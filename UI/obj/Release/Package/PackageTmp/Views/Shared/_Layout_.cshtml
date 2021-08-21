@@ -1,0 +1,504 @@
+﻿<!--
+author: W3layouts
+author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        HShop_
+        Ecommerce
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="" />
+
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+
+
+    <style>
+        .menuli {
+            color: #f1f1f1;
+            display: inline-block;
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            margin-left: -5px;
+        }
+    </style>
+
+    <!-- css files -->
+    <link href="~/css/bootstrap.css" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
+    <link href="~/css/style.css" rel='stylesheet' type='text/css' /><!-- custom css -->
+    <link href="~/css/owl-carousel.css" rel='stylesheet' type='text/css' /><!-- owl carousel css - main slider -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet"><!-- fontawesome css -->
+    <link href="~/css/style_SP.css rel= 'stylesheet' type='text/css' " />
+    <!-- //css files -->
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <!-- //google fonts -->
+
+</head>
+
+<body>
+
+    <!-- header -->
+    <header>
+        <div class="container">
+            <div class="header d-lg-flex">
+
+                <div class="header-agile d-flex">
+                    <h1 class="mr-lg-0 mr-4">
+                        <a class="navbar-brand logo" href="~/Home/Index">
+                            <span class="fa fa-stumbleupon" aria-hidden="true"></span>
+                        </a>
+                    </h1>
+                    <div class="social social-invisible mt-3">
+                        <ul>
+                            <li class="mr-sm-3 mr-2 icons">
+                                <a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                            </li>
+                            <li class="mr-sm-3 mr-2 icons">
+                                <a href="#"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+                            </li>
+                            <li class="mr-sm-3 mr-2 icons"><a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a></li>
+                            <li class="icons"><a href="#"><span class="fa fa-pinterest" aria-hidden="true"></span></a></li>
+
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="nav_w3ls mt-3">
+                    <nav>
+                        <label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"> </span></label>
+                        <input type="checkbox" id="drop" />
+                        <ul class="menu">
+                            <li class="mr-lg-3 mr-2 active"><a href="index.html">Trang Chủ</a></li>
+                            <li class="mr-lg-3 mr-2"><a href="#about1">Giới thiệu </a></li>
+                            <li class="mr-lg-3 mr-2 p-0">
+                                <!-- First Tier Drop Down -->
+                                <label for="drop-2" class="toggle">
+                                    Danh Mục Sản Phẩm<span class="fa fa-angle-down" aria-hidden="true"></span>
+                                </label>
+                                <a href="#">Sản phẩm <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                                <input type="checkbox" id="drop-2" />
+                                <ul class="inner-dropdown  ">
+                                    <li class="menuli"><a href="#"><img src="~/images/thoitrangnam.jpg" /> Thời trang nam</a></li>
+                                    <li class="menuli"><a href="#"><img src="~/images/1.jpg" /> Thời trang nữ</a></li>
+                                    <li class="menuli"><a href="#"><img src="~/images/2.jpg" /> Máy tính và Laptop</a></li>
+                                    <li class="menuli"><a href="#">Máy ảnh và máy quay phim</a></li>
+                                    <li class="menuli"><a href="#">Đồng hồ</a></li>
+                                    <li class="menuli"><a href="#">Thiết bị gia dụng</a></li>
+                                    <li class="menuli"><a href="#">Thể thao và du lịch</a></li>
+                                    <li class="menuli"><a href="#"><img src="~/images/4.jpg" /> Mẹ và bé</a></li>
+                                    <li class="menuli"><a href="#">Sưc khỏe và sắc đẹp</a></li>
+
+
+                                </ul>
+                            </li>
+                            <li class="mr-lg-3 mr-2"><a href="#gallery">Bộ sưu tập</a></li>
+                            <li class="mr-lg-3 mr-2"><a href="#contact">Kết nối vs chúng tôi</a></li>
+                            <li class="mr-lg-3 mr-2 p-0" id="huy">
+                                <a href="#">Tài Khoản <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                                <ul class="inner-dropdown">
+
+                                    <li><a href="~/Home/Login_user">Đăng nhập</a></li>
+                                    <li><a href="~/Home/Register">Đăng ký</a></li>
+                                </ul>
+
+
+                            </li>
+                            <li class="mr-lg-3 mr-2 p-0">
+                                @if (Request.Cookies["firstname"] != null)
+                                {
+                                    <script>
+
+
+                                        document.getElementById("huy").style.display = 'none';
+
+
+
+
+                                    </script>
+                                    <p class="fa fa-angle-down" style="color:cadetblue">
+                                        Xin chào: @Request.Cookies["firstname"].Value
+                                    </p>
+                                }
+                                <ul class="inner-dropdown  ">
+                                    <li><a href="#">Trang cá nhân</a></li>
+                                    <li><a href="#">Cài đặt</a></li>
+                                    <li>@Html.ActionLink("Thoát", "Logout", "Home") </li>
+                                </ul>
+                            </li>
+                            @*<li class="mr-lg-3 mr-2">
+                                    <input type="button" id="btn1" value="Ẩn" />
+                                    <input type="button" id="btn2" value="Hiển Thị" />
+                                    <script language="javascript">
+
+                                        document.getElementById("btn1").onclick = function () {
+                                            document.getElementById("huy").style.display = 'none';
+                                        };
+
+                                        document.getElementById("btn2").onclick = function () {
+                                            document.getElementById("huy").style.display = 'block';
+                                        };
+
+                                    </script>
+                                </li>*@
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="social mt-3 ml-auto">
+                    <ul class="menu">
+                        <li class="mr-3 icons"><a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a></li>
+                        <li class="mr-3 icons"><a href="#"><span class="fa fa-instagram" aria-hidden="true"></span></a></li>
+                        <li class="mr-3 icons"><a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
+                <!--<div  class="nav_w3ls mt-3">
+                <nav>
+                    <ul class="menu">
+                        <li class="mr-lg-3 mr-2 p-0">
+                            <a href="#">-->
+                @*@if (Session["FullName"] != null)
+                    {
+                        <p style="color:seagreen;font-style:italic ">Xin chào: @Session["FullName"].ToString()</p>
+                        <span class="fa fa-angle-down" aria-hidden="true"></span>
+
+
+                    }*@
+
+
+
+                @*@if (Request.Cookies["firstname"] != null)
+                    {
+                        <script language="javascript">
+
+
+                                document.getElementById("huy").style.display = 'none';
+
+
+
+
+                        </script>
+                        <p style="color:seagreen;font-style:italic ">Xin chào @Request.Cookies["firstname"].Value</p>
+                    }*@
+
+
+
+                @*@if (User.Identity.IsAuthenticated)
+                    {
+                        <h1>xin chao @(User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name:"Guest")</h1>
+                    }*@
+                <!--</a>
+
+                <ul class="inner-dropdown  ">
+                    <li class="menuli"><a href="#">Trang cá nhân</a></li>
+                    <li class="menuli"><a href="#">Cài đặt</a></li>
+                    <li class="menuli">@Html.ActionLink("Thoát","Logout","Home") </li>-->
+                @*<li class="menuli"><a href="#">Đăng ký</a></li>
+                    <li class="menuli"><a href="#">Đăng nhập</a></li>*@
+                <!--<li class="menuli">
+
+                                    </li>
+
+
+
+                                </ul>
+
+
+                            </li>
+
+                        </ul>
+                    </nav>
+                    <div class="nav_w3ls mt-3">
+
+                    </div>
+                </div>-->
+
+
+            </div>
+            <div class="container">
+                <div class="header d-lg-flex">
+
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="index.html">
+                                        <img src="~/images/brand-5.png" alt="Logo">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="search">
+                                    <input type="text" placeholder="Search">
+                                    <button><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="user">
+                                    <a href="wishlist.html" class="btn wishlist">
+                                        <i class="fa fa-heart"></i>
+                                        <span>(0)</span>
+                                    </a>
+                                    <a href="cart.html" class="btn cart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>(0)</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <div>
+
+        <img src="~/images/background.jpg " style="height:400px;width:2500px" />
+
+    </div>
+
+    <!-- //header -->
+    <!-- main-slider -->
+
+    <div>
+        @RenderBody();
+    </div>
+    <!-- /main-slider -->
+    <!-- About -->
+    <!-- //stats -->
+    <!-- contact -->
+    <section class="contact py-5" id="contact">
+        <div class="container py-md-5">
+            <div class="row">
+                <div class="col-lg-4 contact-left">
+                    <p>
+                        Liên hệ chúng tôi
+                    </p>
+                    <h3 class="heading">Liên lạc</h3>
+                    <p class="mt-3">
+                        Nếu bạn có bất kỳ thắc mắc nào hoặc muốn nói chuyện với chúng tôi, vui lòng liên hệ với chúng tôi để biết thêm chi tiết theo bên dưới
+                        thông tin đã cho.
+                    </p>
+
+                </div>
+                <div class="col-lg-8 about-text">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15676.273867632177!2d106.71046386775461!3d10.80606817682145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a16940b30b%3A0x1b25a34b7a3ab959!2zUGjGsOG7nW5nIDI1LCBCw6xuaCBUaOG6oW5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1606188970470!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+                </div>
+                <div class="col-lg-8 mt-5">
+                    <form action="#" method="post">
+                        <div class="row main-w3layouts-sectns">
+                            <div class="col-md-6 w3-btm-spc form-text1">
+                                <input type="text" name="Name" placeholder="Enter Your Name" required="">
+                            </div>
+                            <div class="col-md-6 w3-btm-spc form-text2">
+                                <input type="text" name="Phone no" placeholder="Enter Phone Number" required="">
+                            </div>
+                        </div>
+                        <div class="row main-w3layouts-sectns">
+                            <div class="col-md-6 w3-btm-spc form-text1">
+                                <input type="email" name="email" placeholder="Enter Your Email" required="">
+                            </div>
+                            <div class="col-md-6 w3-btm-spc form-text2">
+                                <input type="text" name="subject" placeholder="Subject" required="">
+                            </div>
+                        </div>
+                        <div class="main-w3layouts-sectns ">
+                            <div class="w3-btm-spc form-text2 p-0">
+                                <textarea placeholder="Enter Your Message Here"></textarea>
+                            </div>
+                        </div>
+                        <button class="btn">Gửi</button>
+                    </form>
+                </div>
+                <div class="col-lg-4 mt-5">
+                    <div class="contact-info">
+                        <div class="footer-style-w3ls">
+                            <p>
+                                <span class="fa fa-map-marker" aria-hidden="true"></span><strong> Vị trí</strong> :Công ty HShop_,
+                                phường 25,Quận Bình Thạnh , Thành Phố Hồ Chí Minh.
+                            </p>
+                        </div>
+                        <div class="footer-style-w3ls mt-2">
+                            <p><span class="fa fa-phone" aria-hidden="true"></span><strong> Phone</strong> : 0853506715</p>
+                        </div>
+                        <div class="footer-style-w3ls mt-2">
+                            <p><span class="fa fa-fax" aria-hidden="true"></span><strong> Fax</strong> : +84853506715</p>
+                        </div>
+                        <div class="footer-style-w3ls mt-2">
+                            <p><span class="fa fa-fax" aria-hidden="true"></span><strong> Giám đốc</strong> : Mr:Nguyễn Tuấn Huy</p>
+                        </div>
+                        <div class="footer-style-w3ls mt-2">
+                            <p>
+                                <span class="fa fa-envelope" aria-hidden="true"></span><strong> Email</strong> : <a href="mailto:nguyentuanhuy301198@gmail.com">nguyentuanhuy301198@gmail.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //contact -->
+    <!-- Newsletter -->
+    <section class="subscribe-text py-5" id="subscribe">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="heading mb-3">Theo dõi bản tin</h3>
+                    <p>
+                        Bằng cách đăng ký vào danh sách gửi thư của chúng tôi, bạn sẽ luôn nhận được tin tức và cập nhật thông tin mới nhất từ ​​chúng tôi. Vui lòng làm
+                        đăng ký!
+                    </p>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <form action="#" method="post">
+                        <input type="email" name="Email" placeholder="Enter your email..." required="">
+                        <button class="btn1"><span class="fa fa-paper-plane" aria-hidden="true"></span></button>
+                        <div class="clearfix"> </div>
+                    </form>
+                    <p class="mt-3">
+                        Chúng tôi tôn trọng quyền riêng tư của bạn và sẽ không bao giờ chia sẻ địa chỉ email của bạn với bất kỳ người nào hoặc
+                        cơ quan.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //Newsletter -->
+    <!-- footer -->
+    <footer class="footerv4-w3ls py-sm-5 py-4" id="footer">
+        <div class="footerv4-top">
+            <div class="container">
+
+                <!-- footer logo -->
+                <div class="footer-logo text-center">
+                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> HShop_Ecommerce </a>
+                </div>
+                <!-- pay -->
+                <div class="container-fluid">
+
+
+                    <div class="row payment align-items-center">
+                        <div class="col-md-6">
+                            <div class="payment-method">
+
+                                <img src="~/images/payment-method.png" alt="Payment Method" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="payment-security">
+
+                                <img src="~/images/godaddy.svg" style="width:80px;height:100px" alt="Payment Security" />
+                                <img src="~/images/norton.svg" style="width:80px;height:100px" alt="Payment Security" />
+                                <img src="~/images/ssl.svg" style="width:80px;height:100px" alt="Payment Security" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end pay -->
+                <!-- //footer logo -->
+                <!-- footer nav links -->
+                <div class="d-flex align-items-center footer-nav-wthree justify-content-center my-3">
+                    <ul class="footer-link">
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="#about">Giới thiệu</a>
+                        </li>
+                        <li>
+                            <a href="#services">Hệ thống</a>
+                        </li>
+                        <li>
+                            <a href="#gallery">Bộ sưu tập</a>
+                        </li>
+                        <li>
+                            <a href="#facts">Kết nối doanh nghiệp</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- //footer nav links -->
+                <!-- move top icon -->
+                <div class="text-center">
+                    <a href="#home" class="move-top text-center">
+                        <span class="fa fa-angle-double-up"
+                              aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- //move top icon -->
+                <!-- copyright -->
+                <div class="copy-right text-center">
+                    <p>
+                        @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
+                        <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
+                    </p>
+                    <br />
+                    <a href="~/Admin/Account/Login">
+                        <p style="font-style:italic oblique">Vào Trang ADMIN</p>
+                    </a>
+                </div>
+                <!-- //copyright -->
+
+
+            </div>
+        </div>
+    </footer>
+    <!-- //footer -->
+    <!-- main slider -->
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/owl.carousel.js"></script>
+    <script src="~/js/JavaScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.owl-one').owlCarousel({
+                loop: true,
+                margin: 0,
+                nav: false,
+                dots: true,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    480: {
+                        items: 1,
+                        nav: false
+                    },
+                    667: {
+                        items: 1,
+                        nav: false
+                    },
+                    1000: {
+                        items: 1,
+                        nav: false
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- /main slider -->
+
+</body>
+
+</html>

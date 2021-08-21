@@ -1,0 +1,95 @@
+﻿@model Model.DTO.DTO_Client.DTO_Users_Acc
+
+@{
+    ViewBag.Title = "Profile cá nhân";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@{ 
+   string fullName = Model.FirstName +" "+ Model.LastName;
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<div class="row" style="padding-top:50px;">
+    <div class="col-md-3 col-sm-10" style="border: 1px solid black;margin:10px;">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3" style="margin-top:20px;"><img src="~/Content/Image/cat.jpg" style="height:100px; width:100px;border-radius:50px;" align="middle" /></div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <h2 style="color:red">Xin chào: @fullName</h2>
+        <ul style="list-style:none;">
+            <li>@Html.ActionLink("Thông tin tài khoản", "ProfileUser", new { usr = Model.Email }) </li>
+            <li><a href="#">Lịch sử đơn hàng</a></li>
+            <li>@Html.ActionLink("Đổi mật khẩu", "ResetPassword2", new { id = Model.idUser, mail = Model.Email })</li>
+            <li><a href="~/Cart/yeuThich">Sản phẩm yêu thích</a></li>
+            <li>@Html.ActionLink("Đăng xuất", "Logout")</li>
+            <li><a href="~/Home/Index">Trở về trang chủ</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-10" style="border: 1px solid black;margin:10px;">
+        <h2 style="color:lightseagreen;font-size:25px;margin-top:20px;padding-bottom:10px;border-bottom:1px solid #ffb0bd">HỒ SƠ CỦA TÔI</h2>
+        <p style="text-align:left">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+        @using (Html.BeginForm("ProfileUser", "Customer", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(Model => Model.idUser)
+            @Html.HiddenFor(Model => Model.Email)
+            @Html.HiddenFor(Model => Model.Password)
+            @Html.HiddenFor(Model=>Model.ConfirmPassword)
+             @Html.HiddenFor(Model=>Model.RoleId)
+             
+          
+            <table>
+                <tr>Họ </tr>
+                <tr>@Html.TextBoxFor(Model => Model.LastName, new { @class = "txt" })</tr>
+                <tr>tên</tr>
+                <tr>@Html.TextBoxFor(Model => Model.FirstName, new { @class = "txt" })</tr>
+                <tr>Địa chỉ:</tr>
+                
+                @*<tr>Điện thoại:</tr>
+                <tr>@Html.TextBoxFor(Model => Model.Phone, new { @class = "txt" })</tr>*@
+               
+                <tr class="warning">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger", @style = "list-style-type:none;" })
+                   
+                </tr>
+            </table>
+             <button type="submit" class="btn btn-login btn-success">CẬP NHẬT THÔNG TIN</button>
+              <font style="color:#7c1b1b">@ViewBag.Result</font>
+        }
+    </div>
+</div>
+<style>
+    h2 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .txt {
+        width: 100%;
+        height: 40px;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    table tr{
+        margin-top:10px;
+    }
+    .btn-login {
+        background-color: #ffb0bd;
+        color: white;
+        width: 100%;
+        height: 50px;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        margin-top:20px;
+    }
+    .warning {
+        text-align: left;
+    }
+
+        .warning ul {
+            list-style: none;
+            margin-left: -40px;
+        }
+</style>

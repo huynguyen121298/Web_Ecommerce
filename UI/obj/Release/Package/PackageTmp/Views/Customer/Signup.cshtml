@@ -1,0 +1,149 @@
+﻿@model UI.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Areas/Admin/Views/Shared/View_1.cshtml";
+}
+
+<h2 style="text-align:center ">Đăng Ký </h2>
+
+@using (Html.BeginForm("Signup", "Customer", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+           @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.Label(" Nhập Họ", htmlAttributes: new { @class = "fa fa-user" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.Label(" Email", htmlAttributes: new { @class = "fa fa-envelope-square" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+               
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.Label(" Mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+           @Html.Label(" Xác nhận mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.Label(" Mã xác thực", htmlAttributes: new { @class = "fa fa-lock-open" })
+            <div class="col-md-10">
+                <input id="input" name="AuthenticationCode" style="width:266.01px" type="text" class="form-control" placeholder="Mã xác thực" @*required oninvalid="this.setCustomValidity('Vui lòng nhập mã xác thực')" oninput="this.setCustomValidity('')"*@>
+                <label style="color:red" class="label-success">@ViewData["ErrorMessage"]</label>
+                <label style="color:red" class="label-success">@ViewData["ErrorMessage5"]</label>
+            </div>
+
+
+            @*<button type="submit" class="btn" style="background-color:#ffb0bd;color:white;width:100%;height:50px;border-radius:10px;margin-bottom:10px">ĐĂNG KÝ</button><br />*@
+
+
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnGetAuthCode" class="btn btn-primary btn-user btn-block" type="submit" value="Lấy mã xác thực">
+                <input type="submit" value="Đăng ký" class="btn btn-google btn-user btn-block fab fa-google fa-fw" />
+                <label style="color:red" class="label-success col-md-offset-2 col-md-10">@ViewBag.error</label>
+            </div>
+        </div>
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label style="color:palegreen" class="label-success">@ViewData["ErrorMessage"]</label>
+                </div>
+
+            </div>*@
+    </div>
+}
+
+
+<div class="form-group">
+
+    <div style="text-align:center" class="col-md-10">
+        @Html.ActionLink("Trở về trang đăng nhập", "Login")
+    </div>
+
+
+    @*<button type="submit" class="btn" style="background-color:#ffb0bd;color:white;width:100%;height:50px;border-radius:10px;margin-bottom:10px">ĐĂNG KÝ</button><br />*@
+
+
+</div>
+<hr>
+@*<div  style="margin-left:100px">
+    <a class="small" href="ForgotPassword">Forgot Password?</a>
+</div>*@
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#btnGetAuthCode').off('click').on('click', function () {
+        alert("Đang kiểm tra...")
+        var memberEmail = document.getElementById('Email').value;
+        if (memberEmail) {
+            $.ajax({
+                url: '/Customer/GetAuthenticationInEmail',
+                data: { Email: memberEmail },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        alert("Mã xác thực đã được gửi vào email  " + memberEmail)
+                    }
+                    else {
+                        alert("Email " + memberEmail + " đã tồn tại")
+                    }
+                }
+            });
+        }
+        else {
+            alert("Ban chua nhap email")
+        }
+    });
+
+</script>
+@*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9TyMQ4y3OFtS9ho3C1wB7Lwh-10PtdVY&libraries=places&language=vi&region=VN"></script>
+    <script>
+        var input = document.getElementById('DiaChi');
+        autocomplete = new google.maps.places.Autocomplete(input);
+    </script>*@
+@*<script>
+        document.getElementById("input").attributes["required"] = "Mời nhập ma";
+    </script>*@

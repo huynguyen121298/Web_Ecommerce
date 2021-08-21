@@ -1,0 +1,131 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\H_Shop.NetCore\\H_Shop.NetCore.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\DataAndServices\\DataAndServices.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\DataAndServices\\DataAndServices.csproj",
+        "projectName": "DataAndServices",
+        "projectPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\DataAndServices\\DataAndServices.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\H_Shop.NetCore\\H_Shop.NetCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\H_Shop.NetCore\\H_Shop.NetCore.csproj",
+        "projectName": "H_Shop.NetCore",
+        "projectPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\H_Shop.NetCore\\H_Shop.NetCore.csproj",
+        "packagesPath": "C:\\Users\\Huy-Pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\H_Shop.NetCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Huy-Pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\DataAndServices\\DataAndServices.csproj": {
+                "projectPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\DataAndServices\\DataAndServices.csproj"
+              },
+              "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Formatters.Json": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.11.1, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.12.3, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.11.1, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.12, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj",
+        "projectName": "Model",
+        "projectPath": "C:\\Users\\Huy-Pc\\Documents\\GitHub\\H_Shop.NetCore\\Model\\Model.csproj"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    }
+  }
+}

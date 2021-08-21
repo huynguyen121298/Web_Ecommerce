@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleId" Type="int" />
+  </EntityType>
+  <EntityType Name="checkout">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Zipcode" Type="int" />
+    <Property Name="Id_SanPham" Type="int" Nullable="false" />
+    <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
+    <Property Name="TongTien" Type="float" />
+  </EntityType>
+  <EntityType Name="Checkout_Customer">
+    <Key>
+      <PropertyRef Name="Id_KH" />
+    </Key>
+    <Property Name="Id_KH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SDT" Type="int" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Zipcode" Type="nvarchar" MaxLength="50" />
+    <Property Name="NgayTao" Type="datetime" />
+    <Property Name="GiamGia" Type="float" />
+    <Property Name="TongTien" Type="float" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Checkout_Oder">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_KH" Type="int" Nullable="false" />
+    <Property Name="Id_SanPham" Type="int" Nullable="false" />
+    <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="Gia" Type="float" />
+    <Property Name="NgayTao" Type="datetime" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Checkout1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NgayTao" Type="datetime" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SDT" Type="int" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Zipcode" Type="int" />
+    <Property Name="Id_SanPham" Type="int" Nullable="false" />
+    <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="TongTien" Type="float" />
+  </EntityType>
+  <EntityType Name="CodeDiscount">
+    <Key>
+      <PropertyRef Name="Zipcode" />
+    </Key>
+    <Property Name="Zipcode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Discount" Type="float" />
+    <Property Name="Content" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Discount_Product">
+    <Key>
+      <PropertyRef Name="Id_SanPham" />
+    </Key>
+    <Property Name="Content" Type="nvarchar" MaxLength="50" />
+    <Property Name="Price_Dis" Type="float" />
+    <Property Name="Start" Type="date" />
+    <Property Name="End" Type="date" />
+    <Property Name="Id_SanPham" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DongHo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Feedbacks">
+    <Key>
+      <PropertyRef Name="SDT" />
+    </Key>
+    <Property Name="SDT" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Content" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id_SanPham" />
+    </Key>
+    <Property Name="Id_SanPham" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Item_Type">
+    <Key>
+      <PropertyRef Name="Id_Item" />
+    </Key>
+    <Property Name="Id_Item" Type="int" Nullable="false" />
+    <Property Name="Type_Product" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MayAnhvaMayQuayPhim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MayTinhvaLapTop">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MevaBe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id_SanPham" />
+    </Key>
+    <Property Name="Id_SanPham" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Price" Type="int" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" />
+    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="Id_Item" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="SucKhoevaSacDep">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TheThaovaDuLich">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ThietBiGiaDung">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ThoiTrangNam">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ThoiTrangNu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users_Acc">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleId" Type="int" />
+  </EntityType>
+  <Association Name="FK_Account_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Checkout_Customer_CodeDiscount">
+    <End Role="CodeDiscount" Type="Self.CodeDiscount" Multiplicity="0..1" />
+    <End Role="Checkout_Customer" Type="Self.Checkout_Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CodeDiscount">
+        <PropertyRef Name="Zipcode" />
+      </Principal>
+      <Dependent Role="Checkout_Customer">
+        <PropertyRef Name="Zipcode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Checkout_Oder_Checkout_Customer">
+    <End Role="Checkout_Customer" Type="Self.Checkout_Customer" Multiplicity="1" />
+    <End Role="Checkout_Oder" Type="Self.Checkout_Oder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Checkout_Customer">
+        <PropertyRef Name="Id_KH" />
+      </Principal>
+      <Dependent Role="Checkout_Oder">
+        <PropertyRef Name="Id_KH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Discount_Product_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Discount_Product" Type="Self.Discount_Product" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id_SanPham" />
+      </Principal>
+      <Dependent Role="Discount_Product">
+        <PropertyRef Name="Id_SanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id_SanPham" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Id_SanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Item_Type">
+    <End Role="Item_Type" Type="Self.Item_Type" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item_Type">
+        <PropertyRef Name="Id_Item" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Id_Item" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OnlineShopModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="checkout" EntityType="Self.checkout" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Checkout_Customer" EntityType="Self.Checkout_Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Checkout_Oder" EntityType="Self.Checkout_Oder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Checkout1" EntityType="Self.Checkout1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CodeDiscount" EntityType="Self.CodeDiscount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Discount_Product" EntityType="Self.Discount_Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DongHo" EntityType="Self.DongHo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Feedbacks" EntityType="Self.Feedbacks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item_Type" EntityType="Self.Item_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MayAnhvaMayQuayPhim" EntityType="Self.MayAnhvaMayQuayPhim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MayTinhvaLapTop" EntityType="Self.MayTinhvaLapTop" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MevaBe" EntityType="Self.MevaBe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SucKhoevaSacDep" EntityType="Self.SucKhoevaSacDep" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TheThaovaDuLich" EntityType="Self.TheThaovaDuLich" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThietBiGiaDung" EntityType="Self.ThietBiGiaDung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThoiTrangNam" EntityType="Self.ThoiTrangNam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThoiTrangNu" EntityType="Self.ThoiTrangNu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users_Acc" EntityType="Self.Users_Acc" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Account_Role" Association="Self.FK_Account_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Checkout_Customer_CodeDiscount" Association="Self.FK_Checkout_Customer_CodeDiscount">
+      <End Role="CodeDiscount" EntitySet="CodeDiscount" />
+      <End Role="Checkout_Customer" EntitySet="Checkout_Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Checkout_Oder_Checkout_Customer" Association="Self.FK_Checkout_Oder_Checkout_Customer">
+      <End Role="Checkout_Customer" EntitySet="Checkout_Customer" />
+      <End Role="Checkout_Oder" EntitySet="Checkout_Oder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Discount_Product_Product" Association="Self.FK_Discount_Product_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Discount_Product" EntitySet="Discount_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Item" Association="Self.FK_Product_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Item_Type" Association="Self.FK_Product_Item_Type">
+      <End Role="Item_Type" EntitySet="Item_Type" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Model.DTO.DTO_Ad.DTO_Item_Type>
+@using Model.DTO.DTO_Client;
+@using Model.DTO.DTO_Ad;
+
+@foreach (DTO_Item_Type item in Model)
+    {
+
+
+
+
+
+
+       <li><a href="@Url.Action("Index2", "Product", new { id =item.Id_Item }) ">@item.Type_Product</a></li>
+
+
+
+
+
+    }
+

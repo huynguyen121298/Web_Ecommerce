@@ -1,0 +1,102 @@
+﻿@model UI.Areas.Admin.Models.RegisterAdminModel
+
+@{
+    ViewBag.Title = "AddRegister";
+    Layout = "~/Areas/Admin/Views/Shared/View_2.cshtml";
+}
+
+<h2 style="text-align:center;color:aquamarine " >Thêm Admin</h2>
+
+@using (Html.BeginForm("AddRegister","Account",FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+     @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label(" Nhập Họ", htmlAttributes: new { @class = "fa fa-user" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label(" Email", htmlAttributes: new { @class = "fa fa-envelope-square" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" ,@oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <label style="color:red" class="label-success col-md-offset-2 col-md-10">@ViewBag.error</label>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label(" Mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label(" Xác nhận mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.Label(" Chọn quyền:", htmlAttributes: new { @class = "fa fa-lock-open" })
+        <div class="col-md-10">
+            <select name="stt" id="stt">
+
+                <option>Admin</option>
+                <option>User</option>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Thêm" class="btn btn-google btn-user btn-block fab fa-google fa-fw" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <label style="color:palegreen" class="label-success">@ViewData["ErrorMessage"]</label>
+        </div>
+
+    </div>
+</div>
+}
+
+<div class="form-group">
+
+    <div style="text-align:center" class="col-md-10">
+        @Html.ActionLink("Trở về trang đăng nhập", "Login")
+        <br />
+        @Html.ActionLink("Trở về trang chủ", "Index","Admin")
+    </div>
+
+
+    @*<button type="submit" class="btn" style="background-color:#ffb0bd;color:white;width:100%;height:50px;border-radius:10px;margin-bottom:10px">ĐĂNG KÝ</button><br />*@
+
+
+</div>

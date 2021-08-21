@@ -1,0 +1,75 @@
+﻿@model Model.DTO_Model.DTO_Product_Item_Type
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết sản phẩm</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Mã sản phẩm: @Html.DisplayFor(model => model.Id_SanPham)
+        </dt>
+
+        <dd>
+
+        </dd>
+
+        <dt>
+            Tên sản phẩm:  @Html.DisplayFor(model => model.Name)
+        </dt>
+
+        <dd>
+
+        </dd>
+
+        <dt>
+            Giá sản phẩm:   @string.Format("{0:0,0}", Model.Price)  VNĐ
+        </dt>
+
+        <dd>
+
+        </dd>
+        <dt>
+            Chi tiết sản phẩm:  @Html.DisplayFor(model => model.Details)
+        </dt>
+
+        <dd>
+
+        </dd>
+        <dt>
+            Link hình ảnh:  @Html.DisplayFor(model => model.Photo)
+        </dt>
+
+        <dd>
+
+        </dd>
+
+        <dt>
+            Hỉnh ảnh sản phẩm
+
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
+
+        </dd>
+        <dt>
+            Số lượng còn trong kho:   @Html.DisplayFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.Id_SanPham }) |
+    @Html.ActionLink("Trở về", "Index")
+</p>

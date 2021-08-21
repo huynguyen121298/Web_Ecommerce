@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Model.DTO.DTO_Ad.DTO_User_Acc>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách tài khoản Khách</h6>
+    </div>
+    <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn xác nhận xóa không?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bấm Xóa để xác nhận Xóa, Đóng để hủy
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <a class="btn btn-primary " onclick="xoaSanPham()">Xóa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+
+                        <th>LastName</th>
+                        <th>FirstName</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+
+                        <th>LastName</th>
+                        <th>FirstName</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                @foreach (var item in Model)
+                {
+
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+
+                            <a class="btn btn-success " href=" @Url.Action("Edit", "Users_Acc", new { id = item.idUser })">Chỉnh sửa</a>
+                            <a class="btn btn-primary " href=" @Url.Action("Details", "Users_Acc", new { id = item.idUser })">Chi tiết</a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target(@item.idUser)" data-target="#del">
+                                Xóa
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+   
+    function deleteItem() {
+        var checkstr = confirm('are you sure you want to delete this?');
+        if (checkstr == true) {
+            $(this).remove();
+        } else {
+            return false;
+        }
+    }
+    $(function () {
+
+        $('#confirm .accept').click(function () {
+            delete ($("#confirm").data('deleteId'));
+            $("#confirm").hide();
+        });
+        $('#confirm .cancel').click(function () {
+            $("#confirm").data('deleteId', '').hide();
+        });
+
+    });
+    function showConfirm() {
+        $('#confirm').show();
+    }
+    var del;
+    function target(id) {
+        del = id;
+    }
+    function xoaSanPham() {
+        $.ajax({
+            url: '/Users_Acc/Delete',
+            data: { id: del },
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.mes)
+                    location.reload();
+                else
+                    alert("Không thể xóa vui lòng kiểm tra lại ");
+            }
+        });
+    }
+</script>
+
+
+
+
+

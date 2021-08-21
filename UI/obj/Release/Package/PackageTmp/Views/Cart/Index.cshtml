@@ -1,0 +1,209 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+
+}
+@using Model.DTO_Model;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/style_SP.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>Thanh Toán</title>
+</head>
+<body>
+
+    <div class="breadcrumb-wrap">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item active">Thanh toán</li>
+            </ul>
+        </div>
+    </div>
+
+    @{
+        if (cart.Count != 0)
+        {
+            <div class="cart-page">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="cart-page-inner">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Mã Sản phẩm</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Tổng cộng</th>
+                                                <th>Xóa sản phẩm</th>
+                                            </tr>
+                                        </thead>
+
+                                        @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart"])
+                                        {
+
+
+
+                                            <tbody class="align-middle">
+                                                <tr>
+                                                    <td>
+
+
+                                                        @item.Id_SanPham
+
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="img">
+                                                            <a href="#"><img src="@Url.Content(item.Photo)" /></a>
+                                                            <p>@item.Name</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>@string.Format("{0:0,0}", item.Price)</td>
+                                                    <td>
+
+
+                                                        @item.Quantity
+
+
+                                                    </td>
+                                                    <td>
+                                                        @string.Format("{0:0,0}", (item.Price * item.Quantity))
+                                                    </td>
+                                                    @*<td><button><i class="fa fa-trash"></i></button></td>*@
+                                                    <td><a onclick="Remove()" id="btn_remove" href="@Url.Action("Remove", "Cart", new { id = item.Id_SanPham })"><i class="fa fa-trash">Xóa</i></a></td>
+
+                                                </tr>
+
+                                            </tbody>
+
+
+                                        }
+
+                                    </table>
+                                </div>
+                            </div>
+                            <br>
+                            <a href="@Url.Action("Index", "Product")">Tiếp tục mua sắm</a>
+                            <br />
+                            <a href="~/Product/Details">Xem chi tiết sản phẩm</a>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="cart-page-inner">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div class="cart-summary">
+                                            <div class="cart-content">
+                                                <h1>Tóm tắt giỏ hàng</h1>
+                                                <p>
+                                                    Tổng Hóa đơn<span>
+                                                        @{
+
+                                                            var total = string.Format("{0:0,0}", cart.Sum(item => item.Price * item.Quantity));
+
+                                                        }
+                                                        @total VNĐ
+
+                                                    </span>
+                                                </p>
+                                                <br />
+                                                <p>
+                                                    Số lượng
+                                                    <br />
+                                                    <span style="color:red">
+                                                        @{
+                                                            List<DTO_Product_Item_Type> cart1 = (List<DTO_Product_Item_Type>)Session["cart"];
+                                                            var total1 = cart1.Sum(item => item.Quantity);
+                                                        }
+                                                        @total1
+
+                                                        Cái
+
+                                                    </span>
+
+                                                </p>
+
+                                            </div>
+                                            <div class="cart-btn">
+                                                <a href="~/Cart/Checkout" style="font-size:larger">Thanh toán</a>
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+        $('#btn_remove').click(function () {
+
+            $.ajax({
+                url: "/Cart/Remove",
+                type: 'POST',
+                data: {},
+                success: function () {
+                    alert('Thành công');
+                }
+            })
+        })
+
+
+        function Remove() {
+            Swal.fire({
+                position: 'top',
+                icon: 'success',
+                title: 'Xóa sản phẩm thành công',
+                showConfirmButton: false,
+                timer: 300000
+            })
+        }
+        function Discount() {
+
+            var dis = $('#discount').val();
+
+            $('#gia').val(@total -dis);
+
+        }
+            </script>
+
+        }
+        else
+        {
+
+           
+
+            <img src="~/images/imageCartNo.png" style="width:600px;height:300px" />
+        }
+
+    }
+
+
+
+</body>
+</html>
+
+
+
+

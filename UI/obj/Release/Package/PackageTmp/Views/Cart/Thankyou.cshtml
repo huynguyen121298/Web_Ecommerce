@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thankyou1</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    
+    <link href="~/Content/admin/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="content">
+        <h1 class="display-3 "style="color:cornflowerblue">Cảm ơn bạn đã mua hàng </h1>
+        <p class="lead"><strong>Vui lòng kiểm tra Email hoặc Số điện thoại của bạn</strong> để được hướng dẫn thêm về cách theo dõi đơn hàng của bạn.<br />
+        Đơn hàng của bạn sẽ được gửi từ 2-3 ngày.
+        <br />
+        <p style="font-style:italic">
+            Thông tin đến bạn
+        </p>
+        <hr>
+        <p>
+            Bạn cần hỗ trợ? <a href="">Liên hệ với chúng tôi</a>
+        </p>
+        <p class="lead">
+
+
+
+            <a class="btn btn-primary btn-sm" href="~/Product/Index" role="button">Tiếp tục mua sắm</a>
+        </p>
+    </div>
+
+    @*<div>
+        <input type="file" onchange="upAnh(this)" />
+        <img src="#" class="img-responsive" ,width="150px" ,height="150px" id="chonAnh" />
+
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+        function upAnh(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#chonAnh").attr("src", e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>*@
+</body>
+</html>
+
+
+
+@*<div class="row">
+        <input id="txtInput" />
+        <button id="btnSearch" class="btn btn-primary">Tìm kiểm sản phẩm</button>
+    </div>
+    <script>
+        $('#btnSearch').on('click', function () {
+            var giatrinhap = $('#txtInput').val();
+            alert(giatrinhap);
+        });
+    </script>*@
+
+
+@*<script>
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: '~/Products_Add/ProcessUpload',
+                        contentTyle: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src', urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('có lỗi khi upload' + err.statusText);
+                        }
+
+                    });
+                }
+
+            });
+        });
+    </script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

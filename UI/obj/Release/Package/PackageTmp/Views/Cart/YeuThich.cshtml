@@ -1,0 +1,281 @@
+﻿
+@{
+    ViewBag.Title = "YeuThich";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
+    //var total = cart.Sum(item => item.Product.Price * item.Quantity);
+    //var total1 = cart.Count();
+}
+@using Model.DTO_Model;
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="eCommerce HTML Template Free Download" name="keywords">
+    <meta content="eCommerce HTML Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link href="~/images/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="~/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <!-- Template Stylesheet -->
+    <link href="~/css/style_SP.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="breadcrumb-wrap">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item active">Sản phẩm yêu thích</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- Product Detail Start -->
+    @{
+        if (cart.Count != 0)
+        {
+            <div class="product-detail">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8">
+                                <div class="product-detail-top">
+
+
+                                    @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart_"])
+                                    {
+                                        <div class="row align-items-center">
+                                            <div class="col-md-5">
+                                                <div class="product-slider-single normal-slider">
+                                                    <img src="@Url.Content(item.Photo)" />
+
+                                                </div>
+                                                <div class="product-slider-single-nav normal-slider">
+                                                    <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="product-content">
+                                                    @item.Name
+                                                    <div class="ratting">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h4 class="product-price-range"> giá sản phẩm</h4>
+                                                        <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
+                                                    </div>
+
+                                                    <div class="p-color">
+
+                                                        <div class="btn-group btn-group-sm">
+                                                            <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item.Id_SanPham })">Xóa khỏi sản phẩm yêu thích </a>
+                                                            <a onclick="AddCart()" class="btn" href="@Url.Action("Buy", "Product", new { id = item.Id_SanPham })"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
+
+                                                        </div>
+                                                        <script>
+
+                                                            function AddCart() {
+                                                                Swal.fire({
+                                                                    position: 'top',
+                                                                    icon: 'success',
+                                                                    title: 'Thêm sản phẩm thành công',
+                                                                    showConfirmButton: false,
+                                                                    timer: 300000
+                                                                })
+
+
+
+                                                            }
+
+
+                                                        </script>
+
+                                                    </div>
+                                                    <div class="row product-detail-bottom">
+                                                        <div class="col-lg-12">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
+                                                                </li>
+
+
+                                                            </ul>
+
+                                                            <div class="tab-content">
+                                                                <div id="description" class="container tab-pane active">
+
+                                                                    <p>
+
+                                                                        @item.Details
+
+                                                                    </p>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                    <div class="row product-detail-bottom">
+                                        <div class="col-lg-12">
+
+
+                                            <div class="tab-content">
+
+
+                                                <div id="reviews" class="container tab-pane fade">
+                                                    <div class="reviews-submitted">
+                                                        <div class="reviewer"> Để lại đánh giá của bạn - <span>@DateTime.Today</span></div>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="reviews-submit">
+                                                        <h4>Để lại phản hồi của bạn</h4>
+                                                        <div class="ratting">
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                        </div>
+                                                        @using (Html.BeginForm("saveFeedbacksYeuThich", "Home", FormMethod.Post))
+                                                        {
+                                                            <div class="row form">
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
+                                                                </div>
+                                                            </div>
+                                                            @*<script>
+                                                                function AddCart() {
+                                                                    alert("Gửi phản hồi thành công");
+
+
+
+                                                                }
+
+                                                            </script>*@
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form class="form-horizontal" role="form" method="post" action="@Url.Action("Index", "Product")">
+                                        <div class="sidebar-widget tag">
+                                            <h2 class="title">Sản phẩm tìm kiếm nhiều</h2>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Áo thun nu"})">Áo thun nữ</a>
+
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Táo"})">Hoa quả</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Balo"})">Balo</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Túi"})">Túi xách nữ</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Ví"})">Ví da nam</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Giày"})">Giày Gucci</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Dép"})">Dép quai ngang</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="iphone"})">Iphone 12 Pro Max</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Mac"})">Macbook</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Samsung"})">Samsung Note 10</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Tivi"})">Tivi 97"</a>
+                                            <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
+                                        </div>
+                                    </form>
+                                    @section Upload {
+                                        <script>
+
+
+                                        </script>
+                                    }
+                                </div>
+
+                            <!-- Side Bar Start -->
+                            <!-- Side Bar End -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <img src="~/images/imageCartNo.png" style="width:600px;height:300px" />
+        }
+    }
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/slick/slick.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/js/main.js"></script>
+</body>
+</html>
+
+
+@*<script type="text/javascript">
+        $('#quantity').data('count', 0);
+        $('#tang').click(function () {
+            $('#quantity').html(function () {
+                var $this = $(this),
+                    count = $this.data('count') + 1;
+
+                $this.data('count', count);
+                return count;
+            });
+        });
+    </script>*@
+

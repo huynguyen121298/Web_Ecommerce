@@ -1,0 +1,194 @@
+﻿@model IEnumerable<Model.DTO_Model.DTO_Dis_Product>
+
+
+@using Model.DTO.DTO_Ad;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Sản Phẩm</h2>
+
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
+   aria-expanded="true" aria-controls="collapseTwo">
+    <i class="fas fa-fw fa-cog"></i>
+    <span>Tùy chọn sản phẩm</span>
+</a>
+<div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Xem sản phẩm theo:</h6>
+        <a class="collapse-item" href="~/Admin/Products_Add/Index">Tất cả sản phẩm</a><br />
+        <a class="collapse-item" href="~/Admin/Products_Add/GetAllProductByType">Theo thể loại sản phẩm</a><br />
+        <a class="collapse-item" href="~/Admin/Products_Add/Product_Discount">Sản phẩm đang giảm giá</a><br />
+
+
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 1 })">Đồng hồ</a>
+        <br>
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id =  8})">Thời trang nam</a>
+        <br />
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 9 })">Thời trang nữ</a>
+        <br>
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 4 })">Mẹ và bé</a>
+        <br />
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 7 })">Thiết bị gia dụng</a>
+        <br />
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 2 })">Máy ảnh và Máy Quay Phim</a>
+        <br />
+
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 3 })">Máy tính và LapTop</a>
+        <br />
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 6 })">Thể thao và du lịch</a>
+        <br>
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 5 })">Sức khỏe và sắc đẹp</a>
+        <br>
+        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 10 })">Điện thoại</a>
+    </div>
+</div>
+
+
+<p style="font-size:larger ;text-align:center">
+
+    <a class="btn btn-warning " href=" @Url.Action("Create", "Products_Add")"> Tạo sản phẩm mới </a>
+    <a class="btn btn-info " href="~/Admin/Products_Add/Product_Discount"> Sản phẩm đang được giảm giá! </a>
+
+</p>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách sản phẩm</h6>
+    </div>
+    <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn xác nhận xóa không?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bấm Xóa để xác nhận Xóa, Đóng để hủy
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <a class="btn btn-primary " onclick="xoaSanPham()">Xóa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Nội dung giảm</th>
+                        <th>Giá sau giảm</th>
+                        <th>Hình ảnh sản phẩm</th>
+                        <th>Lựa chọn</th>
+
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Nội dung giảm</th>
+                        <th>Giá sau giảm</th>
+                        <th>Hình ảnh sản phẩm</th>
+                        <th>Lựa chọn</th>
+
+                    </tr>
+                </tfoot>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        var price = item.Price_Dis;
+                        var priceOld = item.Price;
+                        DateTime dateTime = DateTime.Today;
+                        var endDay = item.End;
+                        bool checkPrice = price < priceOld;
+
+                        bool totalday = endDay >= dateTime;
+
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id_SanPham)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.Price)*@
+                                @string.Format("{0:0,0}", item.Price) VNĐ
+                            </td>
+                            <td>
+                                @{
+                                    if (price != null && totalday == true && checkPrice == true)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Content);
+                                    }
+
+                                }
+
+                            </td>
+                            <td>
+                                @{
+                                    if (price != null && totalday == true && checkPrice == true)
+                                    {
+                                        string newprice = string.Format("{0:0,0}", item.Price_Dis);
+                                        <p>@newprice VNĐ</p>
+
+                                    }
+
+                                }
+
+                            </td>
+                            <td>
+                                <img src=" @Url.Content(item.Photo)" style="height:100px; width:100px;margin:10px" />
+                            </td>
+
+                            <td>
+                                <a class="btn btn-success " href=" @Url.Action("Edit", "Products_Add", new { id = item.Id_SanPham })">Chỉnh sửa</a>
+                                <a class="btn btn-primary " href=" @Url.Action("Details", "Products_Add", new { id = item.Id_SanPham })">Chi tiết</a>
+                                <a class="btn btn-info " href=" @Url.Action("Create_Discount", "Products_Add", new { id = item.Id_SanPham })">Tùy chỉnh giảm giá</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target(@item.Id_SanPham)" data-target="#del">
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    var del;
+    function target(id) {
+        del = id;
+    }
+    function xoaSanPham() {
+        $.ajax({
+            url: '/Products_Add/Delete',
+            data: { id: del },
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.mes)
+                    location.reload();
+                else
+                    alert("Không thể xóa vui lòng kiểm tra lại ");
+            }
+        });
+    }
+</script>

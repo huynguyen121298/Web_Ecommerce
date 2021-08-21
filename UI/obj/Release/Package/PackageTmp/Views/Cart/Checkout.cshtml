@@ -1,0 +1,219 @@
+﻿@model Model.DTO_Model.DTO_Product_Item_Type
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Model.DTO_Model;
+
+
+@{
+    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+    var total = cart.Sum(item => item.Quantity * item.Price);
+    var total1 = cart.Count();
+
+
+}
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
+            <li class="breadcrumb-item active">Thanh toán hóa đơn</li>
+        </ul>
+    </div>
+</div>
+<div class="checkout">
+    <div class="container-fluid">
+        @using (Html.BeginForm("saveOrder1", "Cart", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="checkout-inner">
+                        <div class="billing-address">
+                            <h2>Thanh toán hóa đơn </h2>
+
+
+
+                            <div class="row">
+                                @*div class="col-md-6">
+
+                                        <input class="form-control" type="text" value=" @Html.DisplayFor(model => model.Name)">
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Id_SanPham)">
+                                    </div>*@
+
+
+                                <div class="col-md-6">
+
+                                    <input class="form-control" type="text" value="" placeholder="Nhập tên" name="FirstName" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-md-6">
+
+                                    <input class="form-control" type="text" placeholder="Nhập Họ" name="LastName" required oninvalid="this.setCustomValidity('Vui lòng nhập họ')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-md-6">
+
+                                    <input class="form-control" type="email" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ email')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-md-6">
+
+                                    <input class="form-control" type="tel" placeholder="Nhập số điện thoại" name="sdt" required oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-md-12">
+
+                                    <input class="form-control" type="text" placeholder="Nhập địa chỉ" name="diaChi" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chi')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Tỉnh/Thành phố</label>
+                                    <select class="custom-select" name="City">
+                                        <option selected>Hà Nội</option>
+                                        <option>Hồ Chí Minh</option>
+                                        <option>Đà Nẵng</option>
+                                        <option>Huế</option>
+                                        <option>Đăk Lăk</option>
+                                        <option>Nghệ An</option>
+                                        <option>Hà Tĩnh</option>
+                                        <option>Khánh Hóa</option>
+                                        <option>Phú Yên</option>
+                                        <option>Quảng Ngãi</option>
+                                        <option>An Giang</option>
+                                        <option>Tiền Giang</option>
+                                        <option>Long An</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <input class="form-control" type="text" placeholder="ZIP Code" onchange="DiscountPrice()" name="zip" id="pricecode">
+
+                                </div>
+
+
+
+                            </div>
+                            <input type="submit" class="btn btn-success" value="Hoàn thành">
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="checkout-inner">
+                        <div class="checkout-summary">
+                            @*<p style="font-style:italic">Tổng số lượng sản phẩm mua<span>@total1</span></p>
+                                <h2>Tổng tiền thanh toán
+                                <br />
+                                <span style="color:red">@total VNĐ</span></h2>
+                                <p class="ship-cost">Giảm giá<span>VNĐ</span></p>*@
+                            <div class="cart-content">
+
+                                <p>
+                                    Thanh Toán<span>
+
+                                        @string.Format("{0:0,0}", total)
+                                        VNĐ
+                                    </span>
+                                </p>
+                                <p>
+                                    Giảm giá <input type="text" readonly style=" opacity:0.5; width:45px; height:30px" id="discount" name="discount1" />%
+
+
+                                </p>
+
+                                <p>
+                                    Tổng thanh toán
+                                    <br />
+                                    <span style="color:red">
+                                        @*@{
+                                                List<Item> cart1 = (List<Item>)Session["cart"];
+                                                var total1 = cart1.Sum(item => item.Product.Price * item.Quantity);
+                                            }
+                                            @total -*@
+
+                                        <input  readonly id="gia1" style="opacity: 0.5; width:150px" name="gia1" type="text" value="@total " />
+
+                                    </span>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+
+        @*<input class="form-control" type="text" placeholder="ZIP Code" name="zip" id="pricecode">*@
+        @*<input type="submit" value="Kiểm tra code" class="btn btn-outline-success" id="check" onclick="DiscountPrice()" />*@
+        <p style="color:red;font-style:italic" id="message1">@ViewData["Message"]</p>
+    </div>
+</div>
+<script>
+
+   
+    function Discount() {
+
+        var dis = $('#discount').val();
+        console.log("Discount is: " + dis);
+        console.log("Total is: " + @total);
+        var total_discount = @total -(@total* dis);
+        console.log("Total discount is: " + total_discount);
+
+        $('#gia').val(@total -(@total* dis));
+
+    };
+    function DiscountPrice() {
+        var priceCode = $('#pricecode').val();
+        console.log(priceCode);
+        $.ajax({
+            url: '/Cart/saveOrder2',
+            data: { priceCode: priceCode },
+            dataType: 'json',
+            async: false,
+            type: 'POST',
+            success: function (res) {
+
+                console.log();
+
+                //console.log(res.checkout);
+                //alert("Cập nhật code thành công");
+                $("#discount").val(res.checkout * 100)
+
+
+                var dis = res.checkout;
+                $('#gia1').val(@total -(@total* dis));
+
+                var myJsVariable = '@ViewBag.Message';
+                var message =  @Html.Raw(Json.Encode(this.ViewBag.Message));
+                console.log("Message is: " + myJsVariable);
+                console.log("Message is: " + message);
+                $('#discount-message').text(myJsVariable);
+
+            }
+
+
+        });
+
+    };
+</script>
+@section Upload {
+    <script>
+        $(function () {
+            function show_popup() {
+                $("#message1").hide();
+               
+            };
+            window.setTimeout(show_popup, 5000); // 5 seconds
+        });
+    </script>
+    }

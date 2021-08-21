@@ -1,0 +1,116 @@
+﻿@model IEnumerable< Model.DTO.DTO_Ad.DTO_Account>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách tài khoản Admin</h6>
+    </div>
+    <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn xác nhận xóa không?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bấm Xóa để xác nhận Xóa, Đóng để hủy
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <a class="btn btn-primary " onclick="xoaSanPham()">Xóa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        @*<th>RoleName</th>*@
+                        <th>LastName</th>
+                        <th>FirstName</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        @*<th>RoleName</th>*@
+                        <th>LastName</th>
+                        <th>FirstName</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.Role.RoleName)
+                                </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Password)
+                            </td>
+                            <td>
+                                <a class="btn btn-success " href=" @Url.Action("Edit", "Admin_acc", new { id = item.idUser })">Chỉnh sửa</a>
+                                <a class="btn btn-primary " href=" @Url.Action("Details", "Admin_acc", new { id = item.idUser })">Chi tiết</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target(@item.idUser)" data-target="#del">
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+    var del;
+    function target(id) {
+        del = id;
+    }
+    function xoaSanPham() {
+        $.ajax({
+            url: '/Admin_acc/Delete',
+            data: { id: del },
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.mes)
+                    location.reload();
+                else
+                    alert("Không thể xóa vui lòng kiểm tra lại ");
+            }
+        });
+    }
+</script>
+
+
+<!-- /.container-fluid -->

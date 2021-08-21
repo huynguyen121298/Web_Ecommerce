@@ -1,0 +1,233 @@
+﻿@model Model.DTO_Model.DTO_Product_Item_Type
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    int id = Model.Id_Item;
+    string show;
+    switch (id)
+    {
+        case 1: show = "Đồng hồ";
+            break;
+        case 2:
+            show = "Máy ảnh và máy quay phim";
+            break;
+        case 3:
+            show = "Máy tính và laptop";
+            break;
+        case 4:
+            show = "Mẹ và bé";
+            break;
+        case 5:
+            show = "Sức khỏe và sắc đẹp";
+            break;
+        case 6:
+            show = "Thể thao và du lịch";
+            break;
+        case 7:
+            show = "Thiết bị gia dụng";
+            break;
+        case 8:
+            show = "Thời trang nam";
+            break;
+        case 9:
+            show = "Thời trang nữ";
+            break;
+        case 10:
+            show = "Điện thoại";
+            break;
+
+        default: show = "";
+            break;
+    }
+
+
+
+
+
+            }
+
+<script src="~/js/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+            });
+    function ShowImagePreview(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                $('#PreviewImage').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.flles[0]);
+                }
+            }
+</script>
+<h2>Chỉnh sửa sản phẩm</h2>
+
+
+@using (Html.BeginForm("Edit", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id_SanPham)
+
+
+        <div class="form-group">
+            Tên sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Giá sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*<div class="form-group">
+            Chi tiết sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+         <div class="form-group">
+        Chi tiết sản phẩm
+             <div class="col-md-10">
+                 @Html.TextAreaFor(model => model.Details, new { @id = "ckeditor" })
+                 @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+             </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+        CKEDITOR.replace('ckeditor');
+        CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
+                CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
+        CKEDITOR.config.autoParagraph = false;
+        CKEDITOR.config.language = 'vi';
+    });
+
+
+
+
+
+        </script>
+    </div>
+         <div class="form-group">
+             Hình ảnh của sản phẩm
+             <div class="col-md-10">
+                 <p style="font-style:italic">Hiện tại:</p>
+                
+                 @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control" } })
+                <p style="font-style:italic">Hình ảnh mới:</p>
+             
+                 <input type="file" name="ImageUpload" onchange="upAnh(this)" />
+                 <br />
+                 <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh" />
+
+
+             </div>
+             <script type="text/javascript">
+                 $(document).ready(function () {
+
+                 });
+                 function upAnh(input) {
+                     if (input.files && input.files[0]) {
+                         var reader = new FileReader();
+                         reader.onload = function (e) {
+                             $("#chonAnh").attr("src", e.target.result);
+                         }
+                         reader.readAsDataURL(input.files[0]);
+                     }
+                 }
+             </script>
+         </div>
+        @*<div class="form-group">
+                Nhập Mã loại sản phẩm
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Id_Item, new { htmlAttributes = new { @class = "form-control " } })
+                    @Html.ValidationMessageFor(model => model.Id_Item, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Item.Id_SanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Item.Id_SanPham, new { htmlAttributes = new { @class = "form-control " } })
+                    @Html.ValidationMessageFor(model => model.Item.Id_SanPham, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Id_Item, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Id_Item, new { htmlAttributes = new { @class = "form-control " } })
+                    @Html.ValidationMessageFor(model => model.Id_Item, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            Chon loại sản phẩm
+            <div class="col-md-10">
+                <select name="stt" id="stt">
+                    <option selected>@show</option>
+                    <option>Máy ảnh và máy quay phim</option>
+                    <option>Đồng hồ</option>
+                    <option>Mẹ và bé</option>
+                    <option>Sức khỏe và sắc đẹp </option>
+                    <option>Thể thao và du lịch</option>
+                    <option>Thiết bị gia dụng</option>
+                    <option>Thời trang nam</option>
+                    <option>Thời trang nữ</option>
+                    <option>Máy tính và laptop</option>
+                    <option>Điện thoại</option>
+
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            Nhập số lượng
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                @*<input type="number" name="sl" id="sl" class="form-control" />*@
+                @*<label style="color:palegreen" class="label-success">@ViewBag.Message</label>*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-success" value="Lưu" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>
+
+@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+}
+
+@*<script>
+        function ShowImagePreview(imageUploader, PreviewImage) {
+        if (imageUploader.flles && imageUploader.flles[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                    $(PreviewImage).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(imageUploader.flles[0]);
+        };
+    }
+    </script>*@

@@ -1,0 +1,209 @@
+﻿@model Model.DTO_Model.DTO_Dis_Product
+
+
+@{
+    ViewBag.Title = "Create_Discount";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    string id = Model.Content;
+    string show;
+    switch (id)
+    {
+        case "0%":
+            show = "0";
+            break;
+        case "5%":
+            show = "5";
+            break;
+        case "10%":
+            show = "15";
+            break;
+        case "15%":
+            show = "15";
+            break;
+        case "20%":
+            show = "20";
+            break;
+        case "25%":
+            show = "25";
+            break;
+        case "30%":
+            show = "30";
+            break;
+        case "35%":
+            show = "35";
+            break;
+        case "40%":
+            show = "40";
+            break;
+        case "45%":
+            show = "45";
+            break;
+        case "50%":
+            show = "50";
+            break;
+
+        default:
+            show = "";
+            break;
+    }
+
+
+
+
+
+}
+
+
+<h2>Tùy chọn giảm giá sản phẩm</h2>
+
+@using (Html.BeginForm("Create_Discount_Product", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID_Discount)
+        @Html.HiddenFor(model => model.Id_Item)
+        @Html.HiddenFor(model => model.Details)
+
+
+
+
+        <div class="form-group">
+            Mã sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Id_SanPham, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Id_SanPham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Tên sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Giá
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @id = "discount", @disabled = "disabled" } })
+                @*<input type="text" class="form-control" readonly value="@string.Format("{0:0,0}", Model.Price) " />*@
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Hình ảnh
+            <div class="col-md-10">
+                <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh" />
+                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            Chon % Giảm
+            <div class="col-md-10">
+                <select onchange="ChangePrice()" name="stt" id="stt">
+                    <option selected>@show</option>
+                    <option>0</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option>35</option>
+                    <option>40</option>
+                    <option>45</option>
+                    <option>50</option>
+
+
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            Giá đã giảm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price_Dis, new { htmlAttributes = new { @class = "form-control", @id = "gia" } })
+                @Html.ValidationMessageFor(model => model.Price_Dis, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            Ngày bắt đầu
+            <div class="col-md-10">
+                @{
+                    var start = Model.Start;
+                    if (start != null)
+                    {
+                        <input type="date" name="start" class="form-control" value="@Model.Start.Value.ToString("yyyy-MM-dd")" />
+
+                    }
+                    else
+                    {
+                        <input type="date" name="start" class="form-control" />
+                    }
+
+
+
+                }
+
+
+                @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Ngày kết thúc
+            <div class="col-md-10">
+                @{
+
+                    var end = Model.End;
+                    if (end != null)
+                    {
+                        <input type="date" name="end" class="form-control" value="@Model.End.Value.ToString("yyyy-MM-dd")" />
+
+                    }
+                    else
+                    {
+                        <input type="date" name="end" class="form-control" />
+                    }
+
+
+
+                }
+
+
+                @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input class="btn btn-success" type="submit" value="Save" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>
+<script>
+    function ChangePrice() {
+        var dis = $('#discount').val();
+        console.log("Discount is: " + dis);
+        var option = $('#stt').val();
+        console.log("Option is: " + option);
+        $('#gia').val(dis - (dis * (option * 0.01)));
+    }
+</script>

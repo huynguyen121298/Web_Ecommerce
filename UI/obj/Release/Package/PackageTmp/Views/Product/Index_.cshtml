@@ -1,0 +1,495 @@
+﻿@*@using Model.DTO_Model;*@
+@using Model.DTO_Model;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Model.DTO_Model.DTO_Dis_Product>
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_Product_.cshtml";
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="eCommerce HTML Template Free Download" name="keywords">
+    <meta content="eCommerce HTML Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link href="~/images/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="~/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
+    @*<script src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+    <!-- Template Stylesheet -->
+    <link href="~/css/style_SP.css" rel="stylesheet">
+    <style>
+
+        .old-price {
+            margin-top: 10px;
+            font-size: 0.8em;
+            text-decoration: line-through;
+            color: grey;
+        }
+
+        .new-price {
+            color: #f6eb14;
+            font-size: 1.45em;
+            line-height: 1.1;
+        }
+
+
+        ins {
+            color: green;
+            font-size: 32px;
+            text-decoration: none;
+            padding: 1em 1em 1em .5em;
+        }
+        .amount {
+            position: relative;
+        }
+
+            .amount::after {
+                content: "";
+                width: 100%;
+                height: 1px;
+                background: black;
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+            } 
+
+        
+
+    </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+<body>
+
+    <div class="breadcrumb-wrap">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item active">Sản phẩm</li>
+            </ul>
+        </div>
+    </div>
+    @*<div class="container">
+            <div class="header d-lg-flex">
+
+
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="~/images/logo.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="search">
+                        @using (Html.BeginForm("Index", "Product"))
+                        {
+                            <b>Lọc sản phẩm theo:</b> @Html.RadioButton("seachBy", "NameProduct") <text> Tên sản phẩm</text>
+
+                            @Html.("seachBy", "None")<text>Không lọc</text><br />
+
+                            @Html.TextBox("search")<input type="submit" value="Tìm kiếm" />
+                        }
+                        <script>
+                            //clear value tìm kiếm
+                        </script>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>*@
+
+
+    @*<div class="row">
+            <input id="txtInput" />
+            <button id="btnSearch" class="btn btn-primary">Tìm kiểm sản phẩm</button>
+        </div>*@
+    <!-- Breadcrumb End -->
+    <!-- Product List Start -->
+    <div class="product-view">
+        <div class="container-fluid">
+            <div class="row">
+                <p>@ViewData["MessQuantity"]</p>
+                <div class="col-lg-12">
+                    <div class="row">
+                        @foreach (DTO_Dis_Product item in Model)
+                        {
+                            var price = item.Price_Dis;
+                            var priceOld = item.Price;
+                            DateTime dateTime = DateTime.Today;
+                            var endDay = item.End;
+                            bool checkPrice = price < priceOld;
+
+                            bool totalday = endDay >= dateTime;
+                            if (price != null && totalday == true && checkPrice == true)
+                            {
+
+                                <div class="col-md-2">
+
+                                    <div class="product-item">
+                                        <div style="height:102px" class="product-title">
+                                            <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
+
+                                            <div class="ratting">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div style="color:red" class="ratting">
+
+                                                <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
+
+
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="product-image">
+                                            <a href="product-detail.html">
+                                                <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                            </a>
+                                            <div class="product-action">
+                                                <a class="btn" onclick="Buy_Cart(@item.Id_SanPham)"><i class="fa fa-cart-plus"></i></a>
+                                                <a class="btn" onclick="Buy_Favorite(@item.Id_SanPham)"><i class="fa fa-heart"></i></a>
+                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item.Id_SanPham })">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <div style="height:106px" class="product-price">
+
+                                            <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
+                                            <br />
+
+                                            <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
+
+                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item.Id_SanPham })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
+                                            @*<a id="btn_mua" onclick="AddCart()" class="btn" href=" @Url.Action("Details", "Cart", new { id = item.Id_SanPham })"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>*@
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+
+
+
+
+
+
+
+
+
+
+                        }
+
+                    </div>
+
+                </div>
+
+                <!-- Side Bar Start -->
+                <div class="col-lg-4 sidebar">
+
+
+
+
+
+
+                    <!--<div id="showThongBao" class="modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Thông báo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Thêm sản phẩm thành công</p>
+                                </div>-->
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>*@
+                    <!--</div>
+                        </div>
+                    </div>-->
+
+                </div>
+                <!-- Side Bar End -->
+            </div>
+        </div>
+    </div>
+    @*<script type="text/javascript">
+            $('#btn_mua').click(function (event, url, postedData, callback) {
+                event.preventDefault();
+                var href = $(this).attr('href');
+                var name = $(this).attr('name');
+                $.ajax({
+                    url: href,
+                    type: 'POST',
+                    data: {},
+                    success: function () {
+                        console.log("OK");
+                    }
+
+
+                });
+
+
+
+
+
+        </script>*@
+
+    <script>
+
+        $(document).ready(function Buy() {
+
+
+            $.ajax({
+                url: "/Product/Buy_Favorite",
+                type: 'POST',
+                data: {},
+                success: function () {
+                    console.log("OK");
+                }
+
+            })
+
+
+        });
+        //function AddCart() {
+        //    Swal.fire({
+        //        position: 'top',
+        //        icon: 'success',
+        //        title: 'Thêm sản phẩm thành công',
+        //        showConfirmButton: false,
+        //        timer: 300000
+        //    })
+
+
+
+        //}
+    function Buy_Favorite(id) {
+        var id_temp = id;
+            $.ajax({
+
+                url: '/Cart/Details_',
+                data: { Id: id },
+                dataType: 'json',
+                type: 'POST',
+                error: function () {
+
+                            alert("Sản phẩm  đã hết hàng");
+
+                },
+                success: function (res) {
+                    for (let i = 0; i < res.buy.length; i++) {
+                        if (res.buy[i]["Id_SanPham"] == id_temp) {
+                            alert("Sản phẩm " + res.buy[i]["Name"] + " đã được thêm vào sản phẩm yêu thích");
+
+                            break;
+                        }
+
+
+                    }
+
+
+
+
+                    console.log("List of rest: " + res)
+                    console.log("Length of rest.buy is: " + res.buy.length)
+                    $("#sttbuy").text(res.buy.length)
+                    //$("#sttbuy").html(res.buy[0]["Quantity"])
+                }
+
+            });
+        }
+    function Buy_Cart(id) {
+        var id_temp = id;
+            $.ajax({
+                url: '/Product/Buy_Favorite',
+                data: { Id: id },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.buy == 0) {
+                        alert("Sản phầm này đã hết hàng");
+                    }
+                    console.log("Id is: " + id_temp);
+                    console.log(res.buy);
+                    for (let i = 0; i < res.buy.length; i++) {
+
+                        if (res.buy[i]["Id_SanPham"] == id_temp) {
+                            alert("Sản phẩm " + res.buy[i]["Name"] + " đã được thêm vào giỏ hàng");
+                            break;
+                        }
+                    }
+
+
+
+                    //console.log("Res is: " + res)
+                    //console.log(res)
+                    //console.log(res.buy)
+                    //console.log("Quantity is: " + res.soLuong[0]["Quantity"])
+                    //console.log("Price is: " + res.soLuong[0]["Price"])
+                    //$("#sttbuy").val(res.buy[0]())
+                    console.log("Total of product in cart is: " + res.buy.length)
+                    $("#total-product").text(res.buy.length);
+                }
+
+            });
+        }
+
+
+
+    </script>
+    @section Upload {
+        <script>
+            //$('#tang').click(function (event) {
+            //    event.preventDefault();
+            //    $.ajax({
+            //        url: '/Product/Tang',
+            //        type: 'POST',
+            //        data: {  },
+            //        success: function () { alert('thanh cong') }
+            //    });
+
+            //});
+
+        </script>
+    }
+
+
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/slick/slick.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/js/main.js"></script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="product-view">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">*@
+@*<div class="row">
+        <div class="col-md-4">
+            <div class="product-title">
+                @Html.DisplayNameFor(model => model.Item.Id_SanPham)
+            </div>
+            <div class="product-item">
+                <div class="product-title">
+                    @Html.DisplayFor(modelItem => item.Name)
+                    <div class="ratting">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="product-title">
+                    @Html.DisplayFor(modelItem => item.Price)
+                </div>
+
+                <div class="product-image">
+                    <a href="product-detail.html">
+                        <img src="@Url.Content(item.Photo)" style="width:150px; height:150px; margin:10px" />
+                    </a>
+                    <div class="product-action">
+                        <a href="#"><i class="fa fa-cart-plus"></i></a>
+                        <a href="#"><i class="fa fa-heart"></i></a>
+                        <a href="#"><i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+                <div class="product-price">
+                    <h3><span>  @Html.DisplayFor(modelItem => item.Price)</span></h3>
+                    <a href="@Url.Action("Details", "Cart", new { id = item.Id_SanPham })">Thêm vào giỏ hàng</a>
+                </div>
+            </div>
+        </div>
+
+    </div>*@
+@*</div>
+            </div>
+        </div>
+    </div>*@
+
+
+
