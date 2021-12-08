@@ -24,6 +24,10 @@ namespace Model.DTO_Model
 
         public string Photo { get; set; }
 
+        public string Photo2 { get; set; }
+
+        public string Photo3 { get; set; }
+
         public string Details { get; set; }
 
         public int Id_Item { get; set; }

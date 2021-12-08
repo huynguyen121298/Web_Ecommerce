@@ -450,9 +450,9 @@ namespace UI.Controllers
 
         public JsonResult GetAuthenticationInEmail(string Email)
         {
-            var findThisEmail = GetCustomerByEmail(Email);
-            if (findThisEmail == null)
-            {
+            //var findThisEmail = GetCustomerByEmail(Email);
+            //if (findThisEmail == null)
+            //{
                 Session[Constants.AUTHENTICATIONEMAIL_SESSION] = null;
                 int authCode = new Random().Next(1000, 9999);
                 AuthenticationEmail authenticationEmail = new AuthenticationEmail();
@@ -463,9 +463,9 @@ namespace UI.Controllers
                 MailHelper.SendMailAuthentication(Email, "Mã xác thực từ H_Shop", authCode.ToString());
 
                 return Json(new { status = true });
-            }
-            else
-                return Json(new { status = false });
+            //}
+            //else
+            //    return Json(new { status = false });
         }
 
 

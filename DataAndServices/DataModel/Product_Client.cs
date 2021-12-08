@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace DataAndServices.DataModel
 {
@@ -13,6 +14,10 @@ namespace DataAndServices.DataModel
         public int? Price { get; set; }
 
         public string Photo { get; set; }
+
+        public string Photo2 { get; set; }
+
+        public string Photo3 { get; set; }
 
         public string Details { get; set; }
 

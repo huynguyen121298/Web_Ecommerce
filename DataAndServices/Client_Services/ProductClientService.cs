@@ -29,18 +29,20 @@ namespace DataAndServices.Client_Services
                         join product in productCollection.AsQueryable() on dis._id equals product._id
 
                         select new Dis_Product()
-                               {
-                                   _id=dis._id,
-                                   Name = product.Name,
-                                   Price = product.Price,
-                                   Details = product.Details,
-                                   Photo = product.Photo,
-                                   Id_Item = product.Id_Item,
-                                   Content = dis.Content,
-                                   Price_Dis = dis.Price_Dis,
-                                   Start = dis.Start,
-                                   End = dis.End
-                               }).Where(s => s.Name.StartsWith(name)).ToList();         
+                        {
+                            _id = dis._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,
+                            Content = dis.Content,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End
+                        }).Where(s => s.Name.StartsWith(name)).ToList();
             return Info;
         }
 
@@ -52,18 +54,20 @@ namespace DataAndServices.Client_Services
                         join product in productCollection.AsQueryable() on dis._id equals product._id
 
                         select new Dis_Product()
-                              {
-                                  _id =dis._id,
-                                  Name = product.Name,
-                                  Price = product.Price,
-                                  Details = product.Details,
-                                  Photo = product.Photo,
-                                  Id_Item = product.Id_Item,
-                                  Content = dis.Content,
-                                  Price_Dis = dis.Price_Dis,
-                                  Start = dis.Start,
-                                  End = dis.End
-                              });
+                        {
+                            _id = dis._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,
+                            Content = dis.Content,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End
+                        });
             List<Dis_Product> dis_Product = new List<Dis_Product>();
             List<Dis_Product> dis_Product2 = new List<Dis_Product>();
             Dis_Product dis_Product3 = new Dis_Product();
@@ -120,7 +124,7 @@ namespace DataAndServices.Client_Services
 
         public int GetSoLuong(string id)
         {
-            var temp =  _dbItem.Find(s => s._id == id).FirstOrDefault();
+            var temp = _dbItem.Find(s => s._id == id).FirstOrDefault();
             if (temp != null)
             {
                 return (int)temp.Quantity;

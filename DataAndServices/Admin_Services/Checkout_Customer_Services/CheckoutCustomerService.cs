@@ -1,5 +1,7 @@
-﻿using DataAndServices.Data;
+﻿using AutoMapper;
+using DataAndServices.Data;
 using DataAndServices.DataModel;
+using Model.DTO.DTO_Ad;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,13 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
     public class CheckoutCustomerService : ICheckoutCustomerService
     {
         private readonly IMongoCollection<CheckoutCustomerOrder> _db;
+        private readonly IMapper _mapper;
 
-        public CheckoutCustomerService(DataContext db)
+        public CheckoutCustomerService(DataContext db,
+            IMapper mapper)
         {
             _db = db.GetCheckoutCustomerOrderCollection();
+            _mapper = mapper;
         }
         public bool DeleteAccount(string id)
         {
@@ -41,6 +46,40 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         
         {
             return  _db.Find(s=>true).ToList();
+        }
+
+        public IEnumerable<DTO_Checkout_Customer> GetMonthlyRevenue(int month)
+        {
+           
+            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao.Month == month).ToList();
+
+            var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
+
+            var monthTotal = dtocheckoutCustomers.Select(s=>s.TongTien).Sum();
+
+            foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
+            {
+                dtocheckoutCustomer.TongTienThang = monthTotal;
+            }
+
+            return dtocheckoutCustomers;
+        }
+
+        public IEnumerable<DTO_Checkout_Customer> GetYearRevenue(int year)
+        {
+
+            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao.Year == year).ToList();
+
+            var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
+
+            var monthTotal = dtocheckoutCustomers.Select(s => s.TongTien).Sum();
+
+            foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
+            {
+                dtocheckoutCustomer.TongTienNam = monthTotal;
+            }
+
+            return dtocheckoutCustomers;
         }
 
         public async Task<List<CheckoutCustomerOrder>> GetListAccountById(string id)

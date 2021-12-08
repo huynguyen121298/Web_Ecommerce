@@ -38,5 +38,9 @@ namespace Model.DTO.DTO_Ad
         public double? TongTien { get; set; }
 
         public string TrangThai { get; set; }
+
+        public double? TongTienNam { get; set; }
+
+        public double? TongTienThang { get; set; }
     }
 }

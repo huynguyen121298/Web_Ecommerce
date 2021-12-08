@@ -60,6 +60,14 @@
             <br />
             <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh" />
 
+            input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
+            <br />
+            <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh2" />
+
+            input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
+            <br />
+            <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh3" />
+
             <p style="color:red">@ViewData["ErrorMessage"]</p>
         </div>
         <script type="text/javascript">
@@ -71,6 +79,26 @@
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $("#chonAnh").attr("src", e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function upAnh2(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#chonAnh2").attr("src", e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function upAnh3(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#chonAnh3").attr("src", e.target.result);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }

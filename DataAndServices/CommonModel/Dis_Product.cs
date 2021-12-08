@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Collections.Generic;
 
 namespace DataAndServices.CommonModel
 
@@ -25,6 +26,10 @@ namespace DataAndServices.CommonModel
         public Nullable<int> Price { get; set; }
 
         public string Photo { get; set; }
+
+        public string Photo2 { get; set; }
+
+        public string Photo3 { get; set; }
 
         public string Details { get; set; }
 

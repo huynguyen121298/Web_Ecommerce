@@ -44,6 +44,24 @@ namespace H_Shop.NetCore.Controllers.API_Admin
             
         }
 
+        [HttpGet]
+        [Route("GetMonthlyRevenue/{month}")]
+        public IActionResult GetMonthlyRevenue(int month)
+        {
+            var listMonthlyRevenue = _checkoutCustomerService.GetMonthlyRevenue(month);
+            return Ok(listMonthlyRevenue);
+
+        }
+
+        [HttpGet]
+        [Route("GetYearRevenue/{year}")]
+        public IActionResult GetYearRevenue(int year)
+        {
+            var listMonthlyRevenue = _checkoutCustomerService.GetMonthlyRevenue(year);
+            return Ok(listMonthlyRevenue);
+
+        }
+
         //[HttpGet]
         //[Route("GetAllAccounts2")]
         //public JsonResult<List<DTO_Account_Role>> GetAllAccounts2()

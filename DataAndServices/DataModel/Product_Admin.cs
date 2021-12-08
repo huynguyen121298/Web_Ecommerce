@@ -1,13 +1,14 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace DataAndServices.DataModel
 {
     public class Product_Admin
     {
-        public Product_Admin()
-        {
-            Photo = "~/images_product/ap.jpg";
-        }
+        //public Product_Admin()
+        //{
+        //    Photo = "~/images_product/ap.jpg";
+        //}
         
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
@@ -18,6 +19,11 @@ namespace DataAndServices.DataModel
         public int? Price { get; set; }
 
         public string Photo { get; set; }
+
+        public string Photo2 { get; set; }
+
+        public string Photo3 { get; set; }
+
 
         public string Details { get; set; }
 

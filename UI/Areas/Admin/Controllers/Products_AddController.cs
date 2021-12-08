@@ -82,10 +82,11 @@ namespace UI.Areas.Admin.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Create(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload)
+        public ActionResult Create(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload,
+            HttpPostedFileBase ImageUpload2, HttpPostedFileBase ImageUpload3)
         {
 
-            string Id = dTO_Product_Item_Type.Photo;
+            //string Id = dTO_Product_Item_Type.Photo;
             //DTO_Product_Item_Type dTO_Product_Item_Type = new DTO_Product_Item_Type();
             var stt = Request.Form["stt"];
             if (stt == "Đồng hồ")
@@ -141,16 +142,37 @@ namespace UI.Areas.Admin.Controllers
                     string extension = Path.GetExtension(ImageUpload.FileName);
                     fileName = fileName + extension;
                     dTO_Product_Item_Type.Photo = "~/images_product/" + fileName;
-                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
-                    HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/CreateProduct/", dTO_Product_Item_Type);
-                    responseUser.EnsureSuccessStatusCode();
+                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));                   
                 }
-                else
+
+                if (ImageUpload2 != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    fileName = fileName + extension;
+                    dTO_Product_Item_Type.Photo2 = "~/images_product/" + fileName;
+                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+                    
+                }
+
+                if (ImageUpload3 != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    fileName = fileName + extension;
+                    dTO_Product_Item_Type.Photo3 = "~/images_product/" + fileName;
+                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+                    
+                }
+
+                if (ImageUpload == null && ImageUpload2 == null  && ImageUpload3 ==null)
                 {
                     ViewData["ErrorMessage"] = "Bạn chưa chọn hình ảnh cho sản phẩm";
                     return View(dTO_Product_Item_Type);
                 }
 
+                HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/CreateProduct/", dTO_Product_Item_Type);
+                responseUser.EnsureSuccessStatusCode();              
                 return RedirectToAction("Index");
 
             }
@@ -206,7 +228,8 @@ namespace UI.Areas.Admin.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Edit(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload)
+        public ActionResult Edit(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload,
+            HttpPostedFileBase ImageUpload2, HttpPostedFileBase ImageUpload3)
         {
             var stt = Request.Form["stt"];
             if (stt == "Đồng hồ")
@@ -256,20 +279,35 @@ namespace UI.Areas.Admin.Controllers
 
                     if (ImageUpload != null)
                     {
-
                         string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
                         string extension = Path.GetExtension(ImageUpload.FileName);
                         fileName = fileName + extension;
-                        ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
                         dTO_Product_Item_Type.Photo = "~/images_product/" + fileName;
-                        HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/UpdateProduct/", dTO_Product_Item_Type);
-                        responseUser.EnsureSuccessStatusCode();
+                        ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
                     }
-                    else
+
+                    if (ImageUpload2 != null)
                     {
-                        HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/UpdateProduct/", dTO_Product_Item_Type);
-                        responseUser.EnsureSuccessStatusCode();
+                        string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                        string extension = Path.GetExtension(ImageUpload.FileName);
+                        fileName = fileName + extension;
+                        dTO_Product_Item_Type.Photo2 = "~/images_product/" + fileName;
+                        ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+
                     }
+
+                    if (ImageUpload3 != null)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                        string extension = Path.GetExtension(ImageUpload.FileName);
+                        fileName = fileName + extension;
+                        dTO_Product_Item_Type.Photo3 = "~/images_product/" + fileName;
+                        ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+
+                    }
+
+                    HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/CreateProduct/", dTO_Product_Item_Type);
+                    responseUser.EnsureSuccessStatusCode();                
                 }
                 return RedirectToAction("Index");
             }

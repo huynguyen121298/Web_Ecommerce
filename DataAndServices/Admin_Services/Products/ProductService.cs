@@ -46,6 +46,8 @@ namespace DataAndServices.Admin_Services.Products
                 products.Id_Item = product_Item_Type.Id_Item;
                 products.Name = product_Item_Type.Name;
                 products.Photo = product_Item_Type.Photo;
+                products.Photo2 = product_Item_Type.Photo2;
+                products.Photo3 = product_Item_Type.Photo3;
                 products.Price = product_Item_Type.Price;
                 products.Details = product_Item_Type.Details;              
                 _db.InsertOne(products);
@@ -104,6 +106,8 @@ namespace DataAndServices.Admin_Services.Products
                                   Price = product.Price,
                                   Details = product.Details,
                                   Photo = product.Photo,
+                                  Photo2 = product.Photo2,
+                                  Photo3 = product.Photo3,
                                   Id_Item = product.Id_Item,
                                   Quantity = item.Quantity
 
@@ -144,6 +148,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price = product.Price,
                             Details = product.Details,
                             Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
@@ -174,6 +180,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price = product.Price,
                             Details = product.Details,
                             Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
@@ -198,6 +206,8 @@ namespace DataAndServices.Admin_Services.Products
                            Price = product.Price,
                            Details = product.Details,
                            Photo = product.Photo,
+                           Photo2 = product.Photo2,
+                           Photo3 = product.Photo3,
                            Id_Item = product.Id_Item,
                            Quantity = item.Quantity
 
@@ -234,6 +244,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price = product.Price,
                             Details = product.Details,
                             Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Quantity = item.Quantity
                         }).FirstOrDefault();
@@ -256,6 +268,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price = product.Price,
                             Details = product.Details,
                             Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Quantity = item.Quantity
                         });
@@ -278,6 +292,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price = product.Price,
                             Details = product.Details,
                             Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Type_Product = item.Type_Product
                         }).ToList();
@@ -306,6 +322,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price = product.Price,
                             Details = product.Details,
                             Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Quantity = item.Quantity
                         });
@@ -327,6 +345,8 @@ namespace DataAndServices.Admin_Services.Products
                                            Price = product.Price,
                                            Details = product.Details,
                                            Photo = product.Photo,
+                                           Photo2 = product.Photo2,
+                                           Photo3 = product.Photo3,
                                            Id_Item = product.Id_Item,
                                            Content = dis.Content,
                                            Price_Dis = dis.Price_Dis,
@@ -369,6 +389,8 @@ namespace DataAndServices.Admin_Services.Products
                 var eqfilter = Builders<Product_Admin>.Filter.Where(s => s._id == custom._id);
                 var update = Builders<Product_Admin>.Update.Set(s => s.Name, custom.Name)
                     .Set(s => s.Photo, custom.Photo)
+                    .Set(s => s.Photo2, custom.Photo2)
+                    .Set(s => s.Photo3, custom.Photo3)
                     .Set(s => s.Details, custom.Details)
                     .Set(s => s.Price, custom.Price)
                     .Set(s => s._id, custom._id)

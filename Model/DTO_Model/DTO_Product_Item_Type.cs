@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Model.DTO_Model
 {
     public class DTO_Product_Item_Type
     {
-        public DTO_Product_Item_Type()
-        {
-            Photo = "~/images_product/gallery-add-512.png";
-        }
+        //public DTO_Product_Item_Type()
+        //{
+        //    Photo = "~/images_product/gallery-add-512.png";
+        //}
 
         [Required(ErrorMessage = "Yêu cầu nhập mã sản phẩm")]
         public string _id { get; set; }
@@ -30,8 +31,12 @@ namespace Model.DTO_Model
 
         [Required(ErrorMessage = "Yêu cầu nhập hình ảnh")]
         [StringLength(50)]
-        public string Photo { get; set; }       
-        
+        public string Photo { get; set; }
+
+        public string Photo2 { get; set; }
+
+        public string Photo3 { get; set; }
+
         public string Details { get; set; }
     }
 }
