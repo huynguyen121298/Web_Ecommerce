@@ -1,0 +1,59 @@
+/* 1 */
+{
+    "_id" : ObjectId("6120eda861575c1fa6c8c376"),
+    "FirstName" : "Nguyễn Tuấn Huy",
+    "LastName" : "Nguyễn",
+    "Email" : "nguyentuanhuy123@gmail.com",
+    "SDT" : 98987,
+    "DiaChi" : "35 nam cao",
+    "City" : "Quảng Ngãi",
+    "Zipcode" : "GIAM20",
+    "NgayTao" : null,
+    "GiamGia" : null,
+    "TongTien" : 44160000.0,
+    "TrangThai" : "Hoàn thành",
+    "ProductOrder" : [ 
+        {
+            "Id_SanPham" : "6118ec09b871287bf53711d0",
+            "TenSP" : "Ghế mát xa",
+            "SoLuong" : 2,
+            "Gia" : 55200000.0
+        }
+    ]
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("6120f11461575c1fa6c8c378"),
+    "FirstName" : "Huy",
+    "LastName" : "Nguyen",
+    "Email" : "nguyentuanhuy@gmail.com",
+    "SDT" : 98987,
+    "DiaChi" : "35 nam cao",
+    "City" : "Hà Nội",
+    "Zipcode" : "",
+    "NgayTao" : ISODate("2021-08-21T12:26:29.979Z"),
+    "GiamGia" : "%",
+    "TongTien" : 49180000.0,
+    "TrangThai" : "Đang chờ",
+    "ProductOrder" : [ 
+        {
+            "Id_SanPham" : "6118ed0fb871287bf53711d4",
+            "TenSP" : "Macbook pro 2020",
+            "SoLuong" : 1,
+            "Gia" : 35000000.0
+        }, 
+        {
+            "Id_SanPham" : "6118ece3b871287bf53711d3",
+            "TenSP" : "Lều trại du lịch",
+            "SoLuong" : 2,
+            "Gia" : 13600000.0
+        }, 
+        {
+            "Id_SanPham" : "6118ec74b871287bf53711d1",
+            "TenSP" : "Ví da nam",
+            "SoLuong" : 2,
+            "Gia" : 580000.0
+        }
+    ]
+}

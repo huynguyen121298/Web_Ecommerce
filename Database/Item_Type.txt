@@ -1,0 +1,69 @@
+/* 1 */
+{
+    "_id" : ObjectId("60a5d8c6afa488242099925e"),
+    "Id_Item" : 1.0,
+    "Type_Product" : "Đồng hồ"
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("60a5d8ddafa488242099925f"),
+    "Id_Item" : 2.0,
+    "Type_Product" : "Máy ảnh và máy quay phim"
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("60a5d8efafa4882420999260"),
+    "Id_Item" : 3.0,
+    "Type_Product" : "Máy tính và Laptop"
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("60a5d8f9afa4882420999261"),
+    "Id_Item" : 4.0,
+    "Type_Product" : "Mẹ và bé"
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("60a5d909afa4882420999262"),
+    "Id_Item" : 5.0,
+    "Type_Product" : "Sức khỏe và săc đẹp"
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("60a5d917afa4882420999263"),
+    "Id_Item" : 6.0,
+    "Type_Product" : "Thể thao và du lịch"
+}
+
+/* 7 */
+{
+    "_id" : ObjectId("60a5d922afa4882420999264"),
+    "Id_Item" : 7.0,
+    "Type_Product" : "Thiết bị gia dụng"
+}
+
+/* 8 */
+{
+    "_id" : ObjectId("60a5d930afa4882420999265"),
+    "Id_Item" : 8.0,
+    "Type_Product" : "Thời trang nam"
+}
+
+/* 9 */
+{
+    "_id" : ObjectId("60a5d938afa4882420999266"),
+    "Id_Item" : 9.0,
+    "Type_Product" : "Thời trang nữ"
+}
+
+/* 10 */
+{
+    "_id" : ObjectId("60a5d942afa4882420999267"),
+    "Id_Item" : 10.0,
+    "Type_Product" : "Điện thoại"
+}

@@ -1,0 +1,119 @@
+/* 1 */
+{
+    "_id" : ObjectId("6110ac23a64ab0922fa0b725"),
+    "Name" : "Sam sung Note 21",
+    "Price" : 2600000,
+    "Photo" : "~/images_product/samsungs21.jpg",
+    "Details" : "Sơ mi nam",
+    "Id_Item" : 10
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("6110ac4ca64ab0922fa0b726"),
+    "Name" : "Áo thun nữ",
+    "Price" : 150000,
+    "Photo" : "~/images_product/aothunnu.jpg",
+    "Details" : "&Aacute;o thun nữ",
+    "Id_Item" : 9
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("6110ad02a64ab0922fa0b727"),
+    "Name" : "Balo",
+    "Price" : 1200000,
+    "Photo" : "~/images_product/balo.jpg",
+    "Details" : "Balo Nam",
+    "Id_Item" : 8
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("6110ad29a64ab0922fa0b728"),
+    "Name" : "Bếp điện 04",
+    "Price" : 1250000,
+    "Photo" : "~/images_product/bep2.jpg",
+    "Details" : "bep dien 2",
+    "Id_Item" : 7
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("6118ec09b871287bf53711d0"),
+    "Name" : "Ghế mát xa",
+    "Price" : 34500000,
+    "Photo" : "~/images_product/ghematxa.jpg",
+    "Details" : "Ghế m&aacute;t xa vip",
+    "Id_Item" : 5
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("6118ec74b871287bf53711d1"),
+    "Name" : "Ví da nam",
+    "Price" : 290000,
+    "Photo" : "~/images_product/vidanam.jpg",
+    "Details" : "V&iacute; da nam",
+    "Id_Item" : 2
+}
+
+/* 7 */
+{
+    "_id" : ObjectId("6118ecb6b871287bf53711d2"),
+    "Name" : "iphone Xs Max",
+    "Price" : 10500000,
+    "Photo" : "~/images_product/download (1).jpg",
+    "Details" : "Iphone XS max vip pro",
+    "Id_Item" : 10
+}
+
+/* 8 */
+{
+    "_id" : ObjectId("6118ece3b871287bf53711d3"),
+    "Name" : "Lều trại du lịch",
+    "Price" : 3400000,
+    "Photo" : "~/images_product/dulich1.jpg",
+    "Details" : "Lều trại&nbsp;",
+    "Id_Item" : 6
+}
+
+/* 9 */
+{
+    "_id" : ObjectId("6118ed0fb871287bf53711d4"),
+    "Name" : "Macbook pro 2020",
+    "Price" : 35000000,
+    "Photo" : "~/images_product/macbook.jpg",
+    "Details" : "Macbook đẳng cấp 2020",
+    "Id_Item" : 3
+}
+
+/* 10 */
+{
+    "_id" : ObjectId("6118ed31b871287bf53711d5"),
+    "Name" : "Dép quai ngang",
+    "Price" : 150000,
+    "Photo" : "~/images_product/depquaingang.jpg",
+    "Details" : "D&eacute;p nam",
+    "Id_Item" : 8
+}
+
+/* 11 */
+{
+    "_id" : ObjectId("611c873d08401951b65cc987"),
+    "Name" : "Iphone 12 Pro Max",
+    "Price" : 28500000,
+    "Photo" : "~/images_product/ip12.jpg",
+    "Details" : "Iphone ngon ngon ngon",
+    "Id_Item" : 10
+}
+
+/* 12 */
+{
+    "_id" : ObjectId("611c878008401951b65cc988"),
+    "Name" : "Táo",
+    "Price" : 120000,
+    "Photo" : "~/images_product/hoaqua.jpg",
+    "Details" : "T&aacute;o ngon ngon",
+    "Id_Item" : 5
+}

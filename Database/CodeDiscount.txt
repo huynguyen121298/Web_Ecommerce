@@ -1,0 +1,31 @@
+/* 1 */
+{
+    "_id" : ObjectId("60a5dd2bafa48824209992b8"),
+    "Zipcode" : "GIAM10",
+    "Discount" : 0.1,
+    "Content" : "10%"
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("60a5dd33afa48824209992b9"),
+    "Zipcode" : "GIAM20",
+    "Discount" : 0.2,
+    "Content" : "20%"
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("60a5dd45afa48824209992ba"),
+    "Zipcode" : "GIAM15",
+    "Discount" : 0.15,
+    "Content" : "15%"
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("60a5dd4dafa48824209992bb"),
+    "Zipcode" : "GIAM5",
+    "Discount" : 0.05,
+    "Content" : "5%"
+}
