@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "051c4c9a-bbe7-4907-808c-8b80c9f88c89": {
+      "ProjectGuid": "051c4c9a-bbe7-4907-808c-8b80c9f88c89",
+      "DisplayName": "DataAndServices",
+      "ColorIndex": 0
+    },
+    "5edf761e-ebe9-4449-a574-403eb8910789": {
+      "ProjectGuid": "5edf761e-ebe9-4449-a574-403eb8910789",
+      "DisplayName": "H_Shop.NetCore",
+      "ColorIndex": 1
+    },
+    "4f6d3d30-b08d-45bb-8be9-f845ac69e56c": {
+      "ProjectGuid": "4f6d3d30-b08d-45bb-8be9-f845ac69e56c",
+      "DisplayName": "UI",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}
