@@ -4,11 +4,11 @@
     "FirstName" : "Nguyễn Tuấn Huy",
     "LastName" : "Nguyễn",
     "Email" : "nguyentuanhuy123@gmail.com",
-    "SDT" : 98987,
+    "SDT" : 98987.0,
     "DiaChi" : "35 nam cao",
     "City" : "Quảng Ngãi",
     "Zipcode" : "GIAM20",
-    "NgayTao" : null,
+    "NgayTao" : ISODate("2021-08-21T12:26:29.979Z"),
     "GiamGia" : null,
     "TongTien" : 44160000.0,
     "TrangThai" : "Hoàn thành",
@@ -16,7 +16,7 @@
         {
             "Id_SanPham" : "6118ec09b871287bf53711d0",
             "TenSP" : "Ghế mát xa",
-            "SoLuong" : 2,
+            "SoLuong" : 2.0,
             "Gia" : 55200000.0
         }
     ]

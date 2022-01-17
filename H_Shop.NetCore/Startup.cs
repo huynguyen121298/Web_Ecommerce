@@ -1,3 +1,4 @@
+using AutoMapper;
 using DataAndServices.Admin_Services.AccountService;
 using DataAndServices.Admin_Services.Admin_Acc_Services;
 using DataAndServices.Admin_Services.Checkout_Customer_Services;
@@ -6,6 +7,7 @@ using DataAndServices.Admin_Services.Products;
 using DataAndServices.Admin_Services.UserServices;
 using DataAndServices.Client_Services;
 using DataAndServices.Data;
+using DataAndServices.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,9 +31,14 @@ namespace H_Shop.NetCore
         {
             //services.AddDbContext<OnlineShopEntities>(options =>
             //    options.UseS(Configuration.GetConnectionString("OnlineShop")));
-            
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
 
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddControllers();
             services.AddScoped(p => new DataContext(Configuration["Data:ConnectionString"], Configuration["Data:DbName"]));
             services.AddSwaggerGen(c =>

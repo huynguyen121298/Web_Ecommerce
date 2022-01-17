@@ -166,6 +166,7 @@
     <Compile Include="DataModel\User_Acc.cs" />
     <Compile Include="DataModel\User_Acc_Client.cs" />
     <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Mapper\MappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
