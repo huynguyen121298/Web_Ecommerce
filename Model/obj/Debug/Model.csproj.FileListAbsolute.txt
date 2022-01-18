@@ -87,3 +87,15 @@ C:\Users\Huy\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.CoreCom
 C:\Users\Huy\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.CopyComplete
 C:\Users\Huy\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.dll
 C:\Users\Huy\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.pdb
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\Model.dll.config
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\Model.dll
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\Model.pdb
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.dll
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.xml
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.AssemblyReference.cache
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.CopyComplete
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.dll
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.pdb
