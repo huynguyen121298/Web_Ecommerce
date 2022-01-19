@@ -179,6 +179,8 @@ namespace UI.Controllers
                     Price = proItem.Price,
                     Details = proItem.Details,
                     Photo = proItem.Photo,
+                    Photo2 = proItem.Photo2,
+                    Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
                     Quantity = 1
                 });
@@ -206,6 +208,8 @@ namespace UI.Controllers
                         Price = proItem.Price,
                         Details = proItem.Details,
                         Photo = proItem.Photo,
+                        Photo2 = proItem.Photo2,
+                        Photo3 = proItem.Photo3,
                         Id_Item = proItem.Id_Item,
                         Quantity = 1
                     });
@@ -374,6 +378,8 @@ namespace UI.Controllers
                         Price = proItem.Price,
                         Details = proItem.Details,
                         Photo = proItem.Photo,
+                        Photo2 = proItem.Photo2,
+                        Photo3 = proItem.Photo3,
                         Id_Item = proItem.Id_Item,
                     });
                     return 2;
@@ -404,6 +410,8 @@ namespace UI.Controllers
                     Price = proItem.Price,
                     Details = proItem.Details,
                     Photo = proItem.Photo,
+                    Photo2 = proItem.Photo2,
+                    Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
                 });
                 Session["cart"] = li;

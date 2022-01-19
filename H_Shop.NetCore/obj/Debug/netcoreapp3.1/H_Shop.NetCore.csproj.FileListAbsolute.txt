@@ -444,11 +444,12 @@ C:\Users\Huy\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\obj\Debug\netcoreapp3
 C:\Users\Huy\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\obj\Debug\netcoreapp3.1\H_Shop.NetCore.pdb
 C:\Users\Huy\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\obj\Debug\netcoreapp3.1\H_Shop.NetCore.genruntimeconfig.cache
 C:\Users\Huy\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\obj\Debug\netcoreapp3.1\H_Shop.NetCore.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.pdb
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\snappy32.dll
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\snappy64.dll
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\libzstd.dll
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.StaticWebAssets.xml
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.exe
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\mongocrypt.dll
@@ -456,7 +457,6 @@ C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreap
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.runtimeconfig.json
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.runtimeconfig.dev.json
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.dll
-C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\H_Shop.NetCore.pdb
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\engla\Documents\GitHub\Web_Ecommerce\H_Shop.NetCore\bin\Debug\netcoreapp3.1\DnsClient.dll
