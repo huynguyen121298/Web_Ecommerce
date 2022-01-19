@@ -69,7 +69,7 @@ namespace UI.Areas.Admin.Controllers
         }
 
         public ActionResult Create()
-        {
+         {
             DTO_Product_Item_Type pro = new DTO_Product_Item_Type();
 
             return View(pro);
