@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAndServices.DataModel
 {
@@ -13,6 +15,10 @@ namespace DataAndServices.DataModel
         public int? SoLuong { get; set; }
 
         public double? Gia { get; set; }
+
+        [BsonId]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string AccountId { get; set; }
 
     }
 }

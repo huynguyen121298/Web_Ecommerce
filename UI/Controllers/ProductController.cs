@@ -1,5 +1,4 @@
-﻿using Model.DTO.DTO_Ad;
-using Model.DTO.DTO_Client;
+﻿using Model.DTO.DTO_Client;
 using Model.DTO_Model;
 using PagedList;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace UI.Controllers
 
         public ActionResult TypeProduct()
         {
-            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByType");
+            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByTypeByEndUser");
             responseMessage.EnsureSuccessStatusCode();
             List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
             var view = dTO_Accounts.ToPagedList(1, 50);
@@ -73,7 +72,7 @@ namespace UI.Controllers
             }
             catch
             {
-                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_Discount");
+                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_DiscountByEndUser");
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
                 return View(dTO_Accounts.ToPagedList(pageNumber, pageSize));
@@ -86,7 +85,7 @@ namespace UI.Controllers
             int pageSize = 25;
             int pageNumber = (page ?? 1);
 
-            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_Discount");
+            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_DiscountByEndUser");
             responseMessage.EnsureSuccessStatusCode();
             List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
 
@@ -100,7 +99,7 @@ namespace UI.Controllers
 
             HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByName/" + searchName);
             responseMessage2.EnsureSuccessStatusCode();
-            List<DTO_Product_Client> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Product_Client>>().Result;
+            List<DTO_Product> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Product>>().Result;
 
             return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
         }
@@ -361,7 +360,8 @@ namespace UI.Controllers
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
-                    Quantity = 1
+                    Quantity = 1,
+                    AccountId = proItem.AccountId
                 });
 
             }
@@ -412,7 +412,8 @@ namespace UI.Controllers
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
-                    Quantity = 1
+                    Quantity = 1,
+                    AccountId = proItem.AccountId
                 };
                 Session["cart__"] = proItem;
             }
@@ -433,7 +434,8 @@ namespace UI.Controllers
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
-                    Quantity = 1
+                    Quantity = 1,
+                    AccountId = proItem.AccountId
                 };
                 Session["cart__"] = proItem;
             }
@@ -497,6 +499,7 @@ namespace UI.Controllers
                         Photo2 = proItem.Photo2,
                         Photo3=proItem.Photo3,
                         Id_Item = proItem.Id_Item,
+                        AccountId = proItem.AccountId
                     });
                     return 2;
                 }
@@ -529,6 +532,7 @@ namespace UI.Controllers
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
+                    AccountId = proItem.AccountId
                 });
                 Session["cart"] = li;
                 return 2;

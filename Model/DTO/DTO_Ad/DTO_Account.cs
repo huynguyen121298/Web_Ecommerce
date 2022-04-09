@@ -31,6 +31,8 @@ namespace Model.DTO.DTO_Ad
         [System.ComponentModel.DataAnnotations.Compare("Password")]
         public string ConfirmPassword { get; set; }
 
+        public string AccountId { get; set; }
+
         public string FullName()
         {
             return this.FirstName + " " + this.LastName;

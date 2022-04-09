@@ -16,6 +16,8 @@ namespace DataAndServices.DataModel
 
         public string Password { get; set; }
 
+        public string MerchantName { get; set; }
+
         public int? RoleId { get; set; }
     }
 }

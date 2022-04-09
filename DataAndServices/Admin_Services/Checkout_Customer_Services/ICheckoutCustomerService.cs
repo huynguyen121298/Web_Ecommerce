@@ -7,7 +7,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 {
     public interface ICheckoutCustomerService
     {
-        List<CheckoutCustomerOrder> GetAllAccounts();
+        List<CheckoutCustomerOrder> GetAllAccounts(string userLogin);
 
         Task<CheckoutCustomerOrder> GetAccountById(string id);
 

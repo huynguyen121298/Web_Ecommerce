@@ -41,6 +41,32 @@ namespace H_Shop.NetCore.Controllers.API_Client
             return Ok(proByName);
         }
 
+        /// <summary>
+        /// Get merchant by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetMerchantByName/{merchantName}")]
+        public IActionResult GetMerchantByName(string merchantName)
+        {
+            var proByName = _productClientService.GetAllProductByName(merchantName);
+            return Ok(proByName);
+        }
+
+        /// <summary>
+        /// Get merchant by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetProductByMerchant/{merchantId}")]
+        public IActionResult GetProductByMerchant(string merchantId)
+        {
+            var proByName = _productClientService.GetProductByMerchant(merchantId);
+            return Ok(proByName);
+        }
+
         [HttpGet]
         [Route("GetAllProductItemByPageList")]
         public IActionResult GetAllProductItemByPageList()
@@ -53,7 +79,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
         [Route("GetAllProductItem")]
         public async Task<IActionResult> GetAllProductItem()
         {
-            var listProItem= await _productAdminService.GetAllProductItem();
+            var listProItem= await _productAdminService.GetAllProductItemByEndUser();
             return Ok(listProItem);
         }
 

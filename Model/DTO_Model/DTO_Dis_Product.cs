@@ -30,6 +30,8 @@ namespace Model.DTO_Model
 
         public string Details { get; set; }
 
+        public string AccountId { get; set; }
+
         public int Id_Item { get; set; }
     }
 }

@@ -37,6 +37,8 @@ namespace Model.DTO_Model
 
         public string Photo3 { get; set; }
 
+        public string AccountId { get; set; }
+
         public string Details { get; set; }
     }
 }

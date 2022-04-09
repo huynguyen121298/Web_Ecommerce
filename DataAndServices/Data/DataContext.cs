@@ -17,13 +17,13 @@ namespace DataAndServices.Data
         {
             return Database.GetCollection<Account>("Account");
         }
-        public IMongoCollection<Product_Admin> GetProductAdminCollection()
+        public IMongoCollection<Product> GetProductAdminCollection()
         {
-            return Database.GetCollection<Product_Admin>("Product");
+            return Database.GetCollection<Product>("Product");
         }
-        public IMongoCollection<Product_Client> GetProductClientCollection()
+        public IMongoCollection<Product> GetProductClientCollection()
         {
-            return Database.GetCollection<Product_Client>("Product");
+            return Database.GetCollection<Product>("Product");
         }
         public IMongoCollection<Checkout_Customer> GetCheckout_CustomerCollection()
         {

@@ -2,7 +2,7 @@
 
 namespace Model.DTO.DTO_Client
 {
-    public class DTO_Product_Client
+    public class DTO_Product
     {
         public string _id { get; set; }
 

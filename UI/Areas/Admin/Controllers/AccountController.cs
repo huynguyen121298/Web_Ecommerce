@@ -141,6 +141,7 @@ namespace UI.Areas.Admin.Controllers
                 var userSession = new DTO_Account();
                 userSession.Email = resultLogin.Email;
                 userSession.RoleId = resultLogin.RoleId;
+                userSession.AccountId = resultLogin.AccountId;  
                 Session.Add(CommonConstants.ACCOUNT_SESSION, userSession);
                 return View("~/Areas/Admin/Views/Admin/Index.cshtml");
             }

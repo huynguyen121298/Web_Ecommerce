@@ -3,6 +3,7 @@ using Model.DTO_Model;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
+using UI.Areas.Admin.Common;
 using UI.Service;
 
 namespace UI.Areas.Admin.Controllers
@@ -24,7 +25,9 @@ namespace UI.Areas.Admin.Controllers
             }
             else
             {
-                HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/getallcustomer");
+                DTO_Account dTO_Account = new DTO_Account();
+                dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+                HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/getallcustomer/"+dTO_Account.AccountId);
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTOCheckoutCustomerOrder> DTO_Checkout_Customers = responseMessage.Content.ReadAsAsync<List<DTOCheckoutCustomerOrder>>().Result;
                 return View(DTO_Checkout_Customers);

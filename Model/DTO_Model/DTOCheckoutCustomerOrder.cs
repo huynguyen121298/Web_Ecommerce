@@ -29,6 +29,10 @@ namespace Model.DTO_Model
 
         public double? TongTien { get; set; }
 
+        public double ? TongTienThang { get; set; }
+
+        public double? TongTienNam { get; set; }
+
         public string TrangThai { get; set; }
 
         public IList<DTO_Checkout_Order> ProductOrder { get; set; }

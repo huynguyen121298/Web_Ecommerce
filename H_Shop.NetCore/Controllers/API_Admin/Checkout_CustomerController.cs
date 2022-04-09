@@ -35,10 +35,10 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         }
 
         [HttpGet]
-        [Route("GetAllCustomer")]
-        public IActionResult GetAllCustomer()
+        [Route("GetAllCustomer/{userLogin}")]
+        public IActionResult GetAllCustomer(string userLogin)
         {   
-             var listAccount=  _checkoutCustomerService.GetAllAccounts();
+             var listAccount=  _checkoutCustomerService.GetAllAccounts(userLogin);
             return Ok(listAccount);
 
             

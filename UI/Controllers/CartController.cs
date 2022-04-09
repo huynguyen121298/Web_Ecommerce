@@ -86,6 +86,7 @@ namespace UI.Controllers
                         check.Zipcode = fc["zip"];
                         check.GiamGia = price1 +"%";
                     }
+                    
 
                     check.ProductOrder = new List<DTO_Checkout_Order>();
 
@@ -97,6 +98,7 @@ namespace UI.Controllers
                         dTO_Checkout_Order.TenSP = item.Name;
                         dTO_Checkout_Order.SoLuong = (int)item.Quantity;
                         dTO_Checkout_Order.Gia = total;
+                        dTO_Checkout_Order.AccountId = item.AccountId;
                         check.ProductOrder.Add(dTO_Checkout_Order);
                     }
                     HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
@@ -182,7 +184,8 @@ namespace UI.Controllers
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
-                    Quantity = 1
+                    Quantity = 1,
+                    AccountId = proItem.AccountId
                 });
                 Session["cart_"] = li;
                 return Json(new { buy = li });
@@ -211,7 +214,8 @@ namespace UI.Controllers
                         Photo2 = proItem.Photo2,
                         Photo3 = proItem.Photo3,
                         Id_Item = proItem.Id_Item,
-                        Quantity = 1
+                        Quantity = 1,
+                        AccountId = proItem.AccountId
                     });
                     return Json(new { buy = li });
                 }
@@ -381,6 +385,7 @@ namespace UI.Controllers
                         Photo2 = proItem.Photo2,
                         Photo3 = proItem.Photo3,
                         Id_Item = proItem.Id_Item,
+                        AccountId = proItem.AccountId
                     });
                     return 2;
                 }
@@ -413,6 +418,7 @@ namespace UI.Controllers
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
                     Id_Item = proItem.Id_Item,
+                    AccountId = proItem.AccountId
                 });
                 Session["cart"] = li;
                 return 2;

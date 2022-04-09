@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Areas.Admin.Controllers
@@ -11,6 +12,7 @@ namespace UI.Areas.Admin.Controllers
         ServiceRepository service = new ServiceRepository();
 
         // GET: Admin/Admin_acc
+        [DeatAuthorize(Order = 2)]
         public ActionResult Index()
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/User_acc/getallaccounts");

@@ -1,12 +1,13 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace DataAndServices.DataModel
 {
-    public class Product_Client
+    public class Product
     {
         [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
 
         public string Name { get; set; }
@@ -22,5 +23,9 @@ namespace DataAndServices.DataModel
         public string Details { get; set; }
 
         public int Id_Item { get; set; }
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string AccountId { get; set; }
     }
 }

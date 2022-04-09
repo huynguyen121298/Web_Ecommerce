@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Areas.Admin.Controllers
@@ -15,6 +16,7 @@ namespace UI.Areas.Admin.Controllers
             return View();
         }
 
+        [DeatAuthorize(Order = 2)]
         public ActionResult GetAllFeedbacks()
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/Home/getallfeedback");

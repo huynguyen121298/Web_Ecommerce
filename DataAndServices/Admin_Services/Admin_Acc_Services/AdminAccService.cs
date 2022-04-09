@@ -85,7 +85,8 @@ namespace DataAndServices.Admin_Services.Admin_Acc_Services
                     .Set(s => s.FirstName, custom.FirstName)
                     .Set(s => s.LastName, custom.LastName)
                     .Set(s => s.Password, Encryptor.MD5Hash(custom.Password))
-                    .Set(s => s._id, custom._id);
+                    .Set(s => s._id, custom._id)
+                    .Set(s => s.MerchantName, custom.MerchantName);
 
                 var options = new UpdateOptions { IsUpsert = true };
 

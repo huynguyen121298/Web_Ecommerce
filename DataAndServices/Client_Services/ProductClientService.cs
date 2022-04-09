@@ -11,15 +11,17 @@ namespace DataAndServices.Client_Services
 {
     public class ProductClientService : IProductClientServices
     {
-        private readonly IMongoCollection<Product_Client> _db;
+        private readonly IMongoCollection<Product> _db;
         private readonly IMongoCollection<Item> _dbItem;
         private readonly IMongoCollection<Discount_Product> _dbDis;
+        private readonly IMongoCollection<Account> _dbAcc;
         private DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
         public ProductClientService(DataContext db)
         {
             _db = db.GetProductClientCollection();
             _dbItem = db.GetItemCollection();
             _dbDis = db.GetDiscountProductCollection();
+            _dbAcc = db.GetAccountCollection(); 
         }
         public List<Dis_Product> GetAllProductByName(string name)
         {
@@ -44,6 +46,12 @@ namespace DataAndServices.Client_Services
                             End = dis.End
                         }).Where(s => s.Name.StartsWith(name)).ToList();
             return Info;
+        }
+
+        public List<Account> GetMerchantByName(string merchantName)
+        {
+            var merchantByName = _dbAcc.Find(s=>s.MerchantName.StartsWith(merchantName)).ToList();            
+            return merchantByName;
         }
 
         public List<Dis_Product> GetAllProductByPrice(int? gia, int? gia_)
@@ -116,7 +124,7 @@ namespace DataAndServices.Client_Services
             return 0;
         }
 
-        public async Task<List<Product_Client>> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
             return await _db.Find(s => true).ToListAsync();
         }
@@ -130,6 +138,12 @@ namespace DataAndServices.Client_Services
                 return (int)temp.Quantity;
             }
             return 0;
+        }
+
+        public async Task<List<Product>> GetProductByMerchant(string merchantId)
+        {
+            var productsByMerchant = await _db.FindAsync(a => a.AccountId == merchantId);
+            return productsByMerchant.ToList(); 
         }
     }
 }

@@ -2,6 +2,7 @@
 using DataAndServices.Data;
 using DataAndServices.DataModel;
 using Model.DTO.DTO_Ad;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +43,10 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
         }
 
-        public List<CheckoutCustomerOrder> GetAllAccounts()
+        public List<CheckoutCustomerOrder> GetAllAccounts(string userLogin)
         
         {
-            return  _db.Find(s=>true).ToList();
+            return  _db.Find(s=>s.AccountId== userLogin).ToList();
         }
 
         public IEnumerable<DTO_Checkout_Customer> GetMonthlyRevenue(int month)

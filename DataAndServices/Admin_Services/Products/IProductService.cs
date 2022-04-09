@@ -7,13 +7,20 @@ namespace DataAndServices.Admin_Services.Products
 {
     public interface IProductService
     {
-        Task<List<Product_Admin>> GetAllProducts();
+        Task<List<Product>> GetAllProducts(string userLogin);
 
-        Task<List<Product_Item_Type>> GetAllProductItem();
+        Task<List<Product>> GetAllProductsByEndUser();
 
-        List<List<Dis_Product>> GetAllProductItem_Type();
+        Task<List<Product_Item_Type>> GetAllProductItem(string userLogin);
 
-        Task<Product_Admin> GetProductById(string id);
+
+        Task<List<Product_Item_Type>> GetAllProductItemByEndUser();
+
+        List<List<Dis_Product>> GetAllProductItem_Type(string userLogin);
+
+        List<List<Dis_Product>> GetAllProductItem_TypeByEndUser();
+
+        Task<Product> GetProductById(string id);
 
         List<Dis_Product> GetProductById_Item(int id);
 
@@ -34,6 +41,8 @@ namespace DataAndServices.Admin_Services.Products
         bool UpdateProduct(Product_Item_Type dTO_Account);
 
         Dis_Product GetProduct_DiscountById(string id);
+
+        List<Dis_Product> GetAllProduct_Discount(string userLogin);
 
         List<Dis_Product> GetAllProduct_Discount();
 

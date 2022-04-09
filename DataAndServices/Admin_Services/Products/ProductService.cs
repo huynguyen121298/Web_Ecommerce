@@ -12,7 +12,7 @@ namespace DataAndServices.Admin_Services.Products
 {
     public class ProductService : IProductService
     {
-        private readonly IMongoCollection<Product_Admin> _db;
+        private readonly IMongoCollection<Product> _db;
         private readonly IMongoCollection<Discount_Product> _dbDis;
         private readonly IMongoCollection<Item> _dbItem;
         private readonly IMongoCollection<Item_type> _dbItemtype;
@@ -42,14 +42,15 @@ namespace DataAndServices.Admin_Services.Products
         {
             try
             {
-                Product_Admin products = new Product_Admin();
+                Product products = new Product();
                 products.Id_Item = product_Item_Type.Id_Item;
                 products.Name = product_Item_Type.Name;
                 products.Photo = product_Item_Type.Photo;
                 products.Photo2 = product_Item_Type.Photo2;
                 products.Photo3 = product_Item_Type.Photo3;
                 products.Price = product_Item_Type.Price;
-                products.Details = product_Item_Type.Details;              
+                products.Details = product_Item_Type.Details;
+                products.AccountId = product_Item_Type.AccountId;
                 _db.InsertOne(products);
 
                 Item item = new Item();
@@ -74,7 +75,7 @@ namespace DataAndServices.Admin_Services.Products
             try
             {
                 
-                var deleteFilter = Builders<Product_Admin>.Filter.Eq("_id", id);
+                var deleteFilter = Builders<Product>.Filter.Eq("_id", id);
                 var deleteFilter2 = Builders<Item>.Filter.Eq("_id", id);
                 var deleteFilter3 = Builders<Discount_Product>.Filter.Eq("_id", id);
 
@@ -92,9 +93,33 @@ namespace DataAndServices.Admin_Services.Products
             }
         }
 
-        public async Task<List<Product_Item_Type>> GetAllProductItem()
-        {
+        public async Task<List<Product_Item_Type>> GetAllProductItem(string userLogin) 
+        { 
             var itemCollection =  db.GetItemCollection();
+            var productCollection = db.GetProductClientCollection();
+            var infoProduct = from item in itemCollection.AsQueryable()
+                              join product in productCollection.AsQueryable() on item._id equals product._id
+                              where product.AccountId == userLogin
+
+                              select new Product_Item_Type()
+                              {
+                                  _id = product._id,
+                                  Name = product.Name,
+                                  Price = product.Price,
+                                  Details = product.Details,
+                                  Photo = product.Photo,
+                                  Photo2 = product.Photo2,
+                                  Photo3 = product.Photo3,
+                                  Id_Item = product.Id_Item,
+                                  Quantity = item.Quantity
+
+                              };
+            return await infoProduct.ToListAsync();
+        }
+
+        public async Task<List<Product_Item_Type>> GetAllProductItemByEndUser()
+        {
+            var itemCollection = db.GetItemCollection();
             var productCollection = db.GetProductClientCollection();
             var infoProduct = from item in itemCollection.AsQueryable()
                               join product in productCollection.AsQueryable() on item._id equals product._id
@@ -115,11 +140,28 @@ namespace DataAndServices.Admin_Services.Products
             return await infoProduct.ToListAsync();
         }
 
-        public List<List<Dis_Product>> GetAllProductItem_Type()
+
+
+        public List<List<Dis_Product>> GetAllProductItem_Type(string userLogin)
         {
             List<Item_type> item_Types = new List<Item_type>();
             List<List<Dis_Product>> productsByType = new List<List<Dis_Product>>();
             item_Types = _dbItemtype.Find(s=>true).ToList();
+            foreach (Item_type item in item_Types)
+            {
+
+                List<Dis_Product> products = GetProductById_Item(item.Id_Item);
+                var productsByMerchant = products.Where(p => p.AccountId == userLogin).ToList();
+                productsByType.Add(productsByMerchant);
+            }
+            return productsByType.ToList();
+        }
+
+        public List<List<Dis_Product>> GetAllProductItem_TypeByEndUser()
+        {
+            List<Item_type> item_Types = new List<Item_type>();
+            List<List<Dis_Product>> productsByType = new List<List<Dis_Product>>();
+            item_Types = _dbItemtype.Find(s => true).ToList();
             foreach (Item_type item in item_Types)
             {
 
@@ -129,9 +171,42 @@ namespace DataAndServices.Admin_Services.Products
             return productsByType.ToList();
         }
 
-        public async Task<List<Product_Admin>> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts(string userLogin)
         {
-            return await _db.Find(s => true).ToListAsync();
+            return await _db.Find(s =>s.AccountId == userLogin).ToListAsync();
+        }
+
+        public async Task<List<Product>> GetAllProductsByEndUser()
+        {
+            return await _db.FindSync(s=> true).ToListAsync();
+        }
+
+        public List<Dis_Product> GetAllProduct_Discount(string userLogin)
+        {
+            var discountCollection = db.GetDiscountProductCollection();
+            var productCollection = db.GetProductClientCollection();
+
+            var Info = (from dis in discountCollection.AsQueryable()
+                        join product in productCollection.AsQueryable() on dis._id equals product._id
+                        where product.AccountId == userLogin
+                        select new Dis_Product()
+                        {
+                            _id = dis._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,
+                            Content = dis.Content,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End,
+                            AccountId = product.AccountId
+                        });
+
+            return  Info.ToList();  
         }
 
         public List<Dis_Product> GetAllProduct_Discount()
@@ -154,13 +229,14 @@ namespace DataAndServices.Admin_Services.Products
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
-                            End = dis.End
+                            End = dis.End,
+                            AccountId = product.AccountId
                         });
 
-            return  Info.ToList();  
+            return Info.ToList();
         }
 
-        public async Task<Product_Admin> GetProductById(string id)
+        public async Task<Product> GetProductById(string id)
         {
 
             return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
@@ -186,7 +262,8 @@ namespace DataAndServices.Admin_Services.Products
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
-                            End = dis.End
+                            End = dis.End,
+                            AccountId = product.AccountId
                         });
 
             return Info.ToList();
@@ -386,8 +463,8 @@ namespace DataAndServices.Admin_Services.Products
         {
             try
             {
-                var eqfilter = Builders<Product_Admin>.Filter.Where(s => s._id == custom._id);
-                var update = Builders<Product_Admin>.Update.Set(s => s.Name, custom.Name)
+                var eqfilter = Builders<Product>.Filter.Where(s => s._id == custom._id);
+                var update = Builders<Product>.Update.Set(s => s.Name, custom.Name)
                     .Set(s => s.Photo, custom.Photo)
                     .Set(s => s.Photo2, custom.Photo2)
                     .Set(s => s.Photo3, custom.Photo3)

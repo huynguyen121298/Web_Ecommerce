@@ -13,5 +13,8 @@ namespace Model.DTO.DTO_Ad
         public int? SoLuong { get; set; }
 
         public double? Gia { get; set; }
+
+        public string AccountId { get; set; }
+
     }
 }
