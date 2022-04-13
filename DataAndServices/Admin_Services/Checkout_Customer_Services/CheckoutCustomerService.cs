@@ -46,7 +46,23 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         public List<CheckoutCustomerOrder> GetAllAccounts(string userLogin)
         
         {
-            return  _db.Find(s=>s.AccountId== userLogin).ToList();
+            var ckCustomers =   _db.Find(s=>true).ToList();
+            var ckCustomerOrders = new List<CheckoutCustomerOrder>();
+            foreach(var c in ckCustomers)
+            {
+                var ckOrders = new List<Checkout_Oder>();
+                foreach (var order in c.ProductOrder)
+                {
+                  
+                    if(order.AccountId == userLogin)
+                    {
+                        ckOrders.Add(order);
+                    }               
+                }
+                c.ProductOrder = ckOrders;
+                ckCustomerOrders.Add(c);
+            }
+            return ckCustomerOrders;          
         }
 
         public IEnumerable<DTO_Checkout_Customer> GetMonthlyRevenue(int month)

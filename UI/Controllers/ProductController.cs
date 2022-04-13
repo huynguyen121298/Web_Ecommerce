@@ -27,6 +27,7 @@ namespace UI.Controllers
             var searchName = fc["searchName"];
             var priceGiaMin = Request.Form["priceGiaMin"];
             var priceGiaMax = Request.Form["priceGiaMax"];
+            
 
             if (page == null) page = 1;
             int pageSize = 25;
@@ -53,6 +54,7 @@ namespace UI.Controllers
 
                 }
             }
+            
             if (priceGiaMin != null && priceGiaMax != null && priceGiaMin != "" && priceGiaMax != "")
             {
                 HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByPrice/" + priceGiaMin + "/" + priceGiaMax);
