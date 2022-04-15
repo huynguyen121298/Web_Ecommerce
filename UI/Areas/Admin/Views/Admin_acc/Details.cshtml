@@ -14,12 +14,21 @@
     {
         quyen = "User";
     }
+
 }
 
 <h2 style="color:aquamarine">Details</h2>
 
 <div>
-    <h4>Tài Khoản Admin</h4>
+    @{
+        if (stt != 1)
+        {
+            <h4>Tài Khoản của @Model.MerchantName</h4>
+
+        }
+        <h4>Tài Khoản admin của @Model.FirstName + @Model.LastName</h4>
+    }
+
     <hr />
     <dl class="dl-horizontal">
 
@@ -54,14 +63,34 @@
         <dd>
             @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt>
-            Quyền
-        </dt>
+        @{
+            if (stt == 1)
+            {
+                <dt>
+                    Quyền
+                </dt>
 
-        <dd>
-            @quyen
-        </dd>
+                <dd>
+                    @quyen
+                </dd>
+            }
+            <dt>
+                @Html.DisplayNameFor(model => model.MerchantName)
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.MerchantName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Photo)
+            </dt>
+
+            <dd>
+                <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
+            </dd>
+
+        }
     </dl>
 </div>
 <p>

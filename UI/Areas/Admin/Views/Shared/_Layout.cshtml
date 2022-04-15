@@ -1,6 +1,9 @@
-﻿
+﻿@using Model.DTO.DTO_Ad
+@using UI.Areas.Admin.Common;
 @{
     Layout = null;
+    var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +28,7 @@
     <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet" />
 
 
- 
+
 
 
 
@@ -401,7 +404,7 @@
                                  aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Trang cá nhân
+                                    @Html.ActionLink("Trang cá nhân", "Details", "Admin_acc", new { id = dTO_Account.AccountId });
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -411,9 +414,9 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Thoát
+                                   @Html.ActionLink("Thoát", "Logout", "Account");
                                 </a>
-                                @*@Html.ActionLink("Thoát", "Logout", "Account");*@
+
 
                             </div>
                         </li>

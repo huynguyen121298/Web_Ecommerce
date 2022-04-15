@@ -12,6 +12,12 @@
        
         public string Password { get; set; }
 
+        public string MerchantName { get; set; }
+
+        public string Photo { get; set; }
+
+        public string AccountId { get; set; }
+
         public int? RoleId { get; set; }
     }
 }

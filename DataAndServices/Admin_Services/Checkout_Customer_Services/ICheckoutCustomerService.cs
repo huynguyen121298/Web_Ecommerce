@@ -13,9 +13,9 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         Task<List<CheckoutCustomerOrder>> GetListAccountById(string id);
 
-        IEnumerable<DTO_Checkout_Customer> GetMonthlyRevenue(int month);
+        double? GetMonthlyRevenue(int month);
 
-        IEnumerable<DTO_Checkout_Customer> GetYearRevenue(int year);
+        double? GetYearRevenue(int year);
 
         bool Update_Ad_acc(CheckoutCustomerOrder dTO_Account);
 

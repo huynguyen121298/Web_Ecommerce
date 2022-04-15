@@ -140,10 +140,35 @@ namespace DataAndServices.Client_Services
             return 0;
         }
 
-        public async Task<List<Product>> GetProductByMerchant(string merchantId)
+        public List<Dis_Product> GetProductByMerchant(string merchantId)
         {
-            var productsByMerchant = await _db.FindAsync(a => a.AccountId == merchantId);
-            return productsByMerchant.ToList(); 
+
+            var discountCollection = db.GetDiscountProductCollection();
+            var productCollection = db.GetProductClientCollection();
+
+            var Info = (from dis in discountCollection.AsQueryable()
+                        join product in productCollection.AsQueryable() on dis._id equals product._id
+                        where product.AccountId == merchantId
+                        select new Dis_Product()
+                        {
+                            _id = dis._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,
+                            Content = dis.Content,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End,
+                            AccountId = product.AccountId
+                        });
+
+            return Info.ToList();
+            //var productsByMerchant = await _db.FindAsync(a => a.AccountId == merchantId);
+            //return productsByMerchant.ToList(); 
         }
     }
 }

@@ -33,6 +33,10 @@ namespace Model.DTO.DTO_Ad
 
         public string AccountId { get; set; }
 
+        public string MerchantName { get; set; }
+
+        public string Photo { get; set; }
+
         public string FullName()
         {
             return this.FirstName + " " + this.LastName;

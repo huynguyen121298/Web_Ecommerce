@@ -29,6 +29,11 @@ namespace DataAndServices.Data
         {
             return Database.GetCollection<Checkout_Customer>("Checkout_Customer");
         }
+
+        public IMongoCollection<MerchantNotification> GetMerchantNotificationCollection()
+        {
+            return Database.GetCollection<MerchantNotification>("MerchantNotification");
+        }
         public IMongoCollection<Checkout_Oder> GetCheckout_OderCollection()
         {
             return Database.GetCollection<Checkout_Oder>("Checkout_Oder");

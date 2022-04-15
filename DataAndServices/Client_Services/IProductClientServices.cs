@@ -13,7 +13,7 @@ namespace DataAndServices.Client_Services
 
         List<Dis_Product> GetAllProductByName(string name);
 
-        Task<List<Product>> GetProductByMerchant(string merchantId);
+        List<Dis_Product> GetProductByMerchant(string merchantId);
 
         List<Account> GetMerchantByName(string merchantName);
 

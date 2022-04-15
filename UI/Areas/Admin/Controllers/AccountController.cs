@@ -165,10 +165,10 @@ namespace UI.Areas.Admin.Controllers
                     cknameAccount1.Expires = DateTime.Now.AddHours(-50);
                     Response.Cookies.Add(cknameAccount1);
                 }
-                //Session.Clear();
+                Session.Clear();
                 Session.Abandon();
-                //Response.Cookies.Clear();
-                //Request.Cookies.Clear(); 
+                Response.Cookies.Clear();
+                Request.Cookies.Clear(); 
                 return RedirectToAction("Login", "Account");
             }
             catch (Exception)

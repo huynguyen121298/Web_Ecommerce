@@ -1,6 +1,8 @@
 ﻿using Model.DTO.DTO_Ad;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Web;
 using System.Web.Mvc;
 using UI.Security_;
 using UI.Service;
@@ -21,7 +23,7 @@ namespace UI.Areas.Admin.Controllers
         }
 
         public ActionResult Edit(string id)
-        {
+        {           
             ServiceRepository service = new ServiceRepository();
             HttpResponseMessage responseMessage = service.GetResponse("api/Admin_acc/GetAccountById/" + id);
             responseMessage.EnsureSuccessStatusCode();
@@ -41,7 +43,7 @@ namespace UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(DTO_Account2 dTO_Account)
+        public ActionResult Edit(DTO_Account2 dTO_Account, HttpPostedFileBase ImageUpload)
         {
             var stt = Request.Form["stt"];
             var pass = Request.Form["pass"];
@@ -59,10 +61,19 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
+                return RedirectToAction("Index");
 
             }
             else
             {
+                if (ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    fileName = fileName + extension;
+                    dTO_Account.Photo = "~/images_merchant/" + fileName;
+                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
+                }
 
                 dTO_Account.RoleId = 2;
                 if (pass != "")
@@ -77,8 +88,9 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
+                return View("Index","Admin");
             }
-            return RedirectToAction("Index");
+            
         }
 
         public ActionResult Create()

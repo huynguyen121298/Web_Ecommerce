@@ -131,6 +131,8 @@
     <Compile Include="Admin_Services\Admin_Acc_Services\IAdminAccService.cs" />
     <Compile Include="Admin_Services\Checkout_Customer_Services\CheckoutCustomerService.cs" />
     <Compile Include="Admin_Services\Checkout_Customer_Services\ICheckoutCustomerService.cs" />
+    <Compile Include="Admin_Services\NotificationService\INotificationService.cs" />
+    <Compile Include="Admin_Services\NotificationService\NotificationService.cs" />
     <Compile Include="Admin_Services\Products\IProductService.cs" />
     <Compile Include="Admin_Services\Products\ProductService.cs" />
     <Compile Include="Admin_Services\UserServices\IUsers.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="DataModel\Item.cs" />
     <Compile Include="DataModel\Item_Client.cs" />
     <Compile Include="DataModel\Item_type.cs" />
+    <Compile Include="DataModel\MerchantNotification.cs" />
     <Compile Include="DataModel\Product.cs" />
     <Compile Include="DataModel\Role.cs" />
     <Compile Include="DataModel\User_Acc.cs" />

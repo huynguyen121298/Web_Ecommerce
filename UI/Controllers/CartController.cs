@@ -11,8 +11,9 @@ namespace UI.Controllers
 {
     public class CartController : Controller
     {
-        ProductController productController = new ProductController();
-        ServiceRepository service = new ServiceRepository();
+        private ProductController productController = new ProductController();
+        private ServiceRepository service = new ServiceRepository();
+
         public ActionResult Index()
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -23,6 +24,7 @@ namespace UI.Controllers
             else
                 return View();
         }
+
         public ActionResult Checkout()
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -32,10 +34,12 @@ namespace UI.Controllers
             }
             return View();
         }
+
         public ActionResult LuaChon()
         {
             return View();
         }
+
         public ActionResult Buy_()
         {
             bool flag = true;
@@ -60,65 +64,70 @@ namespace UI.Controllers
                 return RedirectToAction("Index", "Cart");
             return View("~/Views/Product/Details.cshtml");
         }
+
         public ActionResult saveOrder1(FormCollection fc, DTOCheckoutCustomerOrder check)
         {
             try
             {
                 var checkZip = check.Zipcode = fc["zip"];
 
-               
-                    var price = Request.Form["gia1"];
-                    var price1 = Request.Form["discount1"];
-                    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
-                    check.NgayTao = DateTime.Now;
-                    check.FirstName = fc["FirstName"];
-                    check.LastName = fc["LastName"];
-                    check.Email = fc["Email"];
+                var price = Request.Form["gia1"];
+                var price1 = Request.Form["discount1"];
+                List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+                check.NgayTao = DateTime.Now;
+                check.FirstName = fc["FirstName"];
+                check.LastName = fc["LastName"];
+                check.Email = fc["Email"];
 
-                    check.DiaChi = fc["diaChi"];
-                    check.TongTien = Convert.ToInt32(price);
+                check.DiaChi = fc["diaChi"];
+                check.TongTien = Convert.ToInt32(price);
 
-                    check.City = fc["city"];
-                    check.SDT = Int32.Parse(fc["sdt"]);
-                    check.TrangThai = "Đang chờ";
-                    if (checkZip != "")
-                    {
-                        check.Zipcode = fc["zip"];
-                        check.GiamGia = price1 +"%";
-                    }
-                    
+                check.City = fc["city"];
+                check.SDT = Int32.Parse(fc["sdt"]);
+                check.TrangThai = "Đang chờ";
+                if (checkZip != "")
+                {
+                    check.Zipcode = fc["zip"];
+                    check.GiamGia = price1 + "%";
+                }
 
-                    check.ProductOrder = new List<DTO_Checkout_Order>();
+                check.ProductOrder = new List<DTO_Checkout_Order>();
 
-                    foreach (DTO_Product_Item_Type item in cart)
-                    {
-                        DTO_Checkout_Order dTO_Checkout_Order = new DTO_Checkout_Order();
-                        var total = (item.Quantity * item.Price);
-                        dTO_Checkout_Order.Id_SanPham = item._id;
-                        dTO_Checkout_Order.TenSP = item.Name;
-                        dTO_Checkout_Order.SoLuong = (int)item.Quantity;
-                        dTO_Checkout_Order.Gia = total;
-                        dTO_Checkout_Order.AccountId = item.AccountId;
-                        check.ProductOrder.Add(dTO_Checkout_Order);
-                    }
-                    HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
+                var notifications = new List<DtoMerchantNotification>();
+                foreach (DTO_Product_Item_Type item in cart)
+                {
+                    DTO_Checkout_Order dTO_Checkout_Order = new DTO_Checkout_Order();
+                    var total = (item.Quantity * item.Price);
+                    dTO_Checkout_Order.Id_SanPham = item._id;
+                    dTO_Checkout_Order.TenSP = item.Name;
+                    dTO_Checkout_Order.SoLuong = (int)item.Quantity;
+                    dTO_Checkout_Order.Gia = total;
+                    dTO_Checkout_Order.AccountId = item.AccountId;
+                    check.ProductOrder.Add(dTO_Checkout_Order);
 
-                   
+                    var notification = new DtoMerchantNotification();
+                    notification.AccountId = item.AccountId;
+                    notification.Subject = "Đơn hàng mới";
+                    notification.Content = "Đơn hàng" + item.Name + "đã được đặt bởi khách hàng" + check.FirstName + " " + check.LastName;
+                    notifications.Add(notification);
+                }
 
-                if (responseUser1.IsSuccessStatusCode)
+                HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
+                HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
+
+                if (responseUser1.IsSuccessStatusCode && response2.IsSuccessStatusCode)
                 {
                     Session.Clear();
                     return View("Thankyou");
                 }
                 return RedirectToAction("Error", "Home");
-
-
             }
             catch
             {
                 return RedirectToAction("Error", "Home");
             }
         }
+
         public ActionResult saveOrder2(string priceCode)
         {
             try
@@ -135,6 +144,7 @@ namespace UI.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+
         public static string RenderRazorViewToString(ControllerContext controllerContext, string viewName, object model)
         {
             controllerContext.Controller.ViewData.Model = model;
@@ -156,14 +166,14 @@ namespace UI.Controllers
                 return View("Thankyou1");
             }
 
-
             return View();
-
         }
+
         public ActionResult HetHang()
         {
             return View();
         }
+
         public ActionResult Details_(string Id)
         {
             if (Session["cart_"] == null)
@@ -220,12 +230,12 @@ namespace UI.Controllers
                     return Json(new { buy = li });
                 }
 
-
                 Session["cart_"] = li;
                 ViewBag.IdPorduct = Id;
                 return Json(new { buy = li });
             }
         }
+
         private int isExist_(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
@@ -234,6 +244,7 @@ namespace UI.Controllers
                     return i;
             return -1;
         }
+
         public ActionResult Remove_(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
@@ -251,6 +262,7 @@ namespace UI.Controllers
                     return i;
             return -1;
         }
+
         public ActionResult Remove2(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -259,21 +271,19 @@ namespace UI.Controllers
             Session["cart"] = cart;
             return RedirectToAction("Index");
         }
+
         public ActionResult Thankyou()
         {
-
             return View();
         }
+
         public ActionResult Thankyou1()
         {
-
             return View();
         }
 
         public ActionResult Details_Buy(string Id)
         {
-            
-
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (cart != null)
             {
@@ -293,9 +303,7 @@ namespace UI.Controllers
                             return View("LuaChon");
                         }
                     }
-
                 }
-
             }
             int checkBuy = CheckBuy_(Id);
             if (checkBuy == 0)
@@ -305,13 +313,10 @@ namespace UI.Controllers
                 return View("LuaChon");
             }
             return RedirectToAction("Details", "Product");
-
         }
 
         public ActionResult BuyLove(string Id)
         {
-            
-
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (cart != null)
             {
@@ -331,9 +336,7 @@ namespace UI.Controllers
                             return View("YeuThich");
                         }
                     }
-
                 }
-
             }
             int checkBuy = CheckBuy_(Id);
             if (checkBuy == 0)
@@ -343,7 +346,6 @@ namespace UI.Controllers
                 return View("YeuThich");
             }
             return RedirectToAction("Details", "Product");
-
         }
 
         public int CheckBuy_(string Id)
@@ -351,7 +353,6 @@ namespace UI.Controllers
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (cart != null)
             {
-                
                 HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + Id);
                 response2.EnsureSuccessStatusCode();
                 int quantity2 = response2.Content.ReadAsAsync<int>().Result;
@@ -375,7 +376,6 @@ namespace UI.Controllers
                 {
                     li.Add(new DTO_Product_Item_Type()
                     {
-
                         Quantity = 1,
                         _id = proItem._id,
                         Name = proItem.Name,
@@ -399,7 +399,6 @@ namespace UI.Controllers
 
                 if (quantity <= 0)
                 {
-
                     return 0;
                 }
                 List<DTO_Product_Item_Type> li = new List<DTO_Product_Item_Type>();

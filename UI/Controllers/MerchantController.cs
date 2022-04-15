@@ -1,4 +1,5 @@
-﻿using Model.DTO_Model;
+﻿using Model.DTO.DTO_Ad;
+using Model.DTO_Model;
 using PagedList;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -22,14 +23,24 @@ namespace UI.Controllers
             //Get product by merchant
             if (searchMerchant != null && searchMerchant != "")
             {
-                HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByPrice/" + searchMerchant);
+                HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetMerchantByName/" + searchMerchant);
                 responseMessage2.EnsureSuccessStatusCode();
 
-                List<DTO_Dis_Product> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
+                List<DTO_Account2> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Account2>>().Result;
                 return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
             }
             return View();
 
+        }
+
+        public ActionResult ProductByMerchant(string merchantId)
+        {
+            HttpResponseMessage responseMessage = service.GetResponse("api/Product/GetProductByMerchant/"+merchantId);
+            responseMessage.EnsureSuccessStatusCode();
+            List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
+            var view = dTO_Accounts.ToPagedList(1, 50);
+
+            return View(view);
         }
     }
 }

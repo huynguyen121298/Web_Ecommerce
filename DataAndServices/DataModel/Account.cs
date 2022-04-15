@@ -18,6 +18,8 @@ namespace DataAndServices.DataModel
 
         public string MerchantName { get; set; }
 
+        public string Photo { get; set; }
+
         public int? RoleId { get; set; }
     }
 }

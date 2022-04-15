@@ -65,7 +65,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return ckCustomerOrders;          
         }
 
-        public IEnumerable<DTO_Checkout_Customer> GetMonthlyRevenue(int month)
+        public double? GetMonthlyRevenue(int month)
         {
            
             var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao.Month == month).ToList();
@@ -74,29 +74,31 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
             var monthTotal = dtocheckoutCustomers.Select(s=>s.TongTien).Sum();
 
-            foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
-            {
-                dtocheckoutCustomer.TongTienThang = monthTotal;
-            }
+            //foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
+            //{
+            //    dtocheckoutCustomer.TongTienThang = monthTotal;
+            //}
 
-            return dtocheckoutCustomers;
+            //return dtocheckoutCustomers;
+            return monthTotal;
         }
 
-        public IEnumerable<DTO_Checkout_Customer> GetYearRevenue(int year)
+        public double? GetYearRevenue(int year)
         {
 
             var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao.Year == year).ToList();
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
 
-            var monthTotal = dtocheckoutCustomers.Select(s => s.TongTien).Sum();
+            var yearTotal = dtocheckoutCustomers.Select(s => s.TongTien).Sum();
 
-            foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
-            {
-                dtocheckoutCustomer.TongTienNam = monthTotal;
-            }
+            //foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
+            //{
+            //    dtocheckoutCustomer.TongTienNam = monthTotal;
+            //}
 
-            return dtocheckoutCustomers;
+            //return dtocheckoutCustomers;
+            return yearTotal;
         }
 
         public async Task<List<CheckoutCustomerOrder>> GetListAccountById(string id)

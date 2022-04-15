@@ -51,3 +51,10 @@ DataAndServices/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 H_Shop.NetCore/bin/Debug/netcoreapp3.1/H_Shop.NetCore.dll
 *.pdb
 UI/bin/UI.dll
+*.v2
+*.v2
+.vs/H_Shop.NetCore/DesignTimeBuild/.dtbcache.v2
+*.v2
+*.v2
+*.cache
+*.cache

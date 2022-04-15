@@ -25,8 +25,8 @@ namespace UI.Areas.Admin.Controllers
             }
             else
             {
-                DTO_Account dTO_Account = new DTO_Account();
-                dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+                
+                var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
                 HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/getallcustomer/"+dTO_Account.AccountId);
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTOCheckoutCustomerOrder> DTO_Checkout_Customers = responseMessage.Content.ReadAsAsync<List<DTOCheckoutCustomerOrder>>().Result;
