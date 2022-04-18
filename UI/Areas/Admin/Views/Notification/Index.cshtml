@@ -5,12 +5,7 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model._id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccountId)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.Subject)
         </th>
@@ -22,22 +17,12 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item._id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccountId)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.Subject)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }

@@ -6,7 +6,7 @@ namespace Model.DTO.DTO_Ad
 {
     public class DTO_Account
     {
-        public string _id;
+        public string _id { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)]
@@ -29,9 +29,7 @@ namespace Model.DTO.DTO_Ad
         [Required]
         [DataType(DataType.Password)]
         [System.ComponentModel.DataAnnotations.Compare("Password")]
-        public string ConfirmPassword { get; set; }
-
-        public string AccountId { get; set; }
+        public string ConfirmPassword { get; set; }      
 
         public string MerchantName { get; set; }
 

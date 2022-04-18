@@ -38,62 +38,70 @@
             Chi tiết sản phẩm:  @Html.DisplayFor(model => model.Details)
         </dt>
 
-        <dd>
+        @if (Model.Photo != null)
+        {
+            <dt>
+                Link hình ảnh :  @Html.DisplayFor(model => model.Photo)
+            </dt>
 
-        </dd>
-        <dt>
-            Link hình ảnh :  @Html.DisplayFor(model => model.Photo)
-        </dt>
+            <dd>
 
-        <dd>
+            </dd>
 
-        </dd>
+            <dt>
+                Hỉnh ảnh sản phẩm 1:
 
-        <dt>
-            Hỉnh ảnh sản phẩm 1:
+            </dt>
 
-        </dt>
+            <dd>
+                <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
 
-        <dd>
-            <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
+            </dd>
+        }
 
-        </dd>
 
-        <dt>
-        Link hình ảnh 2 :  @Html.DisplayFor(model => model.Photo2)
-        </dt>
+        @if (Model.Photo2 != null)
+        {
+            <dt>
+                Link hình ảnh 2 :  @Html.DisplayFor(model => model.Photo2)
+            </dt>
 
-        <dd>
+            <dd>
 
-        </dd>
+            </dd>
 
-        <dt>
-            Hỉnh ảnh sản phẩm 2:
+            <dt>
+                Hỉnh ảnh sản phẩm 2:
 
-        </dt>
+            </dt>
 
-        <dd>
-            <img src="@Url.Content(Model.Photo2)" style="height:200px ;width:200px ; margin:10px " />
+            <dd>
+                <img src="@Url.Content(Model.Photo2)" style="height:200px ;width:200px ; margin:10px " />
 
-        </dd>
+            </dd>
+        }
 
-        <dt>
-        Link hình ảnh 3 :  @Html.DisplayFor(model => model.Photo3)
-        </dt>
+        @if (Model.Photo3 != null)
+        {
+            <dt>
+                Link hình ảnh 3 :@Html.DisplayFor(model => model.Photo3)
+            </dt>
 
-        <dd>
+            <dd>
 
-        </dd>
+            </dd>
 
-        <dt>
-            Hỉnh ảnh sản phẩm 3:
+            <dt>
+                Hỉnh ảnh sản phẩm 3:
 
-        </dt>
+            </dt>
 
-        <dd>
-            <img src="@Url.Content(Model.Photo3)" style="height:200px ;width:200px ; margin:10px " />
+            <dd>
+                <img src="@Url.Content(Model.Photo3)" style="height:200px ;width:200px ; margin:10px " />
 
-        </dd>
+            </dd>
+        }
+
 
         <dt>
             Số lượng còn trong kho:   @Html.DisplayFor(model => model.Quantity)

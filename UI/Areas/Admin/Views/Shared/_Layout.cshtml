@@ -2,7 +2,12 @@
 @using UI.Areas.Admin.Common;
 @{
     Layout = null;
-    var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+    var dTO_Account = new DTO_Account();
+    if (Session[CommonConstants.ACCOUNT_SESSION] != null)
+    {
+        dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+    }
+
 
 }
 <!DOCTYPE html>
@@ -404,7 +409,7 @@
                                  aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    @Html.ActionLink("Trang cá nhân", "Details", "Admin_acc", new { id = dTO_Account.AccountId });
+                                    @Html.ActionLink("Trang cá nhân", "Details", "Admin_acc", new { id = dTO_Account._id });
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>

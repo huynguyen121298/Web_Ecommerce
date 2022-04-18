@@ -60,9 +60,9 @@ namespace UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [DeatAuthorize(Order = 2)]
-        public ActionResult AddRegister([Bind(Include = "FirstName,LastName,Email,Password,ConfirmPassword")] RegisterAdminModel model, string AuthenticationCode)
+        public ActionResult AddRegister(RegisterAdminModel model, string AuthenticationCode)
         {
 
             if (ModelState.IsValid)
@@ -82,7 +82,8 @@ namespace UI.Areas.Admin.Controllers
                     LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.LastName.Trim().ToLower()),
                     Password = model.Password,
                     Email = model.Email,
-                    RoleId = model.RoleId
+                    RoleId = model.RoleId,
+                    MerchantName = model.MerchantName
                 };
                 var stt = Request.Form["stt"];
                 if (stt == "Admin")
@@ -141,7 +142,7 @@ namespace UI.Areas.Admin.Controllers
                 var userSession = new DTO_Account();
                 userSession.Email = resultLogin.Email;
                 userSession.RoleId = resultLogin.RoleId;
-                userSession.AccountId = resultLogin.AccountId;  
+                userSession._id = resultLogin._id;  
                 Session.Add(CommonConstants.ACCOUNT_SESSION, userSession);
                 return View("~/Areas/Admin/Views/Admin/Index.cshtml");
             }
@@ -156,7 +157,11 @@ namespace UI.Areas.Admin.Controllers
         {
             try
             {
-                Session.Remove(CommonConstants.ACCOUNT_SESSION);
+                if (Session[CommonConstants.ACCOUNT_SESSION] != null)
+                {
+                    Session.Remove(CommonConstants.ACCOUNT_SESSION);
+                }
+                
 
 
                 if (Request.Cookies["firstname1"] != null)
@@ -165,10 +170,10 @@ namespace UI.Areas.Admin.Controllers
                     cknameAccount1.Expires = DateTime.Now.AddHours(-50);
                     Response.Cookies.Add(cknameAccount1);
                 }
-                Session.Clear();
+                //Session.Clear();
                 Session.Abandon();
-                Response.Cookies.Clear();
-                Request.Cookies.Clear(); 
+                //Response.Cookies.Clear();
+                //Request.Cookies.Clear(); 
                 return RedirectToAction("Login", "Account");
             }
             catch (Exception)

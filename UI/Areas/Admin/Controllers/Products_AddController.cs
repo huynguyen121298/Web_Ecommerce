@@ -21,7 +21,7 @@ namespace UI.Areas.Admin.Controllers
             {
                 DTO_Account dTO_Account = new DTO_Account();
                 dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
-                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_Discount/"+dTO_Account.AccountId);
+                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_Discount/"+dTO_Account._id);
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
                 return View(dTO_Accounts);
@@ -37,7 +37,7 @@ namespace UI.Areas.Admin.Controllers
             {
                 DTO_Account dTO_Account = new DTO_Account();
                 dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
-                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_Discount/"+dTO_Account.AccountId);
+                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProduct_Discount/"+dTO_Account._id);
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
                 return View(dTO_Accounts);
@@ -54,7 +54,7 @@ namespace UI.Areas.Admin.Controllers
 
             DTO_Account dTO_Account = new DTO_Account();
             dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
-            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByType/"+dTO_Account.AccountId);
+            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByType/"+dTO_Account._id);
             responseMessage.EnsureSuccessStatusCode();
             List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
             return View(dTO_Accounts);
@@ -94,9 +94,8 @@ namespace UI.Areas.Admin.Controllers
         public ActionResult Create(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload,
             HttpPostedFileBase ImageUpload2, HttpPostedFileBase ImageUpload3)
         {
-            DTO_Account dTO_Account = new DTO_Account();
-            dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
-            dTO_Product_Item_Type.AccountId = dTO_Account.AccountId;
+            var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+            dTO_Product_Item_Type.AccountId = dTO_Account._id;
 
             //string Id = dTO_Product_Item_Type.Photo;
             //DTO_Product_Item_Type dTO_Product_Item_Type = new DTO_Product_Item_Type();

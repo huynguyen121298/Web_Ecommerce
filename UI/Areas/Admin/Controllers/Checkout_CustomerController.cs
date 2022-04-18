@@ -27,7 +27,7 @@ namespace UI.Areas.Admin.Controllers
             {
                 
                 var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
-                HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/getallcustomer/"+dTO_Account.AccountId);
+                HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/getallcustomer/"+dTO_Account._id);
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTOCheckoutCustomerOrder> DTO_Checkout_Customers = responseMessage.Content.ReadAsAsync<List<DTOCheckoutCustomerOrder>>().Result;
                 return View(DTO_Checkout_Customers);

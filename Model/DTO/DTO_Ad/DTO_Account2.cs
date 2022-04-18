@@ -2,7 +2,7 @@
 {
     public class DTO_Account2
     {
-        public string _id { get; set; }
+        public string Id { get; set; }
       
         public string FirstName { get; set; }
       
@@ -15,8 +15,6 @@
         public string MerchantName { get; set; }
 
         public string Photo { get; set; }
-
-        public string AccountId { get; set; }
 
         public int? RoleId { get; set; }
     }
