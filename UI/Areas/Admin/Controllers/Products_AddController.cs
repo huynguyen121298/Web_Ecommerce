@@ -158,21 +158,21 @@ namespace UI.Areas.Admin.Controllers
 
                 if (ImageUpload2 != null)
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload2.FileName);
+                    string extension = Path.GetExtension(ImageUpload2.FileName);
                     fileName = fileName + extension;
                     dTO_Product_Item_Type.Photo2 = "~/images_product/" + fileName;
-                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+                    ImageUpload2.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
                     
                 }
 
                 if (ImageUpload3 != null)
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload3.FileName);
+                    string extension = Path.GetExtension(ImageUpload3.FileName);
                     fileName = fileName + extension;
                     dTO_Product_Item_Type.Photo3 = "~/images_product/" + fileName;
-                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+                    ImageUpload3.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
                     
                 }
 
@@ -299,25 +299,25 @@ namespace UI.Areas.Admin.Controllers
 
                     if (ImageUpload2 != null)
                     {
-                        string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                        string extension = Path.GetExtension(ImageUpload.FileName);
+                        string fileName = Path.GetFileNameWithoutExtension(ImageUpload2.FileName);
+                        string extension = Path.GetExtension(ImageUpload2.FileName);
                         fileName = fileName + extension;
                         dTO_Product_Item_Type.Photo2 = "~/images_product/" + fileName;
-                        ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+                        ImageUpload2.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
 
                     }
 
                     if (ImageUpload3 != null)
                     {
-                        string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                        string extension = Path.GetExtension(ImageUpload.FileName);
+                        string fileName = Path.GetFileNameWithoutExtension(ImageUpload3.FileName);
+                        string extension = Path.GetExtension(ImageUpload3.FileName);
                         fileName = fileName + extension;
                         dTO_Product_Item_Type.Photo3 = "~/images_product/" + fileName;
-                        ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
+                        ImageUpload3.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
 
                     }
 
-                    HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/CreateProduct/", dTO_Product_Item_Type);
+                    HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/UpdateProduct/", dTO_Product_Item_Type);
                     responseUser.EnsureSuccessStatusCode();                
                 }
                 return RedirectToAction("Index");

@@ -1302,6 +1302,9 @@
       },
       "System.Threading.Tasks.Extensions/4.5.1": {},
       "DataAndServices/1.0.0": {
+        "dependencies": {
+          "Model": "1.0.0"
+        },
         "runtime": {
           "DataAndServices.dll": {}
         },

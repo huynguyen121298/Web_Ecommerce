@@ -42,8 +42,15 @@ namespace UI.Areas.Admin.Controllers
             return View(dtoAccounts);
         }
 
+        public string ProcessUpload(HttpPostedFileBase file)
+        {
+            file.SaveAs(Server.MapPath("~/images_merchant/" + file.FileName));
+
+            return "~/images_merchant/" + file.FileName;
+        }
+
         [HttpPost]
-        public ActionResult Edit(DTO_Account2 dTO_Account, HttpPostedFileBase ImageUpload)
+        public ActionResult Edit(DTO_Account2 dTO_Account, HttpPostedFileBase ImageUploadMerchant)
         {
             var stt = Request.Form["stt"];
             var pass = Request.Form["pass"];
@@ -66,13 +73,13 @@ namespace UI.Areas.Admin.Controllers
             }
             else
             {
-                if (ImageUpload != null)
+                if (ImageUploadMerchant != null)
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUploadMerchant.FileName);
+                    string extension = Path.GetExtension(ImageUploadMerchant.FileName);
                     fileName = fileName + extension;
                     dTO_Account.Photo = "~/images_merchant/" + fileName;
-                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
+                    ImageUploadMerchant.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
                 }
 
                 dTO_Account.RoleId = 2;
@@ -88,7 +95,7 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
-                return View("Index","Admin");
+                return RedirectToAction("Index","Admin");
             }
             
         }

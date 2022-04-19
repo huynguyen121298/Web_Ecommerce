@@ -17,16 +17,19 @@
 
 }
 
-<h2 style="color:aquamarine">Details</h2>
 
 <div>
     @{
         if (stt != 1)
         {
-            <h4>Tài Khoản của @Model.MerchantName</h4>
+            <h4 style="text-align:center">Tài Khoản doanh nghiệp @Model.MerchantName</h4>
 
         }
-        <h4>Tài Khoản admin của @Model.FirstName + @Model.LastName</h4>
+        else
+        {
+            <h4 style="text-align:center">Tài Khoản admin @Model.FirstName + @Model.LastName</h4>
+        }
+
     }
 
     <hr />
@@ -74,26 +77,43 @@
                     @quyen
                 </dd>
             }
-            <dt>
-                @Html.DisplayNameFor(model => model.MerchantName)
-            </dt>
+            if (Model.MerchantName != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.MerchantName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.MerchantName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.MerchantName)
+                </dd>
+            }
+            if (Model.Photo != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Photo)
-            </dt>
+                <dd>
+                    <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
+                </dd>
+            }
 
-            <dd>
-                <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
-            </dd>
+
+
 
         }
     </dl>
 </div>
 <p>
     @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model._id }) |
-    @Html.ActionLink("Trở về", "Index")
+
+    @if (Model.RoleId == 1)
+    {
+        @Html.ActionLink("Trở về", "Index")
+    }
+    @if (Model.RoleId == 2)
+    {
+        @Html.ActionLink("Trở về", "Index", "Admin")
+    }
+
 </p>

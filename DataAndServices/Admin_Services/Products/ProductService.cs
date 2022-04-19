@@ -473,6 +473,7 @@ namespace DataAndServices.Admin_Services.Products
                     .Set(s => s._id, custom._id)
                     .Set(s => s.Id_Item, custom.Id_Item);
 
+
                 var options = new UpdateOptions { IsUpsert = true };
                 _db.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);
 
