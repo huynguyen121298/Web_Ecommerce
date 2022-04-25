@@ -40,5 +40,8 @@ namespace Model.DTO_Model
         public string AccountId { get; set; }
 
         public string Details { get; set; }
+
+        public List<DtoProductComment> Comments { get; set; }
+
     }
 }

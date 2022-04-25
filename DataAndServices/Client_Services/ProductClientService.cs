@@ -1,6 +1,7 @@
 ﻿using DataAndServices.CommonModel;
 using DataAndServices.Data;
 using DataAndServices.DataModel;
+using Model.DTO_Model;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,15 @@ namespace DataAndServices.Client_Services
         private readonly IMongoCollection<Item> _dbItem;
         private readonly IMongoCollection<Discount_Product> _dbDis;
         private readonly IMongoCollection<Account> _dbAcc;
+        private readonly IMongoCollection<ProductComment> _dbProductComment;
         private DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
         public ProductClientService(DataContext db)
         {
             _db = db.GetProductClientCollection();
             _dbItem = db.GetItemCollection();
             _dbDis = db.GetDiscountProductCollection();
-            _dbAcc = db.GetAccountCollection(); 
+            _dbAcc = db.GetAccountCollection();
+            _dbProductComment = db.GetProductCommentCollection();
         }
         public List<Dis_Product> GetAllProductByName(string name)
         {
@@ -169,6 +172,24 @@ namespace DataAndServices.Client_Services
             return Info.ToList();
             //var productsByMerchant = await _db.FindAsync(a => a.AccountId == merchantId);
             //return productsByMerchant.ToList(); 
+        }
+
+        public bool InsertComment(ProductComment product)
+        {
+            try
+            {
+
+                _dbProductComment.InsertOne(product);
+
+                return true;
+
+            
+
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

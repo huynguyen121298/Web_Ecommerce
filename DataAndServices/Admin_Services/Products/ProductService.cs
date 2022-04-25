@@ -16,6 +16,8 @@ namespace DataAndServices.Admin_Services.Products
         private readonly IMongoCollection<Discount_Product> _dbDis;
         private readonly IMongoCollection<Item> _dbItem;
         private readonly IMongoCollection<Item_type> _dbItemtype;
+        private readonly IMongoCollection<ProductComment> _dbProductComment;
+
         private readonly DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
 
         public ProductService(DataContext db)
@@ -24,7 +26,9 @@ namespace DataAndServices.Admin_Services.Products
             _dbDis = db.GetDiscountProductCollection();
             _dbItem = db.GetItemCollection();
             _dbItemtype = db.GetItem_TypeCollection();
+            _dbProductComment = db.GetProductCommentCollection();
         }
+
         public double GetPriceDiscountByIdList(string id)
         {
             DateTime dateTime = DateTime.Today;
@@ -67,24 +71,23 @@ namespace DataAndServices.Admin_Services.Products
             catch
             {
                 return 0;
-            }   
+            }
         }
 
         public bool DeleteAccount(string id)
         {
             try
             {
-                
                 var deleteFilter = Builders<Product>.Filter.Eq("_id", id);
                 var deleteFilter2 = Builders<Item>.Filter.Eq("_id", id);
                 var deleteFilter3 = Builders<Discount_Product>.Filter.Eq("_id", id);
 
                 _db.DeleteOne(deleteFilter);
-               
+
                 _dbItem.DeleteOne(id);
 
                 _dbDis.DeleteOne(id);
-            
+
                 return true;
             }
             catch
@@ -93,9 +96,9 @@ namespace DataAndServices.Admin_Services.Products
             }
         }
 
-        public async Task<List<Product_Item_Type>> GetAllProductItem(string userLogin) 
-        { 
-            var itemCollection =  db.GetItemCollection();
+        public async Task<List<Product_Item_Type>> GetAllProductItem(string userLogin)
+        {
+            var itemCollection = db.GetItemCollection();
             var productCollection = db.GetProductClientCollection();
             var infoProduct = from item in itemCollection.AsQueryable()
                               join product in productCollection.AsQueryable() on item._id equals product._id
@@ -112,7 +115,6 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo3 = product.Photo3,
                                   Id_Item = product.Id_Item,
                                   Quantity = item.Quantity
-
                               };
             return await infoProduct.ToListAsync();
         }
@@ -135,21 +137,22 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo3 = product.Photo3,
                                   Id_Item = product.Id_Item,
                                   Quantity = item.Quantity
-
                               };
+            foreach (var item in infoProduct)
+            {
+                var productComment = _dbProductComment.Find(cmt => cmt.ProductId == item._id).ToList();
+                item.Comments = productComment;
+            }
             return await infoProduct.ToListAsync();
         }
-
-
 
         public List<List<Dis_Product>> GetAllProductItem_Type(string userLogin)
         {
             List<Item_type> item_Types = new List<Item_type>();
             List<List<Dis_Product>> productsByType = new List<List<Dis_Product>>();
-            item_Types = _dbItemtype.Find(s=>true).ToList();
+            item_Types = _dbItemtype.Find(s => true).ToList();
             foreach (Item_type item in item_Types)
             {
-
                 List<Dis_Product> products = GetProductById_Item(item.Id_Item);
                 var productsByMerchant = products.Where(p => p.AccountId == userLogin).ToList();
                 productsByType.Add(productsByMerchant);
@@ -164,7 +167,6 @@ namespace DataAndServices.Admin_Services.Products
             item_Types = _dbItemtype.Find(s => true).ToList();
             foreach (Item_type item in item_Types)
             {
-
                 List<Dis_Product> products = GetProductById_Item(item.Id_Item);
                 productsByType.Add(products);
             }
@@ -173,12 +175,12 @@ namespace DataAndServices.Admin_Services.Products
 
         public async Task<List<Product>> GetAllProducts(string userLogin)
         {
-            return await _db.Find(s =>s.AccountId == userLogin).ToListAsync();
+            return await _db.Find(s => s.AccountId == userLogin).ToListAsync();
         }
 
         public async Task<List<Product>> GetAllProductsByEndUser()
         {
-            return await _db.FindSync(s=> true).ToListAsync();
+            return await _db.FindSync(s => true).ToListAsync();
         }
 
         public List<Dis_Product> GetAllProduct_Discount(string userLogin)
@@ -206,7 +208,7 @@ namespace DataAndServices.Admin_Services.Products
                             AccountId = product.AccountId
                         });
 
-            return  Info.ToList();  
+            return Info.ToList();
         }
 
         public List<Dis_Product> GetAllProduct_Discount()
@@ -238,7 +240,6 @@ namespace DataAndServices.Admin_Services.Products
 
         public async Task<Product> GetProductById(string id)
         {
-
             return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
         }
 
@@ -248,7 +249,7 @@ namespace DataAndServices.Admin_Services.Products
             var productCollection = db.GetProductClientCollection();
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
-                        where product.Id_Item==id
+                        where product.Id_Item == id
                         select new Dis_Product()
                         {
                             _id = dis._id,
@@ -269,26 +270,28 @@ namespace DataAndServices.Admin_Services.Products
             return Info.ToList();
         }
 
-        public  Product_Item_Type GetProductItemById(string id)
+        public Product_Item_Type GetProductItemById(string id)
         {
             var itemCollection = db.GetItemCollection();
             var productCollection = db.GetProductClientCollection();
-            var Info =  (from item in itemCollection.AsQueryable()
-                       join product in productCollection.AsQueryable() on item._id equals product._id
-                       where  item._id == id
-                       select new Product_Item_Type()
-                       {
-                           _id = item._id,
-                           Name = product.Name,
-                           Price = product.Price,
-                           Details = product.Details,
-                           Photo = product.Photo,
-                           Photo2 = product.Photo2,
-                           Photo3 = product.Photo3,
-                           Id_Item = product.Id_Item,
-                           Quantity = item.Quantity
+            var Info = (from item in itemCollection.AsQueryable()
+                        join product in productCollection.AsQueryable() on item._id equals product._id
+                        where item._id == id
+                        select new Product_Item_Type()
+                        {
+                            _id = item._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,
+                            Quantity = item.Quantity
+                        }).FirstOrDefault();
+            var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
+            Info.Comments = productComment;
 
-                       }).FirstOrDefault();
             if (GetPriceDiscountById(Info._id) != 0)
             {
                 Info.Price = Convert.ToInt32(GetPriceDiscountById(Info._id));
@@ -326,10 +329,11 @@ namespace DataAndServices.Admin_Services.Products
                             Id_Item = product.Id_Item,
                             Quantity = item.Quantity
                         }).FirstOrDefault();
-           
-            return  Info;
+            var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
+            Info.Comments = productComment;
+
+            return Info;
         }
-    
 
         public Product_Item_Type GetProductItemById_admin(string id)
         {
@@ -337,7 +341,7 @@ namespace DataAndServices.Admin_Services.Products
             var productCollection = db.GetProductClientCollection();
             var Info = (from item in itemCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product._id
-                        where item._id == id 
+                        where item._id == id
                         select new Product_Item_Type()
                         {
                             _id = item._id,
@@ -349,10 +353,10 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
                             Quantity = item.Quantity
-                        });
-
-            return Info.FirstOrDefault();
-            
+                        }).FirstOrDefault();
+            var productComment = _dbProductComment.Find(cmt => cmt.ProductId == id).ToList();
+            Info.Comments = productComment;
+            return Info;
         }
 
         public List<Product_Item_Type> GetProductItemById_client(int id)
@@ -361,7 +365,7 @@ namespace DataAndServices.Admin_Services.Products
             var productCollection = db.GetProductClientCollection();
             var Info = (from item in itemTypeCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item.Id_Item equals product.Id_Item
-                        where  item.Id_Item == id
+                        where item.Id_Item == id
                         select new Product_Item_Type()
                         {
                             _id = item._id,
@@ -377,12 +381,14 @@ namespace DataAndServices.Admin_Services.Products
 
             foreach (var item in Info)
             {
+                var productComment = _dbProductComment.Find(cmt => cmt.ProductId == item._id).ToList();
+                item.Comments = productComment;
                 if (GetPriceDiscountByIdList(item._id) != 0)
                 {
                     item.Price = Convert.ToInt32(GetPriceDiscountById(item._id));
                 }
             }
-            return  Info.ToList();
+            return Info.ToList();
         }
 
         public List<Product_Item_Type> GetProductItemByPageList()
@@ -405,7 +411,7 @@ namespace DataAndServices.Admin_Services.Products
                             Quantity = item.Quantity
                         });
 
-            return  Info.ToList();
+            return Info.ToList();
         }
 
         public Dis_Product GetProduct_DiscountById(string id)
@@ -414,7 +420,7 @@ namespace DataAndServices.Admin_Services.Products
             var productCollection = db.GetProductClientCollection();
             var infoProduct_discount = from dis in discountProCollection.AsQueryable()
                                        join product in productCollection.AsQueryable() on dis._id equals product._id
-                                       where dis._id == id 
+                                       where dis._id == id
                                        select new Dis_Product()
                                        {
                                            _id = dis._id,
@@ -430,13 +436,12 @@ namespace DataAndServices.Admin_Services.Products
                                            Start = dis.Start,
                                            End = dis.End
                                        };
-            return  infoProduct_discount.FirstOrDefault();
+            return infoProduct_discount.FirstOrDefault();
         }
 
         public bool InsertProduct_Discount(Discount_Product custom)
         {
-
-            Discount_Product prodItem =  _dbDis.Find(p => p._id == custom._id).FirstOrDefault();
+            Discount_Product prodItem = _dbDis.Find(p => p._id == custom._id).FirstOrDefault();
             if (prodItem != null)
             {
                 var eqfilter = Builders<Discount_Product>.Filter.Where(s => s._id == custom._id);
@@ -448,14 +453,14 @@ namespace DataAndServices.Admin_Services.Products
 
                 var options = new UpdateOptions { IsUpsert = true };
                 _dbDis.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);
-                
+
                 return true;
             }
             else
             {
                 _dbDis.InsertOne(custom);
             }
-            
+
             return false;
         }
 
@@ -473,27 +478,22 @@ namespace DataAndServices.Admin_Services.Products
                     .Set(s => s._id, custom._id)
                     .Set(s => s.Id_Item, custom.Id_Item);
 
-
                 var options = new UpdateOptions { IsUpsert = true };
                 _db.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);
 
                 var eqfilter2 = Builders<Item>.Filter.Where(s => s._id == custom._id);
                 var update2 = Builders<Item>.Update.Set(s => s._id, custom._id)
-                    .Set(s => s.Quantity, custom.Quantity);                   
+                    .Set(s => s.Quantity, custom.Quantity);
 
                 var options2 = new UpdateOptions { IsUpsert = true };
                 _dbItem.UpdateOneAsync(eqfilter2, update2, options2).ConfigureAwait(false);
 
                 return true;
-            }   
+            }
             catch (Exception)
             {
                 return false;
             }
         }
-
-       
     }
 }
-
-

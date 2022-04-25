@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace DataAndServices.DataModel
 {
@@ -18,6 +19,8 @@ namespace DataAndServices.DataModel
         public string Photo2 { get; set; }
 
         public string Photo3 { get; set; }
+
+        public List<ProductComment> Comments { get; set; }
 
         public string Details { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataAndServices.DataModel;
+using System.Collections.Generic;
 
 namespace DataAndServices.CommonModel
 {
@@ -24,8 +25,9 @@ namespace DataAndServices.CommonModel
 
         public string AccountId { get; set; }
 
-
         public string Details { get; set; }
+
+        public List<ProductComment> Comments { get; set; }
 
     }
 }

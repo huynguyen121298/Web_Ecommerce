@@ -147,59 +147,10 @@
                                                 <a class="btn" href="@Url.Action("Buy_", "Cart")"><i class="fa fa-shopping-bag"></i>Xác nhận </a>
                                             </li>
 
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="pill" href="#reviews">Góp ý về sản phẩm (1)</a>
-                                            </li>
+                                            
                                         </ul>
 
-                                        <div class="tab-content">
-                                            <div id="reviews" class="container tab-pane fade">
-                                                <div class="reviews-submitted">
-                                                    <div class="reviewer"> Để lại đánh giá của bạn - <span>@DateTime.Now</span></div>
-                                                    <div class="ratting">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-
-                                                </div>
-                                                <div class="reviews-submit">
-                                                    <h4>Để lại phản hồi của bạn</h4>
-                                                    <div class="ratting">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                    @using (Html.BeginForm("saveFeedbacks2", "Home", FormMethod.Post))
-                                                    {
-                                                        <div class="row form">
-                                                            <div class="col-sm-6">
-                                                                <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
 
@@ -300,7 +251,7 @@
             Swal.fire({
                 position: 'top',
                 icon: 'success',
-                title: 'Thêm sản phẩm thành công',
+                title: 'Thành công',
                 showConfirmButton: false,
                 timer: 300000
             })

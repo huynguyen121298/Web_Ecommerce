@@ -1,5 +1,7 @@
 using Model.DTO.DTO_Ad;
 using Model.DTO.DTO_Client;
+using Model.DTO_Model;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
@@ -50,16 +52,14 @@ namespace UI.Controllers
 
         }
 
-        public ActionResult saveFeedbacks2(FormCollection fc, DTO_Feedback fb)
+        public ActionResult saveFeedbacks2(FormCollection fc, DTO_Product_Item_Type fb)
         {
 
             try
             {
-                fb.Name = fc["Name"];
-                fb.Email = fc["Email"];
-                fb.Details = fc["details"];
-                fb.SDT = (fc["SDT"]);
-                fb.Content = fc["content"];
+
+                var fullName = Request.Cookies["firstname"].Value;
+                //fb.Comments = fc["content"];
                 ServiceRepository serviceObj = new ServiceRepository();
                 HttpResponseMessage response = serviceObj.PostResponse("api/Home/Create/", fb);
                 response.EnsureSuccessStatusCode();
@@ -72,21 +72,25 @@ namespace UI.Controllers
             }
         }
 
-        public ActionResult saveFeedbacksYeuThich(FormCollection fc, DTO_Feedback fb)
+        public ActionResult saveFeedbacksYeuThich(FormCollection fc, DTO_Product_Item_Type product)
         {
 
             try
             {
+              
 
-                fb.Name = fc["Name"];
-                fb.Email = fc["Email"];
-                fb.Details = fc["details"];
-                fb.SDT = (fc["SDT"]);
-                fb.Content = fc["content"];
+                var dtoComment = new DtoProductComment()
+                {
+                    ProductId = product._id,
+                    DateTimeComment = DateTime.Now,
+                    FullName = Request.Cookies["firstname"].Value,
+                    Content = fc["content"]
+                };
+            
                 ServiceRepository serviceObj = new ServiceRepository();
-                HttpResponseMessage response = serviceObj.PostResponse("api/Home/Create/", fb);
+                HttpResponseMessage response = serviceObj.PostResponse("api/Home/AddComment/", dtoComment);
                 response.EnsureSuccessStatusCode();
-                ViewData["ErrorMessage"] = ("Gửi phản hồi thành công");
+                ViewData["ErrorMessage"] = ("Gửi bình luận thành công");
                 return RedirectToAction("YeuThich", "Cart");
             }
             catch

@@ -1,5 +1,6 @@
 ﻿using DataAndServices.CommonModel;
 using DataAndServices.DataModel;
+using Model.DTO_Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace DataAndServices.Client_Services
         List<Dis_Product> GetProductByMerchant(string merchantId);
 
         List<Account> GetMerchantByName(string merchantName);
+
+        bool InsertComment(ProductComment product);
 
         int GetSoLuong(string id);
     }

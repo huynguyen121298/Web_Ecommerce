@@ -145,6 +145,27 @@
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                             </div>
+                                            @foreach (var comment in item.Comments)
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                                            <div class="mr-3">
+                                                                <div class="icon-circle bg-primary">
+                                                                    <i class="fas fa-file-alt text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="small text-gray-500">@comment.DateTimeComment</div>
+                                                                <span class="font-weight-bold">@comment.FullName</span>
+                                                                <span class="font-weight-bold">@comment.Content</span>
+                                                            </div>
+                                                        </a>
+
+                                                    </td>
+                                                </tr>
+                                            }
 
                                         </div>
                                         <div class="reviews-submit">
@@ -160,18 +181,8 @@
                                             @using (Html.BeginForm("saveFeedbacksLuaChon", "Home", FormMethod.Post))
                                             {
                                                 <div class="row form">
-                                                    <div class="col-sm-6">
-                                                        <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
-                                                    </div>
+                                                    
+                                                   
                                                     <div class="col-sm-12">
                                                         <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
                                                     </div>
