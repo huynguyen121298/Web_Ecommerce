@@ -4,6 +4,7 @@ using DataAndServices.DataModel;
 using Model.DTO.DTO_Ad;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,8 +68,10 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         public double? GetMonthlyRevenue(int month)
         {
-           
-            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao.Month == month).ToList();
+
+            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành").ToList();
+
+            var test = checkoutCustomers.Where(s => s.NgayTao.Month == month);
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
 
@@ -83,10 +86,10 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return monthTotal;
         }
 
-        public double? GetYearRevenue(int year)
+        public double? GetDateRevenue(DateTime date)
         {
 
-            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao.Year == year).ToList();
+            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao == date ).ToList();
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
 

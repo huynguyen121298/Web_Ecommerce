@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace DataAndServices.DataModel
 {
@@ -14,5 +15,7 @@ namespace DataAndServices.DataModel
         public string Subject { get; set; }
 
         public string Content { get; set; }
+
+        public DateTime? DateTime { get; set; } 
     }
 }

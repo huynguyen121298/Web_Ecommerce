@@ -106,6 +106,7 @@ namespace UI.Controllers
                     check.ProductOrder.Add(dTO_Checkout_Order);
 
                     var notification = new DtoMerchantNotification();
+                    notification.DateTime = DateTime.Now;
                     notification.AccountId = item.AccountId;
                     notification.Subject = "Đơn hàng mới";
                     notification.Content = "Đơn hàng" + item.Name + "đã được đặt bởi khách hàng" + check.FirstName + " " + check.LastName;

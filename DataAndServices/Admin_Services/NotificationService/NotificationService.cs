@@ -18,6 +18,7 @@ namespace DataAndServices.Admin_Services.NotificationService
         {
             try
             {
+                
                 _db.InsertMany(request);
                 return true;
             }

@@ -4,4 +4,172 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/css/calendar.css" rel="stylesheet" />
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Thu nhập (Hàng Tháng)
+                            </div>
+                            @*<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>*@
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                        <input type="month"/>
+                        <input type="date" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Thu nhập (Hàng năm)
+                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
+                                    Xóa
+                                </button>
+                            </div>
+                            @*<div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>*@
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Nhiệm vụ
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    @*<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>*@
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar"
+                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Yêu cầu đang đợi giải quyết
+                            </div>
+                            @*<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>*@
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn xác nhận xóa không?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bấm Xóa để xác nhận Xóa, Đóng để hủy
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <a class="btn btn-primary" @*href=" @Url.Action("Delete", "Checkout_Customer", new { id =})*@ onclick="xoaSanPham()">Xóa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var app = {
+            settings: {
+                container: $('.calendar'),
+                calendar: $('.front'),
+                days: $('.weeks span'),
+                form: $('.back'),
+                input: $('.back input'),
+                buttons: $('.back button')
+            },
+
+            init: function () {
+                instance = this;
+                settings = this.settings;
+                this.bindUIActions();
+            },
+
+            swap: function (currentSide, desiredSide) {
+                settings.container.toggleClass('flip');
+
+                currentSide.fadeOut(900);
+                currentSide.hide();
+                desiredSide.show();
+
+            },
+
+            bindUIActions: function () {
+                settings.days.on('click', function () {
+                    instance.swap(settings.calendar, settings.form);
+                    settings.input.focus();
+                });
+
+                settings.buttons.on('click', function () {
+                    instance.swap(settings.form, settings.calendar);
+                });
+            }
+        }
+
+        app.init();
+    </script>
+
+
+</div>
+
+
 

@@ -1,5 +1,6 @@
 ﻿using DataAndServices.DataModel;
 using Model.DTO.DTO_Ad;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         double? GetMonthlyRevenue(int month);
 
-        double? GetYearRevenue(int year);
+        double? GetDateRevenue(DateTime date);
 
         bool Update_Ad_acc(CheckoutCustomerOrder dTO_Account);
 

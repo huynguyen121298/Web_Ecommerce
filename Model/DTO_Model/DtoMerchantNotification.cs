@@ -1,4 +1,6 @@
-﻿namespace Model.DTO_Model
+﻿using System;
+
+namespace Model.DTO_Model
 {
     public class DtoMerchantNotification
     {
@@ -9,5 +11,7 @@
         public string Subject { get; set; }
 
         public string Content { get; set; }
+
+        public DateTime? DateTime { get; set; }
     }
 }
