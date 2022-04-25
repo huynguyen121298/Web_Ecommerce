@@ -1,5 +1,6 @@
 ﻿using DataAndServices.DataModel;
 using Model.DTO.DTO_Ad;
+using Model.DTO_Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         Task<List<CheckoutCustomerOrder>> GetListAccountById(string id);
 
-        double? GetMonthlyRevenue(int month);
+        DtoSalesVM GetMonthlyRevenue(string month);
 
         double? GetDateRevenue(DateTime date);
 

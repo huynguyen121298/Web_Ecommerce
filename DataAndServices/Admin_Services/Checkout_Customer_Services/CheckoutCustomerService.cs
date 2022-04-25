@@ -2,6 +2,7 @@
 using DataAndServices.Data;
 using DataAndServices.DataModel;
 using Model.DTO.DTO_Ad;
+using Model.DTO_Model;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -66,23 +67,83 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return ckCustomerOrders;          
         }
 
-        public double? GetMonthlyRevenue(int month)
+
+        public static string[] SplitBitforBit(string text, int bitforbit)
         {
+            int splitcount = Convert.ToInt32(RoundAt(text.Length / bitforbit, 0, 0));
+            char[] allChars = text.ToCharArray();
+            string[] splitted = new string[splitcount];
+            int iL = 0;
+            for (int i = 0; i != splitted.Length; i++)
+            {
+                splitted[i] = null;
+                for (int j = 0; j != bitforbit; j++)
+                {
+                    splitted[i] += allChars[iL];
+                    iL++;
+                }
+            }
+            return splitted;
+        }
+
+        public static double RoundAt(double Number, int Position, int startUp)
+        {
+            double Up = Math.Abs(Number) * Math.Pow(10, Position);
+            double temp = Up;
+            double Out;
+            while (Up > 0)
+            {
+                Up--;
+            }
+            Out = temp - Up;                           //Up
+            if (Up < (Convert.ToDouble(startUp) - 10) / 10)
+            { Out = temp - Up - 1; }                   //Down
+            if (Number < 0)
+            { Out *= -1; }
+            Out /= Math.Pow(10, Position);
+            return Out;
+        }
+        public DtoSalesVM GetMonthlyRevenue(string monthDate)
+        {
+
+
+            string[] splitted = SplitBitforBit(monthDate, 4);
+            int year = Convert.ToInt32(splitted[0]);
+            int month = Convert.ToInt32(splitted[1]);
+
+           
+            int daysInMonth = DateTime.DaysInMonth(year, month);
+            var days = Enumerable.Range(1, daysInMonth);
+           
+           
+          
 
             var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành").ToList();
 
-            var test = checkoutCustomers.Where(s => s.NgayTao.Month == month);
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
 
-            var monthTotal = dtocheckoutCustomers.Select(s=>s.TongTien).Sum();
 
-            //foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
-            //{
-            //    dtocheckoutCustomer.TongTienThang = monthTotal;
-            //}
+            var test = dtocheckoutCustomers.Where(x => x.NgayTao.Year == year && x.NgayTao.Month == month).Select(g => new
+            {
+                Day = g.NgayTao.Day,
+                Total = g.TongTien
+            }); ;
 
-            //return dtocheckoutCustomers;
+            var monthTotal = new DtoSalesVM
+            {
+                Date = new DateTime(year, month, 1),
+                Days = days.GroupJoin(test, d => d, q => q.Day, (d, q) => new DtoDayTotalVM
+                {
+                    Day = d,
+                    Total = (decimal)q.Sum(x => x.Total)
+                }).ToList()
+            };
+            monthTotal.Month = month;
+            monthTotal.Year = year;
+
+            //var monthTotal = dtocheckoutCustomers.Select(s=>s.TongTien).Sum();
+
             return monthTotal;
         }
 

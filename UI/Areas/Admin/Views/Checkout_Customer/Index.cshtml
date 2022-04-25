@@ -57,7 +57,7 @@
                         <th>Mã CODE</th>
                         <th>Giảm giá</th>
                         <th>Tổng tiền sau giảm</th>
-                        <th>Sản phẩm đã đặt hàng</th> 
+                        <th>Sản phẩm đã đặt hàng</th>
                         <th>Trạng thái</th>
                         <th>Lựa chọn</th>
 
@@ -113,12 +113,12 @@
                                 @Html.DisplayFor(modelItem => item.Zipcode)
                             </td>
                             <td>
-                                @string.Format("{0:0,0}", item.GiamGia) 
+                                @string.Format("{0:0,0}", item.GiamGia)
                             </td>
                             <td>
                                 @string.Format("{0:0,0}", item.TongTien) VNĐ
                             </td>
-                             <td>
+                            <td>
                                 @item.ProductOrder.Count() Cái
                             </td>
                             <td>

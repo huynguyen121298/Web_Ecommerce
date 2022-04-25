@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.DTO_Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -32,7 +33,7 @@ namespace Model.DTO.DTO_Ad
 
         public string Zipcode { get; set; }
 
-        public DateTime? NgayTao { get; set; }
+        public DateTime NgayTao { get; set; }
 
         public double? GiamGia { get; set; }
 

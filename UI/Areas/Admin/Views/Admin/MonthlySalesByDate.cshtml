@@ -1,4 +1,5 @@
-﻿
+﻿@model  Model.DTO_Model.DtoSalesVM
+
 <table class="table table-striped" id="datatable">
     <thead>
         <tr class="dataTableHead">
@@ -12,9 +13,9 @@
         <tr>
             <td>
                 @{
-                    <text>@year - @mnth - </text>
+                    <text>@Model.Year- @Model.Month - </text>
                     @Html.DisplayFor(m => m.Days[i].Day);
-                    DateTime dateValue = new DateTime(year, mnth, Model.Days[i].Day);
+                    DateTime dateValue = new DateTime(Model.Year, Model.Month, Model.Days[i].Day);
                     <text> :  @dateValue.ToString("dddd")</text>
 
                 }
