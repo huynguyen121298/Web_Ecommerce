@@ -164,6 +164,7 @@
     <Compile Include="DataModel\Item_type.cs" />
     <Compile Include="DataModel\MerchantNotification.cs" />
     <Compile Include="DataModel\Product.cs" />
+    <Compile Include="DataModel\ProductComment.cs" />
     <Compile Include="DataModel\Role.cs" />
     <Compile Include="DataModel\User_Acc.cs" />
     <Compile Include="DataModel\User_Acc_Client.cs" />

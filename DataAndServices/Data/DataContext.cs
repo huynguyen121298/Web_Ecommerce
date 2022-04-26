@@ -7,9 +7,14 @@ namespace DataAndServices.Data
     {
         private MongoClient mongoClient { get; }
         private IMongoDatabase Database { get; }
+        //public DataContext(string connectionString, string dbName)
+        //{
+        //    mongoClient = new MongoClient("mongodb://localhost:27017");
+        //    Database = mongoClient.GetDatabase("OnlineShop");
+        //}
         public DataContext(string connectionString, string dbName)
         {
-            mongoClient = new MongoClient("mongodb://localhost:27017");
+            mongoClient = new MongoClient("mongodb+srv://huyadmin:Huyhuy123@cluster0.plas1.mongodb.net/OnlineShop?retryWrites=true&w=majority");
             Database = mongoClient.GetDatabase("OnlineShop");
         }
 

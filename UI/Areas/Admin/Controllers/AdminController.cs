@@ -31,7 +31,7 @@ namespace UI.Areas.Admin.Controllers
             if (monthlySalesByDate == null)
             {
                 ViewData["MonthlySalesByDate"] = ("Vui lòng chọn thời gian");
-                return View();
+                return View("~/Admin/Admin/Index");
             }
 
             HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetMonthlyRevenue/"+monthlySalesByDate);

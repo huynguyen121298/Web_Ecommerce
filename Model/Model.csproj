@@ -64,7 +64,10 @@
     <Compile Include="DTO\DTO_Client\DTO_CodeDiscount.cs" />
     <Compile Include="DTO\DTO_Client\DTO_Feedback.cs" />
     <Compile Include="DTO_Model\DTOCheckoutCustomerOrder.cs" />
+    <Compile Include="DTO_Model\DtoDayTotalVM.cs" />
     <Compile Include="DTO_Model\DtoMerchantNotification.cs" />
+    <Compile Include="DTO_Model\DtoProductComment.cs" />
+    <Compile Include="DTO_Model\DtoSalesVM.cs" />
     <Compile Include="DTO_Model\DTO_Account_Role.cs" />
     <Compile Include="DTO\DTO_Ad\DTO_Checkout_Customer.cs" />
     <Compile Include="DTO\DTO_Ad\DTO_Checkout_Order.cs" />

@@ -2548,6 +2548,7 @@
     <Content Include="Areas\Admin\Views\Products_Add\Product_Discount.cshtml" />
     <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\MonthlySalesByDate.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutIndex.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />

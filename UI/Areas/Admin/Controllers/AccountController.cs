@@ -62,7 +62,7 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         [DeatAuthorize(Order = 2)]
-        public ActionResult AddRegister(RegisterAdminModel model, string AuthenticationCode)
+        public ActionResult AddRegister(RegisterAdminModel model)
         {
 
             if (ModelState.IsValid)
@@ -86,6 +86,7 @@ namespace UI.Areas.Admin.Controllers
                     MerchantName = model.MerchantName
                 };
                 var stt = Request.Form["stt"];
+                var merchantInput = Request.Form["merchantInput"];
                 if (stt == "Admin")
                 {
                     c.RoleId = 1;
@@ -95,7 +96,10 @@ namespace UI.Areas.Admin.Controllers
                 }
                 else
                 {
-
+                    if(merchantInput == null)
+                    {
+                        ViewData["ErrorMessage"] = "Tên doanh nghiệp không được để trống";
+                    }
                     c.RoleId = 2;
 
                     HttpResponseMessage response = serviceObj.PostResponse(url + "InsertAccount/", c);
@@ -150,8 +154,9 @@ namespace UI.Areas.Admin.Controllers
             else
             {
                 ViewData["ErrorMessage"] = ("Tên đăng nhập hoặc mật khẩu không tồn tại.");
+                return this.View();
             }
-            return this.View();
+            
 
         }
         public ActionResult Logout()

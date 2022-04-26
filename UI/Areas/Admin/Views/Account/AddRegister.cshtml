@@ -43,10 +43,10 @@
 
     </div>
 
-    <div class="form-group">
+    <div class="form-group" id="merchantInput" style="display:none">
         @Html.Label(" Nhập Tên doanh nghiệp", htmlAttributes: new { @class = "fa fa-user" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.MerchantName, new { htmlAttributes = new { @class = "form-control" } })
+            <input type="text" class="form-control" name="merchantInput"/>
             @Html.ValidationMessageFor(model => model.MerchantName, "", new { @class = "text-danger" })
         </div>
 
@@ -72,7 +72,7 @@
     <div class="form-group">
         @Html.Label(" Chọn quyền:", htmlAttributes: new { @class = "fa fa-lock-open" })
         <div class="col-md-10">
-            <select name="stt" id="stt">
+            <select name="stt" id="stt" onchange="ShowInput()" >
 
                 <option>Admin</option>
                 <option>User</option>
@@ -105,3 +105,15 @@
     </div>
 
 </div>
+<script>
+    function ShowInput() {
+        var valueSelect = $("#stt").val();
+        console.log("value is :" +valueSelect)
+        if (valueSelect == "Admin") {
+            $("#merchantInput").hide();
+        } else {
+            $("#merchantInput").show();
+        }
+        
+    }
+</script>
