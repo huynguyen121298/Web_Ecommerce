@@ -14,7 +14,7 @@ namespace DataAndServices.Data
         //}
         public DataContext(string connectionString, string dbName)
         {
-            mongoClient = new MongoClient("mongodb+srv://huyadmin:Huyhuy123@cluster0.plas1.mongodb.net/OnlineShop?retryWrites=true&w=majority");
+            mongoClient = new MongoClient("mongodb+srv://huyadmin2:Huyhuy123@cluster0.plas1.mongodb.net/OnlineShop?retryWrites=true&w=majority");
             Database = mongoClient.GetDatabase("OnlineShop");
         }
 

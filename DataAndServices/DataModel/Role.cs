@@ -6,6 +6,8 @@ namespace DataAndServices.DataModel
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string _id { get; set; }
+
         public int RoleId { get; set; }
 
         public string RoleName { get; set; }

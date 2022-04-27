@@ -49,8 +49,8 @@ namespace UI.Areas.Admin.Controllers
             return "~/images_merchant/" + file.FileName;
         }
 
-        [HttpPost]
-        public ActionResult Edit(DTO_Account2 dTO_Account, HttpPostedFileBase ImageUploadMerchant)
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Edit(DTO_Account2 dTO_Account, HttpPostedFileBase ImageUpload)
         {
             var stt = Request.Form["stt"];
             var pass = Request.Form["pass"];
@@ -73,13 +73,13 @@ namespace UI.Areas.Admin.Controllers
             }
             else
             {
-                if (ImageUploadMerchant != null)
+                if (ImageUpload != null)
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(ImageUploadMerchant.FileName);
-                    string extension = Path.GetExtension(ImageUploadMerchant.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
                     fileName = fileName + extension;
                     dTO_Account.Photo = "~/images_merchant/" + fileName;
-                    ImageUploadMerchant.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
+                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
                 }
 
                 dTO_Account.RoleId = 2;
@@ -95,6 +95,7 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
+                Request.Cookies["firstname1"].Value = dTO_Account.FirstName + dTO_Account.LastName;
                 return RedirectToAction("Index","Admin");
             }
             

@@ -17,7 +17,7 @@ namespace DataAndServices.Client_Services
         private readonly IMongoCollection<Discount_Product> _dbDis;
         private readonly IMongoCollection<Account> _dbAcc;
         private readonly IMongoCollection<ProductComment> _dbProductComment;
-        private DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
+        //private DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
         public ProductClientService(DataContext db)
         {
             _db = db.GetProductClientCollection();
@@ -28,8 +28,8 @@ namespace DataAndServices.Client_Services
         }
         public List<Dis_Product> GetAllProductByName(string name)
         {
-            var discountCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
 
@@ -59,8 +59,8 @@ namespace DataAndServices.Client_Services
 
         public List<Dis_Product> GetAllProductByPrice(int? gia, int? gia_)
         {
-            var discountCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
 
@@ -146,8 +146,8 @@ namespace DataAndServices.Client_Services
         public List<Dis_Product> GetProductByMerchant(string merchantId)
         {
 
-            var discountCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
 
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id

@@ -2271,6 +2271,7 @@
     <Content Include="images\tuixach.jpg" />
     <Content Include="images_product\aonam2.jpg" />
     <Content Include="images_product\aothunnu.jpg" />
+    <Content Include="images_product\ap.jpg" />
     <Content Include="images_product\balo.jpg" />
     <Content Include="images_product\bep2.jpg" />
     <Content Include="images_product\bep3.jpg" />
@@ -2535,7 +2536,7 @@
     <Content Include="Areas\Admin\Views\Products_Add\GetAllProductByType.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Index2.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutClone.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_1.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_2.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_Acc.cshtml" />
@@ -2548,7 +2549,8 @@
     <Content Include="Areas\Admin\Views\Products_Add\Product_Discount.cshtml" />
     <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\MonthlySalesByDate.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\BagNotification.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />

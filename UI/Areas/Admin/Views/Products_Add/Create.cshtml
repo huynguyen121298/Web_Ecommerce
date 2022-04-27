@@ -55,18 +55,44 @@
     <div class="form-group">
         Chọn hình ảnh cho sản phẩm
         <div class="col-md-10">
+            <ol>
 
-            <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
+                
+                    <ol>
+                                <li>
+                                    <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
+
+                                    <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
+                                </li>
+                        
+
+                                <li>
+                                    <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
+
+                                    <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
+                                </li>
+                        
+
+                     
+                                <li>
+
+                                    <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
+
+                                    <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
+                                </li>
+                        
+
+
+
+                    </ol>
+             
+
+            </ol>
+
             
-            <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
 
-            <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
-            
-            <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
+        
 
-            <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
-           
-            <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
 
             <p style="color:red">@ViewData["ErrorMessage"]</p>
         </div>

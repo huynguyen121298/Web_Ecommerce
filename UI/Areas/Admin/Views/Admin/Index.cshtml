@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutIndex.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/css/calendar.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,6 +38,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Thu nhập (Hàng tháng)
+                                <br />
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#saleMonth">
                                     Chọn tháng
                                 </button>
@@ -49,6 +50,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <p style="color:red;font-style:italic" id="messageMonthlySalesByDate"></p>
             </div>
         </div>
 
@@ -104,86 +108,51 @@
             </div>
         </div>
     </div>
+    @using (Html.BeginForm("MonthlySalesByDate", "Admin", FormMethod.Post))
+    {
+        <div class="modal fade" id="saleMonth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Vui lòng chọn thời gian</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bấm để chọn ngày, Đóng để hủy
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <input type="month" id="saleByDate" name="saleByDate2" >
+                        <input type="submit" class="btn btn-primary" value="Xác nhận"/>
 
-    <div class="modal fade" id="saleMonth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Vui lòng chọn thời gian</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Bấm để chọn ngày, Đóng để hủy
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <input type="month" name="saleByDate">
-                    <a class="btn btn-primary" href=" @Url.Action("MonthlySalesByDate", "Admin") ">Xác nhận</a>
 
-                </div>
-                <div class="col-md-6">
-                    <p style="color:red;font-style:italic" id="messageMonthlySalesByDate">@ViewData["MonthlySalesByDate"]</p>
+                    </div>
+                   
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-
-        var app = {
-            settings: {
-                container: $('.calendar'),
-                calendar: $('.front'),
-                days: $('.weeks span'),
-                form: $('.back'),
-                input: $('.back input'),
-                buttons: $('.back button')
-            },
-
-            init: function () {
-                instance = this;
-                settings = this.settings;
-                this.bindUIActions();
-            },
-
-            swap: function (currentSide, desiredSide) {
-                settings.container.toggleClass('flip');
-
-                currentSide.fadeOut(900);
-                currentSide.hide();
-                desiredSide.show();
-
-            },
-
-            bindUIActions: function () {
-                settings.days.on('click', function () {
-                    instance.swap(settings.calendar, settings.form);
-                    settings.input.focus();
-                });
-
-                settings.buttons.on('click', function () {
-                    instance.swap(settings.form, settings.calendar);
-                });
-            }
-        }
-
-        app.init();
-    </script>
+    }
 
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 </div>
-@section Upload {
-    <script>
-        $(function () {
-            function show_popup() {
-                $("#MonthlySalesByDate").hide();
 
-            };
-            window.setTimeout(show_popup, 5000); // 5 seconds
-        });
-    </script>
-}
+<script>
+    if (@ViewData["MonthlySalesByDate"] != null) {
+        alert("hello")
+    }
+            
+
+
+
+
+</script>
+
 
 
 

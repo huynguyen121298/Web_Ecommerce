@@ -1,10 +1,12 @@
-﻿using Model.DTO.DTO_Client;
+﻿using Model.DTO.DTO_Ad;
+using Model.DTO.DTO_Client;
 using Model.DTO_Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Mvc;
+using UI.Areas.Admin.Common;
 using UI.Security_;
 using UI.Service;
 
@@ -23,15 +25,14 @@ namespace UI.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult MonthlySalesByDate()
+        public ActionResult MonthlySalesByDate(FormCollection formCollection)
         {
-            var monthlySalesByDate = Request.Form["saleByDate"];
-
+            string monthlySalesByDate = formCollection["saleByDate2"];
             //check if year is null
-            if (monthlySalesByDate == null)
+            if (monthlySalesByDate == "")
             {
                 ViewData["MonthlySalesByDate"] = ("Vui lòng chọn thời gian");
-                return View("~/Admin/Admin/Index");
+                return RedirectToAction("Index", "Admin");
             }
 
             HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetMonthlyRevenue/"+monthlySalesByDate);
@@ -49,6 +50,31 @@ namespace UI.Areas.Admin.Controllers
             responseMessage.EnsureSuccessStatusCode();
             List<DTO_Feedback> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Feedback>>().Result;
             return View(dTO_Accounts);
+        }
+
+        public PartialViewResult BagNotification()
+        {
+
+            try
+            {
+                var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+                HttpResponseMessage responseUser = service.GetResponse("api/notification/GetNotiByMerchant/" + dTO_Account._id);
+
+                responseUser.EnsureSuccessStatusCode();
+                List<DtoMerchantNotification> result = responseUser.Content.ReadAsAsync<List<DtoMerchantNotification>>().Result;
+
+               
+                ViewBag.Quantity = result;
+
+                
+            }
+            catch
+            {
+
+                ViewBag.Quantity = 0;
+
+            }
+            return PartialView("BagNotification");
         }
     }
 }

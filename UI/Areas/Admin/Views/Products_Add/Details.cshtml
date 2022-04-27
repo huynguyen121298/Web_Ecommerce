@@ -37,70 +37,37 @@
         <dt>
             Chi tiết sản phẩm:  @Html.DisplayFor(model => model.Details)
         </dt>
+        <ol>
+            
+            <li>
+                Hình ảnh<ol>
+    @if (Model.Photo != null)
+    {
+        <li>
+            <img src="@Url.Content(Model.Photo)" style="height:100px ;width:100px ; margin:10px " />
+        </li>
+    }
 
-        @if (Model.Photo != null)
-        {
-            <dt>
-                Link hình ảnh :  @Html.DisplayFor(model => model.Photo)
-            </dt>
+    @if (Model.Photo2 != null)
+    {
+        <li>
+            <img src="@Url.Content(Model.Photo2)" style="height:100px ;width:100px ; margin:10px " />
+        </li>
+    }
 
-            <dd>
+    @if (Model.Photo3 != null)
+    {
+        <li>
+            <img src="@Url.Content(Model.Photo3)" style="height:100px ;width:100px ; margin:10px " />
+        </li>
+    }
 
-            </dd>
+    
 
-            <dt>
-                Hỉnh ảnh sản phẩm 1:
-
-            </dt>
-
-            <dd>
-                <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
-
-            </dd>
-        }
-
-
-        @if (Model.Photo2 != null)
-        {
-            <dt>
-                Link hình ảnh 2 :  @Html.DisplayFor(model => model.Photo2)
-            </dt>
-
-            <dd>
-
-            </dd>
-
-            <dt>
-                Hỉnh ảnh sản phẩm 2:
-
-            </dt>
-
-            <dd>
-                <img src="@Url.Content(Model.Photo2)" style="height:200px ;width:200px ; margin:10px " />
-
-            </dd>
-        }
-
-        @if (Model.Photo3 != null)
-        {
-            <dt>
-                Link hình ảnh 3 :@Html.DisplayFor(model => model.Photo3)
-            </dt>
-
-            <dd>
-
-            </dd>
-
-            <dt>
-                Hỉnh ảnh sản phẩm 3:
-
-            </dt>
-
-            <dd>
-                <img src="@Url.Content(Model.Photo3)" style="height:200px ;width:200px ; margin:10px " />
-
-            </dd>
-        }
+</ol>
+            </li>
+            
+        </ol>
 
 
         <dt>

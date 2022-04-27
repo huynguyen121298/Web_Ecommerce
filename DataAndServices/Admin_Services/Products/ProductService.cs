@@ -18,7 +18,7 @@ namespace DataAndServices.Admin_Services.Products
         private readonly IMongoCollection<Item_type> _dbItemtype;
         private readonly IMongoCollection<ProductComment> _dbProductComment;
 
-        private readonly DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
+        //private readonly DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
 
         public ProductService(DataContext db)
         {
@@ -98,8 +98,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public async Task<List<Product_Item_Type>> GetAllProductItem(string userLogin)
         {
-            var itemCollection = db.GetItemCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemCollection = _dbItem;
+            var productCollection = _db;
             var infoProduct = from item in itemCollection.AsQueryable()
                               join product in productCollection.AsQueryable() on item._id equals product._id
                               where product.AccountId == userLogin
@@ -114,15 +114,16 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo2 = product.Photo2,
                                   Photo3 = product.Photo3,
                                   Id_Item = product.Id_Item,
-                                  Quantity = item.Quantity
+                                  Quantity = item.Quantity,
+                                  AccountId = product.AccountId
                               };
             return await infoProduct.ToListAsync();
         }
 
         public async Task<List<Product_Item_Type>> GetAllProductItemByEndUser()
         {
-            var itemCollection = db.GetItemCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemCollection = _dbItem;
+            var productCollection = _db;
             var infoProduct = from item in itemCollection.AsQueryable()
                               join product in productCollection.AsQueryable() on item._id equals product._id
 
@@ -136,7 +137,8 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo2 = product.Photo2,
                                   Photo3 = product.Photo3,
                                   Id_Item = product.Id_Item,
-                                  Quantity = item.Quantity
+                                  Quantity = item.Quantity,
+                                  AccountId = product.AccountId
                               };
             foreach (var item in infoProduct)
             {
@@ -185,8 +187,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Dis_Product> GetAllProduct_Discount(string userLogin)
         {
-            var discountCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
 
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
@@ -213,8 +215,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Dis_Product> GetAllProduct_Discount()
         {
-            var discountCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
 
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
@@ -245,8 +247,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Dis_Product> GetProductById_Item(int id)
         {
-            var discountCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
                         where product.Id_Item == id
@@ -272,8 +274,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public Product_Item_Type GetProductItemById(string id)
         {
-            var itemCollection = db.GetItemCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemCollection = _dbItem;
+            var productCollection = _db;
             var Info = (from item in itemCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product._id
                         where item._id == id
@@ -287,7 +289,8 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
-                            Quantity = item.Quantity
+                            Quantity = item.Quantity,
+                            AccountId = product.AccountId
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
@@ -313,8 +316,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public Product_Item_Type GetProductItemById2(string id)
         {
-            var itemCollection = db.GetItemCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemCollection = _dbItem;
+            var productCollection = _db;
             var Info = (from item in itemCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product._id
                         select new Product_Item_Type()
@@ -327,7 +330,8 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
-                            Quantity = item.Quantity
+                            Quantity = item.Quantity,
+                            AccountId = product.AccountId
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
@@ -337,8 +341,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public Product_Item_Type GetProductItemById_admin(string id)
         {
-            var itemCollection = db.GetItemCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemCollection = _dbItem;
+            var productCollection = _db;
             var Info = (from item in itemCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product._id
                         where item._id == id
@@ -352,7 +356,8 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
-                            Quantity = item.Quantity
+                            Quantity = item.Quantity,
+                            AccountId = product.AccountId
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == id).ToList();
             Info.Comments = productComment;
@@ -361,8 +366,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Product_Item_Type> GetProductItemById_client(int id)
         {
-            var itemTypeCollection = db.GetItem_TypeCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemTypeCollection = _dbItemtype;
+            var productCollection = _db;
             var Info = (from item in itemTypeCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item.Id_Item equals product.Id_Item
                         where item.Id_Item == id
@@ -376,7 +381,8 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
-                            Type_Product = item.Type_Product
+                            Type_Product = item.Type_Product,
+                            AccountId = product.AccountId
                         }).ToList();
 
             foreach (var item in Info)
@@ -393,8 +399,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Product_Item_Type> GetProductItemByPageList()
         {
-            var itemCollection = db.GetItemCollection();
-            var productCollection = db.GetProductClientCollection();
+            var itemCollection = _dbItem;
+            var productCollection = _db;
             var Info = (from item in itemCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product._id
                         orderby item._id
@@ -408,7 +414,8 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             Id_Item = product.Id_Item,
-                            Quantity = item.Quantity
+                            Quantity = item.Quantity,
+                            AccountId = product.AccountId
                         });
 
             return Info.ToList();
@@ -416,8 +423,8 @@ namespace DataAndServices.Admin_Services.Products
 
         public Dis_Product GetProduct_DiscountById(string id)
         {
-            var discountProCollection = db.GetDiscountProductCollection();
-            var productCollection = db.GetProductClientCollection();
+            var discountProCollection = _dbDis;
+            var productCollection = _db;
             var infoProduct_discount = from dis in discountProCollection.AsQueryable()
                                        join product in productCollection.AsQueryable() on dis._id equals product._id
                                        where dis._id == id

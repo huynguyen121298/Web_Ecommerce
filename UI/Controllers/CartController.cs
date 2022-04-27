@@ -109,7 +109,7 @@ namespace UI.Controllers
                     notification.DateTime = DateTime.Now;
                     notification.AccountId = item.AccountId;
                     notification.Subject = "Đơn hàng mới";
-                    notification.Content = "Đơn hàng" + item.Name + "đã được đặt bởi khách hàng" + check.FirstName + " " + check.LastName;
+                    notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
                     notifications.Add(notification);
                 }
 

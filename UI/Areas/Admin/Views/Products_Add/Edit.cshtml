@@ -115,39 +115,45 @@
              
                  
              <div class="col-md-10">
-                 @{
-                     if (Model.Photo != null)
-                     {
-                         @*<p style="font-style:italic">Hiện tại 1:</p>*@
-                         @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @style = "display:none" } })
-                         @*<p style="font-style:italic">Hình ảnh mới 1:</p>*@
-                         <input type="file" name="ImageUpload" onchange="upAnh(this)" />
-                         <img src="@Url.Content(Model.Photo)" style="height:50px; width:50px; margin:10px; " id="chonAnh" />
-                     }
+                 <ol>
 
-                     if (Model.Photo2 != null)
-                     {
-                         @*<p style="font-style:italic">Hiện tại 2:</p>
-                @Html.EditorFor(model => model.Photo2, new { htmlAttributes = new { @class = "form-control" } })
-                <p style="font-style:italic">Hình ảnh mới 2:</p>*@
-                         @Html.EditorFor(model => model.Photo2, new { htmlAttributes = new { @style = "display:none" } })
-                         <input type="file" name="ImageUpload2" onchange="upAnh2(this)" />
-                         <img src="@Url.Content(Model.Photo2)" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
-                     }
+                     <ol>
+                             @if (Model.Photo != null)
+                             {
+                                     <li>
+                                         @*<p style="font-style:italic">Hiện tại 1:</p>*@
+                                         @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @style = "display:none" } })
+                                         @*<p style="font-style:italic">Hình ảnh mới 1:</p>*@
+                                         <input type="file" name="ImageUpload" onchange="upAnh(this)" />
+                                         <img src="@Url.Content(Model.Photo)" style="height:50px; width:50px; margin:10px; " id="chonAnh" />
+                                     </li>
+                             }
 
-                     if (Model.Photo3 != null)
-                     {
-                         @*<p style="font-style:italic">Hiện tại 3:</p>
-                @Html.EditorFor(model => model.Photo3, new { htmlAttributes = new { @class = "form-control" } })
-                <p style="font-style:italic">Hình ảnh mới 3:</p>*@
-                         @Html.EditorFor(model => model.Photo3, new { htmlAttributes = new { @style = "display:none" } })
-                         <input type="file" name="ImageUpload3" onchange="upAnh3(this)" />
-                         <img src="@Url.Content(Model.Photo3)" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
+                             @if (Model.Photo2 != null)
+                             {
+                                 <li>
+                                     @Html.EditorFor(model => model.Photo2, new { htmlAttributes = new { @style = "display:none" } })
+                                     <input type="file" name="ImageUpload2" onchange="upAnh2(this)" />
+                                     <img src="@Url.Content(Model.Photo2)" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
+                                 </li>
+                             }
+
+                             @if (Model.Photo3 != null)
+                             {
+                                 <li>
+                                     @Html.EditorFor(model => model.Photo3, new { htmlAttributes = new { @style = "display:none" } })
+                                     <input type="file" name="ImageUpload3" onchange="upAnh3(this)" />
+                                     <img src="@Url.Content(Model.Photo3)" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
+                                 </li>
+                             }
 
 
-                     }
 
-                 }
+                         </ol>
+                    
+
+                 </ol>
+               
              </div>
                  
 

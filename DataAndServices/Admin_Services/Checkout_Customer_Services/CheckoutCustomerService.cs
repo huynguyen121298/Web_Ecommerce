@@ -108,8 +108,10 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
 
             string[] splitted = SplitBitforBit(monthDate, 4);
+            string[] splitted2 = SplitBitforBit(monthDate, 1);
+           
             int year = Convert.ToInt32(splitted[0]);
-            int month = Convert.ToInt32(splitted[1]);
+            int month = Convert.ToInt32((""+splitted2[5] +splitted2[6]+""));
 
            
             int daysInMonth = DateTime.DaysInMonth(year, month);
