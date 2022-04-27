@@ -1,10 +1,12 @@
-﻿using Model.DTO.DTO_Client;
+﻿using Model.Common;
+using Model.DTO.DTO_Client;
 using Model.DTO_Model;
 using PagedList;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Mvc;
+using UI.Models;
 using UI.Service;
 
 namespace UI.Controllers
@@ -296,6 +298,7 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult Buy_Favorite(string Id)
         {
+           
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             int checkBuy = CheckBuy(Id);
             if (checkBuy == 0)
@@ -305,12 +308,11 @@ namespace UI.Controllers
             }
             if (checkBuy == 1)
             {
+                
                 return Json(new { buy = cart, status = "Thành công" });
             }
-
+           
             return Json(new { buy = cart, status = "Thành công" });
-
-
 
         }
 
@@ -404,19 +406,7 @@ namespace UI.Controllers
 
                 //var product = db.Products.Find(Id);
 
-                new DTO_Product_Item_Type()
-                {
-                    _id = proItem._id,
-                    Name = proItem.Name,
-                    Price = proItem.Price,
-                    Details = proItem.Details,
-                    Photo = proItem.Photo,
-                    Photo2 = proItem.Photo2,
-                    Photo3 = proItem.Photo3,
-                    Id_Item = proItem.Id_Item,
-                    Quantity = 1,
-                    AccountId = proItem.AccountId
-                };
+              
                 Session["cart__"] = proItem;
             }
             else
@@ -426,19 +416,7 @@ namespace UI.Controllers
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
 
-                new DTO_Product_Item_Type()
-                {
-                    _id = proItem._id,
-                    Name = proItem.Name,
-                    Price = proItem.Price,
-                    Details = proItem.Details,
-                    Photo = proItem.Photo,
-                    Photo2 = proItem.Photo2,
-                    Photo3 = proItem.Photo3,
-                    Id_Item = proItem.Id_Item,
-                    Quantity = 1,
-                    AccountId = proItem.AccountId
-                };
+               
                 Session["cart__"] = proItem;
             }
             return RedirectToAction("LuaChon", "Cart");

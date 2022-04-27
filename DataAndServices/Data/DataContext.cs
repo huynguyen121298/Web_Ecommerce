@@ -26,6 +26,11 @@ namespace DataAndServices.Data
         {
             return Database.GetCollection<Product>("Product");
         }
+
+        public IMongoCollection<ProductAction> GetProductActionCollection()
+        {
+            return Database.GetCollection<ProductAction>("ProductAction");
+        }
         public IMongoCollection<Product> GetProductClientCollection()
         {
             return Database.GetCollection<Product>("Product");

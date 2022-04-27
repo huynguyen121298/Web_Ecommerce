@@ -1,6 +1,8 @@
 ﻿using DataAndServices.Admin_Services.Products;
 using DataAndServices.Client_Services;
+using DataAndServices.DataModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace H_Shop.NetCore.Controllers.API_Client
@@ -76,6 +78,22 @@ namespace H_Shop.NetCore.Controllers.API_Client
         }
 
         [HttpGet]
+        [Route("GetProductsBought/{userId}")]
+        public IActionResult GetProductsBought(string userId )
+        {
+            var listProItemByPage = _productClientService.GetProductsBought(userId);
+            return Ok(listProItemByPage);
+        }
+
+        [HttpGet]
+        [Route("GetProductsFavorite/{userId}")]
+        public IActionResult GetProductsFavorite(string userId)
+        {
+            var listProItemByPage = _productClientService.GetProductsFavorite(userId);
+            return Ok(listProItemByPage);
+        }
+
+        [HttpGet]
         [Route("GetAllProductItem")]
         public async Task<IActionResult> GetAllProductItem()
         {
@@ -105,6 +123,22 @@ namespace H_Shop.NetCore.Controllers.API_Client
         public int GetSoLuong(string Id)
         {
             return  _productClientService.GetSoLuong(Id);
+        }
+
+        [HttpPost]
+        [Route("AddProductAction")]
+        public bool InsertProductAction(List<ProductAction> productActions)
+        {
+            return _productClientService.InsertProductAction(productActions);
+
+        }
+
+        [HttpPut]
+        [Route("DeleteProductAction")]
+        public bool DeleteProductAction(ProductAction productAction)
+        {
+            return _productClientService.DeleteProductAction(productAction);
+
         }
     }
 }

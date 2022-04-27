@@ -469,6 +469,28 @@ namespace UI.Controllers
         }
 
 
+        public ActionResult ProductBought()
+        {
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            HttpResponseMessage responseUser = serviceObj.GetResponse("api/product/GetProductsBought/" + userLogin._id);
+
+            responseUser.EnsureSuccessStatusCode();
+            List<DTO_Product> result = responseUser.Content.ReadAsAsync<List<DTO_Product>>().Result;
+
+            return PartialView(result);
+        }
+
+        public ActionResult ProductFavorite()
+        {
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            HttpResponseMessage responseUser = serviceObj.GetResponse("api/product/GetProductsFavorite/" + userLogin._id);
+
+            responseUser.EnsureSuccessStatusCode();
+            List<DTO_Product> result = responseUser.Content.ReadAsAsync<List<DTO_Product>>().Result;
+
+            return PartialView(result);
+        }
+
         public ActionResult UserPartial()
         {
             return PartialView();

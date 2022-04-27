@@ -20,6 +20,12 @@ namespace DataAndServices.Client_Services
 
         bool InsertComment(ProductComment product);
 
+        bool DeleteProductAction(ProductAction product);
+
+        bool InsertProductAction(List<ProductAction> productActions);
+
         int GetSoLuong(string id);
+        List<Product> GetProductsBought(string userId);
+        List<Product> GetProductsFavorite(string userId);
     }
 }

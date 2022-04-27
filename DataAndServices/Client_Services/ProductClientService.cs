@@ -1,6 +1,7 @@
 ﻿using DataAndServices.CommonModel;
 using DataAndServices.Data;
 using DataAndServices.DataModel;
+using Model.Common;
 using Model.DTO_Model;
 using MongoDB.Driver;
 using System;
@@ -17,6 +18,7 @@ namespace DataAndServices.Client_Services
         private readonly IMongoCollection<Discount_Product> _dbDis;
         private readonly IMongoCollection<Account> _dbAcc;
         private readonly IMongoCollection<ProductComment> _dbProductComment;
+        private readonly IMongoCollection<ProductAction> _dbProductAction;
         //private DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
         public ProductClientService(DataContext db)
         {
@@ -25,6 +27,7 @@ namespace DataAndServices.Client_Services
             _dbDis = db.GetDiscountProductCollection();
             _dbAcc = db.GetAccountCollection();
             _dbProductComment = db.GetProductCommentCollection();
+            _dbProductAction = db.GetProductActionCollection();
         }
         public List<Dis_Product> GetAllProductByName(string name)
         {
@@ -190,6 +193,84 @@ namespace DataAndServices.Client_Services
             {
                 return false;
             }
+        }
+
+        public bool InsertProductAction(List<ProductAction> productActions)
+        {
+            try
+            {
+                _dbProductAction.InsertMany(productActions);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteProductAction(ProductAction product)
+        {
+            try
+            {
+                var userAction = _dbProductAction.Find(p => p.UserId == product.UserId).ToList();
+                var productByEnduser = userAction.FirstOrDefault(s => s.ProductId == product.ProductId);
+
+                var deleteFilter = Builders<ProductAction>.Filter.Eq("_id", productByEnduser._id);
+                _dbProductAction.DeleteOne(deleteFilter);
+               
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<Product> GetProductsBought(string userId)
+        {
+            var prActionollection = _dbProductAction;
+            var productCollection = _db;
+            var Info = (from product in productCollection.AsQueryable()
+                        join prAction in prActionollection.AsQueryable() on product._id equals prAction.ProductId
+                        where prAction.UserId == userId && prAction.Status == ProductActionConstant.PRODUCT_BOUGHT
+                        select new Product()
+                        {
+                            _id = product._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,                 
+                            AccountId = product.AccountId
+                        });
+
+            return Info.ToList();         
+        }
+
+        public List<Product> GetProductsFavorite(string userId)
+        {
+            var prActionollection = _dbProductAction;
+            var productCollection = _db;
+            var Info = (from product in productCollection.AsQueryable()
+                        join prAction in prActionollection.AsQueryable() on product._id equals prAction.ProductId
+                        where prAction.UserId == userId && prAction.Status == ProductActionConstant.PRODUCT_FAVORITE
+                        select new Product()
+                        {
+                            _id = product._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            Id_Item = product.Id_Item,
+                            AccountId = product.AccountId
+                        });
+
+            return Info.ToList();
         }
     }
 }

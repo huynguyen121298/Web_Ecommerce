@@ -58,9 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\ProductActionConstant.cs" />
     <Compile Include="DTO\BoolResult.cs" />
     <Compile Include="DTO\DTO_Ad\DTO_Account.cs" />
     <Compile Include="DTO\DTO_Ad\DTO_Account2.cs" />
+    <Compile Include="DTO\DTO_Client\DtoProductAction.cs" />
     <Compile Include="DTO\DTO_Client\DTO_CodeDiscount.cs" />
     <Compile Include="DTO\DTO_Client\DTO_Feedback.cs" />
     <Compile Include="DTO_Model\DTOCheckoutCustomerOrder.cs" />

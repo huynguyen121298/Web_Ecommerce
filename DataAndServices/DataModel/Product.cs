@@ -20,8 +20,6 @@ namespace DataAndServices.DataModel
 
         public string Photo3 { get; set; }
 
-        public List<ProductComment> Comments { get; set; }
-
         public string Details { get; set; }
 
         public int Id_Item { get; set; }

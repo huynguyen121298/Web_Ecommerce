@@ -2950,6 +2950,8 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Merchant\Index.cshtml" />
     <Content Include="Views\Merchant\ProductByMerchant.cshtml" />
+    <Content Include="Views\Customer\ProductBought.cshtml" />
+    <Content Include="Views\Customer\ProductFavorite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
