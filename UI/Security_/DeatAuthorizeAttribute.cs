@@ -29,7 +29,7 @@ namespace UI.Security_
             else
             {
                 var hasRole = session.RoleId;
-                if (hasRole == Order)
+                if (hasRole == Order || hasRole ==null)
                 {
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "NotAuthorize" }));
                 }

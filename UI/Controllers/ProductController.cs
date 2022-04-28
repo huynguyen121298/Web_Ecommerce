@@ -1,4 +1,5 @@
 ﻿using Model.Common;
+using Model.DTO.DTO_Ad;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;
 using PagedList;
@@ -29,7 +30,8 @@ namespace UI.Controllers
             var searchName = fc["searchName"];
             var priceGiaMin = Request.Form["priceGiaMin"];
             var priceGiaMax = Request.Form["priceGiaMax"];
-            
+            var searchMerchant = fc["searchMerchant"];
+
 
             if (page == null) page = 1;
             int pageSize = 25;
@@ -64,6 +66,12 @@ namespace UI.Controllers
 
                 List<DTO_Dis_Product> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
                 return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
+            }
+            if (searchMerchant != null && searchMerchant != "")
+            {
+               // create session
+                return RedirectToAction("Index", "Merchant");
+                //return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
             }
             try
             {
@@ -103,7 +111,7 @@ namespace UI.Controllers
 
             HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByName/" + searchName);
             responseMessage2.EnsureSuccessStatusCode();
-            List<DTO_Product> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Product>>().Result;
+            List<Model.DTO.DTO_Client.DTO_Product> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<Model.DTO.DTO_Client.DTO_Product>>().Result;
 
             return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
         }

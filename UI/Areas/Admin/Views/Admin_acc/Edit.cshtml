@@ -51,7 +51,7 @@
     }
 </h2>
 
-@using (Html.BeginForm("Edit", "Admin_acc", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Admin_acc", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -141,7 +141,6 @@
                                     $("#chonAnh").attr("src", e.target.result);
                                 }
                                 reader.readAsDataURL(input.files[0]);
-                                alert("hello");
                             }
                             
                             

@@ -52,7 +52,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
         [Route("GetMerchantByName/{merchantName}")]
         public IActionResult GetMerchantByName(string merchantName)
         {
-            var proByName = _productClientService.GetAllProductByName(merchantName);
+            var proByName = _productClientService.GetMerchantByName(merchantName);
             return Ok(proByName);
         }
 

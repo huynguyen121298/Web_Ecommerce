@@ -2,9 +2,23 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var monthYear = DateTime.Now;
+    var year = ""+monthYear.Year;
+    string month = null;
+    if(monthYear.Month < 10)
+    {
+        month = "-0" + monthYear.Month;
+    }
+    else
+    {
+        month = "" + monthYear.Month;
+    }
+
+
+    var test = year + month;
+
 }
 
-<link href="~/css/calendar.css" rel="stylesheet" />
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -110,6 +124,8 @@
     </div>
     @using (Html.BeginForm("MonthlySalesByDate", "Admin", FormMethod.Post))
     {
+
+   
         <div class="modal fade" id="saleMonth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -124,15 +140,16 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <input type="month" id="saleByDate" name="saleByDate2" >
-                        <input type="submit" class="btn btn-primary" value="Xác nhận"/>
+                        <input type="month" id="saleByDate" name="saleByDate2" value="@test">
+                        <input type="submit" class="btn btn-primary" value="Xác nhận" />
 
 
                     </div>
-                   
+
                 </div>
             </div>
         </div>
+        
     }
 
 
@@ -144,9 +161,8 @@
 
 <script>
     if (@ViewData["MonthlySalesByDate"] != null) {
-        alert("hello")
     }
-            
+
 
 
 

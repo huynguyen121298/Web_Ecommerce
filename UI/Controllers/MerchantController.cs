@@ -14,6 +14,7 @@ namespace UI.Controllers
         // GET: Merchant
         public ActionResult Index(FormCollection fc, int? page)
         {
+            //get session
             if (page == null) page = 1;
             int pageSize = 25;
 

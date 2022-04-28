@@ -58,6 +58,7 @@ namespace UI.Areas.Admin.Controllers
             try
             {
                 var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+                
                 HttpResponseMessage responseUser = service.GetResponse("api/notification/GetNotiByMerchant/" + dTO_Account._id);
 
                 responseUser.EnsureSuccessStatusCode();

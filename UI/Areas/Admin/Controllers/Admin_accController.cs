@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using UI.Areas.Admin.Common;
 using UI.Security_;
 using UI.Service;
 
@@ -80,6 +81,18 @@ namespace UI.Areas.Admin.Controllers
                     fileName = fileName + extension;
                     dTO_Account.Photo = "~/images_merchant/" + fileName;
                     ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
+                    var adminLogin = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+
+                    
+                    
+                    if (dTO_Account._id == adminLogin._id)
+                    {
+                        var userSession = new DTO_Account();
+                        userSession = adminLogin;
+                        userSession.Photo = dTO_Account.Photo;
+                        Session.Remove(CommonConstants.ACCOUNT_SESSION);
+                        Session.Add(CommonConstants.ACCOUNT_SESSION, userSession);
+                    }
                 }
 
                 dTO_Account.RoleId = 2;

@@ -269,16 +269,22 @@
 
                                 }
 
-                                @*@if (dTO_Account.Photo != null)
-                                    {
-                                        <img class="img-profile rounded-circle" src=@Url.Content(dTO_Account.Photo)>
-                                    }
-                                    @if(fdTO_Account.Photo != null){ }*@
-
-
                                 <img class="img-profile rounded-circle"
-                                     src="~/Content/admin/img/undraw_profile.svg">
+                                     src="~/Content/admin/img/profile-Icon-SVG.jpg" style="display:none" >
+                                @if (test.Photo != null)
+        {
+            <img class="img-profile rounded-circle" src=@Url.Content(test.Photo)>
+        }
+      
+
+
+                              
+
+
                             </a>
+
+                           
+                            
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">

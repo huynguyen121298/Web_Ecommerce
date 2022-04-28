@@ -11,9 +11,22 @@
     List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
     var total = cart.Sum(item => item.Quantity * item.Price);
     var total1 = cart.Count();
+    var discount = 0;
+    var totalShow = 0;
 
 
 }
+<style>
+    input {
+        border: 5px solid white;
+        -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1);
+        -moz-box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1);
+        box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1);
+        padding: 15px;
+        background: rgba(255,255,255,0.5);
+        margin: 0 0 10px 0;
+    }
+</style>
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
@@ -77,6 +90,7 @@
                                 </div>
 
                             </div>
+                            <br />
                             <input type="submit" class="btn btn-success" value="Hoàn thành">
 
                         </div>
@@ -93,33 +107,31 @@
                                 <p class="ship-cost">Giảm giá<span>VNĐ</span></p>*@
                             <div class="cart-content">
 
-                                <p>
-                                    Thanh Toán<span>
+                                <p id="totalBefore" style="color:red">
+                                    Thanh Toán : <span>
 
                                         @string.Format("{0:0,0}", total)
                                         VNĐ
                                     </span>
                                 </p>
-                                <p>
-                                    Giảm giá <input type="text" readonly style=" opacity:0.5; width:45px; height:30px" id="discount" name="discount1" />%
 
+                                <p id="totalAfter" style="color:red; display:none" >
+                                    Tổng thanh toán : <span> </span>
+                                    <span>
 
-                                </p>
-
-                                <p>
-                                    Tổng thanh toán
-                                    <br />
-                                    <span style="color:red">
-                                        @*@{
-                                                List<Item> cart1 = (List<Item>)Session["cart"];
-                                                var total1 = cart1.Sum(item => item.Product.Price * item.Quantity);
-                                            }
-                                            @total -*@
-
-                                        <input readonly id="gia1" style="opacity: 0.5; width:150px" name="gia1" type="text" value="@total " />
-
+                                        <input readonly id="gia1"  name="gia1" type="reset" value=" @string.Format("{0:0,0}", total)
+                                        VNĐ" />
                                     </span>
                                 </p>
+
+                                @*<p>
+                                    <input type="text" readonly style=" opacity:0.5; width:45px; height:30px" id="discount" name="discount1" />
+                                    <br />
+
+                                    <span style="font-style:italic">"the value for number is: " @discount</span>
+                                </p>*@
+
+
                             </div>
                         </div>
                     </div>
@@ -144,6 +156,7 @@
         $('#gia').val(@total -(@total* dis));
 
     };
+
     function DiscountPrice() {
         var priceCode = $('#pricecode').val();
         console.log(priceCode);
@@ -156,14 +169,22 @@
             success: function (res) {
                 console.log();
                 $("#discount").val(res.checkout * 100)
-                var dis = res.checkout;
-                $('#gia1').val(@total -(@total* dis));
 
-                var myJsVariable = '@ViewBag.Message';
+                var dis = res.checkout;
+                let dollarUSLocale = Intl.NumberFormat('en-US');
+                $('#gia1').val(dollarUSLocale.format(@total - (@total* dis)));
+
+                var myJsVariable = '@total1';
                 var message =  @Html.Raw(Json.Encode(this.ViewBag.Message));
                 console.log("Message is: " + myJsVariable);
                 console.log("Message is: " + message);
                 $('#discount-message').text(myJsVariable);
+                if (dis > 0) {
+                    $("#totalBefore").hide();
+                    $("#totalAfter").show();
+                }
+
+
             }
         });
 
