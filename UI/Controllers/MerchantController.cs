@@ -1,4 +1,5 @@
-﻿using Model.DTO.DTO_Ad;
+﻿using Model.Common;
+using Model.DTO.DTO_Ad;
 using Model.DTO_Model;
 using PagedList;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace UI.Controllers
             int pageSize = 25;
 
             int pageNumber = (page ?? 1);
-            var searchMerchant = fc["searchMerchant"];
+            var searchMerchant = (string)Session[Constants.SEARCHMERCHANT]; ;
 
             //Get product by merchant
             if (searchMerchant != null && searchMerchant != "")
@@ -29,8 +30,9 @@ namespace UI.Controllers
 
                 List<DTO_Account2> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Account2>>().Result;
                 return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
-            }
-            return View();
+            }  
+            var merchant = new List<DTO_Account2>();
+            return View(merchant.ToPagedList(pageNumber, pageSize));
 
         }
 
@@ -38,8 +40,15 @@ namespace UI.Controllers
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/Product/GetProductByMerchant/"+merchantId);
             responseMessage.EnsureSuccessStatusCode();
-            List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
+            List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
             var view = dTO_Accounts.ToPagedList(1, 50);
+
+            HttpResponseMessage responseMessage2 = service.GetResponse("api/Admin_acc/GetAccountById/" + merchantId);
+            responseMessage2.EnsureSuccessStatusCode();
+
+            DTO_Account2 dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<DTO_Account2>().Result;
+
+            ViewData["MerchantName"] = dTO_Accounts2.MerchantName;
 
             return View(view);
         }

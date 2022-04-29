@@ -11,6 +11,7 @@ namespace UI.Areas.Admin.Controllers
     {
         ServiceRepository service = new ServiceRepository();
 
+        [AuthorizeLoginAdmin]
         // GET: Admin/Admin_acc
         [DeatAuthorize(Order = 2)]
         public ActionResult Index()
@@ -21,6 +22,7 @@ namespace UI.Areas.Admin.Controllers
             return View(DTO_User_Accs);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Edit(string id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -31,6 +33,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dtoAccounts);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Details(string id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -41,6 +44,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dtoAccounts);
         }
 
+        [AuthorizeLoginAdmin]
         [HttpPost]
         public ActionResult Edit(DTO_User_Acc DTO_User_Acc)
         {
@@ -59,6 +63,7 @@ namespace UI.Areas.Admin.Controllers
             return  RedirectToAction("Index");
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Delete(string id)
         {
             try

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Controllers
@@ -28,6 +29,7 @@ namespace UI.Controllers
             return PartialView(result);
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult saveFeedbacks(FormCollection fc, DTO_Feedback fb)
         {
 
@@ -52,6 +54,7 @@ namespace UI.Controllers
 
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult saveFeedbacks2(FormCollection fc, DTO_Product_Item_Type fb)
         {
 
@@ -72,6 +75,7 @@ namespace UI.Controllers
             }
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult saveFeedbacksYeuThich(FormCollection fc, DTO_Product_Item_Type product)
         {
 
@@ -100,6 +104,8 @@ namespace UI.Controllers
 
 
         }
+
+        [AuthorizeLoginEndUser]
         public ActionResult saveFeedbacksLuaChon(FormCollection fc, DTO_Feedback fb)
         {
 

@@ -16,6 +16,7 @@ namespace UI.Areas.Admin.Controllers
     {
         ServiceRepository service = new ServiceRepository();
 
+        [AuthorizeLoginAdmin]
         public ActionResult Index()
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetDateRevenue");
@@ -25,6 +26,7 @@ namespace UI.Areas.Admin.Controllers
             return View();
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult MonthlySalesByDate(FormCollection formCollection)
         {
             string monthlySalesByDate = formCollection["saleByDate2"];

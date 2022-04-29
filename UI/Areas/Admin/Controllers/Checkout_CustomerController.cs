@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
 using UI.Areas.Admin.Common;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Areas.Admin.Controllers
@@ -12,6 +13,7 @@ namespace UI.Areas.Admin.Controllers
     {
         ServiceRepository service = new ServiceRepository();
 
+        [AuthorizeLoginAdmin]
         public ActionResult Index(string seachby)
         {
             var timkiemtim = Request.Form["timkiemtim"];
@@ -34,6 +36,7 @@ namespace UI.Areas.Admin.Controllers
             }
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Edit(string id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -44,6 +47,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dtocustomer);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Details(string id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -54,6 +58,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dtocustomer);
         }
 
+        [AuthorizeLoginAdmin]
         [HttpPost]
         public ActionResult Edit(DTOCheckoutCustomerOrder DTO_Checkout_Customer)
         {
@@ -64,6 +69,7 @@ namespace UI.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Delete(string id)
         {
             try

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Mvc;
 using UI.Models;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Controllers
@@ -69,7 +70,9 @@ namespace UI.Controllers
             }
             if (searchMerchant != null && searchMerchant != "")
             {
-               // create session
+                // create session
+                
+                Session.Add(Constants.SEARCHMERCHANT,searchMerchant );
                 return RedirectToAction("Index", "Merchant");
                 //return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
             }
@@ -290,7 +293,7 @@ namespace UI.Controllers
         }
 
 
-
+        [AuthorizeLoginEndUser]
         public ActionResult Buy(string Id)
         {
             int checkBuy = CheckBuy(Id);
@@ -303,6 +306,8 @@ namespace UI.Controllers
 
 
         }
+
+        [AuthorizeLoginEndUser]
         [HttpPost]
         public ActionResult Buy_Favorite(string Id)
         {
@@ -324,6 +329,7 @@ namespace UI.Controllers
 
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Giam(string Id, DTO_Product_Item_Type item1)
         {
 
@@ -347,6 +353,8 @@ namespace UI.Controllers
             return Json(new { soLuong = li });
 
         }
+
+        [AuthorizeLoginEndUser]
         public ActionResult Update(string Id, FormCollection fc)
         {
 
@@ -380,6 +388,8 @@ namespace UI.Controllers
             Session["cart"] = li;
             return RedirectToAction("Details", "Product");
         }
+
+        [AuthorizeLoginEndUser]
         public ActionResult Tang(string Id, DTO_Product_Item_Type item1)
         {
             int checkBoy = CheckBuy(Id);
@@ -403,6 +413,7 @@ namespace UI.Controllers
 
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Details1(string Id)
         {
             if (Session["cart__"] == null)

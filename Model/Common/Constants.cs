@@ -19,5 +19,6 @@ namespace Model.Common
         public static string AUTHENTICATIONEMAIL_SESSION = "AUTHENTICATIONEMAIL_SESSION";
         public static string CART_SESSION = "CART_SESSION";
         public static string TOKEN_NUMBER = "TOKEN_NUMBER";
+        public static string SEARCHMERCHANT = "SEARCH_MERCHANT";
     }
 }

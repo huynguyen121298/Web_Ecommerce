@@ -1,7 +1,13 @@
-﻿namespace Model.DTO.DTO_Client
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
+
+namespace Model.DTO.DTO_Client
 {
     public class DTO_CodeDiscount
     {
+        public string _id { get; set; }
+
         public string Zipcode { get; set; }
 
         public double Discount { get; set; }

@@ -14,6 +14,7 @@ namespace UI.Areas.Admin.Controllers
     {
         ServiceRepository service = new ServiceRepository();
 
+        [AuthorizeLoginAdmin]
         [DeatAuthorize(Order = 2)]
         public ActionResult Index()
         {
@@ -23,6 +24,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dTO_Accounts);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Edit(string id)
         {           
             ServiceRepository service = new ServiceRepository();
@@ -33,6 +35,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dtoAccounts);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Details(string id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -50,6 +53,7 @@ namespace UI.Areas.Admin.Controllers
             return "~/images_merchant/" + file.FileName;
         }
 
+        [AuthorizeLoginAdmin]
         [HttpPost, ValidateInput(false)]
         public ActionResult Edit(DTO_Account2 dTO_Account, HttpPostedFileBase ImageUpload)
         {
@@ -114,6 +118,7 @@ namespace UI.Areas.Admin.Controllers
             
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Create()
         {
 
@@ -122,6 +127,7 @@ namespace UI.Areas.Admin.Controllers
 
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Delete(string id)
         {
             try

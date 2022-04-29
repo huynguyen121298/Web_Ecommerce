@@ -8,6 +8,7 @@ using System.IO;
 using System.Net.Http;
 using System.Web.Mvc;
 using UI.Models;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Controllers
@@ -17,6 +18,7 @@ namespace UI.Controllers
         private ProductController productController = new ProductController();
         private ServiceRepository service = new ServiceRepository();
 
+        [AuthorizeLoginEndUser]
         public ActionResult Index()
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -27,7 +29,7 @@ namespace UI.Controllers
             else
                 return View();
         }
-
+        [AuthorizeLoginEndUser]
         public ActionResult Checkout()
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -38,11 +40,14 @@ namespace UI.Controllers
             return View();
         }
 
+        [AuthorizeLoginEndUser]
+
         public ActionResult LuaChon()
         {
             return View();
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Buy_()
         {
             bool flag = true;
@@ -68,6 +73,7 @@ namespace UI.Controllers
             return View("~/Views/Product/Details.cshtml");
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult saveOrder1(FormCollection fc, DTOCheckoutCustomerOrder check)
         {
             try
@@ -142,6 +148,7 @@ namespace UI.Controllers
             }
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult saveOrder2(string priceCode)
         {
             try
@@ -172,6 +179,7 @@ namespace UI.Controllers
             }
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult YeuThich()
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
@@ -183,11 +191,13 @@ namespace UI.Controllers
             return View();
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult HetHang()
         {
             return View();
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Details_(string Id)
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
@@ -303,6 +313,7 @@ namespace UI.Controllers
             return -1;
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Remove2(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -311,6 +322,7 @@ namespace UI.Controllers
             Session["cart"] = cart;
             return RedirectToAction("Index");
         }
+
 
         public ActionResult Thankyou()
         {
@@ -322,6 +334,7 @@ namespace UI.Controllers
             return View();
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Details_Buy(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -355,6 +368,7 @@ namespace UI.Controllers
             return RedirectToAction("Details", "Product");
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult BuyLove(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];

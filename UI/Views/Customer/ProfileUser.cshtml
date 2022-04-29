@@ -20,9 +20,9 @@
         <h2 style="color:red">Xin chào: @fullName</h2>
         <ul style="list-style:none;">
             <li>@Html.ActionLink("Thông tin tài khoản", "ProfileUser", new { usr = Model.Email }) </li>
-            <li><a href="#">Lịch sử đơn hàng</a></li>
+            <li>@Html.ActionLink("Lịch sử đơn hàng", "ProductBought")</li>
             <li>@Html.ActionLink("Đổi mật khẩu", "ResetPassword2", new { id = Model._id, mail = Model.Email })</li>
-            <li><a href="~/Cart/yeuThich">Sản phẩm yêu thích</a></li>
+            <li>@Html.ActionLink("sản phẩm yêu thích của tôi", "ProductFavorite")</li>
             <li>@Html.ActionLink("Đăng xuất", "Logout")</li>
             <li><a href="~/Home/Index">Trở về trang chủ</a></li>
         </ul>

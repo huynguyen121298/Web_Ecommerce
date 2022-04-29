@@ -1,6 +1,7 @@
 ﻿using Facebook;
 using Model.Common;
 using Model.DTO.DTO_Client;
+using Model.DTO_Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using UI.Models;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Controllers
@@ -468,7 +470,7 @@ namespace UI.Controllers
             //    return Json(new { status = false });
         }
 
-
+        [AuthorizeLoginEndUser]
         public ActionResult ProductBought()
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
@@ -480,13 +482,14 @@ namespace UI.Controllers
             return PartialView(result);
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult ProductFavorite()
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
             HttpResponseMessage responseUser = serviceObj.GetResponse("api/product/GetProductsFavorite/" + userLogin._id);
 
             responseUser.EnsureSuccessStatusCode();
-            List<DTO_Product> result = responseUser.Content.ReadAsAsync<List<DTO_Product>>().Result;
+            List<DTO_Product_Item_Type> result = responseUser.Content.ReadAsAsync<List<DTO_Product_Item_Type>>().Result;
 
             return PartialView(result);
         }
@@ -495,6 +498,8 @@ namespace UI.Controllers
         {
             return PartialView();
         }
+
+        [AuthorizeLoginEndUser]
         [HttpGet]
         public ActionResult ProfileUser()
 
@@ -502,6 +507,8 @@ namespace UI.Controllers
             DTO_Users_Acc cus = GetCustomerByUsername();
             return View(cus);
         }
+
+        [AuthorizeLoginEndUser]
         [HttpPost]
         public ActionResult ProfileUser(DTO_Users_Acc model)
         {

@@ -5,7 +5,9 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_Product_.cshtml";
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+
+
 }
 
 <!DOCTYPE html>
@@ -74,57 +76,80 @@
             </ul>
         </div>
     </div>
-    <div class="product-view">
-        <div class="container-fluid">
-            <div class="row">
-                <p>@ViewData["MessQuantity"]</p>
-                <div class="col-lg-12">
-                    <div class="row">
-                        @foreach (DTO_Account2 item in Model)
-                        {
+    @if (Model.Count() > 0)
+    {
+        <div class="product-view">
+            <div class="container-fluid">
+                <div class="row">
+                    <p>@ViewData["MessQuantity"]</p>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            @foreach (DTO_Account2 item in Model)
+                            {
 
-                            <div class="col-md-2">
-                                <div class="product-item">
-                                    <div style="height:102px" class="product-title">
-                                        <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.MerchantName)</span>
+                                <div class="col-md-2">
+                                    <div class="product-item">
+                                        <div style="height:102px" class="product-title">
+                                            <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.MerchantName)</span>
 
-                                        <div class="ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            <div class="ratting">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+
+                                        </div>
+                                        @if (item.Photo != null)
+                                        {
+
+                                            <div class="product-image">
+                                                <a href="product-detail.html">
+                                                    <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                                </a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-image">
+                                               <a href="product-detail.html">
+                                            <img style="height:250px" src="~/images/ap.jpg" />
+                                           </a>
+                                            </div>
+                                        }
+                                        <div style="height:106px" class="product-price">
+
+                                            <a class="btn" href=" @Url.Action("ProductByMerchant", "Merchant", new { merchantId = item._id })"><i class="fa fa-shopping-cart"></i>chọn cửa hàng</a>
+
                                         </div>
 
                                     </div>
-
-                                    <div class="product-image">
-                                        <a href="product-detail.html">
-                                            <img style="height:250px" src="@Url.Content(item.Photo)" />
-                                        </a>
-                                    </div>
-                                    <div style="height:106px" class="product-price">
-
-                                        <a class="btn" href=" @Url.Action("ProductByMerchant", "Merchant", new { merchantId = item._id })"><i class="fa fa-shopping-cart"></i>chọn cửa hàng</a>
-
-                                    </div>
-
                                 </div>
-                            </div>
-                        }
+                            }
+
+
+
+
+                        </div>
 
                     </div>
 
-                </div>
+                    <!-- Side Bar Start -->
+                    <div class="col-lg-4 sidebar">
 
-                <!-- Side Bar Start -->
-                <div class="col-lg-4 sidebar">
-
+                    </div>
+                    <!-- Side Bar End -->
                 </div>
-                <!-- Side Bar End -->
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <script>
+            alert("Chưa có kết quả cửa hàng bạn cần tìm");
+        </script>
+    }
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
     @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@

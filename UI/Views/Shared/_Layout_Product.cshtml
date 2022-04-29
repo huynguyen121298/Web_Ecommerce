@@ -182,13 +182,15 @@
                                     <div class="sidebar-widget tag">
                                         <h2 style="color:cornflowerblue" class="title">Theo cửa hàng</h2>
 
-                                        <input style="height:35px" type="text" class="form-control" name="searchName" placeholder="Nhập tìm kiếm sản phẩm theo tên..." />&nbsp;
-                                        <div class="input-group-btn">
-                                            <div class="btn-group" role="group">
+                                        <input type="text" class="form-control" name="searchMerchant" placeholder="Nhập tên cửa hàng..." onchange="BtnClick()" />
 
-                                                <button style="height:35px" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">Tìm kiếm</span></button>
-                                            </div>
-                                        </div>
+
+                                        <button id="btnSearchMerchant" style="height:35px;display:none" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">Tìm kiếm</span></button>
+                                        <script>
+                                            function BtnClick() {
+                                                $("#btnSearchMerchant").click();
+                                            }
+                                        </script>
                                     </div>
 
                                 </div>
@@ -197,19 +199,7 @@
                         </div>
                     </form>
 
-                    <form class="form-horizontal" role="form" method="post" action="@Url.Action("Index", "Merchant")">
-                        <div class="form-group sidebar-widget tag">
-                            <label for="filter">Tên cửa hàng</label>
-
-                            <input type="text" class="form-control" name="searchMerchant" placeholder="Nhập tên cửa hàng..." />&nbsp;
-                            <div class="input-group-btn">
-                                <div class="btn-group" role="group">
-
-                                    <button style="height:35px" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search" aria-hidden="true">Tìm kiếm</span></button>&nbsp;
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <
 
 
                 </div>

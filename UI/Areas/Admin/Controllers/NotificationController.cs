@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
 using UI.Areas.Admin.Common;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Areas.Admin.Controllers
@@ -12,6 +13,8 @@ namespace UI.Areas.Admin.Controllers
     {
         ServiceRepository service = new ServiceRepository();
         // GET: Admin/Notification
+
+        [AuthorizeLoginAdmin]
         public ActionResult Index()
         {
             var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];

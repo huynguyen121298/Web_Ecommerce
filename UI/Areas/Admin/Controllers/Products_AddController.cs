@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using UI.Areas.Admin.Common;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Areas.Admin.Controllers
@@ -15,6 +16,8 @@ namespace UI.Areas.Admin.Controllers
     {
         ServiceRepository service = new ServiceRepository();
         // GET: Admin/Products_Add
+
+        [AuthorizeLoginAdmin]
         public ActionResult Index(DTO_Product dTO_Product)
         {
             try
@@ -31,6 +34,8 @@ namespace UI.Areas.Admin.Controllers
                 return View(dTO_Product);
             }
         }
+
+        [AuthorizeLoginAdmin]
         public ActionResult Product_Discount(DTO_Dis_Product dTO_Product)
         {
             try
@@ -49,6 +54,8 @@ namespace UI.Areas.Admin.Controllers
 
 
         }
+
+        [AuthorizeLoginAdmin]
         public ActionResult GetAllProductByType()
         {
 
@@ -59,6 +66,8 @@ namespace UI.Areas.Admin.Controllers
             List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
             return View(dTO_Accounts);
         }
+
+        [AuthorizeLoginAdmin]
         public ActionResult Index2(int id)
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByIdItem/" + id);
@@ -67,6 +76,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dTO_Accounts);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Details(string Id)
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
@@ -75,6 +85,7 @@ namespace UI.Areas.Admin.Controllers
             return View(dTO_Accounts);
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Create()
          {
             DTO_Product_Item_Type pro = new DTO_Product_Item_Type();
@@ -83,6 +94,7 @@ namespace UI.Areas.Admin.Controllers
             //return View();
         }
 
+
         public string ProcessUpload(HttpPostedFileBase file)
         {
             file.SaveAs(Server.MapPath("~/images_product/" + file.FileName));
@@ -90,6 +102,7 @@ namespace UI.Areas.Admin.Controllers
             return "/images_product/" + file.FileName;
         }
 
+        [AuthorizeLoginAdmin]
         [HttpPost, ValidateInput(false)]
         public ActionResult Create(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload,
             HttpPostedFileBase ImageUpload2, HttpPostedFileBase ImageUpload3)
@@ -194,6 +207,7 @@ namespace UI.Areas.Admin.Controllers
             }
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Create_Discount(string id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -203,6 +217,8 @@ namespace UI.Areas.Admin.Controllers
 
             return View(dTO_Dis_Product);
         }
+
+        [AuthorizeLoginAdmin]
         [HttpPost]
         public ActionResult Create_Discount_Product(DTO_Dis_Product tO_Dis_Product)
         {
@@ -228,6 +244,8 @@ namespace UI.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [AuthorizeLoginAdmin]
         public ActionResult Edit(string Id)
         {
             ServiceRepository service = new ServiceRepository();
@@ -328,6 +346,7 @@ namespace UI.Areas.Admin.Controllers
             }
         }
 
+        [AuthorizeLoginAdmin]
         public ActionResult Delete(string id)
         {
             try
