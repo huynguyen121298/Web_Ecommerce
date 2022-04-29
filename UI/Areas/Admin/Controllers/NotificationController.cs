@@ -25,5 +25,16 @@ namespace UI.Areas.Admin.Controllers
 
             return PartialView(result);
         }
+
+        [AuthorizeLoginAdmin]
+        public ActionResult ChangeStatusNoti(string notiId)
+        {
+            HttpResponseMessage responseUser = service.GetResponse("api/notification/ChangeStatus/" + notiId);
+
+            responseUser.EnsureSuccessStatusCode();
+           
+
+            return PartialView(result);
+        }
     }
 }

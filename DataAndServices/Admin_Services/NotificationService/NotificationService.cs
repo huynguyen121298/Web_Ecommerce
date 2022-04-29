@@ -1,4 +1,5 @@
-﻿using DataAndServices.Data;
+﻿using DataAndServices.Common;
+using DataAndServices.Data;
 using DataAndServices.DataModel;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -32,6 +33,20 @@ namespace DataAndServices.Admin_Services.NotificationService
         {
             var merchantNotis = await _db.FindAsync(n => n.AccountId == merchantId);
             return merchantNotis.ToList();
+        }
+
+        public bool ChangeStatusNotification(string merchantId)
+        {
+
+                var eqfilter = Builders<MerchantNotification>.Filter.Where(s => s._id == merchantId && s.Status == NotificationConstant.PENDING);
+
+                var update = Builders<MerchantNotification>.Update.Set(s => s.Status, NotificationConstant.READED);
+                   
+                var options = new UpdateOptions { IsUpsert = true };
+
+                _db.UpdateOneAsync(eqfilter, update, options);
+                return true;
+            
         }
     }
 }

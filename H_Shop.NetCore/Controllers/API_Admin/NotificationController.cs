@@ -31,5 +31,12 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         {
             return _notificationService.AddNotication(request);
         }
+
+        [HttpPut]
+        [Route("ChangeStatus/{notiId}")]
+        public bool ChangeStatusNotication(string notiId)
+        {
+            return _notificationService.ChangeStatusNotification(notiId);
+        }
     }
 }

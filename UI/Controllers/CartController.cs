@@ -2,6 +2,7 @@
 using Model.DTO.DTO_Ad;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,7 @@ namespace UI.Controllers
             try
             {
                 var userLogin = (UserLogin)Session[Constants.USER_SESSION];
-
+                check._id = new ObjectId();
                 var checkZip = check.Zipcode = fc["zip"];
                 var price = Request.Form["gia1"];
                 var price1 = Request.Form["discount1"];
@@ -120,6 +121,7 @@ namespace UI.Controllers
                     notification.AccountId = item.AccountId;
                     notification.Subject = "Đơn hàng mới";
                     notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
+                    notification.CheckoutId = item.
                     notifications.Add(notification);
 
                     var dtoProductAction = new DtoProductAction()

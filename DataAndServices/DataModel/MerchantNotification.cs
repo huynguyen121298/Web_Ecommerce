@@ -16,6 +16,10 @@ namespace DataAndServices.DataModel
 
         public string Content { get; set; }
 
+        public string CheckoutId { get; set; }  
+
+        public int Status { get; set; }
+
         public DateTime? DateTime { get; set; } 
     }
 }

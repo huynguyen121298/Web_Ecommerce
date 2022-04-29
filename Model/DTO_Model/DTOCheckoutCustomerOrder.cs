@@ -1,4 +1,5 @@
 ﻿using Model.DTO.DTO_Ad;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace Model.DTO_Model
 {
     public class DTOCheckoutCustomerOrder
     {
-
+      
         public string _id { get; set; }
 
         public string FirstName { get; set; }

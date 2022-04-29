@@ -9,5 +9,8 @@ namespace DataAndServices.Admin_Services.NotificationService
         bool AddNotication(List<MerchantNotification> request);
 
         Task<List<MerchantNotification>> GetMerchantNotification(string merchantId);
+
+        bool ChangeStatusNotification(string merchantId);
+
     }
 }
