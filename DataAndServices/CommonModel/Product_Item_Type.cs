@@ -9,7 +9,7 @@ namespace DataAndServices.CommonModel
 
         public int? Quantity { get; set; }
 
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
 
         public string Type_Product { get; set; }
 

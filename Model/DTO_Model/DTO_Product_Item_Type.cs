@@ -17,7 +17,7 @@ namespace Model.DTO_Model
         public int? Quantity { get; set; }
 
         [Required(ErrorMessage = "Yêu cầu nhập loại sản phẩm")]
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
 
         public string Type_Product { get; set; }
 

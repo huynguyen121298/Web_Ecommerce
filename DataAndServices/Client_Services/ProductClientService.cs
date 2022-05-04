@@ -45,7 +45,7 @@ namespace DataAndServices.Client_Services
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
@@ -76,7 +76,7 @@ namespace DataAndServices.Client_Services
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
@@ -164,7 +164,7 @@ namespace DataAndServices.Client_Services
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
@@ -243,7 +243,7 @@ namespace DataAndServices.Client_Services
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,                 
+                            IdItemType = product.IdItemType,                 
                             AccountId = product.AccountId
                         });
 
@@ -266,7 +266,7 @@ namespace DataAndServices.Client_Services
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             AccountId = product.AccountId
                         });
 

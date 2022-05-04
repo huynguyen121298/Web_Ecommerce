@@ -33,7 +33,7 @@ namespace DataAndServices.CommonModel
 
         public string Details { get; set; }
 
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
 
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

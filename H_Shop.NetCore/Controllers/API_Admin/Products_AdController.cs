@@ -75,7 +75,7 @@ namespace H_Shop.NetCore.Controllers.API_Admin
 
         [HttpGet]
         [Route("GetAllProductByIdItem/{id}")]
-        public IActionResult GetAllProductByIdItem(int id)
+        public IActionResult GetAllProductByIdItem(string id)
         {
            var listProItemById=  _productService.GetProductById_Item(id);
             return Ok(listProItemById);

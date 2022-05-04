@@ -5,7 +5,7 @@ namespace DataAndServices.Client_Services
 {
     public interface ICartServices
     {
-        int InsertBill(CheckoutCustomerOrder checkoutCustomerOrder);
+        string InsertBill(CheckoutCustomerOrder checkoutCustomerOrder);
 
         bool InsertCheckoutOrder(Checkout_Oder checkout_Order);
 

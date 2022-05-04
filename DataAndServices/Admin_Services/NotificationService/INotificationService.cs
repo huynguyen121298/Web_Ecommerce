@@ -10,7 +10,7 @@ namespace DataAndServices.Admin_Services.NotificationService
 
         Task<List<MerchantNotification>> GetMerchantNotification(string merchantId);
 
-        bool ChangeStatusNotification(string merchantId);
+        MerchantNotification ChangeStatusNotification(string merchantId);
 
     }
 }

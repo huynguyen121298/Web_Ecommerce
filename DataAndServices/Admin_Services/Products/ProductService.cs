@@ -47,7 +47,7 @@ namespace DataAndServices.Admin_Services.Products
             try
             {
                 Product products = new Product();
-                products.Id_Item = product_Item_Type.Id_Item;
+                
                 products.Name = product_Item_Type.Name;
                 products.Photo = product_Item_Type.Photo;
                 products.Photo2 = product_Item_Type.Photo2;
@@ -55,6 +55,10 @@ namespace DataAndServices.Admin_Services.Products
                 products.Price = product_Item_Type.Price;
                 products.Details = product_Item_Type.Details;
                 products.AccountId = product_Item_Type.AccountId;
+
+                var itemType = _dbItemtype.Find(s => s.Type_Product == product_Item_Type.Type_Product).FirstOrDefault();
+
+                products.IdItemType = itemType._id;
                 _db.InsertOne(products);
 
                 Item item = new Item();
@@ -113,7 +117,7 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo = product.Photo,
                                   Photo2 = product.Photo2,
                                   Photo3 = product.Photo3,
-                                  Id_Item = product.Id_Item,
+                                  IdItemType = product.IdItemType,
                                   Quantity = item.Quantity,
                                   AccountId = product.AccountId
                               };
@@ -136,7 +140,7 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo = product.Photo,
                                   Photo2 = product.Photo2,
                                   Photo3 = product.Photo3,
-                                  Id_Item = product.Id_Item,
+                                  IdItemType = product.IdItemType,
                                   Quantity = item.Quantity,
                                   AccountId = product.AccountId
                               };
@@ -155,7 +159,7 @@ namespace DataAndServices.Admin_Services.Products
             item_Types = _dbItemtype.Find(s => true).ToList();
             foreach (Item_type item in item_Types)
             {
-                List<Dis_Product> products = GetProductById_Item(item.Id_Item);
+                List<Dis_Product> products = GetProductById_Item(item._id);
                 var productsByMerchant = products.Where(p => p.AccountId == userLogin).ToList();
                 productsByType.Add(productsByMerchant);
             }
@@ -169,7 +173,7 @@ namespace DataAndServices.Admin_Services.Products
             item_Types = _dbItemtype.Find(s => true).ToList();
             foreach (Item_type item in item_Types)
             {
-                List<Dis_Product> products = GetProductById_Item(item.Id_Item);
+                List<Dis_Product> products = GetProductById_Item(item._id);
                 productsByType.Add(products);
             }
             return productsByType.ToList();
@@ -202,7 +206,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
@@ -229,7 +233,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
@@ -245,13 +249,13 @@ namespace DataAndServices.Admin_Services.Products
             return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
         }
 
-        public List<Dis_Product> GetProductById_Item(int id)
+        public List<Dis_Product> GetProductById_Item(string id)
         {
             var discountCollection = _dbDis;
             var productCollection = _db;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
-                        where product.Id_Item == id
+                        where product.IdItemType == id
                         select new Dis_Product()
                         {
                             _id = dis._id,
@@ -261,7 +265,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
@@ -288,7 +292,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
                             AccountId = product.AccountId
                         }).FirstOrDefault();
@@ -329,7 +333,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
                             AccountId = product.AccountId
                         }).FirstOrDefault();
@@ -355,7 +359,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
                             AccountId = product.AccountId
                         }).FirstOrDefault();
@@ -364,13 +368,13 @@ namespace DataAndServices.Admin_Services.Products
             return Info;
         }
 
-        public List<Product_Item_Type> GetProductItemById_client(int id)
+        public List<Product_Item_Type> GetProductItemById_client(string id)
         {
             var itemTypeCollection = _dbItemtype;
             var productCollection = _db;
             var Info = (from item in itemTypeCollection.AsQueryable()
-                        join product in productCollection.AsQueryable() on item.Id_Item equals product.Id_Item
-                        where item.Id_Item == id
+                        join product in productCollection.AsQueryable() on item._id equals product.IdItemType
+                        where item._id == id
                         select new Product_Item_Type()
                         {
                             _id = item._id,
@@ -380,7 +384,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Type_Product = item.Type_Product,
                             AccountId = product.AccountId
                         }).ToList();
@@ -413,7 +417,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo = product.Photo,
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
-                            Id_Item = product.Id_Item,
+                            IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
                             AccountId = product.AccountId
                         });
@@ -437,7 +441,7 @@ namespace DataAndServices.Admin_Services.Products
                                            Photo = product.Photo,
                                            Photo2 = product.Photo2,
                                            Photo3 = product.Photo3,
-                                           Id_Item = product.Id_Item,
+                                           IdItemType = product.IdItemType,
                                            Content = dis.Content,
                                            Price_Dis = dis.Price_Dis,
                                            Start = dis.Start,
@@ -483,7 +487,7 @@ namespace DataAndServices.Admin_Services.Products
                     .Set(s => s.Details, custom.Details)
                     .Set(s => s.Price, custom.Price)
                     .Set(s => s._id, custom._id)
-                    .Set(s => s.Id_Item, custom.Id_Item);
+                    .Set(s => s.IdItemType, custom.IdItemType);
 
                 var options = new UpdateOptions { IsUpsert = true };
                 _db.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);

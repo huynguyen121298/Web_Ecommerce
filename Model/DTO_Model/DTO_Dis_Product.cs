@@ -31,6 +31,6 @@ namespace Model.DTO_Model
 
         public string AccountId { get; set; }
 
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
     }
 }

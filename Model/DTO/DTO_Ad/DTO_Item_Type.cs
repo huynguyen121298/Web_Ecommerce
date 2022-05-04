@@ -2,9 +2,11 @@
 {
     public class DTO_Item_Type
     {
-        public int Id_Item { get; set; }
+        public string _id { get; set; }
 
         public string Type_Product { get; set; }
+
+        public string Status { get; set; }
 
     }
 }

@@ -22,7 +22,7 @@ namespace DataAndServices.Admin_Services.Products
 
         Task<Product> GetProductById(string id);
 
-        List<Dis_Product> GetProductById_Item(int id);
+        List<Dis_Product> GetProductById_Item(string id);
 
         Product_Item_Type GetProductItemById(string id);
 
@@ -32,7 +32,7 @@ namespace DataAndServices.Admin_Services.Products
 
         List<Product_Item_Type> GetProductItemByPageList();
 
-        List<Product_Item_Type> GetProductItemById_client(int id);
+        List<Product_Item_Type> GetProductItemById_client(string id);
 
         int CreateProduct(Product_Item_Type dTO_Account);
 

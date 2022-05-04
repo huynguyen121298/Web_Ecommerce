@@ -22,7 +22,7 @@ namespace DataAndServices.DataModel
 
         public string Details { get; set; }
 
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
 
         public string AccountId { get; set; }
     }

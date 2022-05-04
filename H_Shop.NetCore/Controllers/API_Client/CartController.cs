@@ -17,7 +17,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         [HttpPost]
         [Route("InsertBill")]
-        public  int InsertBill(CheckoutCustomerOrder checkoutCustomerOrder)
+        public  string InsertBill(CheckoutCustomerOrder checkoutCustomerOrder)
         {
             return  _cartServices.InsertBill(checkoutCustomerOrder);
         }

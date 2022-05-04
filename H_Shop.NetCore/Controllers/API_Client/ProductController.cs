@@ -103,7 +103,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         [HttpGet]
         [Route("GetAllProductByIdItemClient/{id}")]
-        public IActionResult GetAllProductByIdItem(int id)
+        public IActionResult GetAllProductByIdItem(string id)
         {
             var proItemById =  _productAdminService.GetProductItemById_client(id);
             return Ok(proItemById);

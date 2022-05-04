@@ -88,7 +88,7 @@ namespace UI.Areas.Admin.Controllers
         {
             try
             {
-                HttpResponseMessage response = service.DeleteResponse("api/CodeDiscount/Deletecodediscount/" + id);
+                HttpResponseMessage response = service.DeleteResponse("api/CodeDiscount/Delete/" + id);
                 response.EnsureSuccessStatusCode();
                 return Json(new { mes = true });
             }

@@ -129,20 +129,17 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Các trang</span>
+                    <span>Các trang Admin</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Lựa chọn:</h6>
-                        @*<a class="collapse-item" href="~/Admin/Account/Login">Đăng nhập</a>*@
                         <a class="collapse-item" href="~/Admin/Account/AddRegister">Đăng ký</a>
-                        <a class="collapse-item" href="~/Admin/Admin/GetAllFeedbacks">Xem phản hổi của khách hàng</a>
-                        @*<a class="collapse-item" href="~/Admin/Account/ForgotPassword">Quên mật khẩu?</a>*@
-                        <a class="collapse-item" href="~/Admin/Admin_acc/Index">Xem danh sách tài khoản Admin</a>
-                        <a class="collapse-item" href="~/Admin/Users_acc/Index">Xem danh sách tài khoản Khách</a>
-                        <a class="collapse-item" href="~/Admin/Checkout_Customer/Index">Quản lý hóa đơn đã đặt hàng</a>
-                        <a class="collapse-item" href="~/Admin/Products_Add/Index">Thêm và xem danh sách sản phẩm</a>
-
+                        <a class="collapse-item" href="~/Admin/Admin/GetAllFeedbacks">Phản hổi của khách hàng</a>
+                        <a class="collapse-item" href="~/Admin/Admin_acc/Index">Tài khoản Admin</a>
+                        <a class="collapse-item" href="~/Admin/Users_acc/Index">Tài khoản Khách</a>
+                        <a class="collapse-item" href="~/Admin/CodeDiscount/Index">Mã giảm giá </a>
+                        <a class="collapse-item" href="~/Admin/TypeProduct/Index">Danh mục sản phẩm </a>
 
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Trang khác:</h6>
@@ -154,17 +151,17 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="~/Admin/Checkout_Customer/Index">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Biểu đồ</span>
+                    <span>Quản lý đơn đặt hàng</span>
                 </a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href=#">
+                <a class="nav-link" href="~/Admin/Products_Add/Index">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Bảng</span>
+                    <span>Sản phẩm</span>
                 </a>
             </li>
 
@@ -251,7 +248,7 @@
                                 </form>
                             </div>
                         </li>
-                        @Html.Action("BagNotification", "Admin")
+                        @Html.Action("BagNotification", "Notification")
 
                         <!-- Nav Item - Messages -->
 

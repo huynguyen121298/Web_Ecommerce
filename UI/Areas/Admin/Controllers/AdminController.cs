@@ -54,30 +54,15 @@ namespace UI.Areas.Admin.Controllers
             return View(dTO_Accounts);
         }
 
-        public PartialViewResult BagNotification()
+        public PartialViewResult ListTypeProductAdmin()
         {
+            HttpResponseMessage responseUser = service.GetResponse("api/Home/GetAllItemType");
 
-            try
-            {
-                var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
-                
-                HttpResponseMessage responseUser = service.GetResponse("api/notification/GetNotiByMerchant/" + dTO_Account._id);
+            responseUser.EnsureSuccessStatusCode();
+            List<DTO_Item_Type> result = responseUser.Content.ReadAsAsync<List<DTO_Item_Type>>().Result;
 
-                responseUser.EnsureSuccessStatusCode();
-                List<DtoMerchantNotification> result = responseUser.Content.ReadAsAsync<List<DtoMerchantNotification>>().Result;
-
-               
-                ViewBag.Quantity = result;
-
-                
-            }
-            catch
-            {
-
-                ViewBag.Quantity = 0;
-
-            }
-            return PartialView("BagNotification");
+            return PartialView(result);
         }
+
     }
 }

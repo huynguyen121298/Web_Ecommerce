@@ -5,50 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    int id = Model.Id_Item;
-    string show;
-    switch (id)
-    {
-        case 1: show = "Đồng hồ";
-            break;
-        case 2:
-            show = "Máy ảnh và máy quay phim";
-            break;
-        case 3:
-            show = "Máy tính và laptop";
-            break;
-        case 4:
-            show = "Mẹ và bé";
-            break;
-        case 5:
-            show = "Sức khỏe và sắc đẹp";
-            break;
-        case 6:
-            show = "Thể thao và du lịch";
-            break;
-        case 7:
-            show = "Thiết bị gia dụng";
-            break;
-        case 8:
-            show = "Thời trang nam";
-            break;
-        case 9:
-            show = "Thời trang nữ";
-            break;
-        case 10:
-            show = "Điện thoại";
-            break;
 
-        default: show = "";
-            break;
-    }
-
-
-
-
-
-            }
 
 <script src="~/js/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
@@ -197,21 +154,7 @@
         <div class="form-group">
             Chon loại sản phẩm
             <div class="col-md-10">
-                <select name="stt" id="stt">
-                    <option selected>@show</option>
-                    <option>Máy ảnh và máy quay phim</option>
-                    <option>Đồng hồ</option>
-                    <option>Mẹ và bé</option>
-                    <option>Sức khỏe và sắc đẹp </option>
-                    <option>Thể thao và du lịch</option>
-                    <option>Thiết bị gia dụng</option>
-                    <option>Thời trang nam</option>
-                    <option>Thời trang nữ</option>
-                    <option>Máy tính và laptop</option>
-                    <option>Điện thoại</option>
-
-
-                </select>
+                @Html.Action("ListTypeProductAdmin", "Admin")
             </div>
         </div>
         <div class="form-group">

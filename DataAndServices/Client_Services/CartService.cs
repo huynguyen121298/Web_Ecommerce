@@ -34,7 +34,7 @@ namespace DataAndServices.Client_Services
             return 0;
         }
 
-        public int InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
+        public string InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
         {
           
             try
@@ -48,11 +48,11 @@ namespace DataAndServices.Client_Services
            
                 _dbCheckCustomerOrder.InsertOne(checkoutCustomer_Order);
 
-                return 1;
+                return checkoutCustomer_Order._id;
             }
             catch
             {
-                return 0;
+                return null;
             }
         }
         public bool UpdateQuantityItem(string _id, int quantity)

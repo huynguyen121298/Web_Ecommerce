@@ -134,22 +134,7 @@
     <div class="form-group">
         Chon loại sản phẩm
         <div class="col-md-10">
-            <select name="stt" id="stt">
-
-                <option>Máy ảnh và máy quay phim</option>
-                <option>Đồng hồ</option>
-                <option>Mẹ và bé</option>
-                <option>Sức khỏe và sắc đẹp </option>
-                <option>Thể thao và du lịch</option>
-                <option>Thiết bị gia dụng</option>
-                <option>Thời trang nam</option>
-                <option>Thời trang nữ</option>
-                <option>Máy tính và laptop</option>
-                <option>Điện thoại</option>
-
-
-
-            </select>
+            @Html.Action("ListTypeProductAdmin", "Admin")
         </div>
     </div>
     <div class="form-group">

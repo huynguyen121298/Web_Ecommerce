@@ -3,6 +3,7 @@ using DataAndServices.Data;
 using DataAndServices.DataModel;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAndServices.Admin_Services.NotificationService
@@ -35,17 +36,19 @@ namespace DataAndServices.Admin_Services.NotificationService
             return merchantNotis.ToList();
         }
 
-        public bool ChangeStatusNotification(string merchantId)
+        public MerchantNotification ChangeStatusNotification(string notiId)
         {
 
-                var eqfilter = Builders<MerchantNotification>.Filter.Where(s => s._id == merchantId && s.Status == NotificationConstant.PENDING);
+                var eqfilter = Builders<MerchantNotification>.Filter.Where(s => s._id == notiId && s.Status == NotificationConstant.PENDING);
 
                 var update = Builders<MerchantNotification>.Update.Set(s => s.Status, NotificationConstant.READED);
                    
                 var options = new UpdateOptions { IsUpsert = true };
 
                 _db.UpdateOneAsync(eqfilter, update, options);
-                return true;
+
+                var notiUpdated = _db.Find(n => n._id == notiId).FirstOrDefault();
+                return notiUpdated;
             
         }
     }

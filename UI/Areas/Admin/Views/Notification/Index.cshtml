@@ -43,7 +43,16 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">@item.DateTime</div>
-                                        <span class="font-weight-bold">@item.Content</span>
+                                        @if (item.Status == 0)
+                                        {
+                                            <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item.CheckoutId})"><span class="font-weight-bold">@item.Content</span></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item.CheckoutId })"><span class="font-weight-normal">@item.Content</span></a>
+
+                                        }
+
 
                                     </div>
                                 </a>

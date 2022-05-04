@@ -29,12 +29,44 @@ namespace UI.Areas.Admin.Controllers
         [AuthorizeLoginAdmin]
         public ActionResult ChangeStatusNoti(string notiId)
         {
-            HttpResponseMessage responseUser = service.GetResponse("api/notification/ChangeStatus/" + notiId);
+            HttpResponseMessage responseUser = service.GetResponse("api/notification/ChangeStatus/" +notiId );
 
-            responseUser.EnsureSuccessStatusCode();
-           
+            DtoMerchantNotification result = responseUser.Content.ReadAsAsync<DtoMerchantNotification>().Result;
 
-            return PartialView(result);
+            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + result.CheckoutId);
+            responseMessage.EnsureSuccessStatusCode();
+            DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
+
+            return View("~Admin/Checkout_Customer/Details",dtocustomer);
+          
+
+            //return Json(new {checkSuccess = true});
+        }
+
+        public PartialViewResult BagNotification()
+        {
+
+            try
+            {
+                var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+
+                HttpResponseMessage responseUser = service.GetResponse("api/notification/GetNotiByMerchant/" + dTO_Account._id);
+
+                responseUser.EnsureSuccessStatusCode();
+                List<DtoMerchantNotification> result = responseUser.Content.ReadAsAsync<List<DtoMerchantNotification>>().Result;
+
+
+                ViewBag.Quantity = result;
+
+
+            }
+            catch
+            {
+
+                ViewBag.Quantity = 0;
+
+            }
+            return PartialView("BagNotification");
         }
     }
 }

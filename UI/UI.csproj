@@ -151,6 +151,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\Admin_accController.cs" />
     <Compile Include="Areas\Admin\Controllers\Checkout_CustomerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TypeProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\CodeDiscountController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\Products_AddController.cs" />
@@ -2554,10 +2555,14 @@
     <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\MonthlySalesByDate.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\BagNotification.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\BagNotification.cshtml" />
     <Content Include="Areas\Admin\Views\CodeDiscount\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CodeDiscount\Create.cshtml" />
     <Content Include="Areas\Admin\Views\CodeDiscount\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ListTypeProductAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\TypeProduct\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TypeProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TypeProduct\Index.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />

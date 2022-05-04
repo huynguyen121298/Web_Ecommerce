@@ -379,7 +379,7 @@ namespace UI.Controllers
                     Photo = proItem.Photo,
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
-                    Id_Item = proItem.Id_Item,
+                    IdItemType = proItem.IdItemType,
                     Quantity = 1,
                     AccountId = proItem.AccountId
                 });
@@ -497,7 +497,7 @@ namespace UI.Controllers
                         Photo = proItem.Photo,
                         Photo2 = proItem.Photo2,
                         Photo3=proItem.Photo3,
-                        Id_Item = proItem.Id_Item,
+                        IdItemType = proItem.IdItemType,
                         AccountId = proItem.AccountId
                     });
                     return 2;
@@ -530,7 +530,7 @@ namespace UI.Controllers
                     Photo = proItem.Photo,
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
-                    Id_Item = proItem.Id_Item,
+                    IdItemType = proItem.IdItemType,
                     AccountId = proItem.AccountId
                 });
                 Session["cart"] = li;

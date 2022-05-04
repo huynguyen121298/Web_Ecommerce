@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Model.DTO.DTO_Ad.DTO_Item_Type>
+@using Model.DTO.DTO_Ad;
+
+<select name="typeProduct" id="typeProduct">
+    @foreach (DTO_Item_Type item in Model)
+    {
+        <option>@item.Type_Product</option>
+    }
+</select>

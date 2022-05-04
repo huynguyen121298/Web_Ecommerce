@@ -80,7 +80,6 @@ namespace UI.Controllers
             try
             {
                 var userLogin = (UserLogin)Session[Constants.USER_SESSION];
-                check._id = new ObjectId();
                 var checkZip = check.Zipcode = fc["zip"];
                 var price = Request.Form["gia1"];
                 var price1 = Request.Form["discount1"];
@@ -121,7 +120,7 @@ namespace UI.Controllers
                     notification.AccountId = item.AccountId;
                     notification.Subject = "Đơn hàng mới";
                     notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
-                    notification.CheckoutId = item.
+                    notification.CheckoutId = item._id;
                     notifications.Add(notification);
 
                     var dtoProductAction = new DtoProductAction()
@@ -131,9 +130,30 @@ namespace UI.Controllers
                         ProductId=item._id
                     };
                     dtoProductActions.Add(dtoProductAction);
+                    
+                }
+                HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
+                string idBill = responseUser1.Content.ReadAsAsync<string>().Result;
+                foreach (DTO_Product_Item_Type item in cart)
+                {                   
+                    var notification = new DtoMerchantNotification();
+                    notification.DateTime = DateTime.Now;
+                    notification.AccountId = item.AccountId;
+                    notification.Subject = "Đơn hàng mới";
+                    notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
+                    notification.CheckoutId = idBill;
+                    notifications.Add(notification);
+
+                    var dtoProductAction = new DtoProductAction()
+                    {
+                        Status = ProductActionConstant.PRODUCT_BOUGHT,
+                        UserId = userLogin._id,
+                        ProductId = item._id
+                    };
+                    dtoProductActions.Add(dtoProductAction);
+
                 }
 
-                HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
                 HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
                 HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
 
@@ -230,7 +250,7 @@ namespace UI.Controllers
                         Photo = proItem.Photo,
                         Photo2 = proItem.Photo2,
                         Photo3 = proItem.Photo3,
-                        Id_Item = proItem.Id_Item,
+                        IdItemType = proItem.IdItemType,
                         Quantity = 1,
                         AccountId = proItem.AccountId
                     });
@@ -260,7 +280,7 @@ namespace UI.Controllers
                             Photo = proItem.Photo,
                             Photo2 = proItem.Photo2,
                             Photo3 = proItem.Photo3,
-                            Id_Item = proItem.Id_Item,
+                            IdItemType = proItem.IdItemType,
                             Quantity = 1,
                             AccountId = proItem.AccountId
                         });
@@ -299,7 +319,8 @@ namespace UI.Controllers
             var dtoProductAction = new DtoProductAction()
             {
                 ProductId = Id,
-                UserId = userLogin._id
+                UserId = userLogin._id,
+                Status = ProductActionConstant.PRODUCT_FAVORITE
             };
             HttpResponseMessage response = service.PutResponse("api/Product/DeleteProductAction/", dtoProductAction);
             response.EnsureSuccessStatusCode();
@@ -440,7 +461,7 @@ namespace UI.Controllers
                         Photo = proItem.Photo,
                         Photo2 = proItem.Photo2,
                         Photo3 = proItem.Photo3,
-                        Id_Item = proItem.Id_Item,
+                        IdItemType = proItem.IdItemType,
                         AccountId = proItem.AccountId
                     });
                     return 2;
@@ -472,7 +493,7 @@ namespace UI.Controllers
                     Photo = proItem.Photo,
                     Photo2 = proItem.Photo2,
                     Photo3 = proItem.Photo3,
-                    Id_Item = proItem.Id_Item,
+                    IdItemType = proItem.IdItemType,
                     AccountId = proItem.AccountId
                 });
                 Session["cart"] = li;

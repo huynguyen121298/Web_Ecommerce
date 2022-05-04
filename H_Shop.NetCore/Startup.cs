@@ -3,6 +3,8 @@ using DataAndServices.Admin_Services.AccountService;
 using DataAndServices.Admin_Services.Admin_Acc_Services;
 using DataAndServices.Admin_Services.Checkout_Customer_Services;
 using DataAndServices.Admin_Services.CheckoutOrderServices;
+using DataAndServices.Admin_Services.CodeDiscountService;
+using DataAndServices.Admin_Services.ItemTypeService;
 using DataAndServices.Admin_Services.NotificationService;
 using DataAndServices.Admin_Services.Products;
 using DataAndServices.Admin_Services.UserServices;
@@ -61,6 +63,8 @@ namespace H_Shop.NetCore
             services.AddTransient<IProductClientServices, ProductClientService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUsers, UserService>();
+            services.AddTransient<ICodeDiscountService, CodeDiscountService>();
+            services.AddTransient<IItemTypeService, ItemTypeService>();
 
         }
 
