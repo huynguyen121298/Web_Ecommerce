@@ -34,7 +34,7 @@ namespace DataAndServices.Client_Services
             return 0;
         }
 
-        public string InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
+        public async Task<string> InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
         {
           
             try
@@ -46,7 +46,7 @@ namespace DataAndServices.Client_Services
                   UpdateQuantityItem(item.Id_SanPham, quantity);
                 }
            
-                _dbCheckCustomerOrder.InsertOne(checkoutCustomer_Order);
+                await _dbCheckCustomerOrder.InsertOneAsync(checkoutCustomer_Order);
 
                 return checkoutCustomer_Order._id;
             }

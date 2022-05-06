@@ -11,32 +11,35 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh mục loại sản phẩm</h6>
+        <p style="text-align:center"><a class="btn btn-success " href=" @Url.Action("Create", "TypeProduct")"> Tạo danh mục mới </a></p>
     </div>
     @if (Model.Count() > 0)
     {
-        foreach (var item in Model)
-        {
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
 
-                                <th>Loại sản phẩm</th>
-                                <th>Trạng thái</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
 
 
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
 
-                                <th>Loại sản phẩm</th>
-                                <th>Trạng thái</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
 
-                            </tr>
-                        </tfoot>
-                        <tbody>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
 
 
@@ -48,14 +51,16 @@
                                 </td>
 
                                 <td>
-                                    <a class="btn btn-success " href=" @Url.Action("Edit", "TypeProduct", new { id = item._id })">Chỉnh sửa</a>
+                                    <a class="btn btn-outline-warning " href=" @Url.Action("Edit", "TypeProduct", new { id = item._id })">Chỉnh sửa</a>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        }
+
+                    </tbody>
+                </table>
             </div>
-        }
+        </div>
+       
     }
     else
     {

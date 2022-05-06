@@ -65,7 +65,7 @@ namespace UI.Areas.Admin.Controllers
         }
 
         [AuthorizeLoginAdmin]
-        public ActionResult Index2(int id)
+        public ActionResult Index2(string id)
         {
             HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByIdItem/" + id);
             responseMessage.EnsureSuccessStatusCode();

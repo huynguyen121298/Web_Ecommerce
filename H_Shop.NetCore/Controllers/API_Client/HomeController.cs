@@ -27,6 +27,14 @@ namespace H_Shop.NetCore.Controllers.API_Client
         }
 
         [HttpGet]
+        [Route("GetAllItemTypeUsed")]
+        public async Task<IActionResult> GetAllItemTypeUsed()
+        {
+            var listItemType = await _homeServices.GetAllItemTypeUsed();
+            return Ok(listItemType);
+        }
+
+        [HttpGet]
         [Route("getallfeedback")]
         public IActionResult GetAllFeedback()
         {

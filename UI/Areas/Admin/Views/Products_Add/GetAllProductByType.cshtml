@@ -23,26 +23,8 @@
         <a class="collapse-item" href="~/Admin/Products_Add/GetAllProductByType">Theo thể loại sản phẩm</a><br />
         <a class="collapse-item" href="~/Admin/Products_Add/Product_Discount">Sản phẩm đang giảm giá</a><br />
 
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 1 })">Đồng hồ</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id =  8})">Thời trang nam</a>
-        <br />
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 9 })">Thời trang nữ</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 4 })">Mẹ và bé</a>
-        <br />
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 7 })">Thiết bị gia dụng</a>
-        <br />
-        <a class="collapse-item" href="@Url.Action("Index2", "Products_Add", new { id = 2 })">Máy ảnh và Máy Quay Phim</a>
-        <br />
+        @Html.Action("ListTypeProductUsed", "Admin")
 
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 3 })">Máy tính và LapTop</a>
-        <br />
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 6 })">Thể thao và du lịch</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 5 })">Sức khỏe và sắc đẹp</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 10 })">Điện thoại</a>
     </div>
 </div>
 

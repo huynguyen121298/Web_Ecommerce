@@ -1,6 +1,8 @@
 ﻿@using Model.DTO_Model;
 @using Model.DTO.DTO_Ad;
 @using PagedList.Mvc;
+@using UI.Models;
+@using Model.Common;
 @model PagedList.IPagedList<List<Model.DTO_Model.DTO_Dis_Product>>
 
 
@@ -97,7 +99,7 @@
                                             </div>
                                             <div style="color:red" class="ratting">
                                                 @{
-                                                    if (price != null  && totalday == true && checkPrice == true)
+                                                    if (price != null && totalday == true && checkPrice == true)
                                                     {
                                                         <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
                                                     }
@@ -109,17 +111,33 @@
                                                 <img style="height:250px" src="@Url.Content(item.Photo)" />
                                             </a>
                                             <div class="product-action">
-                                                <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
-                                                <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
-                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                    <i class="fa fa-search"></i>
-                                                </a>
+                                                @{
+                                                    var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
+                                                    if (session == null)
+                                                    {
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
+                                                        <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    }
+                                                }
+
+
                                             </div>
                                         </div>
                                         <div style="height:106px" class="product-price">
                                             @{
 
-                                                if (price != null && totalday == true && checkPrice==true)
+                                                if (price != null && totalday == true && checkPrice == true)
                                                 {
                                                     <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
                                                     <br />
@@ -166,7 +184,7 @@
                     }
                     $("#sttbuy").text(res.buy.length);
                 }
-                                   
+
 
             });
         }

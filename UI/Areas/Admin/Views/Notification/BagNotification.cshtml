@@ -4,7 +4,7 @@
        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter">3+</span>
+        <span class="badge badge-danger badge-counter">Thông báo+</span>
     </a>
 
     <!-- Dropdown - Alerts -->
@@ -18,25 +18,25 @@
             
                 foreach (var item in ViewBag.Quantity)
                 {
-                    <a class="dropdown-item d-flex align-items-center" href="~/Admin/Notification/Index">
-                        <div class="mr-3">
+                    @*<a class="dropdown-item d-flex align-items-center" href="~/Admin/Notification/Index">*@
+                        @*<div class="mr-3">
                             <div class="icon-circle bg-primary">
                                 <i class="fas fa-file-alt text-white"></i>
                             </div>
-                        </div>
+                        </div>*@
                         <div>
                             <div class="small text-gray-500">@item.DateTime</div>
                             @if (item.Status == 0)
                             {
-                                <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item.CheckoutId})"><span class="font-weight-bold">@item.Content</span></a>
+                                <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item._id})"><span class="font-weight-bold">@item.Content</span></a>
                             }
                             else
                             {
-                                <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item.CheckoutId })"><span class="font-weight-normal">@item.Content</span></a>
+                                <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item._id })"><span class="font-weight-normal">@item.Content</span></a>
 
                             }
                         </div>
-                    </a>
+                    @*</a>*@
 
                 }
             

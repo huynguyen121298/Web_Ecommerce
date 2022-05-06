@@ -31,7 +31,7 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         }
 
         [HttpDelete]
-        [Route("Delete{id}")]
+        [Route("Delete/{id}")]
         public async Task<bool> DeleteAccount(string id)
         {
             return await _codeDiscountService.DeleteCodeDiscount(id);

@@ -46,6 +46,7 @@ namespace UI.Areas.Admin.Controllers
 
             string firstname = string.Empty;
             string accountId = string.Empty;
+            int roleId = 0; 
 
             if (Request.Cookies["firstname1"] != null)
                 firstname = Request.Cookies["firstname1"].Value;
@@ -53,9 +54,12 @@ namespace UI.Areas.Admin.Controllers
             if (Request.Cookies["accountId"] != null)
                 accountId = Request.Cookies["accountId"].Value;
 
+            if (Request.Cookies["roleId"] != null)
+                roleId = Int32.Parse(Request.Cookies["roleId"].Value);
+
 
             if (!string.IsNullOrEmpty(firstname))
-                result = new DTO_Account { FirstName = firstname, _id = accountId };
+                result = new DTO_Account { FirstName = firstname, _id = accountId ,RoleId = roleId};
             return result;
         }
         [DeatAuthorize(Order = 2)]
@@ -156,6 +160,10 @@ namespace UI.Areas.Admin.Controllers
                 ck2.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck2);
 
+                HttpCookie ck3 = new HttpCookie("roleId",(resultLogin.RoleId).ToString());
+                ck2.Expires = DateTime.Now.AddHours(48);
+                Response.Cookies.Add(ck3);
+
                 var userSession = new DTO_Account();
                 userSession.Email = resultLogin.Email;
                 userSession.RoleId = resultLogin.RoleId;
@@ -193,6 +201,13 @@ namespace UI.Areas.Admin.Controllers
                 if (Request.Cookies["accountId"] != null)
                 {
                     HttpCookie ckAccount = new HttpCookie("accountId");
+                    ckAccount.Expires = DateTime.Now.AddHours(-50);
+                    Response.Cookies.Add(ckAccount);
+                }
+
+                if (Request.Cookies["roleId"] != null)
+                {
+                    HttpCookie ckAccount = new HttpCookie("roleId");
                     ckAccount.Expires = DateTime.Now.AddHours(-50);
                     Response.Cookies.Add(ckAccount);
                 }

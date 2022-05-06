@@ -6,7 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @{
-    var codeDiscount = Model.
+    var codeDiscount = Model.Content;
     string id = Model.Content;
     string show;
     switch (id)
@@ -60,7 +60,7 @@
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id_Item)
+        @Html.HiddenFor(model => model.IdItemType)
         @Html.HiddenFor(model => model.Details)
         @Html.HiddenFor(model => model._id)
 

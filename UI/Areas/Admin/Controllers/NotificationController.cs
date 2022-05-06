@@ -33,11 +33,11 @@ namespace UI.Areas.Admin.Controllers
 
             DtoMerchantNotification result = responseUser.Content.ReadAsAsync<DtoMerchantNotification>().Result;
 
-            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + result.CheckoutId);
-            responseMessage.EnsureSuccessStatusCode();
-            DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
+            //HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + result.CheckoutId);
+            //responseMessage.EnsureSuccessStatusCode();
+            //DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
 
-            return View("~Admin/Checkout_Customer/Details",dtocustomer);
+            return RedirectToAction("Details", "Checkout_Customer", new { id = result.CheckoutId });
           
 
             //return Json(new {checkSuccess = true});

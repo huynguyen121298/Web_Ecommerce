@@ -72,11 +72,11 @@ namespace UI.Areas.Admin.Controllers
                 HttpResponseMessage responseMessage = service.PostResponse("api/ItemType/update/", request);
                 responseMessage.EnsureSuccessStatusCode();
                 bool result = responseMessage.Content.ReadAsAsync<bool>().Result;
-                return View();
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
     }

@@ -56,7 +56,17 @@ namespace UI.Areas.Admin.Controllers
 
         public PartialViewResult ListTypeProductAdmin()
         {
-            HttpResponseMessage responseUser = service.GetResponse("api/Home/GetAllItemType");
+            HttpResponseMessage responseUser = service.GetResponse("api/Home/GetAllItemTypeUsed");
+
+            responseUser.EnsureSuccessStatusCode();
+            List<DTO_Item_Type> result = responseUser.Content.ReadAsAsync<List<DTO_Item_Type>>().Result;
+
+            return PartialView(result);
+        }
+
+        public PartialViewResult ListTypeProductUsed()
+        {
+            HttpResponseMessage responseUser = service.GetResponse("api/Home/GetAllItemTypeUsed");
 
             responseUser.EnsureSuccessStatusCode();
             List<DTO_Item_Type> result = responseUser.Content.ReadAsAsync<List<DTO_Item_Type>>().Result;

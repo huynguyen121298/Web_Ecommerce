@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Model.DTO.DTO_Ad.DTO_Item_Type>
+@using Model.DTO.DTO_Client;
+@using Model.DTO.DTO_Ad;
+
+@foreach (DTO_Item_Type item in Model)
+    {
+       <a class="collapse-item" href="@Url.Action("Index2", "Products_Add", new { id =item._id }) ">@item.Type_Product</a>
+       <br />
+    }
+

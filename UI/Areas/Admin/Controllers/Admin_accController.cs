@@ -112,10 +112,26 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
-                Request.Cookies["firstname1"].Value = dTO_Account.FirstName + dTO_Account.LastName;
-                return RedirectToAction("Index","Admin");
+                Response.Cookies["firstname1"].Value = dTO_Account.FirstName +""+ dTO_Account.LastName;
+
+                //HttpCookie cknameAccount1 = new HttpCookie("firstname1");
+                //cknameAccount1.Value = dTO_Account.FirstName + dTO_Account.LastName;
+                //Response.Cookies.Add(cknameAccount1);
+                //HttpCookie ck1 = new HttpCookie("firstname1", (resultLogin.FirstName + "  " + resultLogin.LastName).ToString());
+                //ck1.Expires = DateTime.Now.AddHours(48);
+                //Response.Cookies.Add(ck1);
+
+                var userLogin = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+                if (userLogin.RoleId == 2)
+                {
+                    return RedirectToAction("Index", "Admin");
+
+                }
+                return RedirectToAction("Index");
+
+
             }
-            
+
         }
 
         [AuthorizeLoginAdmin]

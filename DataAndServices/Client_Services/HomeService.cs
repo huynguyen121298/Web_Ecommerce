@@ -42,6 +42,11 @@ namespace DataAndServices.Client_Services
             return await _dbitemType.Find(s => true).ToListAsync();
         }
 
+        public async Task<List<Item_type>> GetAllItemTypeUsed()
+        {
+            return await _dbitemType.Find(s =>s.Status =="Đã kích hoạt").ToListAsync();
+        }
+
         public async Task<User_Acc_Client> GetCustomerByEmail(string mail)
         {
             return await _dbUser.Find(s => s.Email==mail).FirstOrDefaultAsync();

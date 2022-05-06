@@ -120,9 +120,9 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         [HttpGet]
         [Route("GetSoLuong/{Id}")]
-        public int GetSoLuong(string Id)
+        public async Task<int> GetSoLuong(string Id)
         {
-            return  _productClientService.GetSoLuong(Id);
+            return await  _productClientService.GetSoLuong(Id);
         }
 
         [HttpPost]

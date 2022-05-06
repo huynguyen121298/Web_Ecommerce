@@ -308,7 +308,6 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        [HttpPost]
         public ActionResult Buy_Favorite(string Id)
         {
            
@@ -413,7 +412,7 @@ namespace UI.Controllers
 
         }
 
-        [AuthorizeLoginEndUser]
+        
         public ActionResult Details1(string Id)
         {
             if (Session["cart__"] == null)

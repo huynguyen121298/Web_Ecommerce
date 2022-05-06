@@ -2563,6 +2563,7 @@
     <Content Include="Areas\Admin\Views\TypeProduct\Create.cshtml" />
     <Content Include="Areas\Admin\Views\TypeProduct\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\TypeProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ListTypeProductUsed.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />

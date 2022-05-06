@@ -8,9 +8,7 @@
     if (test != null)
     {
         dTO_Account = test;
-    }
-
-
+    } 
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -34,17 +32,9 @@
 
     <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet" />
 
-
-
-
-
-
-
     <!-- Custom styles for this page -->
     <link href="~/Content/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 </head>
-
 
 <body id="page-top">
 
@@ -164,30 +154,17 @@
                     <span>Sản phẩm</span>
                 </a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-            <!-- Sidebar Message -->
-            @*<div class="sidebar-card">
-                    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="">
-                    <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-                </div>*@
-
         </ul>
         <!-- End of Sidebar -->
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-
-
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -209,7 +186,6 @@
         </div>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
 
@@ -252,7 +228,6 @@
 
                         <!-- Nav Item - Messages -->
 
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -262,26 +237,15 @@
 
                                 @if (Request.Cookies["firstname1"] != null)
                                 {
-                                    <p style="color:seagreen;font-style:italic ">Xin chào @Request.Cookies["firstname1"].Value</p>
-
-                                }
+                    <p style="color:seagreen;font-style:italic ">Xin chào @Request.Cookies["firstname1"].Value</p>}
 
                                 <img class="img-profile rounded-circle"
-                                     src="~/Content/admin/img/profile-Icon-SVG.jpg" style="display:none" >
+                                     src="~/Content/admin/img/profile-Icon-SVG.jpg" style="display:none">
                                 @if (test.Photo != null)
-        {
-            <img class="img-profile rounded-circle" src=@Url.Content(test.Photo)>
-        }
-      
-
-
-                              
-
-
+                                {
+                    <img class="img-profile rounded-circle" src=@Url.Content(test.Photo)>}
                             </a>
 
-                           
-                            
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
@@ -299,13 +263,9 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     @*@Html.ActionLink("Thoát", "Logout", "Account");*@ Thoát
                                 </a>
-
-
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
@@ -315,52 +275,25 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
-
-
     <!-- Bootstrap core JavaScript-->
-
     <script src="~/Content/admin/vendor/jquery/jquery.min.js"></script>
-
     <script src="~/Content/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="~/Content/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="~/Content/admin/js/sb-admin-2.min.js"></script>
-
     <!-- Page level plugins -->
     <script src="~/Content/admin/vendor/chart.js/Chart.min.js"></script>
-
     <!-- Page level custom scripts -->
     <script src="~/Content/admin/js/demo/chart-area-demo.js"></script>
     <script src="~/Content/admin/js/demo/chart-pie-demo.js"></script>
-
-
-
-
-
-
-
     <!-- Page level plugins -->
     <script src="~/Content/admin/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/Content/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
     <!-- Page level custom scripts -->
     <script src="~/Content/admin/js/demo/datatables-demo.js"></script>
-
-    <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
-
-    <script src="~/js/owl.carousel.js"></script>
     @RenderSection("Upload", required: false)
     @RenderSection("Scripts", required: false)
-
-
 </body>
-
 </html>

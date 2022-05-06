@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using UI.Models;
 using UI.Security_;
@@ -75,7 +76,7 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult saveOrder1(FormCollection fc, DTOCheckoutCustomerOrder check)
+        public async Task<ActionResult> saveOrder1(FormCollection fc, DTOCheckoutCustomerOrder check)
         {
             try
             {
@@ -133,7 +134,7 @@ namespace UI.Controllers
                     
                 }
                 HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
-                string idBill = responseUser1.Content.ReadAsAsync<string>().Result;
+                var idBill = await responseUser1.Content.ReadAsStringAsync();
                 foreach (DTO_Product_Item_Type item in cart)
                 {                   
                     var notification = new DtoMerchantNotification();
@@ -141,7 +142,7 @@ namespace UI.Controllers
                     notification.AccountId = item.AccountId;
                     notification.Subject = "Đơn hàng mới";
                     notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
-                    notification.CheckoutId = idBill;
+                    notification.CheckoutId = idBill.ToString();
                     notifications.Add(notification);
 
                     var dtoProductAction = new DtoProductAction()

@@ -24,7 +24,7 @@ namespace DataAndServices.Client_Services
 
         bool InsertProductAction(List<ProductAction> productActions);
 
-        int GetSoLuong(string id);
+        Task<int> GetSoLuong(string id);
         List<Product> GetProductsBought(string userId);
         List<Product> GetProductsFavorite(string userId);
     }

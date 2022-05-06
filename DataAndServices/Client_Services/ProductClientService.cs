@@ -136,9 +136,9 @@ namespace DataAndServices.Client_Services
         }
 
 
-        public int GetSoLuong(string id)
+        public async Task<int> GetSoLuong(string id)
         {
-            var temp = _dbItem.Find(s => s._id == id).FirstOrDefault();
+            var temp = await _dbItem.Find(s => s._id == id).FirstOrDefaultAsync();
             if (temp != null)
             {
                 return (int)temp.Quantity;

@@ -26,6 +26,7 @@ namespace UI.Controllers
 
         public ActionResult Index()
         {
+           
             return View();
         }
 
@@ -115,7 +116,7 @@ namespace UI.Controllers
                 HttpCookie cookie = new HttpCookie(Constants.TOKEN_NUMBER, tokenUser);
                 cookie.Expires = DateTime.Now.AddHours(-48);
                 Response.Cookies.Add(cookie);
-                return RedirectToAction("ProfileUser", "Customer", new { usr = model.Email });
+                return RedirectToAction("ProfileUser", "Customer");
             }
         }
 
@@ -187,7 +188,7 @@ namespace UI.Controllers
                 Response.Cookies.Add(ck1);
 
                 ViewBag.SuccessMessage = "Đăng nhập thành công";
-                return RedirectToAction("Index", "Home", new { usr = customLogin.Email });
+                return RedirectToAction("Index", "Home");
             }
             else
             {

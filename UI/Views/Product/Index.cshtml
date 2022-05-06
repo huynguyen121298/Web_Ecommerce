@@ -1,6 +1,8 @@
 ﻿@*@using Model.DTO_Model;*@
 @using Model.DTO_Model;
 @using PagedList.Mvc;
+@using UI.Models;
+@using Model.Common;
 @model PagedList.IPagedList<Model.DTO_Model.DTO_Dis_Product>
 
 @{
@@ -121,11 +123,26 @@
                                             <img style="height:250px" src="@Url.Content(item.Photo)" />
                                         </a>
                                         <div class="product-action">
-                                            <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
-                                            <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
-                                            <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                <i class="fa fa-search"></i>
-                                            </a>
+                                            @{
+                                                var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
+                                                if (session == null)
+                                                {
+                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                        <i class="fa fa-search"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
+                                                    <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
+                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                        <i class="fa fa-search"></i>
+                                                    </a>
+                                                }
+                                            }
+
 
                                         </div>
                                     </div>

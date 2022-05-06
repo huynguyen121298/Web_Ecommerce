@@ -17,9 +17,10 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         [HttpPost]
         [Route("InsertBill")]
-        public  string InsertBill(CheckoutCustomerOrder checkoutCustomerOrder)
+        public async Task<string> InsertBill(CheckoutCustomerOrder checkoutCustomerOrder)
         {
-            return  _cartServices.InsertBill(checkoutCustomerOrder);
+            var idBill = await _cartServices.InsertBill(checkoutCustomerOrder);
+            return idBill;
         }
 
         [HttpPost]
