@@ -91,7 +91,14 @@
 
                             </div>
                             <br />
-                            <input type="submit" class="btn btn-success" value="Hoàn thành">
+                            <div class="col-md-6">
+                                <a class="btn btn-success" value="Xác thực thanh toán">
+                                <a class="btn btn-success" href="@Url.Action("Payment","Cart")">Thanh toán online</a>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                
+                            </div>
 
                         </div>
 
@@ -115,20 +122,20 @@
                                     </span>
                                 </p>
 
-                                <p id="totalAfter" style="color:red; display:none" >
+                                <p id="totalAfter" style="color:red; display:none">
                                     Tổng thanh toán : <span> </span>
                                     <span>
 
-                                        <input readonly id="gia1"  name="gia1" type="reset" value=" @string.Format("{0:0,0}", total)" />
+                                        <input readonly id="gia1" name="gia1" type="reset" value=" @string.Format("{0:0,0}", total)" />
                                     </span>
                                 </p>
 
                                 @*<p>
-                                    <input type="text" readonly style=" opacity:0.5; width:45px; height:30px" id="discount" name="discount1" />
-                                    <br />
+                                        <input type="text" readonly style=" opacity:0.5; width:45px; height:30px" id="discount" name="discount1" />
+                                        <br />
 
-                                    <span style="font-style:italic">"the value for number is: " @discount</span>
-                                </p>*@
+                                        <span style="font-style:italic">"the value for number is: " @discount</span>
+                                    </p>*@
 
 
                             </div>
@@ -139,6 +146,7 @@
             </div>
         }
     </div>
+    
     <div class="col-md-6">
         <p style="color:red;font-style:italic" id="message1">@ViewData["Message"]</p>
     </div>

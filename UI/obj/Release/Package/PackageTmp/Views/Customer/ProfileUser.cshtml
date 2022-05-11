@@ -20,9 +20,9 @@
         <h2 style="color:red">Xin chào: @fullName</h2>
         <ul style="list-style:none;">
             <li>@Html.ActionLink("Thông tin tài khoản", "ProfileUser", new { usr = Model.Email }) </li>
-            <li><a href="#">Lịch sử đơn hàng</a></li>
-            <li>@Html.ActionLink("Đổi mật khẩu", "ResetPassword2", new { id = Model.idUser, mail = Model.Email })</li>
-            <li><a href="~/Cart/yeuThich">Sản phẩm yêu thích</a></li>
+            <li>@Html.ActionLink("Lịch sử đơn hàng", "ProductBought")</li>
+            <li>@Html.ActionLink("Đổi mật khẩu", "ResetPassword2", new { id = Model._id, mail = Model.Email })</li>
+            <li>@Html.ActionLink("sản phẩm yêu thích của tôi", "ProductFavorite")</li>
             <li>@Html.ActionLink("Đăng xuất", "Logout")</li>
             <li><a href="~/Home/Index">Trở về trang chủ</a></li>
         </ul>
@@ -33,30 +33,30 @@
         @using (Html.BeginForm("ProfileUser", "Customer", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(Model => Model.idUser)
+            @Html.HiddenFor(Model => Model._id)
             @Html.HiddenFor(Model => Model.Email)
             @Html.HiddenFor(Model => Model.Password)
-            @Html.HiddenFor(Model=>Model.ConfirmPassword)
-             @Html.HiddenFor(Model=>Model.RoleId)
-             
-          
+            @Html.HiddenFor(Model => Model.ConfirmPassword)
+            @Html.HiddenFor(Model => Model.RoleId)
+
+
             <table>
                 <tr>Họ </tr>
                 <tr>@Html.TextBoxFor(Model => Model.LastName, new { @class = "txt" })</tr>
                 <tr>tên</tr>
                 <tr>@Html.TextBoxFor(Model => Model.FirstName, new { @class = "txt" })</tr>
                 <tr>Địa chỉ:</tr>
-                
+
                 @*<tr>Điện thoại:</tr>
                 <tr>@Html.TextBoxFor(Model => Model.Phone, new { @class = "txt" })</tr>*@
-               
+
                 <tr class="warning">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger", @style = "list-style-type:none;" })
-                   
+
                 </tr>
             </table>
-             <button type="submit" class="btn btn-login btn-success">CẬP NHẬT THÔNG TIN</button>
-              <font style="color:#7c1b1b">@ViewBag.Result</font>
+            <button type="submit" class="btn btn-login btn-success">CẬP NHẬT THÔNG TIN</button>
+            <font style="color:#7c1b1b">@ViewBag.Result</font>
         }
     </div>
 </div>

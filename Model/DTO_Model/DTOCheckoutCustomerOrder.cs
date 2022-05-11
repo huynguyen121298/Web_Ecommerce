@@ -1,5 +1,4 @@
 ﻿using Model.DTO.DTO_Ad;
-using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 

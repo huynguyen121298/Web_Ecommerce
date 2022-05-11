@@ -92,7 +92,7 @@ namespace UI.Controllers
                 response.EnsureSuccessStatusCode();
                 ViewData["ErrorMessage"] = ("Gửi phản hồi thành công");
 
-                return RedirectToAction("LuaChon", "Cart");
+                return RedirectToAction("YeuThich", "Cart");
             }
             catch
             {
@@ -123,8 +123,13 @@ namespace UI.Controllers
                 ServiceRepository serviceObj = new ServiceRepository();
                 HttpResponseMessage response = serviceObj.PostResponse("api/Home/AddComment/", dtoComment);
                 response.EnsureSuccessStatusCode();
+
+                HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + item._id);
+                DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
+                Session["cart__"] = proItem;
+
                 ViewData["ErrorMessage"] = ("Gửi bình luận thành công");
-                return RedirectToAction("YeuThich", "Cart");
+                return RedirectToAction("Luachon", "Cart");
             }
             catch
             {

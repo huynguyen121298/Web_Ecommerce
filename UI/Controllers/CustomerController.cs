@@ -2,10 +2,12 @@
 using Model.Common;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -355,7 +357,7 @@ namespace UI.Controllers
         }
         private void SendEmail(string emailAddress, string body, string subject)
         {
-            using (MailMessage mm = new MailMessage("nguyentuanhuy301198@gmail.com", emailAddress))
+            using (MailMessage mm = new MailMessage("huytuannguyen.301198@gmail.com", emailAddress))
             {
                 mm.Subject = subject;
                 mm.Body = body;
@@ -363,7 +365,7 @@ namespace UI.Controllers
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
-                NetworkCredential NetworkCred = new NetworkCredential("nguyentuanhuy301198@gmail.com", "HuyHuyTuanNguyen");
+                NetworkCredential NetworkCred = new NetworkCredential("huytuannguyen.301198@gmail.com", "Huyhuy123");
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;
@@ -555,8 +557,10 @@ namespace UI.Controllers
                 redirect_uri = RedirectUri.AbsoluteUri,
                 code = code
             });
+           
 
-            var accessToken = result.access_token;
+
+        var accessToken = result.access_token;
             if (!string.IsNullOrEmpty(accessToken))
             {
                 fb.AccessToken = accessToken;

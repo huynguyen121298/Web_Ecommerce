@@ -1,8 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.ComponentModel.DataAnnotations;
-
-namespace Model.DTO.DTO_Client
+﻿namespace Model.DTO.DTO_Client
 {
     public class DTO_CodeDiscount
     {
