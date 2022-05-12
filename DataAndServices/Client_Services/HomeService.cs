@@ -129,6 +129,10 @@ namespace DataAndServices.Client_Services
             var user = _dbUser.Find(x => x.Email == cusInsert.Email).SingleOrDefault();
             if (user == null)
             {
+                cusInsert.RoleId = 2;
+                cusInsert.FirstName =cusInsert.Email;
+                cusInsert.Password = Encryptor.MD5Hash(cusInsert.Email);
+
                 _dbUser.InsertOne(cusInsert);
 
                 return cusInsert._id;

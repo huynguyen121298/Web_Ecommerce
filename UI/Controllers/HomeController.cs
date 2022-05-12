@@ -18,8 +18,21 @@ namespace UI.Controllers
         public string userName;
         public ActionResult Index()
         {
-            
+            string id = String.Empty;
+            if (Request.Cookies["idCustomer"] != null)
+                id = Request.Cookies["idCustomer"].Value;
+            if(id == String.Empty)
+            {
+                if (Request.Cookies["firstname"] != null)
+                {
+                    HttpCookie ck1 = new HttpCookie("firstname");
+                    ck1.Expires = DateTime.Now.AddHours(-48);
+                    Response.Cookies.Add(ck1);
+                }
+                return View();
+            }
             return View();
+
         }
         public PartialViewResult ListTypeProduct()
         {

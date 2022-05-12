@@ -105,7 +105,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
         }
 
         [HttpPost]
-        [Route(" InsertForGoogle")]
+        [Route("InsertForGoogle")]
         public string InsertForGoogle(User_Acc_Client model)
         {
             try

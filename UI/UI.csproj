@@ -2973,6 +2973,7 @@
     <Content Include="Views\Customer\ProductFavorite.cshtml" />
     <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
     <Content Include="Views\Cart\PaymentConfirm.cshtml" />
+    <Content Include="Views\Customer\SingUpFacebook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
