@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -547,20 +548,32 @@ namespace UI.Controllers
 
             return Redirect(loginUrl.AbsoluteUri);
         }
-        public ActionResult FacebookCallback(string code)
+
+        [HttpGet]
+        public ActionResult SingupFacebook()
+        {
+            return View();
+        }
+
+       
+
+        public async Task<ActionResult> FacebookCallback(string code)
         {
             var fb = new FacebookClient();
-            dynamic result = fb.Post("oauth/access_token", new
-            {
-                client_id = ConfigurationManager.AppSettings["FbAppId"],
-                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
-                redirect_uri = RedirectUri.AbsoluteUri,
-                code = code
-            });
+            var result = "https://graph.facebook.com/oauth/access_token?client_id=" + ConfigurationManager.AppSettings["FbAppId"] 
+                + "&client_secret=" + ConfigurationManager.AppSettings["FbAppSecret"] + "&redirect_uri=" + RedirectUri.AbsoluteUri + "&code=" + code;
+            //dynamic result = fb.Post("oauth/access_token", new
+            //{
+            //    client_id = ConfigurationManager.AppSettings["FbAppId"],
+            //    client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+            //    redirect_uri = "https://localhost:44388/Customer/FacebookCallback/",
+            //    code = code,
+            //});
+            var httpClient = new HttpClient();
            
-
-
-        var accessToken = result.access_token;
+            httpClient.BaseAddress = new Uri("https://graph.facebook.com");
+            HttpResponseMessage response = await httpClient.GetAsync(result);
+            var accessToken = "SS";
             if (!string.IsNullOrEmpty(accessToken))
             {
                 fb.AccessToken = accessToken;

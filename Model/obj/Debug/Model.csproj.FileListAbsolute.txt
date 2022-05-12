@@ -106,7 +106,6 @@ C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramewo
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.AssemblyReference.cache
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.csproj.CopyComplete
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\Model\obj\Debug\Model.dll
