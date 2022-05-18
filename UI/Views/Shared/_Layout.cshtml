@@ -1,8 +1,11 @@
 ﻿@*@using PagedList.Mvc;
     @model PagedList.IPagedList<Model.DTO.DTO_Client.DTO_Product>*@
-@model IEnumerable<Model.DTO.DTO_Ad.DTO_Item_Type>
+
 @using Model.DTO.DTO_Client;
 @using Model.DTO.DTO_Ad;
+@using Model.Common;
+@using UI.Models;
+
 <!--
 author: W3layouts
 author URL: http://w3layouts.com
@@ -214,11 +217,11 @@ author URL: http://w3layouts.com
                                     <li><a href=" ~/Product/TypeProduct">Tất cả theo phân loại</a></li>
                                     <li><a href=" ~/Product/Index">Tất cả sản phẩm</a></li>
                                     <li><a href=" ~/Product/Index_">Sản phẩm đang giảm giá</a></li>
-                              
+
                                     @Html.Action("ListTypeProduct", "Home")
 
 
-      
+
                                 </ul>
                             </li>
 
@@ -236,7 +239,7 @@ author URL: http://w3layouts.com
                     <!--</ul>-->
                     <nav>
 
-                        <ul  class="menu">
+                        <ul class="menu">
 
 
 
@@ -270,11 +273,11 @@ author URL: http://w3layouts.com
                     <nav>
                         <label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"> </span></label>
                         <input type="checkbox" id="drop" />
-                        <ul  class="menu">
+                        <ul class="menu">
 
 
 
-                            <li  class="mr-lg-3 mr-2 p-0" id="huy">
+                            <li class="mr-lg-3 mr-2 p-0" id="huy">
                                 <a href="#">Tài Khoản <span class="fa fa-angle-down" aria-hidden="true"></span></a>
                                 <ul style="background: rgba(76, 175, 80, 0.3)" class="inner-dropdown">
 
@@ -298,7 +301,7 @@ author URL: http://w3layouts.com
 
                             </li>
                             <li class="mr-lg-3 mr-2 p-0">
-                                @if (Request.Cookies["firstname"] != null)
+                                @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
 
@@ -314,7 +317,7 @@ author URL: http://w3layouts.com
                                         Xin chào: @Request.Cookies["firstname"].Value
                                     </p>
                                 }
-                                <ul  style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
+                                <ul style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
                                     <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
 
                                     <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
@@ -432,38 +435,38 @@ author URL: http://w3layouts.com
                 <div class="col-lg-8 mt-5">
                     @using (Html.BeginForm("saveFeedbacks", "Home", FormMethod.Post))
                     {
-                    <form action="saveFeedbacks" method="post">
-                        <div class="row form">
-                            <div class="col-sm-6">
-                                <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
+                        <form action="saveFeedbacks" method="post">
+                            <div class="row form">
+                                <div class="col-sm-6">
+                                    <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-sm-12">
+                                    <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-sm-12">
+                                    <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="col-sm-12">
+                                    <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-sm-12">
-                                <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-sm-12">
-                                <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-sm-12">
-                                <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
-                            </div>
-                            <div class="col-sm-12">
-                                <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
-                            </div>
-                        </div>
-                        @*<script>
-                            function AddCart() {
-                                alert("Gửi phản hồi thành công");
+                            @*<script>
+                                    function AddCart() {
+                                        alert("Gửi góp ý thành công");
 
+                                        console.log("done");
 
+                                    }
 
-                            }
+                                </script>*@
+                        </form>
 
-                        </script>*@
-                    </form>
-                       
                     }
 
                 </div>
@@ -587,7 +590,6 @@ author URL: http://w3layouts.com
                 <div class="copy-right text-center">
                     <p>
                         @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
-                        <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
 
                 </div>
@@ -660,10 +662,10 @@ author URL: http://w3layouts.com
             })
         })
 
-       
 
 
-        
+
+
     </script>
     <!-- /main slider -->
 

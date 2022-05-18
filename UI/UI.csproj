@@ -2201,6 +2201,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\calendar.css" />
+    <Content Include="css\css_new.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\main.css" />
@@ -2973,7 +2974,11 @@
     <Content Include="Views\Customer\ProductFavorite.cshtml" />
     <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
     <Content Include="Views\Cart\PaymentConfirm.cshtml" />
-    <Content Include="Views\Customer\SingUpFacebook.cshtml" />
+    <Content Include="Views\Customer\SignUpFacebook.cshtml" />
+    <Content Include="Views\Product\hi.cshtml" />
+    <Content Include="Views\Shared\_LayoutMerchant2.cshtml" />
+    <Content Include="Views\Home\ListTypeProductMerchant.cshtml" />
+    <Content Include="Views\Merchant\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

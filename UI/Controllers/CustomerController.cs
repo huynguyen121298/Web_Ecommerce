@@ -2,6 +2,8 @@
 using Model.Common;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;
+using MongoDB.Bson;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -131,39 +133,23 @@ namespace UI.Controllers
             bool acc = (resultLogin.Email != null);
             if (acc)
             {
-                HttpResponseMessage responseUser = serviceObj.GetResponse(url + "GetCustomerByUsername?user=" + model.Email);
-                responseUser.EnsureSuccessStatusCode();
-                DTO_Users_Acc customLogin = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
+                //HttpResponseMessage responseUser = serviceObj.GetResponse(url + "GetCustomerByUsername?user=" + model.Email);
+                //responseUser.EnsureSuccessStatusCode();
+                //DTO_Users_Acc customLogin = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
 
                 if (model.RememberMe)
                 {
-                    UserLogin u = new UserLogin
-                    {
-                        _id = customLogin._id,
-                        FirstName = customLogin.FirstName,
-                        LastName = customLogin.LastName,
-                        Email = customLogin.Email,
-                        Password = customLogin.Password
-                    };
-                    Session.Add(Constants.USER_SESSION, u);
+                    
 
-                    //Save token API
-                    string tokenUser = GetToken(u.Email);
-                    HttpCookie cookie = new HttpCookie(Constants.TOKEN_NUMBER, tokenUser);
-                    HttpContext.Response.Cookies.Remove(Constants.TOKEN_NUMBER);
-                    Response.Cookies.Add(cookie);
-                    cookie.Expires = DateTime.Now.AddDays(1);
-                    cookie.Value = tokenUser;
-                    HttpContext.Response.SetCookie(cookie);
-
+               
                     //Save cookies
                     HttpCookie ckUserAccount = new HttpCookie("usernameCustomer");
                     ckUserAccount.Expires = DateTime.Now.AddHours(48);
-                    ckUserAccount.Value = u.Email;
+                    ckUserAccount.Value = resultLogin.Email;
                     Response.Cookies.Add(ckUserAccount);
                     HttpCookie ckIDAccount = new HttpCookie("idCustomer");
                     ckIDAccount.Expires = DateTime.Now.AddHours(48);
-                    ckIDAccount.Value = u._id + "";
+                    ckIDAccount.Value = resultLogin._id + "";
                     Response.Cookies.Add(ckIDAccount);
 
                     HttpCookie ckNameAccount = new HttpCookie("nameCustomer");
@@ -171,6 +157,15 @@ namespace UI.Controllers
                     ckNameAccount.Value = resultLogin.FirstName + "  " + resultLogin.LastName;
                     Response.Cookies.Add(ckNameAccount);
                 }
+                UserLogin u = new UserLogin
+                {
+                    _id = resultLogin._id,
+                    FirstName = resultLogin.FirstName,
+                    LastName = resultLogin.LastName,
+                    Email = resultLogin.Email,
+                    Password = resultLogin.Password
+                };
+                Session.Add(Constants.USER_SESSION, u);
                 HttpCookie ck1 = new HttpCookie("firstname", (resultLogin.FirstName + "  " + resultLogin.LastName).ToString());
                 ck1.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck1);
@@ -451,15 +446,19 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult ProductBought()
+        public ActionResult ProductBought(int? page)
         {
+            if (page == null) page = 1;
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
             HttpResponseMessage responseUser = serviceObj.GetResponse("api/product/GetProductsBought/" + userLogin._id);
 
             responseUser.EnsureSuccessStatusCode();
-            List<DTO_Product> result = responseUser.Content.ReadAsAsync<List<DTO_Product>>().Result;
+            List<DTO_Dis_Product> result = responseUser.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
 
-            return PartialView(result);
+            return PartialView(result.ToPagedList(pageNumber,pageSize));
         }
 
         [AuthorizeLoginEndUser]
@@ -534,64 +533,40 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult SignUpFacebook(DTO_Users_Acc model)
         {
-            var mail = GetCustomerByEmail(model.Email);
-            if (mail != null)
+            var objId = new ObjectId();
+
+            UserLogin u = new UserLogin
             {
-                ModelState.AddModelError("", "Email này đã được sử dụng.");
-                return View(model);
-            }
-            HttpResponseMessage response = serviceObj.PostResponse(url + "InsertForFacebook/", model);
+                _id = objId.ToString(),
+            };
+            Session.Add(Constants.USER_SESSION, u);
 
-            if (response.IsSuccessStatusCode)
-            {
-                HttpResponseMessage responseUser = serviceObj.GetResponse(url + "GetCustomerByUsername?user=" + model.Email);
-                responseUser.EnsureSuccessStatusCode();
-                DTO_Users_Acc customLogin = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
-
-                UserLogin u = new UserLogin
-                {
-                    _id = customLogin._id,
-                    FirstName = customLogin.FirstName,
-                    LastName = customLogin.LastName,
-                    Email = customLogin.Email,
-                    Password = customLogin.Password
-                };
-                Session.Add(Constants.USER_SESSION, u);
-
-                //Save token API
-                string tokenUser = GetToken(u.Email);
-                HttpCookie cookie = new HttpCookie(Constants.TOKEN_NUMBER, tokenUser);
-                HttpContext.Response.Cookies.Remove(Constants.TOKEN_NUMBER);
-                Response.Cookies.Add(cookie);
-                cookie.Expires = DateTime.Now.AddDays(1);
-                cookie.Value = tokenUser;
-                HttpContext.Response.SetCookie(cookie);
-
-                //Save cookies
-                HttpCookie ckUserAccount = new HttpCookie("usernameCustomer");
-                ckUserAccount.Expires = DateTime.Now.AddHours(48);
-                ckUserAccount.Value = u.Email;
-                Response.Cookies.Add(ckUserAccount);
-                HttpCookie ckIDAccount = new HttpCookie("idCustomer");
-                ckIDAccount.Expires = DateTime.Now.AddHours(48);
-                ckIDAccount.Value = u._id + "";
-                Response.Cookies.Add(ckIDAccount);
-
-                HttpCookie ck1 = new HttpCookie("firstname", (u.FirstName + "  " + u.LastName).ToString());
-                ck1.Expires = DateTime.Now.AddHours(48);
-                Response.Cookies.Add(ck1);
-                ViewBag.SuccessMessage = "Đăng nhập thành công";
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
+            HttpCookie ck1 = new HttpCookie("firstname", ("Facebook").ToString());
+            ck1.Expires = DateTime.Now.AddHours(48);
+            Response.Cookies.Add(ck1);
+            ViewBag.SuccessMessage = "Đăng nhập thành công";
+            Session.Remove(Constants.SESSION_CREDENTIALS);
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult FacebookCallback(string code)
         {
             if (code != null)
             {
-                return View("SignUpFacebook");
+                var objId = new ObjectId();
 
+                UserLogin u = new UserLogin
+                {
+                    _id = objId.ToString(),
+                };
+                Session.Add(Constants.USER_SESSION, u);
+
+                HttpCookie ck1 = new HttpCookie("firstname", ("Facebook").ToString());
+                ck1.Expires = DateTime.Now.AddHours(48);
+                Response.Cookies.Add(ck1);
+                ViewBag.SuccessMessage = "Đăng nhập thành công";
+                Session.Remove(Constants.SESSION_CREDENTIALS);
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }

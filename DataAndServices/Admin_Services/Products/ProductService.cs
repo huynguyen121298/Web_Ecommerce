@@ -370,7 +370,7 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Product_Item_Type> GetProductItemById_client(string id)
         {
-            var itemTypeCollection = _dbItemtype;
+            var itemTypeCollection = _dbItemtype.Find(s => s.Status == "Đã kích hoạt").ToList();
             var productCollection = _db;
             var Info = (from item in itemTypeCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product.IdItemType

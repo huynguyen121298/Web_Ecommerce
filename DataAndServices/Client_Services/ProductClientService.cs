@@ -35,7 +35,6 @@ namespace DataAndServices.Client_Services
             var productCollection = _db;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
-
                         select new Dis_Product()
                         {
                             _id = dis._id,
@@ -227,39 +226,18 @@ namespace DataAndServices.Client_Services
             }
         }
 
-        public List<Product> GetProductsBought(string userId)
+        public List<Dis_Product> GetProductsBought(string userId)
         {
-            var prActionollection = _dbProductAction;
+            var discountCollection = _dbDis;
             var productCollection = _db;
-            var Info = (from product in productCollection.AsQueryable()
-                        join prAction in prActionollection.AsQueryable() on product._id equals prAction.ProductId
-                        where prAction.UserId == userId && prAction.Status == ProductActionConstant.PRODUCT_BOUGHT
-                        select new Product()
-                        {
-                            _id = product._id,
-                            Name = product.Name,
-                            Price = product.Price,
-                            Details = product.Details,
-                            Photo = product.Photo,
-                            Photo2 = product.Photo2,
-                            Photo3 = product.Photo3,
-                            IdItemType = product.IdItemType,                 
-                            AccountId = product.AccountId
-                        });
+            var prAction = _dbProductAction.Find(a => a.UserId == userId && a.Status == ProductActionConstant.PRODUCT_BOUGHT).ToList();
 
-            return Info.ToList();         
-        }
-
-        public List<Product> GetProductsFavorite(string userId)
-        {
-            var prActionollection = _dbProductAction;
-            var productCollection = _db;
-            var Info = (from product in productCollection.AsQueryable()
-                        join prAction in prActionollection.AsQueryable() on product._id equals prAction.ProductId
-                        where prAction.UserId == userId && prAction.Status == ProductActionConstant.PRODUCT_FAVORITE
-                        select new Product()
+            var products = new List<Dis_Product>();
+            var prod = (from dis in discountCollection.AsQueryable()
+                        join product in productCollection.AsQueryable() on dis._id equals product._id
+                        select new Dis_Product()
                         {
-                            _id = product._id,
+                            _id = dis._id,
                             Name = product.Name,
                             Price = product.Price,
                             Details = product.Details,
@@ -267,10 +245,40 @@ namespace DataAndServices.Client_Services
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
+                            Content = dis.Content,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End,
                             AccountId = product.AccountId
-                        });
+                        }).ToList();
 
-            return Info.ToList();
+            foreach (var product in prAction)
+            {
+                var pro = prod.Find(p => p._id == product.ProductId);
+                var checkPro = products.Contains(pro);
+                if (!checkPro)
+                    products.Add(pro);
+            }
+
+            return products;       
+    
+            
+        }
+
+        public List<Product> GetProductsFavorite(string userId)
+        {
+
+            var prAction = _dbProductAction.Find(a => a.UserId == userId && a.Status == ProductActionConstant.PRODUCT_FAVORITE).ToList();
+
+            var products = new List<Product>();
+            var prod = _db.Find(s => true).ToList();
+            foreach (var product in prAction)
+            {
+                var pro = prod.Find(p => p._id == product.ProductId);
+                products.Add(pro);
+            }
+
+            return products;
         }
     }
 }

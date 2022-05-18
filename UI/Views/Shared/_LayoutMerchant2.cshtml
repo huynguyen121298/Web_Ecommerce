@@ -1,12 +1,9 @@
-﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<Model.DTO_Model.DTO_Product_Item_Type>
+﻿
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Model.DTO.DTO_Ad.DTO_Account2>
 @using Model.DTO_Model;
 @using Model.Common;
 @using UI.Models;
-<!--
-author: W3layouts
-author URL: http://w3layouts.com
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +15,16 @@ author URL: http://w3layouts.com
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta name="keywords" content="" />
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="92543054677-o2h09g2o5d17fujhhhe3a65djgr508h7.apps.googleusercontent.com">
+    <!-- Custom fonts for this template-->
+    <link href="~/Content/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
 
     <script>
         addEventListener("load", function () {
@@ -39,7 +46,51 @@ author URL: http://w3layouts.com
             line-height: 40px;
             margin-left: -5px;
         }
+
+        .dropdown.dropdown-lg .dropdown-menu {
+            margin-top: -1px;
+            padding: 6px 20px;
+        }
+
+        .input-group-btn .btn-group {
+            display: flex !important;
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+            margin-left: -1px;
+        }
+
+            .btn-group .btn:last-child {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+
+        .btn-group .form-horizontal .btn[type="submit"] {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .form-horizontal .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .form-group .form-control:last-child {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+
+        .dropdown.dropdown-lg {
+            position: static !important;
+        }
+
+            .dropdown.dropdown-lg .dropdown-menu {
+                min-width: 500px;
+            }
     </style>
+
 
     <!-- css files -->
     <link href="~/css/bootstrap.css" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
@@ -55,13 +106,66 @@ author URL: http://w3layouts.com
     <link href="//fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <!-- //google fonts -->
     <script src="~/js/jquery-3.3.1.min.js"></script>
+
+
 </head>
 
 <body>
 
+
     <!-- header -->
     <header>
         <div class="container">
+
+            <div style="opacity:1;z-index:900" class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal" role="form" method="post" action="@Url.Action("ProductByMerchant", "Merchant")">
+                        <div class="input-group" id="adv-search">
+                            <input type="text" class="form-control" name="searchNameMer" placeholder="Nhập tìm kiếm sản phẩm của cửa hàng này..." />&nbsp;
+                            <div class="input-group-btn">
+                                <div class="btn-group" role="group">
+
+                                    <button style="height:35px" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search" aria-hidden="true">Tìm kiếm</span></button>&nbsp;
+                                </div>
+                            </div>
+                            <div class="dropdown dropdown-lg">
+                                <button style="height:35px" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span>Lựa chọn sản phẩm theo</button>
+                                <div class="dropdown-menu " role="menu">
+                                    <div class="form-group sidebar-widget tag">
+                                        <label for="filter">Giá Sản phẩm</label>
+
+                                        <ul>
+                                            <li>
+                                                <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("ProductByMerchant", "Merchant", new { gia_="0",gia="500000" })">0-500.000 </a>
+                                                <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("ProductByMerchant", "Merchant", new { gia_="500000",gia="1000000" })">500.000-1.000.000 </a>
+                                                <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("ProductByMerchant", "Merchant", new { gia_="1000000",gia="2000000" })">1.000.000-2.000.000 </a>
+                                                <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("ProductByMerchant", "Merchant", new { gia_="2000000",gia="1000000000" })">Lớn hơn 2 triệu </a>
+
+
+                                            </li>
+                                        </ul>
+                                        <label for="contain">Giá từ</label>
+                                        <input name="priceGiaMinMer" class="form-control" type="text" />
+                                        đến
+
+                                        <input name="priceGiaMaxMer" class="form-control" type="text" />
+                                        <button style="text-align:center" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">Chọn</span></button>
+
+                                    </div>
+
+                                    <br />
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+
+
+                </div>
+            </div>
+
             <div class="header d-lg-flex">
 
                 <div class="header-agile d-flex">
@@ -74,11 +178,10 @@ author URL: http://w3layouts.com
                 </div>
                 <div class="nav_w3ls mt-3">
                     <nav>
-                        <label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"> </span></label>
-                        <input type="checkbox" id="drop" />
+
                         <ul class="menu">
-                            @*<li class="mr-lg-3 mr-2 active"><a href="~/Home/Index">Trang Chủ</a></li>*@
-                            <li class="mr-lg-3 mr-2"><a href="~/Home/Index">Giới thiệu </a></li>
+                            <li class="mr-lg-3 mr-2 active"><a href="~/Home/Index">Trang Chủ</a></li>
+                            @*<li class="mr-lg-3 mr-2"><a href="~/Home/Index">Giới thiệu </a></li>*@
                             <li class="mr-lg-3 mr-2 p-0">
 
 
@@ -88,24 +191,14 @@ author URL: http://w3layouts.com
                                     <li><a href=" ~/Product/TypeProduct">Tất cả theo phân loại</a></li>
                                     <li><a href=" ~/Product/Index">Tất cả sản phẩm</a></li>
                                     <li><a href=" ~/Product/Index_">Sản phẩm đang giảm giá</a></li>
-                                    @*<li><a href="@Url.Action("Index2", "Product", new { id = 8 })"> Thời trang nam</a></li>
 
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 9 })"> Thời trang nữ</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 3 })">Máy tính và Laptop</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 2 })">Máy ảnh và máy quay phim</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 1 })">Đồng hồ</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 7 })">Thiết bị gia dụng</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 6 })">Thể thao và du lịch</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 4 })"> Mẹ và bé</a></li>
-                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 5 })">Sức khỏe và sắc đẹp</a></li>*@
                                     @Html.Action("ListTypeProduct", "Home")
-
 
                                 </ul>
                             </li>
 
-                            <li class="mr-lg-3 mr-2"><a href="#gallery">Bộ sưu tập</a></li>
-                            <li class="mr-lg-3 mr-2"><a href="#contact">Kết nối vs chúng tôi</a></li>
+
+                            <li class="mr-lg-3 mr-2"><a href="#contact">Liên hệ</a></li>
 
 
 
@@ -158,7 +251,7 @@ author URL: http://w3layouts.com
 
                             <li class="mr-lg-3 mr-2 p-0" id="huy">
                                 <a href="#">Tài Khoản <span class="fa fa-angle-down" aria-hidden="true"></span></a>
-                                <ul style="background: rgba(76, 175, 80, 0.3)" class="inner-dropdown">
+                                <ul class="inner-dropdown">
 
                                     <li>
                                         <a style="background-color:red" href="~/Customer/Login" class="btn btn-google btn-user btn-block"><i class="fa fa-share-square" aria-hidden="true"></i>  Đăng nhập</a>
@@ -221,6 +314,7 @@ author URL: http://w3layouts.com
 
             </div>
 
+
         </div>
 
     </header>
@@ -228,8 +322,12 @@ author URL: http://w3layouts.com
         <div class="owl-one owl-carousel owl-theme">
             <div style="height:500px" class="item">
 
+
                 <div class="banner-view">
                     <div style="height:500px" class="container banner-info ">
+                        <br />
+                        <br />
+                        <br />
 
                         <h5><span class="fa fa-stumbleupon" aria-hidden="true"></span> Xu hướng mua sắm </h5>
                         <h2 class="movetxt agile-title text-capitalize">Sản Phẩm đang Hot </h2>
@@ -242,8 +340,12 @@ author URL: http://w3layouts.com
             </div>
             <div style="height:500px" class="item">
 
+
                 <div style="height:500px" class="banner-view banner-top1">
                     <div style="height:500px" class="container banner-info">
+                        <br />
+                        <br />
+                        <br />
                         <h5><span class="fa fa-stumbleupon" aria-hidden="true"></span>Xu hướng mua sắm</h5>
                         <h4 class="movetxt agile-title text-capitalize">Sản Phẩm đang Hot</h4>
                         @*<h4 class="movetxt mb-3 agile-title text-capitalize">Ngành thời trang</h4>*@
@@ -253,8 +355,12 @@ author URL: http://w3layouts.com
             </div>
             <div style="height:500px" class="item">
 
+
                 <div style="height:500px" class="banner-view banner-top2">
                     <div style="height:500px" class="container banner-info">
+                        <br />
+                        <br />
+                        <br />
                         <h5><span class="fa fa-stumbleupon" aria-hidden="true"></span>Xu hướng mua sắm</h5>
                         <h4 class="movetxt agile-title text-capitalize">Sản Phẩm đang Hot</h4>
                         @*<h4 class="movetxt mb-3 agile-title text-capitalize">Ngành thời trang</h4>*@
@@ -268,21 +374,22 @@ author URL: http://w3layouts.com
 
     </section>
 
-
-
-
-
-
     <!-- //header -->
     <!-- main-slider -->
 
     <div>
         @RenderBody()
     </div>
-    <!-- /main-slider -->
-    <!-- About -->
-    <!-- //stats -->
-    <!-- contact -->
+    <div class="col-md-12">
+        <nav aria-label="Page navigation example" style="color:red">
+            Trang @(Model.PageCount<Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+        </nav>
+    </div>
 
     <section class="contact py-5" id="contact">
         <div class="container py-md-5">
@@ -304,37 +411,37 @@ author URL: http://w3layouts.com
                 </div>
 
                 <div class="col-lg-8 mt-5">
-
                     @using (Html.BeginForm("saveFeedbacks", "Home", FormMethod.Post))
                     {
-                        <div class="row main-w3layouts-sectns">
-                            <div class="col-md-6 w3-btm-spc form-text1">
-                                <input type="text" value="" placeholder="Nhập tên" name="Name">
+                        <form action="saveFeedbacks" method="post">
+                            <div class="row main-w3layouts-sectns">
+                                <div class="col-md-6 w3-btm-spc form-text1">
+                                    <input type="text" value="" placeholder="Nhập tên" name="Name">
+                                </div>
+                                <div class="col-md-6 w3-btm-spc form-text2">
+                                    <input type="text" placeholder="Nhập SDT" name="SDT">
+                                </div>
                             </div>
-                            <div class="col-md-6 w3-btm-spc form-text2">
-                                <input type="text" placeholder="Nhập SDT" name="SDT">
+                            <div class="row main-w3layouts-sectns">
+                                <div class="col-md-6 w3-btm-spc form-text1">
+                                    <input type="text" value="" placeholder="Nhập Email" name="Email">
+                                </div>
+                                <div class="col-md-6 w3-btm-spc form-text2">
+                                    <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row main-w3layouts-sectns">
-                            <div class="col-md-6 w3-btm-spc form-text1">
-                                <input type="text" value="" placeholder="Nhập Email" name="Email">
+                            <div class="main-w3layouts-sectns ">
+                                <div class="w3-btm-spc form-text2 p-0">
+                                    <textarea name="details" placeholder="Nhập nội dung của bạn"></textarea>
+                                </div>
                             </div>
-                            <div class="col-md-6 w3-btm-spc form-text2">
-                                <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content">
-                            </div>
-                        </div>
-                        <div class="main-w3layouts-sectns ">
-                            <div class="w3-btm-spc form-text2 p-0">
-                                <textarea name="details" placeholder="Nhập nội dung của bạn"></textarea>
-                            </div>
-                        </div>
 
 
 
-                        <input class="btn" onclick="Add()" type="submit" value="Gửi">
+                            <input class="btn btn-outline-primary" onclick="Add()" type="submit" value="Gửi">
 
+                        </form>
                     }
-
 
                 </div>
                 <div class="col-lg-4 mt-5">
@@ -430,10 +537,10 @@ author URL: http://w3layouts.com
                             <a href="#home">Home</a>
                         </li>
                         <li>
-                            <a href="#about">Giới thiệu</a>
+                            <a href="~/Product/Index">Giới thiệu</a>
                         </li>
                         <li>
-                            <a href="#services">Hệ thống</a>
+                            <a href="#">Hệ thống</a>
                         </li>
                         <li>
                             <a href="#gallery">Bộ sưu tập</a>
@@ -459,7 +566,6 @@ author URL: http://w3layouts.com
                         @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
                         <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
-                    <br />
 
                 </div>
                 <div id="btnlogin" @*style="display:none"*@ class="copy-right text-center">
@@ -490,13 +596,14 @@ author URL: http://w3layouts.com
     </footer>
     <!-- //footer -->
     <!-- main slider -->
-    @Scripts.Render("~/Scripts/bootstrap.js")
-    @Scripts.Render("~/Scripts/jquery-3.4.1.js")
-    @RenderSection("scripts", required: false)
+    <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 
     <script src="~/js/owl.carousel.js"></script>
-    <script src="~/js/JavaScript.js"></script>
+
+
     @RenderSection("Upload", required: false)
+    @RenderSection("UpProduct", required: false)
     <script>
         $(document).ready(function () {
             $('.owl-one').owlCarousel({

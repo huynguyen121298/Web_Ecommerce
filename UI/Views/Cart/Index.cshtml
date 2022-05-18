@@ -4,6 +4,8 @@
 }
 @{
     List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+    var total1 = cart.Sum(item => item.Quantity);
+    
 }
 @using Model.DTO_Model;
 
@@ -53,7 +55,8 @@
                                         @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart"])
                                         {
 
-                                         <tbody class="align-middle">
+
+                                            <tbody class="align-middle">
                                                 <tr>
                                                     <td>
                                                         @item._id
@@ -75,7 +78,7 @@
                                                     <td>
                                                         @string.Format("{0:0,0}", (item.Price * item.Quantity))
                                                     </td>
-                                                    <td><a   href="@Url.Action("Remove2", "Cart", new { id = @item._id })"><i class="fa fa-trash">Xóa</i></a></td>
+                                                    <td><a href="@Url.Action("Remove2", "Cart", new { id = @item._id })"><i class="fa fa-trash">Xóa</i></a></td>
 
                                                 </tr>
                                             </tbody>
@@ -99,27 +102,21 @@
                                             <div class="cart-content">
                                                 <h1>Tóm tắt giỏ hàng</h1>
                                                 <p>
-                                                    Tổng Hóa đơn<span>
+                                                    Tổng Hóa đơn
                                                         @{
 
                                                             var total = string.Format("{0:0,0}", cart.Sum(item => item.Price * item.Quantity));
                                                         }
                                                         @total VNĐ
 
-                                                    </span>
                                                 </p>
-                                                <br />
                                                 <p>
-                                                    Số lượng
-                                                    <br />
-                                                    <span style="color:red">
-                                                        @{
-                                                            List<DTO_Product_Item_Type> cart1 = (List<DTO_Product_Item_Type>)Session["cart"];
-                                                            var total1 = cart1.Sum(item => item.Quantity);
-                                                        }
-                                                        @total1
-                                                        Cái
-                                                    </span>
+                                                  
+                                                        Số lượng :  @total1 Cái
+
+
+
+                                                   
                                                 </p>
                                             </div>
                                             <div class="cart-btn">

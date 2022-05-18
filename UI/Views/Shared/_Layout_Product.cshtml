@@ -1,6 +1,8 @@
 ﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<Model.DTO.DTO_Client.DTO_Product>
 @using Model.DTO_Model;
+@using Model.Common;
+@using UI.Models;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -217,7 +219,7 @@
                 </div>
                 <div class="nav_w3ls mt-3">
                     <nav>
-                     
+
                         <ul class="menu">
                             <li class="mr-lg-3 mr-2 active"><a href="~/Home/Index">Trang Chủ</a></li>
                             @*<li class="mr-lg-3 mr-2"><a href="~/Home/Index">Giới thiệu </a></li>*@
@@ -232,20 +234,20 @@
                                     <li><a href=" ~/Product/Index_">Sản phẩm đang giảm giá</a></li>
                                     @*<li><a href="@Url.Action("Index2", "Product", new { id = 8 })"> Thời trang nam</a></li>
 
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 9 })"> Thời trang nữ</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 3 })">Máy tính và Laptop</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 2 })">Máy ảnh và máy quay phim</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 1 })">Đồng hồ</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 7 })">Thiết bị gia dụng</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 6 })">Thể thao và du lịch</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 4 })"> Mẹ và bé</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 5 })">Sức khỏe và sắc đẹp</a></li>*@
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 9 })"> Thời trang nữ</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 3 })">Máy tính và Laptop</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 2 })">Máy ảnh và máy quay phim</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 1 })">Đồng hồ</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 7 })">Thiết bị gia dụng</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 6 })">Thể thao và du lịch</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 4 })"> Mẹ và bé</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 5 })">Sức khỏe và sắc đẹp</a></li>*@
                                     @Html.Action("ListTypeProduct", "Home")
 
                                 </ul>
                             </li>
 
-                           
+
                             <li class="mr-lg-3 mr-2"><a href="#contact">Liên hệ</a></li>
 
 
@@ -320,8 +322,8 @@
 
 
                             </li>
-                            <li  class="mr-lg-3 mr-2 p-0">
-                                @if (Request.Cookies["firstname"] != null)
+                            <li class="mr-lg-3 mr-2 p-0">
+                                @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
 
@@ -337,15 +339,15 @@
                                         Xin chào: @Request.Cookies["firstname"].Value
                                     </p>
                                 }
-                            <ul  style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
-                                <li  ><a class="btn btn-facebook btn-user btn-block" style="background-color:dodgerblue" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+                                <ul style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
+                                    <li><a class="btn btn-facebook btn-user btn-block" style="background-color:dodgerblue" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
 
-                                <li><a class="btn btn-success btn-user btn-block"style="background-color:forestgreen" href="#">Cài đặt</a></li>
-                                <li>
+                                    <li><a class="btn btn-success btn-user btn-block" style="background-color:forestgreen" href="#">Cài đặt</a></li>
+                                    <li>
 
-                                    <a class="btn btn-google btn-user btn-block " style="background-color:red" href="@Url.Action("Logout","Customer")"> Thoát </a>
-                                </li>
-                            </ul>
+                                        <a class="btn btn-google btn-user btn-block " style="background-color:red" href="@Url.Action("Logout","Customer")"> Thoát </a>
+                                    </li>
+                                </ul>
                             </li>
 
 

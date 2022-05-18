@@ -77,16 +77,20 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public async Task<ActionResult> saveOrder1()
+        public async Task<ActionResult> saveOrder1(bool isPayOnline = false)
         {
-            try
+            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            if(cart == null)
+            {
+                return ViewBag.Error;
+            }
+            var price = Request.Form["gia1"];
+            var checkPayOnl = Request.Form["checkPayOnl"];
+            if(isPayOnline == false)
             {
                 var check = new DTOCheckoutCustomerOrder();
-                var userLogin = (UserLogin)Session[Constants.USER_SESSION];
-                var checkZip = check.Zipcode = Request.Form["zip"];
-                var price = Request.Form["gia1"];
-                var price1 = Request.Form["discount1"];
-                List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+
+                check.Zipcode = Request.Form["zip"];
                 check.NgayTao = DateTime.Now;
                 check.FirstName = Request.Form["FirstName"];
                 check.LastName = Request.Form["LastName"];
@@ -96,81 +100,120 @@ namespace UI.Controllers
                 check.City = Request.Form["city"];
                 check.SDT = Int32.Parse(Request.Form["sdt"]);
                 check.TrangThai = "Đang chờ";
-                if (checkZip != "")
+                if (check.Zipcode != "")
                 {
                     check.Zipcode = Request.Form["zip"];
-                    check.GiamGia = price1 + "%";
+                    check.GiamGia = Request.Form["discount1"] + "%";
                 }
-
-                check.ProductOrder = new List<DTO_Checkout_Order>();
-
-                var notifications = new List<DtoMerchantNotification>();
-
-                var dtoProductActions = new List<DtoProductAction>();
-                foreach (DTO_Product_Item_Type item in cart)
-                {
-                    DTO_Checkout_Order dTO_Checkout_Order = new DTO_Checkout_Order();
-                    var total = (item.Quantity * item.Price);
-                    dTO_Checkout_Order.Id_SanPham = item._id;
-                    dTO_Checkout_Order.TenSP = item.Name;
-                    dTO_Checkout_Order.SoLuong = (int)item.Quantity;
-                    dTO_Checkout_Order.Gia = total;
-                    dTO_Checkout_Order.AccountId = item.AccountId;
-                    check.ProductOrder.Add(dTO_Checkout_Order);
-
-                    var notification = new DtoMerchantNotification();
-                    notification.DateTime = DateTime.Now;
-                    notification.AccountId = item.AccountId;
-                    notification.Subject = "Đơn hàng mới";
-                    notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
-                    notification.CheckoutId = item._id;
-                    notifications.Add(notification);
-
-                    var dtoProductAction = new DtoProductAction()
-                    {
-                        Status = ProductActionConstant.PRODUCT_BOUGHT,
-                        UserId = userLogin._id,
-                        ProductId=item._id
-                    };
-                    dtoProductActions.Add(dtoProductAction);
-                    
-                }
-                HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", check);
-                var idBill = await responseUser1.Content.ReadAsStringAsync();
-                foreach (DTO_Product_Item_Type item in cart)
-                {                   
-                    var notification = new DtoMerchantNotification();
-                    notification.DateTime = DateTime.Now;
-                    notification.AccountId = item.AccountId;
-                    notification.Subject = "Đơn hàng mới";
-                    notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + check.FirstName + " " + check.LastName;
-                    notification.CheckoutId = idBill.ToString();
-                    notifications.Add(notification);
-
-                    var dtoProductAction = new DtoProductAction()
-                    {
-                        Status = ProductActionConstant.PRODUCT_BOUGHT,
-                        UserId = userLogin._id,
-                        ProductId = item._id
-                    };
-                    dtoProductActions.Add(dtoProductAction);
-
-                }
-
-                HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
-                HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
-
-                if (responseUser1.IsSuccessStatusCode && response2.IsSuccessStatusCode && response.IsSuccessStatusCode)
-                {
-                    Session.Clear();
-                    return View("Thankyou");
-                }
-                return RedirectToAction("Error", "Home");
+                Session.Add("PayOrder", check);
             }
-            catch
+            
+            if (checkPayOnl == String.Empty || checkPayOnl == null)
             {
-                return RedirectToAction("Error", "Home");
+                
+
+                try
+                {
+                    var checkSession = (DTOCheckoutCustomerOrder)Session["PayOrder"];
+                    if (isPayOnline == true) checkSession.TrangThai = "Hoàn thành";
+                    var userLogin = (UserLogin)Session[Constants.USER_SESSION];                   
+                   
+
+                    checkSession.ProductOrder = new List<DTO_Checkout_Order>();
+
+                    var notifications = new List<DtoMerchantNotification>();
+
+                    var dtoProductActions = new List<DtoProductAction>();
+                    foreach (DTO_Product_Item_Type item in cart)
+                    {
+                        DTO_Checkout_Order dTO_Checkout_Order = new DTO_Checkout_Order();
+                        var total = (item.Quantity * item.Price);
+                        dTO_Checkout_Order.Id_SanPham = item._id;
+                        dTO_Checkout_Order.TenSP = item.Name;
+                        dTO_Checkout_Order.SoLuong = (int)item.Quantity;
+                        dTO_Checkout_Order.Gia = total;
+                        dTO_Checkout_Order.AccountId = item.AccountId;
+                        checkSession.ProductOrder.Add(dTO_Checkout_Order);
+
+                        var notification = new DtoMerchantNotification();
+                        notification.DateTime = DateTime.Now;
+                        notification.AccountId = item.AccountId;
+                        notification.Subject = "Đơn hàng mới";
+                        notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + checkSession.FirstName + " " + checkSession.LastName;
+                        notification.CheckoutId = item._id;
+                        notifications.Add(notification);
+
+                        var dtoProductAction = new DtoProductAction()
+                        {
+                            Status = ProductActionConstant.PRODUCT_BOUGHT,
+                            UserId = userLogin._id,
+                            ProductId = item._id
+                        };
+                        dtoProductActions.Add(dtoProductAction);
+
+                    }
+                    HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", checkSession);
+                    var idBill = await responseUser1.Content.ReadAsStringAsync();
+                    foreach (DTO_Product_Item_Type item in cart)
+                    {
+                        var notification = new DtoMerchantNotification();
+                        notification.DateTime = DateTime.Now;
+                        notification.AccountId = item.AccountId;
+                        notification.Subject = "Đơn hàng mới";
+                        notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + checkSession.FirstName + " " + checkSession.LastName;
+                        notification.CheckoutId = idBill.ToString();
+                        notifications.Add(notification);
+
+                        var dtoProductAction = new DtoProductAction()
+                        {
+                            Status = ProductActionConstant.PRODUCT_BOUGHT,
+                            UserId = userLogin._id,
+                            ProductId = item._id
+                        };
+                        dtoProductActions.Add(dtoProductAction);
+
+                    }
+
+                    HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
+                    HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
+
+                    if (responseUser1.IsSuccessStatusCode && response2.IsSuccessStatusCode && response.IsSuccessStatusCode)
+                    {
+                        Session.Remove("cart");
+                        Session.Remove("PayOrder");
+                        return View("Thankyou");
+                    }
+                    return RedirectToAction("Error", "Home");
+                }
+                catch
+                {
+                    return RedirectToAction("Error", "Home");
+                }
             }
+            string url = ConfigurationManager.AppSettings["Url"];
+            string returnUrl = ConfigurationManager.AppSettings["ReturnUrl"];
+            string tmnCode = ConfigurationManager.AppSettings["TmnCode"];
+            string hashSecret = ConfigurationManager.AppSettings["HashSecret"];
+            PayLib pay = new PayLib();
+
+            pay.AddRequestData("vnp_Version", "2.0.0"); //Phiên bản api mà merchant kết nối. Phiên bản hiện tại là 2.0.0
+            pay.AddRequestData("vnp_Command", "pay"); //Mã API sử dụng, mã cho giao dịch thanh toán là 'pay'
+            pay.AddRequestData("vnp_TmnCode", tmnCode); //Mã website của merchant trên hệ thống của VNPAY (khi đăng ký tài khoản sẽ có trong mail VNPAY gửi về)
+            pay.AddRequestData("vnp_Amount", price + "00"); //số tiền cần thanh toán, công thức: số tiền * 100 - ví dụ 10.000 (mười nghìn đồng) --> 1000000
+            pay.AddRequestData("vnp_BankCode", ""); //Mã Ngân hàng thanh toán (tham khảo: https://sandbox.vnpayment.vn/apis/danh-sach-ngan-hang/), có thể để trống, người dùng có thể chọn trên cổng thanh toán VNPAY
+            pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss")); //ngày thanh toán theo định dạng yyyyMMddHHmmss
+            pay.AddRequestData("vnp_CurrCode", "VND"); //Đơn vị tiền tệ sử dụng thanh toán. Hiện tại chỉ hỗ trợ VND
+            pay.AddRequestData("vnp_IpAddr", Util.GetIpAddress()); //Địa chỉ IP của khách hàng thực hiện giao dịch
+            pay.AddRequestData("vnp_Locale", "vn"); //Ngôn ngữ giao diện hiển thị - Tiếng Việt (vn), Tiếng Anh (en)
+            pay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang"); //Thông tin mô tả nội dung thanh toán
+            pay.AddRequestData("vnp_OrderType", "other"); //topup: Nạp tiền điện thoại - billpayment: Thanh toán hóa đơn - fashion: Thời trang - other: Thanh toán trực tuyến
+            pay.AddRequestData("vnp_ReturnUrl", returnUrl); //URL thông báo kết quả giao dịch khi Khách hàng kết thúc thanh toán
+            pay.AddRequestData("vnp_TxnRef", DateTime.Now.Ticks.ToString()); //mã hóa đơn
+
+            string paymentUrl = pay.CreateRequestUrl(url, hashSecret);
+
+            return Redirect(paymentUrl);
+
         }
 
         [AuthorizeLoginEndUser]
@@ -258,7 +301,6 @@ namespace UI.Controllers
                         AccountId = proItem.AccountId
                     });
                     Session["cart_"] = li;
-                    return Json(new { buy = li });
                 }
                 else
                 {
@@ -287,7 +329,6 @@ namespace UI.Controllers
                             Quantity = 1,
                             AccountId = proItem.AccountId
                         });
-                        return Json(new { buy = li });
                     }
 
 
@@ -315,9 +356,13 @@ namespace UI.Controllers
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
-            int index = isExist_(Id);
-            cart.RemoveAt(index);
-            Session["cart_"] = cart;
+            if(cart != null)
+            {
+                int index = isExist_(Id);
+                cart.RemoveAt(index);
+                Session["cart_"] = cart;
+            }
+            
 
             var dtoProductAction = new DtoProductAction()
             {
@@ -560,7 +605,9 @@ namespace UI.Controllers
                 {
                     if (vnp_ResponseCode == "00")
                     {
-                        await saveOrder1();
+                        var test = await saveOrder1(true);
+                        
+                        
                         //Thanh toán thành công
                         ViewBag.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
                     }

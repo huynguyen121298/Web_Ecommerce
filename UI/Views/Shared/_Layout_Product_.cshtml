@@ -1,6 +1,9 @@
 ﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<Model.DTO_Model.DTO_Dis_Product>
 @using Model.DTO_Model;
+@using Model.Common;
+@using UI.Models;
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,7 +131,7 @@
                             <div class="dropdown dropdown-lg">
                                 <button style="height:35px" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span>Lựa chọn sản phẩm theo</button>
                                 <div class="dropdown-menu " role="menu">
-                 <div class="form-group sidebar-widget tag">
+                                    <div class="form-group sidebar-widget tag">
                                         <label for="filter">Giá Sản phẩm</label>
 
                                         <ul>
@@ -177,7 +180,7 @@
                                         <a style="color:coral" href=" ~/Product/TypeProduct" class="btn btn-info">Sắp xếp theo từng mẫu</a>
                                         <a style="color:red" class="btn btn-info" href=" ~/Product/Index_">Sản phẩm đang giảm giá</a>
                                     </div>
-                                    
+
                                     <div class="sidebar-widget tag">
                                         <h2 style="color:cornflowerblue" class="title">Theo cửa hàng</h2>
 
@@ -191,7 +194,7 @@
                                             }
                                         </script>
                                     </div>
-                                
+
 
                                 </div>
                             </div>
@@ -321,7 +324,7 @@
 
                             </li>
                             <li class="mr-lg-3 mr-2 p-0">
-                                @if (Request.Cookies["firstname"] != null)
+                                @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
 

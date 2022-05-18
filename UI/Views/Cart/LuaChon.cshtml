@@ -61,12 +61,37 @@
                         <div class="row align-items-center">
 
                             <div class="col-md-5">
+
                                 <div class="product-slider-single normal-slider">
-                                    <img src="@Url.Content(item.Photo)" />
+                                    @if (item.Photo != null)
+                                    {
+                                        <img src="@Url.Content(item.Photo)" style="width:200px;height:300px;margin:auto" />
+                                    }
+                                    @if (item.Photo2 != null)
+                                    {
+                                        <img src="@Url.Content(item.Photo2)" style="width:200px;height:300px;margin:auto" />
+                                    }
+                                    @if (item.Photo3 != null)
+                                    {
+                                        <img src="@Url.Content(item.Photo3)" style="width:200px;height:300px;margin:auto" />
+                                    }
 
                                 </div>
                                 <div class="product-slider-single-nav normal-slider">
-                                    <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
+                                    @if (item.Photo != null)
+                                    {
+                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
+                                    }
+
+                                    @if (item.Photo2 != null)
+                                    {
+                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo2)" /></div>
+                                    }
+                                    @if (item.Photo3 != null)
+                                    {
+                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo3)" /></div>
+                                    }
+
 
                                 </div>
                             </div>
@@ -137,14 +162,8 @@
                                 <div class="tab-content">
                                     <div id="reviews" class="container tab-pane fade">
                                         <div class="reviews-submitted">
-                                            <div class="reviewer"> Để lại đánh giá của bạn - <span>@DateTime.Now</span></div>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+                                            <div class="reviewer">Đánh giá của khách hàng - <span>@DateTime.Now</span></div>
+                                          
                                             @foreach (var comment in item.Comments)
                                             {
 
@@ -170,15 +189,9 @@
 
                                         </div>
                                         <div class="reviews-submit">
-                                            <h4>Để lại phản hồi của bạn</h4>
+                                            <h4> Để lại đánh giá của bạn</h4>
 
-                                            <div class="ratting">
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
+                                         
                                             @using (Html.BeginForm("saveFeedbacksLuaChon", "Home", FormMethod.Post))
                                             {
                                                 <div class="row form">

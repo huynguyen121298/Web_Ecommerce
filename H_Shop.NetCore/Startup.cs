@@ -65,6 +65,7 @@ namespace H_Shop.NetCore
             services.AddTransient<IUsers, UserService>();
             services.AddTransient<ICodeDiscountService, CodeDiscountService>();
             services.AddTransient<IItemTypeService, ItemTypeService>();
+            services.AddTransient<IMerchantService,MerchantService>();
 
         }
 

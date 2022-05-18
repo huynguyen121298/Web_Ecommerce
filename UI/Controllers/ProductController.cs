@@ -94,6 +94,12 @@ namespace UI.Controllers
 
             }
         }
+
+        public ActionResult hi()
+        {
+            return View();
+        }
+
         public ActionResult Index_(DTO_Dis_Product dTO_Product, int? page)
         {
             if (page == null) page = 1;
@@ -118,7 +124,7 @@ namespace UI.Controllers
 
             return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult Index2(int id, string seachBy, string search, int? page, int? gia, int? gia_)
+        public ActionResult Index2(string id, string seachBy, string search, int? page, int? gia, int? gia_)
         {
 
             if (page == null) page = 1;
@@ -328,7 +334,6 @@ namespace UI.Controllers
 
         }
 
-        [AuthorizeLoginEndUser]
         public ActionResult Giam(string Id, DTO_Product_Item_Type item1)
         {
 
@@ -388,7 +393,6 @@ namespace UI.Controllers
             return RedirectToAction("Details", "Product");
         }
 
-        [AuthorizeLoginEndUser]
         public ActionResult Tang(string Id, DTO_Product_Item_Type item1)
         {
             int checkBoy = CheckBuy(Id);

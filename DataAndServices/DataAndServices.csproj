@@ -147,7 +147,9 @@
     <Compile Include="Client_Services\HomeService.cs" />
     <Compile Include="Client_Services\ICartServices.cs" />
     <Compile Include="Client_Services\IHomeServices.cs" />
+    <Compile Include="Client_Services\IMerchantService.cs" />
     <Compile Include="Client_Services\IProductClientServices.cs" />
+    <Compile Include="Client_Services\MerchantService.cs" />
     <Compile Include="Client_Services\ProductClientService.cs" />
     <Compile Include="CommonModel\Account_Role.cs" />
     <Compile Include="CommonModel\BoolResult.cs" />

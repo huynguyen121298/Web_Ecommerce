@@ -20,6 +20,8 @@ namespace Model.DTO.DTO_Client
 
         public string Details { get; set; }
 
+        public int Quantity { get; set; }
+
         public string IdItemType { get; set; }
 
         public string AccountId { get; set; }
