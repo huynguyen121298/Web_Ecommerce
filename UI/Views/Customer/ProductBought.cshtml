@@ -5,29 +5,24 @@
 @using Model.Common;
 @model PagedList.IPagedList<Model.DTO_Model.DTO_Dis_Product>
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/Layout.cshtml";
-}
-
 <!DOCTYPE html>
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="eCommerce HTML Template Free Download" name="keywords">
-    <meta content="eCommerce HTML Template Free Download" name="description">
-    <!-- Favicon -->
-    <link href="~/images/favicon.ico" rel="icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
-    <!-- CSS Libraries -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="~/lib/slick/slick.css" rel="stylesheet">
-    <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
-    <link href="~/css/style_SP.css" rel="stylesheet">
+  
     <style>
+       /* .showOrder {
+            background: linear-gradient(to right, #c04848, #480048);
+            min-height: 100vh
+        }*/
+
+        .text-gray {
+            color: #aaa
+        }
+
+        img {
+            height: 170px;
+            width: 140px
+        }
 
         .old-price {
             margin-top: 10px;
@@ -41,7 +36,6 @@
             font-size: 1.45em;
             line-height: 1.1;
         }
-
 
         ins {
             color: green;
@@ -63,90 +57,43 @@
                 bottom: -10px;
                 left: 0;
             }
+
+       
     </style>
 </head>
 
-<body>
-
-    <div class="breadcrumb-wrap">
-        <div class="container-fluid">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
-                <li class="breadcrumb-item active">Sản phẩm</li>
-            </ul>
+<body class="showOrder">
+    <div class="container py-5">
+        <div class="row text-center text-white mb-5">
+            <div class="col-lg-7 mx-auto">
+                <h1 class="display-4">Sản phẩm đã mua</h1>
+            </div>
         </div>
-    </div>
-    <div class="product-view">
-        <div class="container-fluid">
-            <div class="row">
-                <p>@ViewData["MessQuantity"]</p>
-                <div class="col-lg-12">
-                    
-                        @foreach (DTO_Dis_Product item in Model)
-                        {
-                            var price = item.Price_Dis;
-                            var priceOld = item.Price;
-                            DateTime dateTime = DateTime.Today;
-                            var endDay = item.End;
-                            var startDay = item.Start;
-                            bool checkPrice = price < priceOld;
+        <div class="row ">
+            <div class="col-lg-8 mx-auto">
+                <!-- List group-->
+                <ul class="list-group shadow">
+                    <!-- list group item-->
+                    @foreach (DTO_Dis_Product item in Model)
+                    {
+                        var price = item.Price_Dis;
+                        var priceOld = item.Price;
+                        DateTime dateTime = DateTime.Today;
+                        var endDay = item.End;
+                        var startDay = item.Start;
+                        bool checkPrice = price < priceOld;
 
-                            bool totalday = endDay >= dateTime && startDay <= dateTime;
-                            <div class="col-md-2">
-                                <div class="product-item">
-                                    <div style="height:102px" class="product-title">
-                                        <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
-
-                                        <div class="ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div style="color:red" class="ratting">
-                                            @{
-
-                                                if (price != null && totalday == true && checkPrice == true)
-                                                {
-                                                    <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
-
-                                                }
-                                            }
-
-                                        </div>
-                                    </div>
-
-                                    <div class="product-image">
-                                        <a href="product-detail.html">
-                                            <img style="height:250px" src="@Url.Content(item.Photo)" />
-                                        </a>
-                                        <div class="product-action">
-                                            @{
-                                                var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
-                                                if (session == null)
-                                                {
-                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
-                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
-                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                        <i class="fa fa-search"></i>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
-                                                    <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
-                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                        <i class="fa fa-search"></i>
-                                                    </a>
-                                                }
-                                            }
-
-
-                                        </div>
-                                    </div>
-                                    <div style="height:106px" class="product-price">
+                        bool totalday = endDay >= dateTime && startDay <= dateTime;
+                        <li class="list-group-item">
+                            <!-- Custom content-->
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body order-2 order-lg-1">
+                                    <h5 class="mt-0 font-weight-bold mb-2">@item.Name</h5>
+                                    @if (price != null && totalday == true && checkPrice == true)
+                                    {
+                                        <p class="font-italic text-muted mb-0 small">@item.Content</p>
+                                    }
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
                                         @{
                                             if (price != null && totalday == true && checkPrice == true)
                                             {
@@ -159,31 +106,48 @@
                                             {
                                                 string newprice = string.Format("{0:0,0}", item.Price);
 
-                                                <h3>@newprice<span> VNĐ </span></h3>
+                                                <h6 class="font-weight-bold my-2">@newprice</h6>
                                             }
 
                                         }
+                                    <div class="product-action">
+                                        @{
+                                            var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
+                                            if (session == null)
+                                            {
+                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-outline-success" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
+                                                <a class="btn btn-danger" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
+                                                <a class="btn btn-outline-danger" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                                @*<a class="btn btn-danger" onclick="Buy_Favorite('@item._id')"><i class="fa fa-trash"></i></a>*@
+                                            }
 
-                                        <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
+                                            <a class="btn btn-outline-info" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua lại</a>
 
+                                        }
                                     </div>
-
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                                <img src="@Url.Content(item.Photo)" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                            </div> <!-- End -->
+                        </li>
+                    }
 
-                   
-
-                </div>
-
-                <!-- Side Bar Start -->
-                <div class="col-lg-4 sidebar">
-
-                </div>
-                <!-- Side Bar End -->
+                    <!-- End -->
+                </ul> <!-- End -->
             </div>
         </div>
     </div>
+
     <script>
         function Buy_Favorite(id) {
             var id_temp = id;
@@ -237,9 +201,8 @@
             });
         }
     </script>
-    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
-    @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>

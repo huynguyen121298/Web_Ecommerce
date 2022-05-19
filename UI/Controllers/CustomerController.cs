@@ -446,7 +446,7 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult ProductBought(int? page)
+        public PartialViewResult ProductBought(int? page)
         {
             if (page == null) page = 1;
             int pageSize = 25;
