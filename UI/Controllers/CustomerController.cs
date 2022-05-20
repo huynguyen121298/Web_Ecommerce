@@ -116,6 +116,7 @@ namespace UI.Controllers
                 Response.Cookies.Add(ck1);
                 //Save token API
                 Session[Constants.USER_SESSION] = model;
+                Session.Timeout = 100;
 
                 return RedirectToAction("ProfileUser", "Customer");
             }
@@ -166,6 +167,7 @@ namespace UI.Controllers
                     Password = resultLogin.Password
                 };
                 Session.Add(Constants.USER_SESSION, u);
+                Session.Timeout = 100;
                 HttpCookie ck1 = new HttpCookie("firstname", (resultLogin.FirstName + "  " + resultLogin.LastName).ToString());
                 ck1.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck1);

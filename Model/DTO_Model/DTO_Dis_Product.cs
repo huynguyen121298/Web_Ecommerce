@@ -32,5 +32,7 @@ namespace Model.DTO_Model
         public string AccountId { get; set; }
 
         public string IdItemType { get; set; }
+
+        public string Type_Product { get; set; }    
     }
 }

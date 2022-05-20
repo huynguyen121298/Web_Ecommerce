@@ -316,9 +316,9 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public ActionResult Buy_Favorite(string Id)
         {
-           
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+                    
             int checkBuy = CheckBuy(Id);
+            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (checkBuy == 0)
             {
                 string message = (" Sản phẩm đã hết hàng");
@@ -334,7 +334,7 @@ namespace UI.Controllers
 
         }
 
-        public ActionResult Giam(string Id, DTO_Product_Item_Type item1)
+        public ActionResult Giam(string Id)
         {
 
             List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -359,7 +359,7 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult Update(string Id, FormCollection fc)
+        public ActionResult Update(string Id)
         {
 
             List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -393,7 +393,7 @@ namespace UI.Controllers
             return RedirectToAction("Details", "Product");
         }
 
-        public ActionResult Tang(string Id, DTO_Product_Item_Type item1)
+        public ActionResult Tang(string Id)
         {
             int checkBoy = CheckBuy(Id);
             if (checkBoy == 0)

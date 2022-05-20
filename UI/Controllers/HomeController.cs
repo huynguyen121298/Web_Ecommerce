@@ -28,6 +28,8 @@ namespace UI.Controllers
                     Email = Request.Cookies["usernameCustomer"].Value,
                 };
                 Session.Add(Constants.USER_SESSION, u);
+                Session.Timeout = 100;
+
             }
             return View();
         }

@@ -304,28 +304,22 @@ author URL: http://w3layouts.com
                                 @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
-
-
                                         document.getElementById("huy").style.display = 'none';
-
-
-
-
-
                                     </script>
                                     <p class="fa fa-angle-down" style="color:white">
                                         Xin chào: @Request.Cookies["firstname"].Value
                                     </p>
+                                    <ul style="background: space" class="inner-dropdown  ">
+                                        <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+
+                                        <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
+                                        <li>
+
+                                            <a class="btn btn-google btn-user btn-block " href="@Url.Action("Logout","Customer")"> Thoát </a>
+                                        </li>
+                                    </ul>
                                 }
-                                <ul style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
-                                    <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
 
-                                    <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
-                                    <li>
-
-                                        <a class="btn btn-google btn-user btn-block " href="@Url.Action("Logout","Customer")"> Thoát </a>
-                                    </li>
-                                </ul>
                             </li>
 
 

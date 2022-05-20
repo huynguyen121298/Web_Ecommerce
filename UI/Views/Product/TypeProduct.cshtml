@@ -16,8 +16,12 @@
 <script src="~/js/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<style>
 
+<style>
+    h2 {
+        text-shadow: 2px 2px;
+        color:orangered
+    }
     .old-price {
         margin-top: 10px;
         font-size: 0.8em;
@@ -67,105 +71,119 @@
 
     <div class="product-view">
         <div class="container-fluid">
-            <div class="row">
+           
+                @foreach (List<DTO_Dis_Product> item1 in @Model)
+                {
+                    if (item1.Count() > 0)
+                    {
+                        <div class="content-heading-anchor">
+                            @{                         var itemType = item1.Select(i => i.IdItemType).FirstOrDefault();}
+                            <h2 class="read-more-1">@item1.Select(s => s.Type_Product).FirstOrDefault() 
+                             <a class="read-more-1" href="@Url.Action("Index2", "Product", new { id =itemType }) ">Xem thêm -></a>
+                            </h2>
 
-                <div class="col-lg-12">
-                    <div class="row">
-                        @foreach (List<DTO_Dis_Product> item1 in @Model)
-                        {
+                               
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row">
+                                
 
-                            //List<DTO_PDis> dTO_Products1 = new List<DTO_Product>();
-                            foreach (DTO_Dis_Product item in item1)
-                            {
-                                var price = item.Price_Dis;
-                                var priceOld = item.Price;
-                                DateTime dateTime = DateTime.Today;
-                                var endDay = item.End;
-                                var startDay = item.Start;
-                                bool checkPrice = price < priceOld;
+                                @{
+                                    foreach (DTO_Dis_Product item in item1.Take(5))
+                                    {
+                                        var price = item.Price_Dis;
+                                        var priceOld = item.Price;
+                                        DateTime dateTime = DateTime.Today;
+                                        var endDay = item.End;
+                                        var startDay = item.Start;
+                                        bool checkPrice = price < priceOld;
 
-                                bool totalday = endDay >= dateTime && startDay <= dateTime;
+                                        bool totalday = endDay >= dateTime && startDay <= dateTime;
 
-                                <div class="col-md-2">
-                                    <div class="product-item">
-                                        <div style="height:102px" class="product-title">
-                                            <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div style="color:red" class="ratting">
-                                                @{
-                                                    if (price != null && totalday == true && checkPrice == true)
-                                                    {
-                                                        <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
+                                        <div class="col-md-2">
+                                            <div class="product-item">
+                                                <div style="height:102px" class="product-title">
+                                                    <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
+                                                    <div class="ratting">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div style="color:red" class="ratting">
+                                                        @{
+                                                            if (price != null && totalday == true && checkPrice == true)
+                                                            {
+                                                                <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="product-image">
+                                                    <a href="product-detail.html">
+                                                        <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                                    </a>
+                                                    <div class="product-action">
+                                                        @{
+                                                            var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
+                                                            if (session == null)
+                                                            {
+                                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                                    <i class="fa fa-search"></i>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
+                                                                <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
+                                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                                    <i class="fa fa-search"></i>
+                                                                </a>
+                                                            }
+                                                        }
+
+
+                                                    </div>
+                                                </div>
+                                                <div style="height:106px" class="product-price">
+                                                    @{
+
+                                                        if (price != null && totalday == true && checkPrice == true)
+                                                        {
+                                                            <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
+                                                            <br />
+
+                                                            <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            string newprice = string.Format("{0:0,0}", item.Price);
+
+                                                            <h3>@newprice<span> VNĐ </span></h3>
+                                                        }
+
                                                     }
-                                                }
+                                                    <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
+                                                </div>
+
                                             </div>
                                         </div>
-                                        <div class="product-image">
-                                            <a href="product-detail.html">
-                                                <img style="height:250px" src="@Url.Content(item.Photo)" />
-                                            </a>
-                                            <div class="product-action">
-                                                @{
-                                                    var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
-                                                    if (session == null)
-                                                    {
-                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
-                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
-                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                            <i class="fa fa-search"></i>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
-                                                        <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
-                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                            <i class="fa fa-search"></i>
-                                                        </a>
-                                                    }
-                                                }
 
+                                    }
+                                }
 
-                                            </div>
-                                        </div>
-                                        <div style="height:106px" class="product-price">
-                                            @{
+                            </div>
 
-                                                if (price != null && totalday == true && checkPrice == true)
-                                                {
-                                                    <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
-                                                    <br />
+                        </div>
+                    }
 
-                                                    <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
-                                                }
-                                                else
-                                                {
-                                                    string newprice = string.Format("{0:0,0}", item.Price);
+                }
 
-                                                    <h3>@newprice<span> VNĐ </span></h3>
-                                                }
-
-                                            }
-                                            <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        }
-
-                    </div>
-
-                </div>
             </div>
         </div>
-    </div>
     <script>
         function Buy_Favorite(id) {
             var id_temp = id;

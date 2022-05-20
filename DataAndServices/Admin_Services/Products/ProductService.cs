@@ -174,6 +174,7 @@ namespace DataAndServices.Admin_Services.Products
             foreach (Item_type item in item_Types)
             {
                 List<Dis_Product> products = GetProductById_Item(item._id);
+                
                 productsByType.Add(products);
             }
             return productsByType.ToList();
@@ -251,8 +252,10 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Dis_Product> GetProductById_Item(string id)
         {
+            var typeProduct = _dbItemtype.Find(s => s._id == id).FirstOrDefault();   
             var discountCollection = _dbDis;
             var productCollection = _db;
+            var itemTypeCollection = _dbItemtype;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
                         where product.IdItemType == id
@@ -267,6 +270,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Content = dis.Content,
+                            Type_Product = typeProduct.Type_Product,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,

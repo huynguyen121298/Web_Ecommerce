@@ -301,6 +301,8 @@ namespace UI.Controllers
                         AccountId = proItem.AccountId
                     });
                     Session["cart_"] = li;
+                    return Json(new { buy = li });
+
                 }
                 else
                 {
