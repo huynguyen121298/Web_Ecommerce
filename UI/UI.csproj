@@ -2979,6 +2979,7 @@
     <Content Include="Views\Shared\_LayoutMerchant2.cshtml" />
     <Content Include="Views\Home\ListTypeProductMerchant.cshtml" />
     <Content Include="Views\Merchant\Index2.cshtml" />
+    <Content Include="Views\Merchant\Index_.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

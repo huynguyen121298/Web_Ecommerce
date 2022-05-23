@@ -182,7 +182,10 @@ namespace DataAndServices.Client_Services
                     var update = Builders<User_Acc_Client>.Update.Set(s => s.Email, custom.Email)
                         .Set(s => s.FirstName, custom.FirstName)
                         .Set(s => s.LastName, custom.LastName)
-                       .Set(s => s._id, custom._id);
+                        .Set(s => s._id, custom._id)
+                        .Set(s => s.PhoneNumber, custom.PhoneNumber)
+                        .Set(s => s.Address, custom.Address)
+                        .Set(s => s.City, custom.City);
                     var options = new UpdateOptions { IsUpsert = true };
 
                     _dbUser.UpdateOneAsync(eqfilter, update, options);

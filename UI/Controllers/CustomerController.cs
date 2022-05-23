@@ -1,4 +1,5 @@
 ﻿using Facebook;
+using Facebook;
 using Model.Common;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;
@@ -42,6 +43,8 @@ namespace UI.Controllers
             try
             {
                 Session.Remove(Constants.USER_SESSION);
+                Session.Clear();
+
                 if (Request.Cookies["usernameCustomer"] != null)
                 {
                     HttpCookie ckUserAccount = new HttpCookie("usernameCustomer");
@@ -164,10 +167,12 @@ namespace UI.Controllers
                     FirstName = resultLogin.FirstName,
                     LastName = resultLogin.LastName,
                     Email = resultLogin.Email,
-                    Password = resultLogin.Password
+                    PhoneNumber = resultLogin.PhoneNumber,
+                    Address = resultLogin.Address,
+                    City = resultLogin.City,
                 };
                 Session.Add(Constants.USER_SESSION, u);
-                Session.Timeout = 100;
+                Session.Timeout = 1000;
                 HttpCookie ck1 = new HttpCookie("firstname", (resultLogin.FirstName + "  " + resultLogin.LastName).ToString());
                 ck1.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck1);
@@ -494,12 +499,33 @@ namespace UI.Controllers
         public ActionResult ProfileUser(DTO_Users_Acc model)
         {
             HttpResponseMessage response = serviceObj.PutResponse(url + "UpdateCustomer", model);
-            //Change token
-            HttpCookie cookie = HttpContext.Request.Cookies.Get(Constants.TOKEN_NUMBER);
-            //string token = cookie.Value.ToString();
-
-            response.EnsureSuccessStatusCode();
             bool resultUpdate = response.Content.ReadAsAsync<bool>().Result;
+
+            var newUserLogin = new UserLogin()
+            {
+                _id = model._id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                City = Request.Form["city"].ToString(),
+            };
+            
+           
+            Session.Add(Constants.USER_SESSION,newUserLogin);
+
+            if (Request.Cookies["firstname"] != null)
+            {
+                HttpCookie ck = new HttpCookie("firstname");
+                ck.Expires = DateTime.Now.AddHours(-50);
+                Response.Cookies.Add(ck);
+            }
+
+            HttpCookie ck1 = new HttpCookie("firstname", (model.FirstName + "  " + model.LastName).ToString());
+            ck1.Expires = DateTime.Now.AddHours(48);
+            Response.Cookies.Add(ck1);
+
             if (resultUpdate)
                 ViewBag.Result = "Cập nhật thông tin thành công.";
             else

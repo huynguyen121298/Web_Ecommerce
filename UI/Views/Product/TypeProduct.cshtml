@@ -18,9 +18,8 @@
 
 
 <style>
-    h2 {
-        text-shadow: 2px 2px;
-        color:orangered
+    h4 {
+        color:peru
     }
     .old-price {
         margin-top: 10px;
@@ -64,7 +63,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
                 <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
-                <li class="breadcrumb-item active">Sản phẩm</li>
+                <li class="breadcrumb-item active">Sản phẩm theo loại</li>
             </ul>
         </div>
     </div>
@@ -78,9 +77,9 @@
                     {
                         <div class="content-heading-anchor">
                             @{                         var itemType = item1.Select(i => i.IdItemType).FirstOrDefault();}
-                            <h2 class="read-more-1">@item1.Select(s => s.Type_Product).FirstOrDefault() 
-                             <a class="read-more-1" href="@Url.Action("Index2", "Product", new { id =itemType }) ">Xem thêm -></a>
-                            </h2>
+                            <h4 style="font-size:35px" class="title">@item1.Select(s => s.Type_Product).FirstOrDefault() 
+                             <a style="font-size:20px" class="read-more-1" href="@Url.Action("Index2", "Product", new { id =itemType }) "> Xem thêm -></a>
+                            </h4>
 
                                
                         </div>

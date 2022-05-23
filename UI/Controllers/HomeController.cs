@@ -22,13 +22,24 @@ namespace UI.Controllers
         {
             if (Request.Cookies["idCustomer"] != null && (UserLogin)Session[Constants.USER_SESSION] ==null)
             {
+                var userId = Request.Cookies["idCustomer"].Value;
+                HttpResponseMessage responseUser = service.GetResponse("api/User_Acc/GetAccountById/" +userId);
+
+                responseUser.EnsureSuccessStatusCode();
+                DTO_Users_Acc result = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
+
                 UserLogin u = new UserLogin
                 {
-                    _id = Request.Cookies["idCustomer"].Value,
-                    Email = Request.Cookies["usernameCustomer"].Value,
+                    _id = result._id,
+                    FirstName = result.FirstName,
+                    LastName = result.LastName,
+                    Email = result.Email,
+                    PhoneNumber = result.PhoneNumber,
+                    Address = result.Address,
+                    City = result.City,
                 };
                 Session.Add(Constants.USER_SESSION, u);
-                Session.Timeout = 100;
+                Session.Timeout = 1000;
 
             }
             return View();

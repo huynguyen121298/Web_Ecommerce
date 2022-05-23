@@ -3,6 +3,7 @@ using Model.DTO.DTO_Ad;
 using Model.DTO_Model;
 using PagedList;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Mvc;
 using UI.Service;
@@ -47,7 +48,7 @@ namespace UI.Controllers
             {
                 return Content("Chưa có sản phẩm bạn đang muốn tìm kiếm");
             }
-
+            ViewData["TypeProduct"] = dTO_Accounts.Select(s=>s.Type_Product).FirstOrDefault();
             var view = dTO_Accounts.ToPagedList(1, 10);
             return View(view);
         }
@@ -121,9 +122,27 @@ namespace UI.Controllers
                 DTO_Account2 dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<DTO_Account2>().Result;
 
                 ViewData["MerchantName"] = dTO_Accounts2.MerchantName;
+                Session.Add(Constants.MERCHANT_NAME, dTO_Accounts2.MerchantName); 
+                
 
                 return View(view);
             }
+
+
+        }
+
+        public ActionResult Index_(DTO_Dis_Product dTO_Product, int? page)
+        {
+            string merchantId = (string)Session[Constants.MERCHANT_ID];
+            if (page == null) page = 1;
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+
+            HttpResponseMessage responseMessage = service.GetResponse("api/Merchant/GetAllProduct_DiscountByEndUser/"+merchantId);
+            responseMessage.EnsureSuccessStatusCode();
+            List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
+
+            return View(dTO_Accounts.ToPagedList(pageNumber, pageSize));
         }
     }
 }

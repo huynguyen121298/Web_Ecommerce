@@ -18,6 +18,12 @@ namespace Model.DTO.DTO_Client
 
         public string Password { get; set; }
 
+        public int? PhoneNumber { get; set; }    
+
+        public string City { get; set; }
+
+        public string Address { get; set; } 
+
         [NotMapped]
         [Required]
         [DataType(DataType.Password)]

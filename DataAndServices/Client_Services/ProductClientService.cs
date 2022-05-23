@@ -198,6 +198,19 @@ namespace DataAndServices.Client_Services
         {
             try
             {
+                var checkTypeAction = productActions.FirstOrDefault();
+                if(checkTypeAction.Status == ProductActionConstant.PRODUCT_FAVORITE)
+                {
+                    var proAction = _dbProductAction.Find(a => a.UserId == checkTypeAction.UserId
+                                                           && a.Status == ProductActionConstant.PRODUCT_FAVORITE
+                                                           && a.ProductId == checkTypeAction.ProductId).FirstOrDefault();
+
+                    if (proAction == null)
+                    {
+                        _dbProductAction.InsertOne(proAction);
+                    }
+                    return true;
+                }
                 _dbProductAction.InsertMany(productActions);
                 return true;
             }

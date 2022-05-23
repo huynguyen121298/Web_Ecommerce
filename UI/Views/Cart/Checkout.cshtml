@@ -1,13 +1,17 @@
 ﻿﻿@model Model.DTO_Model.DTO_Product_Item_Type
 
 @{ ViewBag.Title = "Checkout";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 @using Model.DTO_Model;
-
+@using UI.Models;
+@using Model.Common;
 
 @{ List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
-                var total = cart.Sum(item => item.Quantity * item.Price);
-                var total1 = cart.Count(); }
+ var total = cart.Sum(item => item.Quantity * item.Price);
+ var total1 = cart.Count();
+ var userLogin = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION]; 
+ }
+
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
@@ -21,112 +25,103 @@
     <div class="container-fluid">
         @using (Html.BeginForm("saveOrder1", "Cart", FormMethod.Post))
         {
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="checkout-inner">
-                    <div class="billing-address">
-                        <h2>Thanh toán hóa đơn </h2>
-                        <div class="row">
+<div class="row">
+    <div class="col-lg-8">
+        <div class="checkout-inner">
+            <div class="billing-address">
+                <h2>Thanh toán hóa đơn </h2>
+                <div class="row">
 
-                            <div class="col-md-6">
+                    <div class="col-md-6">
 
-                                <input class="form-control" type="text" value="" placeholder="Nhập tên" name="FirstName" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-md-6">
-
-                                <input class="form-control" type="text" placeholder="Nhập Họ" name="LastName" required oninvalid="this.setCustomValidity('Vui lòng nhập họ')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-md-6">
-
-                                <input class="form-control" type="email" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ email')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-md-6">
-
-                                <input class="form-control" type="tel" placeholder="Nhập số điện thoại" name="sdt" required oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-md-12">
-
-                                <input class="form-control" type="text" placeholder="Nhập địa chỉ" name="diaChi" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chi')" oninput="this.setCustomValidity('')">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Tỉnh/Thành phố</label>
-                                <select class="custom-select" name="City">
-                                    <option selected>Hà Nội</option>
-                                    <option>Hồ Chí Minh</option>
-                                    <option>Đà Nẵng</option>
-                                    <option>Huế</option>
-                                    <option>Đăk Lăk</option>
-                                    <option>Nghệ An</option>
-                                    <option>Hà Tĩnh</option>
-                                    <option>Khánh Hóa</option>
-                                    <option>Phú Yên</option>
-                                    <option>Quảng Ngãi</option>
-                                    <option>An Giang</option>
-                                    <option>Tiền Giang</option>
-                                    <option>Long An</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="ZIP Code" onchange="DiscountPrice()" name="zip" id="pricecode">
-                            </div>
-
-                        </div>
-                        <br />
-                        <input type="submit" class="btn btn-outline-info" value="Hoàn thành">
-
-                        <input type="submit" class="btn btn-success" onclick="CheckPayOnline()" value="Thanh toán online">
-                        <input id="checkPayOnl" style="display:none" name="checkPayOnl" type="text" />
-                        <script>
-                            function CheckPayOnline() {
-                                var checkPay = "true"
-                                $('#checkPayOnl').val(checkPay);
-                                console.log("check pay is" + checkPay);
-                            }
-                        </script>
-
-
+                        <input class="form-control" type="text" value="@userLogin.LastName" placeholder="Nhập tên" name="FirstName" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
                     </div>
+                    <div class="col-md-6">
 
+                        <input class="form-control" type="text" value="@userLogin.FirstName" placeholder="Nhập Họ" name="LastName" required oninvalid="this.setCustomValidity('Vui lòng nhập họ')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col-md-6">
+
+                        <input class="form-control" type="email" value="@userLogin.Email" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ email')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col-md-6">
+
+                        <input class="form-control" type="tel" value="@userLogin.PhoneNumber" placeholder="Nhập số điện thoại" name="sdt" required oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col-md-12">
+
+                        <input class="form-control" type="text" value="@userLogin.Address" placeholder="Nhập địa chỉ" name="diaChi" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chi')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tỉnh/Thành phố</label>
+                        <select class="custom-select" name="City">
+                            @if (userLogin.City != null)
+                            {
+                        <option selected>@userLogin.City</option>}
+                            <option selected>Hà Nội</option>
+                            <option>Hồ Chí Minh</option>
+                            <option>Đà Nẵng</option>
+                            <option>Huế</option>
+                            <option>Đăk Lăk</option>
+                            <option>Nghệ An</option>
+                            <option>Hà Tĩnh</option>
+                            <option>Khánh Hóa</option>
+                            <option>Phú Yên</option>
+                            <option>Quảng Ngãi</option>
+                            <option>An Giang</option>
+                            <option>Tiền Giang</option>
+                            <option>Long An</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" placeholder="ZIP Code" onchange="DiscountPrice()" name="zip" id="pricecode">
+                    </div>
                 </div>
+                <br />
+                <input type="submit" class="btn btn-outline-info" value="Hoàn thành">
+
+                <input type="submit" class="btn btn-success" onclick="CheckPayOnline()" value="Thanh toán online">
+                <input id="checkPayOnl" style="display:none" name="checkPayOnl" type="text" />
+                <script>
+                    function CheckPayOnline() {
+                        var checkPay = "true"
+                        $('#checkPayOnl').val(checkPay);
+                        console.log("check pay is" + checkPay);
+                    }
+                </script>
             </div>
+        </div>
+    </div>
 
-            <div class="col-lg-4">
-                <div class="cart-page-inner">
-                    <div class="row">
+    <div class="col-lg-4">
+        <div class="cart-page-inner">
+            <div class="row">
 
-                        <div class="col-md-12">
-                            <div class="cart-summary">
-                                <div class="cart-content">
-                                    <h1>Tóm tắt </h1>
-                                    <p>
-                                        Thanh Toán :  <input readonly class="form-control" type="text" value="@string.Format("{0:0,0}", total)  VNĐ" /> 
-
-
-                                       
-                                    </p>
-                                    <p style="display:none">
-                                        Giảm giá <input type="text" readonly class="form-control" id="discount" name="discount1" />
-                                    </p>
-                                    <p>
-                                        Tổng thanh toán
-                                       
-                                       
-
-
-                                            <input readonly id="gia1" name="gia1" class="form-control" type="text" value="@total " />
-
-                                       
-                                    </p>
-                                </div>
-                               
-                            </div>
+                <div class="col-md-12">
+                    <div class="cart-summary">
+                        <div class="cart-content">
+                            <h1>Tóm tắt </h1>
+                            <p>
+                                Thanh Toán :  <input readonly class="form-control" type="text" value="@string.Format("{0:0,0}", total)  VNĐ" />
+                            </p>
+                            <p style="display:none">
+                                Giảm giá <input type="text" readonly class="form-control" id="discount" name="discount1" />
+                            </p>
+                            <p style="display:none">
+                                Tổng thanh toán
+                                <input readonly id="gia1" name="gia1" class="form-control" type="text" value="@total " />
+                            </p>
+                            <p>
+                                Tổng thanh toán
+                                <input readonly id="gia2" name="gia2" class="form-control" type="text" value="@string.Format("{0:0,0}", total)" />
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-
-        </div>}
+        </div>
+    </div>
+</div>}
     </div>
     <div class="col-md-6">
         <p style="color:red;font-style:italic" id="message1">@ViewData["Message"]</p>
@@ -144,6 +139,11 @@
         $('#gia').val(@total -(@total* dis));
 
     };
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 2
+    })
     function DiscountPrice() {
         var priceCode = $('#pricecode').val();
         console.log(priceCode);
@@ -158,6 +158,7 @@
                 $("#discount").val(res.checkout * 100)
                 var dis = res.checkout;
                 $('#gia1').val(@total -(@total* dis));
+                $('#gia2').val(formatter.format(@total -(@total* dis)));
 
                 var myJsVariable = '@ViewBag.Message';
                 var message =  @Html.Raw(Json.Encode(this.ViewBag.Message));

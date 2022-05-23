@@ -8,5 +8,6 @@ namespace DataAndServices.Client_Services
         List<Dis_Product> GetAllProductByName(string name, string merchantId);
         List<Dis_Product> GetAllProductByPrice(int giaMin, int giaMax, string merchantId);
         List<Product_Item_Type> GetProductItemById_client(string id, string merchantId);
+        List<Dis_Product> GetAllProduct_Discount(string merchantId);
     }
 }

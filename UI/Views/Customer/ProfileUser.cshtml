@@ -1,4 +1,4 @@
-﻿@model Model.DTO.DTO_Client.DTO_Users_Acc
+﻿ @model Model.DTO.DTO_Client.DTO_Users_Acc
 
 @{
     ViewBag.Title = "Profile cá nhân";
@@ -9,6 +9,17 @@
 }
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <style>
+    .tieude_giua {
+        text-align: center;
+        text-transform: uppercase;
+        color: #4d2b00;
+        font-size: 30px;
+        background: url(images/tieude_center.png) no-repeat bottom center;
+        padding-bottom: 10px;
+        margin-bottom: 2.5%;
+        font-family: 'UTM Impact';
+    }
+
     h2 {
         font-size: 16px;
         font-weight: bold;
@@ -77,12 +88,41 @@
             <table>
                 <tr>Họ </tr>
                 <tr>@Html.TextBoxFor(Model => Model.LastName, new { @class = "txt" })</tr>
-                <tr>tên</tr>
-                <tr>@Html.TextBoxFor(Model => Model.FirstName, new { @class = "txt" })</tr>
-                <tr>Địa chỉ:</tr>
+                <tr>Tên đệm</tr>
 
-                @*<tr>Điện thoại:</tr>
-                    <tr>@Html.TextBoxFor(Model => Model.Phone, new { @class = "txt" })</tr>*@
+                <tr>@Html.TextBoxFor(Model => Model.FirstName, new { @class = "txt" })</tr>
+
+                <tr>Tỉnh/Thành phố:</tr>
+               
+                      
+                        <select class="txt" name="City">
+                            @if (Model.City != null)
+                            {
+                        <option selected>@Model.City</option>
+                    }
+                    else
+                    {
+                        <option selected>Hà Nội</option>
+                    }
+
+                            <option>Hồ Chí Minh</option>
+                            <option>Đà Nẵng</option>
+                            <option>Huế</option>
+                            <option>Đăk Lăk</option>
+                            <option>Nghệ An</option>
+                            <option>Hà Tĩnh</option>
+                            <option>Khánh Hóa</option>
+                            <option>Phú Yên</option>
+                            <option>Quảng Ngãi</option>
+                            <option>An Giang</option>
+                            <option>Tiền Giang</option>
+                            <option>Long An</option>
+                        </select>
+                <tr>Địa chỉ:</tr>
+                <tr>@Html.TextBoxFor(Model => Model.Address, new { @class = "txt" })</tr>
+
+                <tr>Điện thoại:</tr>
+                <tr>@Html.TextBoxFor(Model => Model.PhoneNumber, new { @class = "txt" })</tr>
 
                 <tr class="warning">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger", @style = "list-style-type:none;" })
@@ -93,7 +133,10 @@
         }
     </div>
 </div>
-<div class="row" id="contentShowOrder" style=" display:none">
+<div  id="contentShowOrder" style=" display:none">
+    <div class="tieude_giua">
+        Lịch sử đơn hàng
+    </div>
     @Html.Action("ProductBought", "Customer");
     <button class="btn btn-login btn-success" onclick="CloseStuff()">Đóng</button>
 

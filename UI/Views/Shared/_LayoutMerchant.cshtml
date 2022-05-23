@@ -183,14 +183,13 @@
                             <li class="mr-lg-3 mr-2 active"><a href="~/Home/Index">Trang Chủ</a></li>
                             @*<li class="mr-lg-3 mr-2"><a href="~/Home/Index">Giới thiệu </a></li>*@
                             <li class="mr-lg-3 mr-2 p-0">
+                                @{ var merchantName = (string)Session[Constants.MERCHANT_NAME];}
 
-
-                                <a href="#">Sản phẩm của cửa hàng <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                                <a href="#">Sản phẩm của cửa hàng @merchantName<span class="fa fa-angle-down" aria-hidden="true"></span></a>
                                 <input type="checkbox" id="drop-2" />
                                 <ul class="inner-dropdown  ">
-                                    <li><a href=" ~/Product/TypeProduct">Tất cả theo phân loại</a></li>
-                                    <li><a href=" ~/Product/Index">Tất cả sản phẩm</a></li>
-                                    <li><a href=" ~/Product/Index_">Sản phẩm đang giảm giá</a></li>
+                                    <li><a href=" ~/Merchant/ProductByMerchant">Tất cả sản phẩm</a></li>
+                                    <li><a href=" ~/Merchant/Index_">Sản phẩm đang giảm giá</a></li>
 
                                     @Html.Action("ListTypeProductMerchant", "Home")
 

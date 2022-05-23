@@ -15,5 +15,6 @@
         public static string TOKEN_NUMBER = "TOKEN_NUMBER";
         public static string SEARCHMERCHANT = "SEARCH_MERCHANT";
         public static string MERCHANT_ID = "MERCHANT_ID";
+        public static string MERCHANT_NAME = "MERCHANT_NAME";
     }
 }

@@ -39,6 +39,12 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         }
 
-
+        [HttpGet]
+        [Route("GetAllProduct_DiscountByEndUser/{merchantId}")]
+        public IActionResult GetAllProduct_Discount(string merchantId)
+        {
+            var listProDis = _merchantService.GetAllProduct_Discount(merchantId);
+            return Ok(listProDis);
+        }
     }
 }

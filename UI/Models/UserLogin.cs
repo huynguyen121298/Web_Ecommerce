@@ -36,5 +36,11 @@ namespace UI.Models
             return this.FirstName + " " + this.LastName;
         }
         public int? RoleId { get; set; }
+
+        public int? PhoneNumber { get; set; }
+
+        public string City { get; set; }
+
+        public string Address { get; set; }
     }
 }

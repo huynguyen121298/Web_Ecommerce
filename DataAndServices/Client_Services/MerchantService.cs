@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace DataAndServices.Client_Services
 {
     public class MerchantService : IMerchantService
@@ -15,21 +14,22 @@ namespace DataAndServices.Client_Services
         private readonly IMongoCollection<Discount_Product> _dbDis;
         private readonly IMongoCollection<Item_type> _dbItemtype;
         private readonly IMongoCollection<ProductComment> _dbProductComment;
+
         public MerchantService(DataContext db)
         {
             _db = db.GetProductClientCollection();
             _dbDis = db.GetDiscountProductCollection();
             _dbItemtype = db.GetItem_TypeCollection();
             _dbProductComment = db.GetProductCommentCollection();
-
         }
+
         public List<Dis_Product> GetAllProductByName(string name, string merchantId)
         {
             var discountCollection = _dbDis;
             var productCollection = _db;
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
-                        where product.AccountId == merchantId 
+                        where product.AccountId == merchantId
                         select new Dis_Product()
                         {
                             _id = dis._id,
@@ -89,7 +89,6 @@ namespace DataAndServices.Client_Services
                     {
                         dis_Product5.Add(item);
                     }
-
                 }
                 else
                 {
@@ -98,7 +97,6 @@ namespace DataAndServices.Client_Services
                     {
                         dis_Product2.Add(item);
                     }
-
                 }
             }
             dis_Product6.AddRange(dis_Product2);
@@ -121,11 +119,11 @@ namespace DataAndServices.Client_Services
 
         public List<Product_Item_Type> GetProductItemById_client(string id, string merchantId)
         {
-            var itemTypeCollection = _dbItemtype.Find(s=>s.Status == "Đã kích hoạt").ToList();
+            var itemTypeCollection = _dbItemtype.Find(s => s.Status == "Đã kích hoạt").ToList();
             var productCollection = _db;
             var Info = (from item in itemTypeCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on item._id equals product.IdItemType
-                        where item._id == id 
+                        where item._id == id
                         select new Product_Item_Type()
                         {
                             _id = item._id,
@@ -163,6 +161,34 @@ namespace DataAndServices.Client_Services
             }
 
             return 0;
+        }
+
+        public List<Dis_Product> GetAllProduct_Discount(string merchantId)
+        {
+            var discountCollection = _dbDis;
+            var productCollection = _db;
+
+            var Info = (from dis in discountCollection.AsQueryable()
+                        join product in productCollection.AsQueryable() on dis._id equals product._id
+                        where product.AccountId == merchantId
+                        select new Dis_Product()
+                        {
+                            _id = dis._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            IdItemType = product.IdItemType,
+                            Content = dis.Content,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End,
+                            AccountId = product.AccountId
+                        });
+
+            return Info.ToList();
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Model.Common;
+﻿using UI.Models;
+using Model.Common;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using UI.Models;
 
 namespace UI.Security_
 {
