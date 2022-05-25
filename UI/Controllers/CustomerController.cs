@@ -1,5 +1,4 @@
 ﻿using Facebook;
-using Facebook;
 using Model.Common;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;

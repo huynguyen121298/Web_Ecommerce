@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace DataAndServices.DataModel
 {
@@ -10,6 +11,11 @@ namespace DataAndServices.DataModel
         public string _id { get; set; }
 
         public int? Quantity { get; set; }
+
+        public List<string> Color { get; set; } 
+
+        public List<string> Size { get; set; }
+
 
     }
 }

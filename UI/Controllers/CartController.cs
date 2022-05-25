@@ -161,7 +161,7 @@ namespace UI.Controllers
                         notification.AccountId = item.AccountId;
                         notification.Subject = "Đơn hàng mới";
                         notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + checkSession.FirstName + " " + checkSession.LastName;
-                        notification.CheckoutId = idBill.ToString();
+                        notification.CheckoutId = idBill;
                         notifications.Add(notification);
 
                         var dtoProductAction = new DtoProductAction()

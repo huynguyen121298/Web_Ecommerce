@@ -2201,6 +2201,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\calendar.css" />
+    <Content Include="css\css_color.css" />
     <Content Include="css\css_new.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />

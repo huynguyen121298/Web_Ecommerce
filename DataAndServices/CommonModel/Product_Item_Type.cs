@@ -29,5 +29,9 @@ namespace DataAndServices.CommonModel
 
         public List<ProductComment> Comments { get; set; }
 
+        public List<string> Color { get; set; }
+
+        public List<string> Size { get; set; }
+
     }
 }

@@ -35,7 +35,7 @@ namespace Model.DTO.DTO_Ad
 
         public DateTime NgayTao { get; set; }
 
-        public double? GiamGia { get; set; }
+        public string GiamGia { get; set; }
 
         public double? TongTien { get; set; }
 

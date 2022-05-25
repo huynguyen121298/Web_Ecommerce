@@ -1,6 +1,7 @@
 ﻿using Model.DTO.DTO_Ad;
 using Model.DTO_Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Mvc;
 using UI.Areas.Admin.Common;
@@ -56,7 +57,7 @@ namespace UI.Areas.Admin.Controllers
                 List<DtoMerchantNotification> result = responseUser.Content.ReadAsAsync<List<DtoMerchantNotification>>().Result;
 
 
-                ViewBag.Quantity = result;
+                ViewBag.Quantity = result.Take(5);
 
 
             }

@@ -43,5 +43,9 @@ namespace Model.DTO_Model
 
         public List<DtoProductComment> Comments { get; set; }
 
+        public List<string> Color { get; set; }
+
+        public List<string> Size { get; set; }
+
     }
 }

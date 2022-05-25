@@ -64,6 +64,8 @@ namespace DataAndServices.Admin_Services.Products
                 Item item = new Item();
                 item.Quantity = product_Item_Type.Quantity;
                 item._id = products._id;
+                item.Size = product_Item_Type.Size;
+                item.Color = product_Item_Type.Color;
                 _dbItem.InsertOne(item);
 
                 Discount_Product dis = new Discount_Product();
@@ -119,7 +121,10 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo3 = product.Photo3,
                                   IdItemType = product.IdItemType,
                                   Quantity = item.Quantity,
-                                  AccountId = product.AccountId
+                                  AccountId = product.AccountId,
+                                  Color = item.Color,
+                                  Size = item.Size,
+                                  
                               };
             return await infoProduct.ToListAsync();
         }
@@ -142,11 +147,14 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo3 = product.Photo3,
                                   IdItemType = product.IdItemType,
                                   Quantity = item.Quantity,
-                                  AccountId = product.AccountId
+                                  AccountId = product.AccountId,
+                                  Color = item.Color,
+                                  Size = item.Size
                               };
             foreach (var item in infoProduct)
             {
                 var productComment = _dbProductComment.Find(cmt => cmt.ProductId == item._id).ToList();
+
                 item.Comments = productComment;
             }
             return await infoProduct.ToListAsync();
@@ -212,7 +220,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+
                         });
 
             return Info.ToList();
@@ -298,7 +307,9 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Color = item.Color,
+                            Size = item.Size
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
@@ -339,7 +350,9 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Color = item.Color,
+                            Size = item.Size
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
@@ -365,7 +378,9 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Color = item.Color,
+                            Size = item.Size
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == id).ToList();
             Info.Comments = productComment;
@@ -390,7 +405,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Type_Product = item.Type_Product,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
                         }).ToList();
 
             foreach (var item in Info)
@@ -423,7 +438,9 @@ namespace DataAndServices.Admin_Services.Products
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Quantity = item.Quantity,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Color = item.Color,
+                            Size = item.Size
                         });
 
             return Info.ToList();
@@ -498,7 +515,9 @@ namespace DataAndServices.Admin_Services.Products
 
                 var eqfilter2 = Builders<Item>.Filter.Where(s => s._id == custom._id);
                 var update2 = Builders<Item>.Update.Set(s => s._id, custom._id)
-                    .Set(s => s.Quantity, custom.Quantity);
+                    .Set(s => s.Quantity, custom.Quantity)
+                    .Set(s => s.Color, custom.Color)
+                    .Set(s => s.Size, custom.Size);
 
                 var options2 = new UpdateOptions { IsUpsert = true };
                 _dbItem.UpdateOneAsync(eqfilter2, update2, options2).ConfigureAwait(false);

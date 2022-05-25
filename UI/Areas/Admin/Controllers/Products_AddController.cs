@@ -106,11 +106,36 @@ namespace UI.Areas.Admin.Controllers
             var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
             dTO_Product_Item_Type.AccountId = dTO_Account._id;
 
-            //string Id = dTO_Product_Item_Type.Photo;
-            //DTO_Product_Item_Type dTO_Product_Item_Type = new DTO_Product_Item_Type();
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
 
+            var colors = Request.Form["selectColor"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
+            if(colors.Length > 0)
+            {
+                var newColors = new List<string>();
+                foreach (var color in colors)
+                {
+                    newColors.Add(color);
+                }
+                dTO_Product_Item_Type.Color = newColors;
 
+            }
+
+            if(dTO_Product_Item_Type.Type_Product =="Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
+            {
+                var sizes = Request.Form["sizeProduct"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
+                if(sizes.Length > 0)
+                {
+                    var newSizes = new List<string>();
+                    foreach (var size in sizes)
+                    {
+                        newSizes.Add(size);
+                    }
+                    dTO_Product_Item_Type.Size = newSizes;
+                }
+                else
+                    ViewData["ErrorMessage"] = "Bạn chưa chọn size cho sản phẩm";
+            }
+           
             try
             {
                 if (ImageUpload != null)
@@ -211,6 +236,33 @@ namespace UI.Areas.Admin.Controllers
         {
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
 
+            var colors = Request.Form["selectColor"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
+            if (colors.Length > 0)
+            {
+                var newColors = new List<string>();
+                foreach (var color in colors)
+                {
+                    newColors.Add(color);
+                }
+                dTO_Product_Item_Type.Color = newColors;
+
+            }
+
+            if (dTO_Product_Item_Type.Type_Product == "Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
+            {
+                var sizes = Request.Form["sizeProduct"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
+                if (sizes.Length > 0)
+                {
+                    var newSizes = new List<string>();
+                    foreach (var size in sizes)
+                    {
+                        newSizes.Add(size);
+                    }
+                    dTO_Product_Item_Type.Size = newSizes;
+                }
+                else
+                    ViewData["ErrorMessage"] = "Bạn chưa chọn size cho sản phẩm";
+            }
             try
             {
                 if (ModelState.IsValid)

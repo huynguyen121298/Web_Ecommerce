@@ -15,5 +15,9 @@ namespace Model.DTO.DTO_Client
         {
             return (int)items.Sum(s => s.Quantity);
         }
+
+        public List<string> Color { get; set; }
+
+        public List<string> Size { get; set; }
     }
 }

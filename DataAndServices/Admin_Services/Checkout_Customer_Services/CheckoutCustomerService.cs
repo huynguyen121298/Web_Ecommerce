@@ -120,7 +120,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
            
           
 
-            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành").ToList();
+            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn thành").ToList();
 
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
@@ -133,7 +133,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             }); ;
 
             var monthTotal = new DtoSalesVM
-            {
+            { 
                 Date = new DateTime(year, month, 1),
                 Days = days.GroupJoin(test, d => d, q => q.Day, (d, q) => new DtoDayTotalVM
                 {
@@ -152,7 +152,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         public double? GetDateRevenue(DateTime date)
         {
 
-            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn Thành" && s.NgayTao == date ).ToList();
+            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn thành" && s.NgayTao == date ).ToList();
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
 

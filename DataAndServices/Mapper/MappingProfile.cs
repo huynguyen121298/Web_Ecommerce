@@ -9,6 +9,7 @@ namespace DataAndServices.Mapper
         public MappingProfile()
         {
             CreateMap<CheckoutCustomerOrder, DTO_Checkout_Customer>();
+            CreateMap<Checkout_Oder, DTO_Checkout_Order>();
         }
     }
 }
