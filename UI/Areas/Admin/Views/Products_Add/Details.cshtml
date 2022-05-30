@@ -9,10 +9,10 @@
 
 <h2>Chi tiết sản phẩm</h2>
 
-<div>
+<div class="form-content text-body">
 
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal form-content text-body">
         <dt>
             Mã sản phẩm: @Html.DisplayFor(model => model._id)
         </dt>
@@ -31,49 +31,59 @@
         @if (Model.Size != null)
         {
             <dt>
-                Size sản phẩm:  @Html.DisplayFor(model => model.Size)
+                Size sản phẩm: @foreach (var item in Model.Size)
+                {
+                    <div class="flex-column align-items-center">@item</div>
+
+                }
             </dt>
         }
 
         @if (Model.Color != null)
         {
-            <dt>
-                Màu sản phẩm sản phẩm:
-                @foreach (var item in Model.Color)
-                {
-                    <div class="color" style="background-color:@item" data-hex="#e1e851"></div>
+    <dt>
+        Màu sản phẩm sản phẩm:
+        <ol>
+            @foreach (var item in Model.Color)
+            {
+                <li>
+                    <div class="flex-column align-items-center">@item</div>
+                </li>
 
-                }
-            </dt>
+
+            }
+        </ol>
+       
+    </dt>
 
         }
-        <ol>
+    <dt>
+        Hình ảnh<ol>
+            @if (Model.Photo != null)
+            {
+                <li>
+                    <img src="@Url.Content(Model.Photo)" style="height:100px ;width:100px ; margin:10px " />
+                </li>
+            }
 
-            <li>
-                Hình ảnh<ol>
-                    @if (Model.Photo != null)
-                    {
-                        <li>
-                            <img src="@Url.Content(Model.Photo)" style="height:100px ;width:100px ; margin:10px " />
-                        </li>
-                    }
+            @if (Model.Photo2 != null)
+            {
+                <li>
+                    <img src="@Url.Content(Model.Photo2)" style="height:100px ;width:100px ; margin:10px " />
+                </li>
+            }
 
-                    @if (Model.Photo2 != null)
-                    {
-                        <li>
-                            <img src="@Url.Content(Model.Photo2)" style="height:100px ;width:100px ; margin:10px " />
-                        </li>
-                    }
-
-                    @if (Model.Photo3 != null)
-                    {
-                        <li>
-                            <img src="@Url.Content(Model.Photo3)" style="height:100px ;width:100px ; margin:10px " />
-                        </li>
-                    }
-                </ol>
-            </li>
+            @if (Model.Photo3 != null)
+            {
+                <li>
+                    <img src="@Url.Content(Model.Photo3)" style="height:100px ;width:100px ; margin:10px " />
+                </li>
+            }
         </ol>
+    </dt>
+
+               
+      
 
         <dt>
             Số lượng còn trong kho:   @Html.DisplayFor(model => model.Quantity)

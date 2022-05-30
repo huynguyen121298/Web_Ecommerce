@@ -131,11 +131,32 @@
 
                                     }
 
-                                }
+
+
+}
 
                             </td>
                             <td>
-                                <img src=" @Url.Content(item.Photo)" style="height:100px; width:100px;margin:10px" />
+                                @if (item.Photo != null)
+                                {
+                                    <img src=" @Url.Content(item.Photo)" style="height:100px; width:100px;margin:10px" />
+
+                                }
+                                else
+                                {
+                                    if (item.Photo2 != null)
+                                    {
+                                        <img src=" @Url.Content(item.Photo2)" style="height:100px; width:100px;margin:10px" />
+
+                                    }
+                                    else
+                                    {
+                                        <img src=" @Url.Content(item.Photo3)" style="height:100px; width:100px;margin:10px" />
+
+                                    }
+
+                                }
+                              
                             </td>
 
                             <td>

@@ -374,19 +374,10 @@ namespace UI.Controllers
             }
             else
             {
-                li.Add(new DTO_Product_Item_Type()
-                {
-                    _id = proItem._id,
-                    Name = proItem.Name,
-                    Price = proItem.Price,
-                    Details = proItem.Details,
-                    Photo = proItem.Photo,
-                    Photo2 = proItem.Photo2,
-                    Photo3 = proItem.Photo3,
-                    IdItemType = proItem.IdItemType,
-                    Quantity = 1,
-                    AccountId = proItem.AccountId
-                });
+                var newProduct = new DTO_Product_Item_Type();
+                newProduct = proItem;
+                newProduct.Quantity = 1;
+                li.Add(newProduct);
 
             }
             Session["cart"] = li;
@@ -489,20 +480,11 @@ namespace UI.Controllers
                 }
                 else
                 {
-                    li.Add(new DTO_Product_Item_Type()
-                    {
+                    var newProduct = new DTO_Product_Item_Type();
+                    newProduct = proItem;
+                    newProduct.Quantity = 1;
+                    li.Add(newProduct);
 
-                        Quantity = 1,
-                        _id = proItem._id,
-                        Name = proItem.Name,
-                        Price = proItem.Price,
-                        Details = proItem.Details,
-                        Photo = proItem.Photo,
-                        Photo2 = proItem.Photo2,
-                        Photo3=proItem.Photo3,
-                        IdItemType = proItem.IdItemType,
-                        AccountId = proItem.AccountId
-                    });
                     return 2;
                 }
             }
@@ -523,19 +505,12 @@ namespace UI.Controllers
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
-                li.Add(new DTO_Product_Item_Type()
-                {
-                    Quantity = 1,
-                    _id = proItem._id,
-                    Name = proItem.Name,
-                    Price = proItem.Price,
-                    Details = proItem.Details,
-                    Photo = proItem.Photo,
-                    Photo2 = proItem.Photo2,
-                    Photo3 = proItem.Photo3,
-                    IdItemType = proItem.IdItemType,
-                    AccountId = proItem.AccountId
-                });
+
+                var newProduct = new DTO_Product_Item_Type();
+                newProduct = proItem;
+                newProduct.Quantity = 1;
+                li.Add(newProduct);
+
                 Session["cart"] = li;
                 return 2;
             }

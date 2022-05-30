@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Model.DTO.DTO_Ad.DTO_Item_Type>
 @using Model.DTO.DTO_Ad;
-<select style="width:200px" name="typeProduct" id="typeProduct" onchange="ShowOptionSize()">
+<select style="width:200px;margin-left:10%" name="typeProduct" id="typeProduct" onchange="ShowOptionSize()">
     @foreach (DTO_Item_Type item in Model)
     {
         <option>@item.Type_Product</option>

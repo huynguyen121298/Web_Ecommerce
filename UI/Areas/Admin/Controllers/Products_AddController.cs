@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using UI.Areas.Admin.Common;
@@ -107,7 +108,6 @@ namespace UI.Areas.Admin.Controllers
             dTO_Product_Item_Type.AccountId = dTO_Account._id;
 
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
-
             var colors = Request.Form["selectColor"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
             if(colors.Length > 0)
             {
@@ -225,12 +225,17 @@ namespace UI.Areas.Admin.Controllers
             ServiceRepository service = new ServiceRepository();
             HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetProductItemById_admin/" + Id);
             responseMessage.EnsureSuccessStatusCode();
-            DTO_Product_Item_Type dtoAccounts = responseMessage.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
 
+            DTO_Product_Item_Type dtoAccounts = responseMessage.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
+            HttpResponseMessage responseMessage2 = service.GetResponse("api/ItemType/GetById/" + dtoAccounts.IdItemType);
+
+            var itemType = responseMessage2.Content.ReadAsAsync<DTO_Item_Type>().Result;
+            dtoAccounts.Type_Product = itemType.Type_Product;
             return View(dtoAccounts);
         }
 
-        [HttpPost, ValidateInput(false)]
+        [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload,
             HttpPostedFileBase ImageUpload2, HttpPostedFileBase ImageUpload3)
         {
@@ -293,7 +298,12 @@ namespace UI.Areas.Admin.Controllers
                         dTO_Product_Item_Type.Photo3 = "~/images_product/" + fileName;
                         ImageUpload3.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
                     }
-
+                    if ((ImageUpload == null && ImageUpload2 == null && ImageUpload3 == null) 
+                        && dTO_Product_Item_Type.Photo == null && dTO_Product_Item_Type.Photo2 == null && dTO_Product_Item_Type.Photo3 == null)
+                    {
+                        ViewData["ErrorMessage"] = "Bạn chưa chọn hình ảnh cho sản phẩm";
+                        return View(dTO_Product_Item_Type);
+                    }
                     HttpResponseMessage responseUser = service.PostResponse("api/Products_Ad/UpdateProduct/", dTO_Product_Item_Type);
                     responseUser.EnsureSuccessStatusCode();
                 }

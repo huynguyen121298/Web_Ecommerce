@@ -11,8 +11,6 @@
 }
 @using Model.DTO_Model;
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,135 +46,211 @@
         </div>
     </div>
 
-
     @{
         if (cart.Count > 0)
         {
             <div class="product-detail">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-8">
-                            <div class="product-detail-top">
+                            <div class="col-lg-8">
+                                <form class="form-horizontal" role="form" method="post" action="@Url.Action("Buy_", "Cart")">
+                                    <div class="product-detail-top">
 
+                                        @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart"])
+                                        {
+                                            <div class="row align-items-center">
+                                                <div class="col-md-5">
 
-                                @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart"])
-                                {
-                                    <div class="row align-items-center">
-                                        <div class="col-md-5">
-                                           
-                                            <div class="product-slider-single normal-slider">
-                                                @if (item.Photo != null)
-                                                {
-                                                    <img src="@Url.Content(item.Photo)" style="width:200px;height:300px;margin:auto" />
-                                                }
-                                                @if (item.Photo2 != null)
-                                                {
-                                                    <img src="@Url.Content(item.Photo2)" style="width:200px;height:300px;margin:auto" />
-                                                }
-                                                @if (item.Photo3 != null)
-                                                {
-                                                    <img src="@Url.Content(item.Photo3)" style="width:200px;height:300px;margin:auto" />
-                                                }
-
-                                            </div>
-                                                <div class="product-slider-single-nav normal-slider">
-                                                    @if (item.Photo != null)
-                                                    {
-                                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
-                                                    }
-
-                                                    @if (item.Photo2 != null)
-                                                    {
-                                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo2)" /></div>
-                                                    }
-                                                    @if (item.Photo3 != null)
-                                                    {
-                                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo3)" /></div>
-                                                    }
-
-
-                                                </div>
-                                            </div>
-                                        <div class="col-md-7">
-                                            <div class="product-content">
-                                                @item.Name
-                                                <div class="ratting">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div>
-                                                    <h4 class="product-price-range">Tổng giá sản phẩm</h4>
-                                                    <p><span id="total-price_@item._id" style="color:red"> @string.Format("{0:0,0}", (item.Price * item.Quantity))</span> VNĐ</p>
-                                                </div>
-                                                <div class="quantity">
-                                                    <h4>Số lượng:</h4>
-                                                    <br />
-
-                                                    <a class="btn btn-minus" id="giam" onclick="giamSoLuong('@item._id')"><i class="fa fa-minus"></i> Giảm số lượng </a>
-
-                                                    <input readonly type="text" min="0" name="quantity" id="quantity_@item._id" value=" @item.Quantity " onchange="if (this.value <= 0) {this.value = '1';}">
-
-                                                    <a class="btn btn-plus" id="tang" onclick="tangSoLuong('@item._id')"><i class="fa fa-plus"></i> Tăng số lượng </a>
-
-                                                </div>
-
-                                                <div class="p-color">
-
-                                                    <div class="btn-group btn-group-sm">
-                                                        <a class="btn" href="@Url.Action("Remove", "Product", new { id = item._id })">Xóa sản phẩm </a>
+                                                    <div class="product-slider-single normal-slider">
+                                                        @if (item.Photo != null)
+                                                        {
+                                                            <img src="@Url.Content(item.Photo)" style="width:200px;height:300px;margin:auto" />
+                                                        }
+                                                        @if (item.Photo2 != null)
+                                                        {
+                                                            <img src="@Url.Content(item.Photo2)" style="width:200px;height:300px;margin:auto" />
+                                                        }
+                                                        @if (item.Photo3 != null)
+                                                        {
+                                                            <img src="@Url.Content(item.Photo3)" style="width:200px;height:300px;margin:auto" />
+                                                        }
                                                     </div>
+                                                    <div class="product-slider-single-nav normal-slider">
+                                                        @if (item.Photo != null)
+                                                        {
+                                                            <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
+                                                        }
 
+                                                        @if (item.Photo2 != null)
+                                                        {
+                                                            <div class="slider-nav-img"> <img src="@Url.Content(item.Photo2)" /></div>
+                                                        }
+                                                        @if (item.Photo3 != null)
+                                                        {
+                                                            <div class="slider-nav-img"> <img src="@Url.Content(item.Photo3)" /></div>
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <div class="row product-detail-bottom">
-                                                    <div class="col-lg-12">
-                                                        <ul class="nav nav-pills nav-justified">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
-                                                            </li>
-                                                        </ul>
+                                                <div class="col-md-7">
+                                                    <div class="product-content">
+                                                        @item.Name
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
 
-                                                        <div class="tab-content">
-                                                            <div id="description" class="container tab-pane active">
-                                                                <p>
-                                                                    @item.Details
-                                                                </p>
+                                                        @if (item.Color != null)
+                                                        {
+                                                            <div class="flex-column align-items-center">
+                                                                <label>Chọn màu</label>
+                                                                @{ string selectColor = "selectColor" + item._id; }
+                                                                <select name="@selectColor" required>
+                                                                    @foreach (var color in item.Color)
+                                                                    {
+                                                                        <option>@color</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+
+                                                        @if (item.Size != null)
+                                                        {
+                                                            <div class="flex-column align-items-center">
+                                                                <label>Chọn size</label>
+                                                                @{ string selectSize = "selectSize" + item._id; }
+                                                                <select name="@selectSize">
+                                                                    @foreach (var size in item.Size)
+                                                                    {
+                                                                        <option>@size</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+
+                                                        <div>
+                                                            <h4 class="product-price-range">Tổng giá sản phẩm</h4>
+                                                            <p><span id="total-price_@item._id" style="color:red"> @string.Format("{0:0,0}", (item.Price * item.Quantity))</span> VNĐ</p>
+                                                        </div>
+                                                        <div class="quantity">
+                                                            <h4>Số lượng:</h4>
+                                                            <br />
+
+                                                            <a class="btn btn-minus" id="giam" onclick="giamSoLuong('@item._id')"><i class="fa fa-minus"></i> Giảm số lượng </a>
+
+                                                            <input readonly type="text" min="0" name="quantity" id="quantity_@item._id" value=" @item.Quantity " onchange="if (this.value <= 0) {this.value = '1';}">
+
+                                                            <a class="btn btn-plus" id="tang" onclick="tangSoLuong('@item._id')"><i class="fa fa-plus"></i> Tăng số lượng </a>
+                                                        </div>
+
+                                                        <div class="p-color">
+
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a class="btn" href="@Url.Action("Remove", "Product", new { id = item._id })">Xóa sản phẩm </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row product-detail-bottom">
+                                                            <div class="col-lg-12">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div class="tab-content">
+                                                                    <div id="description" class="container tab-pane active">
+                                                                        <p>
+                                                                            @item.Details
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        }
 
+                                        <div class="row product-detail-bottom">
+                                            <div class="col-lg-12">
+                                                @{
+                                                    if (messages != null)
+                                                    {
+                                                        foreach (string item in messages)
+                                                        {
+                                                            <h3 style="color:red;font-style:italic;text-align:center">- @item!</h3>
+
+                                                        }
+                                                    }
+                                                }
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li class="nav-item">
+                                                        <input type="submit" class="btn btn-outline-success" value="Xác nhận"><i class="fa fa-shopping-bag"></i>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                }
 
 
-                                <div class="row product-detail-bottom">
-                                    <div class="col-lg-12">
-                                        @{
-                                            if (messages != null)
-                                            {
-                                                foreach (string item in messages)
-                                                {
-                                                    <h3 style="color:red;font-style:italic;text-align:center">- @item!</h3>
 
+                                        @section Upload {
+                                            <script>
+
+                                                function tangSoLuong(id) {
+                                                    var id_temp = id
+                                                    $.ajax({
+                                                        url: '/Product/Tang',
+                                                        data: { Id: id },
+                                                        dataType: 'json',
+                                                        type: 'POST',
+
+                                                        success: function (res) {
+                                                            if (res.soLuong == 0) {
+                                                                alert("Sản phẩm này đã vượt quá số lượng trong kho");
+                                                            }
+                                                            var dom_quantity = "#quantity_" + id_temp
+                                                            var dom_price = "#total-price_" + id_temp
+                                                            for (let i = 0; i < res.soLuong.length; i++) {
+
+                                                                if (res.soLuong[i]["_id"] == id_temp) {
+
+                                                                    $(dom_quantity).val(res.soLuong[i]["Quantity"])
+
+                                                                    $(dom_price).html(res.soLuong[i]["Price"])
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+
+                                                    });
                                                 }
-                                            }
+                                                function giamSoLuong(id) {
+                                                    var id_temp = id
+                                                    $.ajax({
+                                                        url: '/Product/Giam',
+                                                        data: { Id: id },
+                                                        dataType: 'json',
+                                                        type: 'POST',
+                                                        success: function (res) {
+                                                            var dom_quantity = "#quantity_" + id_temp
+                                                            var dom_price = "#total-price_" + id_temp
+                                                            for (let i = 0; i < res.soLuong.length; i++) {
+                                                                if (res.soLuong[i]["_id"] == id_temp) {
+                                                                    $(dom_quantity).val(res.soLuong[i]["Quantity"])
+                                                                    $(dom_price).html(res.soLuong[i]["Price"])
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                        }
+                                                    });
+                                                }
+                                            </script>
                                         }
-                                        <ul class="nav nav-pills nav-justified">
-                                            <li class="nav-item">
-                                                <a class="btn" href="@Url.Action("Buy_", "Cart")"><i class="fa fa-shopping-bag"></i>Xác nhận </a>
-                                            </li>
-
-                                            
-                                        </ul>
-
-                                       
                                     </div>
-                                </div>
+                                </form>
 
                                 <form class="form-horizontal" role="form" method="post" action="@Url.Action("Index", "Product")">
                                     <div class="sidebar-widget tag">
@@ -196,72 +270,9 @@
                                         <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
                                     </div>
                                 </form>
-
-                                @section Upload {
-                                    <script>
-
-
-                                        function tangSoLuong(id) {
-                                            var id_temp = id
-                                            $.ajax({
-                                                url: '/Product/Tang',
-                                                data: { Id: id },
-                                                dataType: 'json',
-                                                type: 'POST',
-                                                
-                                                
-                                                success: function (res) {
-                                                    if (res.soLuong == 0) {
-                                                        alert("Sản phẩm này đã vượt quá số lượng trong kho");
-                                                    }
-                                                    var dom_quantity = "#quantity_" + id_temp
-                                                    var dom_price = "#total-price_" + id_temp
-                                                    for (let i = 0; i < res.soLuong.length; i++) {
-                                                        
-                                                            
-                                                        
-                                                        if (res.soLuong[i]["_id"] == id_temp) {
-                                                            
-                                                            
-                                                            $(dom_quantity).val(res.soLuong[i]["Quantity"])
-
-                                                            $(dom_price).html(res.soLuong[i]["Price"])
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-
-
-                                            });
-                                        }
-                                        function giamSoLuong(id) {
-                                            var id_temp = id
-                                            $.ajax({
-                                                url: '/Product/Giam',
-                                                data: { Id: id },
-                                                dataType: 'json',
-                                                type: 'POST',
-                                                success: function (res) {                      
-                                                    var dom_quantity = "#quantity_" + id_temp
-                                                    var dom_price = "#total-price_" + id_temp
-                                                    for (let i = 0; i < res.soLuong.length; i++) {
-                                                        if (res.soLuong[i]["_id"] == id_temp) {
-                                                            $(dom_quantity).val(res.soLuong[i]["Quantity"])
-                                                            $(dom_price).html(res.soLuong[i]["Price"])
-                                                            break;
-                                                        }
-                                                    }
-
-                                                }
-                                            });
-                                        }
-                                    </script>
-                                }
                             </div>
-                        </div>
                     </div>
                 </div>
-
             </div>
         }
         else

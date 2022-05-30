@@ -1,10 +1,13 @@
-﻿<!-- Nav Item - Alerts -->
+﻿@model IEnumerable<Model.DTO_Model.DtoMerchantNotification>
+@using Model.DTO_Model
+
+<!-- Nav Item - Alerts -->
 <li class="nav-item dropdown no-arrow mx-1">
     <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Notification")" id="alertsDropdown" role="button"
        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter">Thông báo+</span>
+        <span class="badge badge-danger badge-counter">Thông báo (+@ViewBag.Count)</span>
     </a>
 
     <!-- Dropdown - Alerts -->
@@ -15,31 +18,31 @@
         </h6>
 
         @{
-            
-                foreach (var item in ViewBag.Quantity)
-                {
-                    @*<a class="dropdown-item d-flex align-items-center" href="~/Admin/Notification/Index">*@
-                        @*<div class="mr-3">
-                            <div class="icon-circle bg-primary">
-                                <i class="fas fa-file-alt text-white"></i>
-                            </div>
-                        </div>*@
-                        <div>
-                            <div class="small text-gray-500">@item.DateTime</div>
-                            @if (item.Status == 0)
-                            {
-                                <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item._id})"><span class="font-weight-bold">@item.Content</span></a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item._id })"><span class="font-weight-normal">@item.Content</span></a>
 
-                            }
+            foreach (var item in ViewBag.Quantity)
+            {
+                @*<a class="dropdown-item d-flex align-items-center" href="~/Admin/Notification/Index">*@
+                @*<div class="mr-3">
+                        <div class="icon-circle bg-primary">
+                            <i class="fas fa-file-alt text-white"></i>
                         </div>
-                    @*</a>*@
+                    </div>*@
+                <div>
+                    <div class="small text-gray-500">@item.DateTime</div>
+                    @if (item.Status == 0)
+                    {
+                        <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item._id})"><span class="font-weight-bold">@item.Content</span></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ChangeStatusNoti", "Notification", new { notiId = item._id })"><span class="font-weight-normal">@item.Content</span></a>
 
-                }
-            
+                    }
+                </div>
+                @*</a>*@
+
+            }
+
 
         }
 

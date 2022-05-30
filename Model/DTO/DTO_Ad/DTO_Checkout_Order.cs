@@ -14,6 +14,12 @@ namespace Model.DTO.DTO_Ad
 
         public double? Gia { get; set; }
 
+        public string Size { get; set; }
+
+        public string Color { get; set; }
+
+        public string Photo { get; set; }
+
         public string AccountId { get; set; }
 
     }

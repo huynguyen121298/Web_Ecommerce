@@ -15,21 +15,26 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
     public class CheckoutCustomerService : ICheckoutCustomerService
     {
         private readonly IMongoCollection<CheckoutCustomerOrder> _db;
+        private readonly IMongoCollection<MerchantNotification> _dbNoti;
         private readonly IMapper _mapper;
 
         public CheckoutCustomerService(DataContext db,
             IMapper mapper)
         {
             _db = db.GetCheckoutCustomerOrderCollection();
+            _dbNoti = db.GetMerchantNotificationCollection();
             _mapper = mapper;
+            
         }
         public bool DeleteAccount(string id)
         {
             try
             {
+                var noti = Builders<MerchantNotification>.Filter.Eq("CheckoutId", id);
                 var deleteFilter3 = Builders<CheckoutCustomerOrder>.Filter.Eq("_id", id);
 
                  _db.DeleteOne(deleteFilter3);
+                _dbNoti.DeleteOne(noti);
 
               
                 return true;

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -24,7 +25,7 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public ActionResult Index()
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
 
             if (cart == null)
 
@@ -35,7 +36,8 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public ActionResult Checkout()
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+
+            var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
             if (cart == null)
             {
                 return View("Thankyou1");
@@ -51,11 +53,14 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult Buy_()
+        public ActionResult Buy_(FormCollection formCollection)
         {
             bool flag = true;
             List<string> messages = new List<string>();
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+
+            var productCarts = new List<DtoProductCart>();
+          
             foreach (var item in cart)
             {
                 HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item._id);
@@ -69,7 +74,25 @@ namespace UI.Controllers
                     string message = (item.Name + " đã vượt quá số lượng đang có");
                     messages.Add(message);
                 }
+
+                var productCart = new DtoProductCart();
+                productCart._id = item._id;
+                productCart.Name = item.Name;
+                productCart.Quantity = item.Quantity;
+                productCart.Price = item.Price; 
+                productCart.IdItemType = item.IdItemType;
+                productCart.Photo = item.Photo;
+                productCart.AccountId = item.AccountId;
+                productCart.Color = formCollection["selectColor" + item._id];
+
+                if (item.Type_Product == "Thời trang nam" || item.Type_Product == "Thời trang nữ")
+                    productCart.Size = formCollection["selectSize" + item._id];
+
+                productCarts.Add(productCart);
+                
             }
+
+            Session.Add(Constants.CART_SESSION,productCarts);
             ViewData["messages"] = messages;
             if (flag)
                 return RedirectToAction("Index", "Cart");
@@ -79,7 +102,7 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public async Task<ActionResult> saveOrder1(bool isPayOnline = false)
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
             if(cart == null)
             {
                 return ViewBag.Error;
@@ -121,10 +144,8 @@ namespace UI.Controllers
 
                     checkSession.ProductOrder = new List<DTO_Checkout_Order>();
 
-                    var notifications = new List<DtoMerchantNotification>();
-
-                    var dtoProductActions = new List<DtoProductAction>();
-                    foreach (DTO_Product_Item_Type item in cart)
+                  
+                    foreach (var item in cart)
                     {
                         DTO_Checkout_Order dTO_Checkout_Order = new DTO_Checkout_Order();
                         var total = (item.Quantity * item.Price);
@@ -133,28 +154,18 @@ namespace UI.Controllers
                         dTO_Checkout_Order.SoLuong = (int)item.Quantity;
                         dTO_Checkout_Order.Gia = total;
                         dTO_Checkout_Order.AccountId = item.AccountId;
+                        dTO_Checkout_Order.Size = item.Size;
+                        dTO_Checkout_Order.Color = item.Color;
+                        dTO_Checkout_Order.Photo = item.Photo;
                         checkSession.ProductOrder.Add(dTO_Checkout_Order);
-
-                        var notification = new DtoMerchantNotification();
-                        notification.DateTime = DateTime.Now;
-                        notification.AccountId = item.AccountId;
-                        notification.Subject = "Đơn hàng mới";
-                        notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + checkSession.FirstName + " " + checkSession.LastName;
-                        notification.CheckoutId = item._id;
-                        notifications.Add(notification);
-
-                        var dtoProductAction = new DtoProductAction()
-                        {
-                            Status = ProductActionConstant.PRODUCT_BOUGHT,
-                            UserId = userLogin._id,
-                            ProductId = item._id
-                        };
-                        dtoProductActions.Add(dtoProductAction);
-
                     }
+
                     HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", checkSession);
                     var idBill = await responseUser1.Content.ReadAsStringAsync();
-                    foreach (DTO_Product_Item_Type item in cart)
+
+                    var notifications = new List<DtoMerchantNotification>();
+                    var dtoProductActions = new List<DtoProductAction>();
+                    foreach (var item in cart)
                     {
                         var notification = new DtoMerchantNotification();
                         notification.DateTime = DateTime.Now;
@@ -287,19 +298,11 @@ namespace UI.Controllers
                     responseUser.EnsureSuccessStatusCode();
                     DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
 
-                    li.Add(new DTO_Product_Item_Type()
-                    {
-                        _id = proItem._id,
-                        Name = proItem.Name,
-                        Price = proItem.Price,
-                        Details = proItem.Details,
-                        Photo = proItem.Photo,
-                        Photo2 = proItem.Photo2,
-                        Photo3 = proItem.Photo3,
-                        IdItemType = proItem.IdItemType,
-                        Quantity = 1,
-                        AccountId = proItem.AccountId
-                    });
+                    var newProduct = new DTO_Product_Item_Type();
+                    newProduct = proItem;
+                    newProduct.Quantity = 1;
+                    li.Add(newProduct);
+
                     Session["cart_"] = li;
                     return Json(new { buy = li });
 
@@ -318,19 +321,10 @@ namespace UI.Controllers
                     }
                     else
                     {
-                        li.Add(new DTO_Product_Item_Type()
-                        {
-                            _id = proItem._id,
-                            Name = proItem.Name,
-                            Price = proItem.Price,
-                            Details = proItem.Details,
-                            Photo = proItem.Photo,
-                            Photo2 = proItem.Photo2,
-                            Photo3 = proItem.Photo3,
-                            IdItemType = proItem.IdItemType,
-                            Quantity = 1,
-                            AccountId = proItem.AccountId
-                        });
+                        var newProduct = new DTO_Product_Item_Type();
+                        newProduct = proItem;
+                        newProduct.Quantity = 1;
+                        li.Add(newProduct);
                     }
 
 
@@ -379,7 +373,7 @@ namespace UI.Controllers
 
         private int isExist2(string Id)
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
             for (int i = 0; i < cart.Count; i++)
                 if (cart[i]._id.Equals(Id))
                     return i;
@@ -389,7 +383,7 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public ActionResult Remove2(string Id)
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
             int index = isExist2(Id);
             cart.RemoveAt(index);
             Session["cart"] = cart;
@@ -501,19 +495,10 @@ namespace UI.Controllers
                 }
                 else
                 {
-                    li.Add(new DTO_Product_Item_Type()
-                    {
-                        Quantity = 1,
-                        _id = proItem._id,
-                        Name = proItem.Name,
-                        Price = proItem.Price,
-                        Details = proItem.Details,
-                        Photo = proItem.Photo,
-                        Photo2 = proItem.Photo2,
-                        Photo3 = proItem.Photo3,
-                        IdItemType = proItem.IdItemType,
-                        AccountId = proItem.AccountId
-                    });
+                    var newProduct = new DTO_Product_Item_Type();
+                    newProduct = proItem;
+                    newProduct.Quantity = 1;
+                    li.Add(newProduct);
                     return 2;
                 }
             }
@@ -533,19 +518,12 @@ namespace UI.Controllers
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
-                li.Add(new DTO_Product_Item_Type()
-                {
-                    Quantity = 1,
-                    _id = proItem._id,
-                    Name = proItem.Name,
-                    Price = proItem.Price,
-                    Details = proItem.Details,
-                    Photo = proItem.Photo,
-                    Photo2 = proItem.Photo2,
-                    Photo3 = proItem.Photo3,
-                    IdItemType = proItem.IdItemType,
-                    AccountId = proItem.AccountId
-                });
+
+                var newProduct = new DTO_Product_Item_Type();
+                newProduct = proItem;
+                newProduct.Quantity = 1;
+                li.Add(newProduct);
+
                 Session["cart"] = li;
                 return 2;
             }

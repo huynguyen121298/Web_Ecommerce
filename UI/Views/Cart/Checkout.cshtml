@@ -6,7 +6,7 @@
 @using UI.Models;
 @using Model.Common;
 
-@{ List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+@{ var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
  var total = cart.Sum(item => item.Quantity * item.Price);
  var total1 = cart.Count();
  var userLogin = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION]; 

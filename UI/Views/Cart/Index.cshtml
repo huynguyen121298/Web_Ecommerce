@@ -2,12 +2,14 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
-    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
-    var total1 = cart.Sum(item => item.Quantity);
-    
-}
 @using Model.DTO_Model;
+@using Model.Common
+@{
+    var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
+    var total1 = cart.Sum(item => item.Quantity);
+
+}
+
 
 <!DOCTYPE html>
 <html>
@@ -52,7 +54,7 @@
                                             </tr>
                                         </thead>
 
-                                        @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart"])
+                                        @foreach (var item in cart)
                                         {
 
 
@@ -103,20 +105,20 @@
                                                 <h1>Tóm tắt giỏ hàng</h1>
                                                 <p>
                                                     Tổng Hóa đơn
-                                                        @{
+                                                    @{
 
-                                                            var total = string.Format("{0:0,0}", cart.Sum(item => item.Price * item.Quantity));
-                                                        }
-                                                        @total VNĐ
+                                                        var total = string.Format("{0:0,0}", cart.Sum(item => item.Price * item.Quantity));
+                                                    }
+                                                    @total VNĐ
 
                                                 </p>
                                                 <p>
-                                                  
-                                                        Số lượng :  @total1 Cái
+
+                                                    Số lượng :  @total1 Cái
 
 
 
-                                                   
+
                                                 </p>
                                             </div>
                                             <div class="cart-btn">

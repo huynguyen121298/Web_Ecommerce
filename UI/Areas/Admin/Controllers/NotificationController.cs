@@ -58,8 +58,7 @@ namespace UI.Areas.Admin.Controllers
 
 
                 ViewBag.Quantity = result.Take(5);
-
-
+                ViewBag.Count = result.Where(s=>s.Status == 0).Count();
             }
             catch
             {

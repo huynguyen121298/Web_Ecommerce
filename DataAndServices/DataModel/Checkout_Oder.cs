@@ -16,6 +16,10 @@ namespace DataAndServices.DataModel
 
         public double? Gia { get; set; }
 
+        public string Size { get; set; }
+
+        public string Photo { get; set; }
+
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string AccountId { get; set; }

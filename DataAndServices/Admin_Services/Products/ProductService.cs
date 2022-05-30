@@ -87,12 +87,14 @@ namespace DataAndServices.Admin_Services.Products
                 var deleteFilter = Builders<Product>.Filter.Eq("_id", id);
                 var deleteFilter2 = Builders<Item>.Filter.Eq("_id", id);
                 var deleteFilter3 = Builders<Discount_Product>.Filter.Eq("_id", id);
+                var deleteFilter4 = Builders<ProductComment>.Filter.Eq("ProductId", id);
 
                 _db.DeleteOne(deleteFilter);
 
-                _dbItem.DeleteOne(id);
+                _dbItem.DeleteOne(deleteFilter2);
 
-                _dbDis.DeleteOne(id);
+                _dbDis.DeleteOne(deleteFilter3);
+                _dbProductComment.DeleteOne(deleteFilter4);
 
                 return true;
             }
@@ -500,6 +502,8 @@ namespace DataAndServices.Admin_Services.Products
         {
             try
             {
+                var itemType = _dbItemtype.Find(s => s.Type_Product == custom.Type_Product).FirstOrDefault();
+
                 var eqfilter = Builders<Product>.Filter.Where(s => s._id == custom._id);
                 var update = Builders<Product>.Update.Set(s => s.Name, custom.Name)
                     .Set(s => s.Photo, custom.Photo)
@@ -508,7 +512,7 @@ namespace DataAndServices.Admin_Services.Products
                     .Set(s => s.Details, custom.Details)
                     .Set(s => s.Price, custom.Price)
                     .Set(s => s._id, custom._id)
-                    .Set(s => s.IdItemType, custom.IdItemType);
+                    .Set(s => s.IdItemType, itemType._id);
 
                 var options = new UpdateOptions { IsUpsert = true };
                 _db.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);

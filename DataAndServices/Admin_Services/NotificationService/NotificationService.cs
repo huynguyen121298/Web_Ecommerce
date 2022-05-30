@@ -39,16 +39,25 @@ namespace DataAndServices.Admin_Services.NotificationService
         public MerchantNotification ChangeStatusNotification(string notiId)
         {
 
+            var acc =  _db.Find(s => s._id == notiId && s.Status == NotificationConstant.PENDING).FirstOrDefaultAsync();
+
+            if (acc != null)
+            {
                 var eqfilter = Builders<MerchantNotification>.Filter.Where(s => s._id == notiId && s.Status == NotificationConstant.PENDING);
 
                 var update = Builders<MerchantNotification>.Update.Set(s => s.Status, NotificationConstant.READED);
-                   
+
                 var options = new UpdateOptions { IsUpsert = true };
 
                 _db.UpdateOneAsync(eqfilter, update, options);
-
                 var notiUpdated = _db.Find(n => n._id == notiId).FirstOrDefault();
                 return notiUpdated;
+
+            }
+            return null;
+           
+
+               
             
         }
     }

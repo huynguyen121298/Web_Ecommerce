@@ -5,23 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/js/jquery-3.3.1.min.js"></script>
+
 <script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
 <link href="~/css/css_color.css" rel="stylesheet" />
-<script type="text/javascript">
-    $(document).ready(function () {
 
-    });
-    function ShowImagePreview(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#PreviewImage').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.flles[0]);
-        }
-    }
-</script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
 <h2>Chỉnh sửa sản phẩm</h2>
 
 @using (Html.BeginForm("Edit", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -54,15 +42,25 @@
                 @Html.TextAreaFor(model => model.Details, new { @id = "ckeditor" })
                 @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
             </div>
-            <script type="text/javascript">
+
+            <script>
                 $(document).ready(function () {
                     CKEDITOR.replace('ckeditor');
-                    CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
-                    CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
+                    CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+                    CKEDITOR.config.pasteFromWordRemoveStyles = false;
+                    CKEDITOR.config.htmlEncodeOutput = false;
+                    CKEDITOR.config.ProcessHTMLEntities = false;
+                    CKEDITOR.config.entities = false;
+                    CKEDITOR.config.entities_latin = false;
+                    CKEDITOR.config.ForceSimpleAmpersand = true;
                     CKEDITOR.config.autoParagraph = false;
                     CKEDITOR.config.language = 'vi';
+                    CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
+                    CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
                 });
+
             </script>
+
         </div>
 
         <div class="form-group">
@@ -82,6 +80,15 @@
                                 <img src="@Url.Content(Model.Photo)" style="height:50px; width:50px; margin:10px; " id="chonAnh" />
                             </li>
                         }
+                        else
+                        {
+                            <li>
+                                <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
+
+                                <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh" />
+                            </li>
+
+                        }
 
                         @if (Model.Photo2 != null)
                         {
@@ -89,6 +96,14 @@
                                 @Html.EditorFor(model => model.Photo2, new { htmlAttributes = new { @style = "display:none" } })
                                 <input type="file" name="ImageUpload2" onchange="upAnh2(this)" />
                                 <img src="@Url.Content(Model.Photo2)" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
+
+                                <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
                             </li>
                         }
 
@@ -100,8 +115,19 @@
                                 <img src="@Url.Content(Model.Photo3)" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
                             </li>
                         }
+                        else
+                        {
+                            <li>
+                                <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
+
+                                <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
+                            </li>
+
+                        }
                     </ol>
                 </ol>
+                <p style="color:red">@ViewData["ErrorMessage"]</p>
+
             </div>
 
             <script type="text/javascript">
@@ -141,23 +167,46 @@
         </div>
         <div class="form-group">
             Chon loại sản phẩm
-            <div class="col-md-10">
+            <div class="col-md-10" id="typeLayout1" onclick="Show()">
+                <select style="margin-left:10%">
+                    <option>@Model.Type_Product</option>
+
+                </select>
+            </div>
+            <div class="col-md-10" id="typeLayout2" style="display:none">
+
                 @Html.Action("ListTypeProductAdmin", "Admin")
             </div>
+
+            <script>
+                function Show() {
+                    $("#typeLayout1").hide();
+                    $("#typeLayout2").show();
+
+                }
+            </script>
         </div>
 
         <div class="form-group">
             Chon màu sản phẩm
-           
-            <select class="form-control" name="selectColor" multiple>
+            <br />
+
+            <select style="margin-left:10%" name="selectColor" multiple>
                 @foreach (var item in Model.Color)
                 {
-                    <option class="color" style="background-color:@item" data-hex="#e1e851"></option>
+                    <option selected>@item </option>
 
                 }
-               
+                <option>Xanh </option>
+                <option>Đỏ</option>
+                <option>Tím</option>
+                <option>Vàng</option>
+                <option>Cam</option>
+                <option>Trắng</option>
+                <option>Đen</option>
             </select>
-            
+
+
         </div>
         <div class="form-group">
             Nhập số lượng
@@ -168,6 +217,7 @@
         </div>
 
         <div class="form-group">
+            <p style="color:red">@ViewData["ErrorMessage2"]</p>
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" class="btn btn-success" value="Lưu" />
             </div>
