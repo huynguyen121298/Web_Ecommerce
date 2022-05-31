@@ -139,10 +139,10 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-success " href=" @Url.Action("Edit", "Products_Add", new { id = item._id })">Chỉnh sửa</a>
-                                <a class="btn btn-primary " href=" @Url.Action("Details", "Products_Add", new { id = item._id })">Chi tiết</a>
-                                <a class="btn btn-info " href=" @Url.Action("Create_Discount", "Products_Add", new { id = item._id })">Tùy chỉnh giảm giá</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target(@item._id)" data-target="#del">
+                                <a class="btn btn-success " style="width:100px;height:40px" href=" @Url.Action("Edit", "Products_Add", new { Id = item._id })">Chỉnh sửa</a>
+                                <a class="btn btn-primary " style="width:100px;height:40px" href=" @Url.Action("Details", "Products_Add", new { Id = item._id })">Chi tiết</a>
+                                <a class="btn btn-info " style="width:100px;height:40px" href=" @Url.Action("Create_Discount", "Products_Add", new { Id = item._id })">Tùy chỉnh giảm giá</a>
+                                <button type="button" style="width:100px;height:40px" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
                                     Xóa
                                 </button>
                             </td>

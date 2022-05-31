@@ -10,8 +10,9 @@
 <link href="~/css/css_color.css" rel="stylesheet" />
 
 <script src="~/Scripts/jquery-3.4.1.js"></script>
-<h2>Chỉnh sửa sản phẩm</h2>
-
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Cập nhật sản phẩm</h6>
+</div>
 @using (Html.BeginForm("Edit", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

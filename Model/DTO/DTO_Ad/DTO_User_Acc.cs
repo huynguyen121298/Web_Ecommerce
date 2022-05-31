@@ -23,6 +23,7 @@ namespace Model.DTO.DTO_Ad
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        //1 : default , 2 facebook
         public int? RoleId { get; set; }
     }
 }

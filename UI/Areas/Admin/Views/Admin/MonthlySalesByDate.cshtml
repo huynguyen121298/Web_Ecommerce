@@ -4,7 +4,7 @@
     <thead>
         <tr class="dataTableHead">
             <th>Ngày</th>
-            <th>Tổng thu</th>
+            <th>Doanh thu</th>
         </tr>
     </thead>
     @{decimal total = 0;}
@@ -26,7 +26,7 @@
 
                     if (Convert.ToString(Html.DisplayFor(m => m.Days[i].Total)) != "0.00")
                     {
-                        <strong style="color:#4800ff;"><strong> @Html.DisplayFor(m => m.Days[i].Total) </strong></strong>
+                        <strong style="color:#4800ff;"><strong>@string.Format("{0:0,0}", Html.DisplayFor(m => m.Days[i].Total) )</strong></strong>
                     }
                     else
                     {
@@ -41,10 +41,10 @@
     <tfoot class="dataTableHead">
         <tr>
             <td>
-                <h4 class="pull-right">Total :</h4>
+                <h4 class="pull-right">Tổng doanh thu :</h4>
             </td>
             <td>
-                <h4>@total</h4>
+                <h4>@string.Format("{0:0,0}", @total)</h4>
             </td>
         </tr>
     </tfoot>

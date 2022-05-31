@@ -40,7 +40,7 @@ namespace UI.Areas.Admin.Controllers
                 HttpResponseMessage responseMessage = service.PostResponse("api/ItemType/create/",request);
                 responseMessage.EnsureSuccessStatusCode();
                 bool result = responseMessage.Content.ReadAsAsync<bool>().Result;
-                return View();
+                return View("Index");
                 // TODO: Add insert logic here
 
             }

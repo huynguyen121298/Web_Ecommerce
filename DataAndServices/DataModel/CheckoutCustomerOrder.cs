@@ -33,6 +33,8 @@ namespace DataAndServices.DataModel
 
         public string TrangThai { get; set; }
 
+        public bool State { get; set; }
+
         public IList<Checkout_Oder> ProductOrder { get; set; }
     }
 }

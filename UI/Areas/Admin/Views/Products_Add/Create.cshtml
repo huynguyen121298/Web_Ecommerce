@@ -9,160 +9,162 @@
 <link href="~/css/css_color.css" rel="stylesheet" />
 
 <script src="~/Scripts/jquery-3.4.1.js"></script>
-
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Tạo sản phẩm</h6>
+</div>
 @using (Html.BeginForm("Create", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model._id)
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model._id)
 
-    <div class="form-group">
-        Tên sản phẩm
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        Giá sản phẩm
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        Chi tiết sản phẩm   
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Details, new { @id = "ckeditor" })
-            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+        <div class="form-group">
+            Tên sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
         </div>
 
-        <script>
-            $(document).ready(function () {
-                CKEDITOR.replace('ckeditor');
-                CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
-                CKEDITOR.config.pasteFromWordRemoveStyles = false;
-                CKEDITOR.config.htmlEncodeOutput = false;
-                CKEDITOR.config.ProcessHTMLEntities = false;
-                CKEDITOR.config.entities = false;
-                CKEDITOR.config.entities_latin = false;
-                CKEDITOR.config.ForceSimpleAmpersand = true;
-                CKEDITOR.config.autoParagraph = false;
-                CKEDITOR.config.language = 'vi';
-                CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
-                CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
-            });
-         
-        </script>
+        <div class="form-group">
+            Giá sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    </div>
-    <div class="form-group">
-        Chọn hình ảnh cho sản phẩm
-        <div class="col-md-10">
-            <ol>
+        <div class="form-group">
+            Chi tiết sản phẩm
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Details, new { @id = "ckeditor" })
+                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+            </div>
 
+            <script>
+                $(document).ready(function () {
+                    CKEDITOR.replace('ckeditor');
+                    CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+                    CKEDITOR.config.pasteFromWordRemoveStyles = false;
+                    CKEDITOR.config.htmlEncodeOutput = false;
+                    CKEDITOR.config.ProcessHTMLEntities = false;
+                    CKEDITOR.config.entities = false;
+                    CKEDITOR.config.entities_latin = false;
+                    CKEDITOR.config.ForceSimpleAmpersand = true;
+                    CKEDITOR.config.autoParagraph = false;
+                    CKEDITOR.config.language = 'vi';
+                    CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
+                    CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
+                });
+
+            </script>
+
+        </div>
+        <div class="form-group">
+            Chọn hình ảnh cho sản phẩm
+            <div class="col-md-10">
                 <ol>
-                    <li>
-                        <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
 
-                        <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
-                    </li>
+                    <ol>
+                        <li>
+                            <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
 
-                    <li>
-                        <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
+                            <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
+                        </li>
 
-                        <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
-                    </li>
+                        <li>
+                            <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
 
-                    <li>
+                            <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
+                        </li>
 
-                        <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
+                        <li>
 
-                        <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
-                    </li>
+                            <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
+
+                            <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
+                        </li>
+                    </ol>
                 </ol>
-            </ol>
 
-            <p style="color:red">@ViewData["ErrorMessage"]</p>
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function () {
+                <p style="color:red">@ViewData["ErrorMessage"]</p>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
 
-            });
-            function upAnh(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#chonAnh").attr("src", e.target.result);
+                });
+                function upAnh(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#chonAnh").attr("src", e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
                     }
-                    reader.readAsDataURL(input.files[0]);
                 }
-            }
 
-            function upAnh2(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#chonAnh2").attr("src", e.target.result);
+                function upAnh2(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#chonAnh2").attr("src", e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
                     }
-                    reader.readAsDataURL(input.files[0]);
                 }
-            }
 
-            function upAnh3(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#chonAnh3").attr("src", e.target.result);
+                function upAnh3(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#chonAnh3").attr("src", e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
                     }
-                    reader.readAsDataURL(input.files[0]);
                 }
-            }
-        </script>
-    </div>
-    <div class="form-group">
-        Chon loại sản phẩm
-        <div class="col-md-10">
-            @Html.Action("ListTypeProductAdmin", "Admin")
+            </script>
         </div>
-    </div>
+        <div class="form-group">
+            Chon loại sản phẩm
+            <div class="col-md-10">
+                @Html.Action("ListTypeProductAdmin", "Admin")
+            </div>
+        </div>
 
-    <div class="form-group">
-        Chon màu sản phẩm
-        <div class="col-md-10">
-            <select style="margin-left:10%" name="selectColor" multiple required>
-                <option>Xanh </option>
-                <option>Đỏ</option>
-                <option>Tím</option>
-                <option>Vàng</option>
-                <option>Cam</option>
-                <option>Trắng</option>
-                <option>Đen</option>
-            </select>
+        <div class="form-group">
+            Chon màu sản phẩm
+            <div class="col-md-10">
+                <select style="margin-left:10%" name="selectColor" multiple required>
+                    <option>Xanh </option>
+                    <option>Đỏ</option>
+                    <option>Tím</option>
+                    <option>Vàng</option>
+                    <option>Cam</option>
+                    <option>Trắng</option>
+                    <option>Đen</option>
+                </select>
+            </div>
         </div>
-    </div>
-   
 
-    <div class="form-group">
-        Nhập số lượng
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
-            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        <p style="color:red">@ViewData["ErrorMessage2"]</p>
-        <div class="col-md-offset-2 col-md-10">
-            <input class="btn btn-primary" type="submit" value="Thêm sản phẩm" />
+        <div class="form-group">
+            Nhập số lượng
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p style="color:red">@ViewData["ErrorMessage2"]</p>
+            <div class="col-md-offset-2 col-md-10">
+                <input class="btn btn-primary" type="submit" value="Thêm sản phẩm" />
+            </div>
         </div>
     </div>
-</div>
 }
 
 <div>

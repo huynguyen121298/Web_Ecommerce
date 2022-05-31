@@ -44,6 +44,7 @@
                             <th>LastName</th>
                             <th>FirstName</th>
                             <th>Email</th>
+                            <th>Loại tài khoản</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -53,6 +54,7 @@
                             <th>LastName</th>
                             <th>FirstName</th>
                             <th>Email</th>
+                            <th>Loại tài khoản</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -60,26 +62,36 @@
                     {
 
 
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                        
-                            <td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
 
-                                <a class="btn btn-success " href=" @Url.Action("Edit", "Users_Acc", new { id = item._id })">Chỉnh sửa</a>
-                                <a class="btn btn-primary " href=" @Url.Action("Details", "Users_Acc", new { id = item._id })">Chi tiết</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
+                    @if (item.RoleId == 1)
+                    {
+
+                        <td>Mặc định</td>
+                    }
+                    else
+                    {
+                        <td>Facebook</td>
+                    }
+
+                    <td>
+
+                        <a class="btn btn-success " style="width:100px;height:40px" href=" @Url.Action("Edit", "Users_Acc", new { id = item._id })">Chỉnh sửa</a>
+                        <a class="btn btn-primary " style="width:100px;height:40px" href=" @Url.Action("Details", "Users_Acc", new { id = item._id })">Chi tiết</a>
+                        <button type="button" style="width:100px;height:40px" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
                     }
                 </table>
             </div>

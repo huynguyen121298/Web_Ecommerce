@@ -5,36 +5,29 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2 style="color:aquamarine">Chi tiết tài khoản của khách hàng</h2>
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Chi tiết tài khoản của khách hàng</h6>
+</div>
 
-<div>
+<div class="justify-content-center">
 
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal justify-content-center">
 
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.FirstName) : @Html.DisplayFor(model => model.FirstName)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.LastName) :  @Html.DisplayFor(model => model.LastName)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Email) :  @Html.DisplayFor(model => model.Email)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
 
     </dl>
 </div>

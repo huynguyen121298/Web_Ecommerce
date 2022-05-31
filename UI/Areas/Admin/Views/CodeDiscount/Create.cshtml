@@ -2,15 +2,15 @@
 
 @{ ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
-
-<h2>Create</h2>
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Tạo mã giảm giá</h6>
+</div>
 
 @using (Html.BeginForm("Create", "CodeDiscount", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>Tạo mã giảm giá</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model._id)
@@ -50,5 +50,5 @@
                 </div>}
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Trở về", "Index")
 </div>

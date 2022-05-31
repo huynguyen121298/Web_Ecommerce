@@ -171,9 +171,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chắn thoát?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">See you again nhé you</span>
-                        </button>
+                       
                     </div>
                     <div class="modal-body">Bấm Thoát để xác nhận đăng xuất, Cancel để hủy</div>
                     <div class="modal-footer">
@@ -243,7 +241,13 @@
                                      src="~/Content/admin/img/profile-Icon-SVG.jpg" style="display:none">
                                 @if (test.Photo != null)
                                 {
-                    <img class="img-profile rounded-circle" src=@Url.Content(test.Photo)>}
+                    <img class="img-profile rounded-circle" src=@Url.Content(test.Photo)>
+            }
+            else
+            {
+                            <img class="img-profile rounded-circle"
+                                 src="~/Content/admin/img/profile-Icon-SVG.jpg">
+            }
                             </a>
 
                             <!-- Dropdown - User Information -->

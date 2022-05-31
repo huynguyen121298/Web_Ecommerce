@@ -125,7 +125,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
            
           
 
-            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn thành").ToList();
+            var checkoutCustomers = _db.Find(s => s.State == true).ToList();
 
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
@@ -157,7 +157,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         public double? GetDateRevenue(DateTime date)
         {
 
-            var checkoutCustomers = _db.Find(s => s.TrangThai == "Hoàn thành" && s.NgayTao == date ).ToList();
+            var checkoutCustomers = _db.Find(s => s.State == true  && s.NgayTao == date ).ToList();
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
 
@@ -182,6 +182,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             var acc = GetAccountById(custom._id);
             if (acc != null)
             {
+                
                 var eqfilter = Builders<CheckoutCustomerOrder>.Filter.Where(s => s._id == custom._id);
 
                 var update = Builders<CheckoutCustomerOrder>.Update.Set(s => s.Email, custom.Email)
@@ -192,7 +193,9 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
                     .Set(s => s.NgayTao, custom.NgayTao)
                     .Set(s => s.SDT, custom.SDT)
                     .Set(s => s.TongTien, custom.TongTien)
-                    .Set(s => s.TrangThai, custom.TrangThai);
+                    .Set(s => s.TrangThai, custom.TrangThai)
+                    .Set(s => s.State, custom.State);
+
 
                 var options = new UpdateOptions { IsUpsert = true };
 

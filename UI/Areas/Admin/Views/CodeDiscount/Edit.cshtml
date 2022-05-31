@@ -5,8 +5,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var discount = Model.Discount * 100;
 }
-
-<h2>Cập nhật mã giảm giá</h2>
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Cập nhật mã giảm giá</h6>
+</div>
 
 @using (Html.BeginForm("Edit", "CodeDiscount", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -48,12 +49,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Lưu" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Trở về", "Index")
 </div>

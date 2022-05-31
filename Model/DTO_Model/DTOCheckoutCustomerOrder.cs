@@ -35,6 +35,8 @@ namespace Model.DTO_Model
 
         public string TrangThai { get; set; }
 
+        public bool State { get; set; }
+
         public IList<DTO_Checkout_Order> ProductOrder { get; set; }
     }
 }

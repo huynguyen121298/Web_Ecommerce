@@ -5,7 +5,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Cập nhật tài khoản của khách hàng</h6>
+</div>
 
 @using (Html.BeginForm("Edit", "Users_Acc", FormMethod.Post))
 {
@@ -50,7 +52,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Lưu" class="btn btn-success" />
             </div>
         </div>
     </div>

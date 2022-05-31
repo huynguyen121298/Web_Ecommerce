@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UI.Helper;
@@ -123,6 +125,7 @@ namespace UI.Controllers
                 check.City = Request.Form["city"];
                 check.SDT = Int32.Parse(Request.Form["sdt"]);
                 check.TrangThai = "Đang chờ";
+                check.State = false;
                 if (check.Zipcode != "")
                 {
                     check.Zipcode = Request.Form["zip"];
@@ -138,7 +141,7 @@ namespace UI.Controllers
                 try
                 {
                     var checkSession = (DTOCheckoutCustomerOrder)Session["PayOrder"];
-                    if (isPayOnline == true) checkSession.TrangThai = "Hoàn thành";
+                    if (isPayOnline == true) checkSession.State = true;
                     var userLogin = (UserLogin)Session[Constants.USER_SESSION];                   
                    
 
@@ -187,6 +190,18 @@ namespace UI.Controllers
 
                     HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
                     HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
+
+                    var fullName = checkSession.FirstName + "" + checkSession.LastName;
+
+                    var subject = "Đơn hàng được xác nhận";
+                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + "đã được xác nhận vào lúc " + checkSession.NgayTao;
+
+                    var sendMail = SendEmail(checkSession.Email, body, subject);
+                    if (sendMail == false)
+                    {
+                        ViewBag.Mess = "Có lỗi gửi mail ngoài ý muốn, vui lòng kiểm tra lại";
+                        return View();
+                    }
 
                     if (responseUser1.IsSuccessStatusCode && response2.IsSuccessStatusCode && response.IsSuccessStatusCode)
                     {
@@ -557,6 +572,32 @@ namespace UI.Controllers
             return Redirect(paymentUrl);
         }
 
+        private bool SendEmail(string emailAddress, string body, string subject)
+        {
+            try
+            {
+                using (MailMessage mm = new MailMessage("huytuannguyen.301198@gmail.com", emailAddress))
+                {
+                    mm.Subject = subject;
+                    mm.Body = body;
+                    mm.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("huytuannguyen.301198@gmail.com", "Huyhuy123");
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mm);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
         public async Task<ActionResult> PaymentConfirm()
         {
             if (Request.QueryString.Count > 0)
