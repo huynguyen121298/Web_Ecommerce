@@ -83,31 +83,41 @@ namespace UI.Areas.Admin.Controllers
         }
 
         [AuthorizeLoginAdmin]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string id, string reason)
         {
             try
             {
-                var reason = Request.Form["reason"];
-                HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id);
-                responseMessage.EnsureSuccessStatusCode();
-                DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
-
-                var fullName = dtocustomer.FirstName + "" + dtocustomer.LastName;
-
-                var subject = "Hủy đơn hàng";
-                var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + dtocustomer._id + " được đặt ngày " + dtocustomer.NgayTao + "đã bị từ chối vì lý do "
-                    + reason;
-
-                var sendMail = SendEmail(dtocustomer.Email, body, subject);
-                if(sendMail == false)
+                //var reason = Request.Form["reason"];
+                if(reason != "")
                 {
-                    ViewBag.Mess = "Có lỗi ngoài ý muốn, vui lòng kiểm tra lại";
-                    return Json(new { mes = false });
-                }
-                HttpResponseMessage response = service.DeleteResponse("api/Checkout_Customer/Deletecustomer/" + id);
-                response.EnsureSuccessStatusCode();
+                   
+                    HttpResponseMessage response = service.DeleteResponse("api/Checkout_Customer/Deletecustomer/" + id);
+                    response.EnsureSuccessStatusCode();
+                    bool checkSuccess = response.Content.ReadAsAsync<bool>().Result;
+                    if(checkSuccess == false)
+                        return Json(new { mes = false });
 
-                return Json(new { mes = true });
+                    HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id);
+                    responseMessage.EnsureSuccessStatusCode();
+                    DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
+
+                    var fullName = dtocustomer.FirstName + "" + dtocustomer.LastName;
+
+                    var subject = "Hủy đơn hàng";
+                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + dtocustomer._id + " được đặt ngày " + dtocustomer.NgayTao + " đã bị từ chối vì lý do "
+                        + reason;
+
+                    var sendMail = SendEmail(dtocustomer.Email, body, subject);
+                    if (sendMail == false)
+                    {
+                        ViewBag.Mess = "Có lỗi ngoài ý muốn, vui lòng kiểm tra lại";
+                        return Json(new { mes = false });
+                    }
+
+                    return Json(new { mes = true });
+                }
+                ViewBag.Mess = "Lý do không được để trống";
+                return Json(new { mes = false });
             }
             catch
             {

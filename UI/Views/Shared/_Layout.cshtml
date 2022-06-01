@@ -15,8 +15,8 @@ author URL: http://w3layouts.com
 
 <head>
     <title>
-        HShop_
-        Ecommerce
+        NTH_
+        Ecom
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -40,7 +40,6 @@ author URL: http://w3layouts.com
 
     <!-- Custom styles for this template-->
     <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
-
 
     <style>
         .menuli {
@@ -86,7 +85,6 @@ author URL: http://w3layouts.com
             border-bottom-left-radius: 4px;
         }
 
-
         .dropdown.dropdown-lg {
             position: static !important;
         }
@@ -110,12 +108,9 @@ author URL: http://w3layouts.com
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <!-- //google fonts -->
-
-
 </head>
 
 <body>
-
 
     <!-- header -->
     <header>
@@ -145,11 +140,8 @@ author URL: http://w3layouts.com
                                                     <a class="btn" href="@Url.Action("Index", "Product", new { gia_="500000",gia="1000000" })">500.000-1.000.000 </a>
                                                     <a class="btn" href="@Url.Action("Index", "Product", new { gia_="1000000",gia="2000000" })">1.000000-2.000.000 </a>
                                                     <a class="btn" href="@Url.Action("Index", "Product", new { gia_="2000000",gia="10000000" })">Lớn hơn 2 triệu </a>
-
-
                                                 </li>
                                             </ul>
-
                                         </div>
                                         <div class="form-group">
                                             <label for="contain">Giá từ</label>
@@ -161,7 +153,6 @@ author URL: http://w3layouts.com
                                         </div>
 
                                         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">Chọn</span></button>
-
 
                                         <div class="sidebar-widget tag">
                                             <h2 class="title">Sản phẩm tìm kiếm nhiều</h2>
@@ -178,16 +169,10 @@ author URL: http://w3layouts.com
                                             <a href="#">Tivi 97"</a>
                                             <a href="#">Ghế mátxa</a>
                                         </div>
-
                                     </div>
                                 </div>*@
-
                         </div>
                     </form>
-
-
-
-
                 </div>
             </div>
 
@@ -199,7 +184,6 @@ author URL: http://w3layouts.com
                             <span class="fa fa-stumbleupon" aria-hidden="true"></span>
                         </a>
                     </h1>
-
                 </div>
                 <div class="nav_w3ls mt-3">
                     <nav>
@@ -210,7 +194,6 @@ author URL: http://w3layouts.com
                             <li class="mr-lg-3 mr-2"><a href="~/Home/Index">Giới thiệu </a></li>
                             <li class="mr-lg-3 mr-2 p-0">
 
-
                                 <a href="#">Sản phẩm <span class="fa fa-angle-down" aria-hidden="true"></span></a>
                                 <input type="checkbox" id="drop-2" />
                                 <ul class="inner-dropdown  ">
@@ -219,18 +202,11 @@ author URL: http://w3layouts.com
                                     <li><a href=" ~/Product/Index_">Sản phẩm đang giảm giá</a></li>
 
                                     @Html.Action("ListTypeProduct", "Home")
-
-
-
                                 </ul>
                             </li>
 
                             <li class="mr-lg-3 mr-2"><a href="#gallery">Bộ sưu tập</a></li>
                             <li class="mr-lg-3 mr-2"><a href="#contact">Liên Hệ</a></li>
-
-
-
-
                         </ul>
                     </nav>
                 </div>
@@ -240,11 +216,6 @@ author URL: http://w3layouts.com
                     <nav>
 
                         <ul class="menu">
-
-
-
-
-
 
                             <li><a href="~/Product/Details">Giỏ hàng <span style="color:red" id="total-product" class="fa fa-shopping-cart" aria-hidden="true">  @Html.Action("BagCart", "Product")/</span></a></li>
 
@@ -254,18 +225,9 @@ author URL: http://w3layouts.com
                                     <i class="fa fa-heart"></i>
                                 </a>
                                 <span style="color:red" id="sttbuy">@Html.Action("BagCart_", "Product")</span>
-
                             </li>
-
-
-
-
                         </ul>
-
                     </nav>
-
-
-
                 </div>
                 <div class="social mt-3 ml-auto">
                     <!--<ul class="menu">-->
@@ -274,8 +236,6 @@ author URL: http://w3layouts.com
                         <label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"> </span></label>
                         <input type="checkbox" id="drop" />
                         <ul class="menu">
-
-
 
                             <li class="mr-lg-3 mr-2 p-0" id="huy">
                                 <a href="#">Tài Khoản <span class="fa fa-angle-down" aria-hidden="true"></span></a>
@@ -288,17 +248,10 @@ author URL: http://w3layouts.com
                                         </a>
                                     </li>
 
-
-
-
                                     <li>
                                         <a href="~/Customer/Signup" class="btn btn-success btn-user btn-block"><i class="fa fa-ruble-sign" aria-hidden="true"></i>Đăng ký</a>
-
                                     </li>
-
                                 </ul>
-
-
                             </li>
                             <li class="mr-lg-3 mr-2 p-0">
                                 @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
@@ -306,11 +259,17 @@ author URL: http://w3layouts.com
                                     <script>
                                         document.getElementById("huy").style.display = 'none';
                                     </script>
+                                    var fullname = Request.Cookies["firstname"].Value;
                                     <p class="fa fa-angle-down" style="color:white">
-                                        Xin chào: @Request.Cookies["firstname"].Value
+                                        Xin chào: @fullname
                                     </p>
+
                                     <ul style="background: space" class="inner-dropdown  ">
-                                        <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+                                        @if (fullname != "Facebook")
+                                        {
+                                            <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+
+                                        }
 
                                         <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
                                         <li>
@@ -319,31 +278,16 @@ author URL: http://w3layouts.com
                                         </li>
                                     </ul>
                                 }
-
                             </li>
-
-
-
-
                         </ul>
-
                     </nav>
-
-
-
                 </div>
-
-
             </div>
-
-
         </div>
-
     </header>
     <section class="main-slider" id="home">
         <div class="owl-one owl-carousel owl-theme">
             <div style="height:500px" class="item">
-
 
                 <div class="banner-view">
                     <div style="height:500px" class="container banner-info ">
@@ -358,10 +302,8 @@ author URL: http://w3layouts.com
                         <a href="~/Product/Index">Xem thêm sản phầm</a>
                     </div>
                 </div>
-
             </div>
             <div style="height:500px" class="item">
-
 
                 <div style="height:500px" class="banner-view banner-top1">
                     <div style="height:500px" class="container banner-info">
@@ -377,7 +319,6 @@ author URL: http://w3layouts.com
             </div>
             <div style="height:500px" class="item">
 
-
                 <div style="height:500px" class="banner-view banner-top2">
                     <div style="height:500px" class="container banner-info">
                         <br />
@@ -391,9 +332,6 @@ author URL: http://w3layouts.com
                 </div>
             </div>
         </div>
-
-
-
     </section>
 
     <!-- //header -->
@@ -419,11 +357,9 @@ author URL: http://w3layouts.com
                         Nếu bạn có bất kỳ thắc mắc nào hoặc muốn nói chuyện với chúng tôi, vui lòng liên hệ với chúng tôi để biết thêm chi tiết theo bên dưới
                         thông tin đã cho.
                     </p>
-
                 </div>
                 <div class="col-lg-8 about-text">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15676.273867632177!2d106.71046386775461!3d10.80606817682145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a16940b30b%3A0x1b25a34b7a3ab959!2zUGjGsOG7nW5nIDI1LCBCw6xuaCBUaOG6oW5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1606188970470!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-
                 </div>
 
                 <div class="col-lg-8 mt-5">
@@ -457,18 +393,16 @@ author URL: http://w3layouts.com
                                         console.log("done");
 
                                     }
-
                                 </script>*@
                         </form>
 
                     }
-
                 </div>
                 <div class="col-lg-4 mt-5">
                     <div class="contact-info">
                         <div class="footer-style-w3ls">
                             <p>
-                                <span class="fa fa-map-marker" aria-hidden="true"></span><strong> Vị trí</strong> :Công ty HShop_,
+                                <span class="fa fa-map-marker" aria-hidden="true"></span><strong> Vị trí</strong> :Công ty NTH_Ecom,
                                 phường 25,Quận Bình Thạnh , Thành Phố Hồ Chí Minh.
                             </p>
                         </div>
@@ -525,11 +459,10 @@ author URL: http://w3layouts.com
 
                 <!-- footer logo -->
                 <div class="footer-logo text-center">
-                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> HShop_Ecommerce </a>
+                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> NTH_Ecom </a>
                 </div>
                 <!-- pay -->
                 <div class="container-fluid">
-
 
                     <div class="row payment align-items-center">
                         <div class="col-md-6">
@@ -583,9 +516,8 @@ author URL: http://w3layouts.com
                 <!-- copyright -->
                 <div class="copy-right text-center">
                     <p>
-                        @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
+                        @DateTime.Now   NTH_Ecom | Design by Nguyễn Tuấn Huy
                     </p>
-
                 </div>
                 <div id="btnlogin" @*style="display:none"*@ class="copy-right text-center">
 
@@ -597,19 +529,11 @@ author URL: http://w3layouts.com
                     {
                         <script>
 
-
                             document.getElementById("btnlogin").style.display = 'block';
-
-
-
-
-
                         </script>
 
                     }*@
                 <!-- //copyright -->
-
-
             </div>
         </div>
     </footer>
@@ -619,7 +543,6 @@ author URL: http://w3layouts.com
     <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 
     <script src="~/js/owl.carousel.js"></script>
-
 
     @RenderSection("Upload", required: false)
     @RenderSection("UpProduct", required: false)
@@ -655,14 +578,7 @@ author URL: http://w3layouts.com
                 }
             })
         })
-
-
-
-
-
     </script>
     <!-- /main slider -->
-
 </body>
-
 </html>

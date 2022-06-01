@@ -29,9 +29,9 @@ namespace H_Shop.NetCore.Controllers.API_Admin
 
         [HttpDelete]
         [Route("DeleteCustomer/{id}")]
-        public bool DeleteCustomer(string id)
+        public async Task<bool> DeleteCustomer(string id)
         {
-            return  _checkoutCustomerService.DeleteAccount(id);
+            return await _checkoutCustomerService.DeleteAccount(id);
         }
 
         [HttpGet]

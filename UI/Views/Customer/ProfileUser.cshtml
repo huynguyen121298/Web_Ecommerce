@@ -5,7 +5,11 @@
     Layout = "~/Views/Shared/Layout.cshtml";
 }
 @{
-    string fullName = Model.FirstName + " " + Model.LastName;
+    string fullName =null;
+    if (Model.FirstName!=null && Model.LastName != null)
+    {
+        fullName = Model.FirstName + " " + Model.LastName;
+    }
 }
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <style>

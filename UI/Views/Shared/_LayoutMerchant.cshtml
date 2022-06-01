@@ -9,8 +9,7 @@
 
 <head>
     <title>
-        HShop_
-        Ecommerce
+        NTH_Ecom
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -275,28 +274,27 @@
                                 @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
-
-
                                         document.getElementById("huy").style.display = 'none';
-
-
-
-
-
                                     </script>
+                                    var fullname = Request.Cookies["firstname"].Value;
                                     <p class="fa fa-angle-down" style="color:white">
-                                        Xin chào: @Request.Cookies["firstname"].Value
+                                        Xin chào: @fullname
                                     </p>
+
+                                    <ul style="background: space" class="inner-dropdown  ">
+                                        @if (fullname != "Facebook")
+                                        {
+                                            <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+
+                                        }
+
+                                        <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
+                                        <li>
+
+                                            <a class="btn btn-google btn-user btn-block " href="@Url.Action("Logout","Customer")"> Thoát </a>
+                                        </li>
+                                    </ul>
                                 }
-                                <ul style="background: space" class="inner-dropdown  ">
-                                    <li><a class="btn btn-facebook btn-user btn-block" style="background-color:dodgerblue" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
-
-                                    <li><a class="btn btn-success btn-user btn-block" style="background-color:forestgreen" href="#">Cài đặt</a></li>
-                                    <li>
-
-                                        <a class="btn btn-google btn-user btn-block " style="background-color:red" href="@Url.Action("Logout","Customer")"> Thoát </a>
-                                    </li>
-                                </ul>
                             </li>
 
 
@@ -447,7 +445,7 @@
                     <div class="contact-info">
                         <div class="footer-style-w3ls">
                             <p>
-                                <span class="fa fa-map-marker" aria-hidden="true"></span><strong> Vị trí</strong> :Công ty HShop_,
+                                <span class="fa fa-map-marker" aria-hidden="true"></span><strong> Vị trí</strong> :Công ty NTH_Ecom,
                                 phường 25,Quận Bình Thạnh , Thành Phố Hồ Chí Minh.
                             </p>
                         </div>
@@ -504,7 +502,7 @@
 
                 <!-- footer logo -->
                 <div class="footer-logo text-center">
-                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> HShop_Ecommerce </a>
+                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span>NTH_Ecom </a>
                 </div>
                 <!-- pay -->
                 <div class="container-fluid">
@@ -562,7 +560,7 @@
                 <!-- copyright -->
                 <div class="copy-right text-center">
                     <p>
-                        @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
+                        @DateTime.Now  NTH_Ecom | Design by Nguyễn Tuấn Huy
                         <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
 

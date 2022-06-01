@@ -23,7 +23,7 @@ namespace DataAndServices.DataModel
         //role 1: user default , role 2 user facebook
         public int? RoleId { get; set; }
 
-        public int? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string City { get; set; }
 

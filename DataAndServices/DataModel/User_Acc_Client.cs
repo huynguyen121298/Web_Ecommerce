@@ -18,7 +18,7 @@ namespace DataAndServices.DataModel
 
         public int? RoleId { get; set; }
 
-        public int? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string City { get; set; }
 

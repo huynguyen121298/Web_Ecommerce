@@ -5,14 +5,14 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
 }
-
+<script src="~/js/jquery-3.3.1.min.js"></script>
 @if (Model.Count() != 0)
 {
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách Khách đặt hàng</h6>
         </div>
-        <!--<div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -22,16 +22,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <textarea type="text" name="reason"  required/>
-                        Nhập lý do và bấm Xóa để xác nhận xóa, Đóng để hủy
+                        <input style="height:200px ;width:100%" type="text" id="reason" onchange="UpdateReason()" name="reason" />
+                        <br />
+                        <p style=" color:red">Nhập lý do và bấm Xóa để xác nhận xóa, Đóng để hủy</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <a class="btn btn-primary"--> @*href=" @Url.Action("Delete", "Checkout_Customer", new { id =})*@ <!--onclick="xoaSanPham()">Xóa</a>
+                        <a class="btn btn-primary" onclick="xoaSanPham()">Xóa</a>
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -145,16 +146,22 @@ else
 {
     <span class="font-weight-bold" style="text-align:center">Chưa có đơn đặt hàng nào</span>
 }
-
 <script>
+    var reason;
     var del;
     function target(id) {
         del = id;
     }
+    function UpdateReason() {
+        reason = $('#reason').val();
+
+        console.log("value is:" + reason);
+
+    }
     function xoaSanPham() {
         $.ajax({
             url: '/Checkout_Customer/Delete',
-            data: { id: del },
+            data: { id: del ,reason : reason },
             dataType: 'json',
             type: 'POST',
             success: function (res) {

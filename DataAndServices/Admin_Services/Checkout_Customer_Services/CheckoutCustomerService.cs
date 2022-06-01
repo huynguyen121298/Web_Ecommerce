@@ -26,10 +26,15 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             _mapper = mapper;
             
         }
-        public bool DeleteAccount(string id)
+        public async Task<bool> DeleteAccount(string id)
         {
             try
             {
+                var checkout = await GetAccountById(id);
+                if(checkout.State == true && checkout.TrangThai=="Hoàn thành")
+                {
+                    return false;
+                }
                 var noti = Builders<MerchantNotification>.Filter.Eq("CheckoutId", id);
                 var deleteFilter3 = Builders<CheckoutCustomerOrder>.Filter.Eq("_id", id);
 
@@ -125,7 +130,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
            
           
 
-            var checkoutCustomers = _db.Find(s => s.State == true).ToList();
+            var checkoutCustomers = _db.Find(s => s.State == true && s.TrangThai == "Hoàn thành").ToList();
 
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);

@@ -116,7 +116,7 @@ namespace UI.Controllers
                 var check = new DTOCheckoutCustomerOrder();
 
                 check.Zipcode = Request.Form["zip"];
-                check.NgayTao = DateTime.Now;
+                check.NgayTao = DateTime.Now.AddHours(-5);
                 check.FirstName = Request.Form["FirstName"];
                 check.LastName = Request.Form["LastName"];
                 check.Email = Request.Form["Email"];
@@ -194,7 +194,7 @@ namespace UI.Controllers
                     var fullName = checkSession.FirstName + "" + checkSession.LastName;
 
                     var subject = "Đơn hàng được xác nhận";
-                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + "đã được xác nhận vào lúc " + checkSession.NgayTao;
+                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + " đã đặt hàng thành công vào lúc " + checkSession.NgayTao;
 
                     var sendMail = SendEmail(checkSession.Email, body, subject);
                     if (sendMail == false)

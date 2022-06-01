@@ -139,7 +139,7 @@ namespace UI.Controllers
                 var dtoComment = new DtoProductComment()
                 {
                     ProductId = item._id,
-                    DateTimeComment = DateTime.Now,
+                    DateTimeComment = DateTime.Now.AddHours(-5),
                     FullName = Request.Cookies["firstname"].Value,
                     Content = fc["details"]
                 };

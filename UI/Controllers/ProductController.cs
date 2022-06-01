@@ -169,7 +169,7 @@ namespace UI.Controllers
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (cart == null)
             {
-                return View("~/Cart/Thankyou1");
+                return RedirectToAction("Thankyou1", "Cart");
             }
             return View();
         }

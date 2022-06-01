@@ -26,7 +26,7 @@
 
                     if (Convert.ToString(Html.DisplayFor(m => m.Days[i].Total)) != "0.00")
                     {
-                        <strong style="color:#4800ff;"><strong>@string.Format("{0:0,0}", Html.DisplayFor(m => m.Days[i].Total) )</strong></strong>
+                        <strong style="color:#4800ff;"><strong>@string.Format("{0:0,0}", Model.Days[i].Total)</strong></strong>
                     }
                     else
                     {
