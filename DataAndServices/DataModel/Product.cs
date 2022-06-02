@@ -24,5 +24,7 @@ namespace DataAndServices.DataModel
         public string IdItemType { get; set; }
 
         public string AccountId { get; set; }
+
+        public int Rating { get; set; }
     }
 }

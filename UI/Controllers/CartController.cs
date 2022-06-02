@@ -487,6 +487,16 @@ namespace UI.Controllers
         public int CheckBuy_(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            var productRecommend = new DtoProductRecommend
+            {
+                ProductId = Id,
+                UserId = userLogin._id,
+            };
+            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommends/", productRecommend);
+            bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
+            if (!checkSuccess)
+                return 0;
             if (cart != null)
             {
                 HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + Id);

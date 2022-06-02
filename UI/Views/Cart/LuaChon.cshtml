@@ -11,8 +11,6 @@
 }
 @using Model.DTO_Model;
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +55,6 @@
                 <div class="col-lg-8">
                     <div class="product-detail-top">
 
-
                         <div class="row align-items-center">
 
                             <div class="col-md-5">
@@ -75,7 +72,6 @@
                                     {
                                         <img src="@Url.Content(item.Photo3)" style="width:200px;height:300px;margin:auto" />
                                     }
-
                                 </div>
                                 <div class="product-slider-single-nav normal-slider">
                                     @if (item.Photo != null)
@@ -91,8 +87,6 @@
                                     {
                                         <div class="slider-nav-img"> <img src="@Url.Content(item.Photo3)" /></div>
                                     }
-
-
                                 </div>
                             </div>
                             <div class="col-md-7">
@@ -122,8 +116,6 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
                                                 </li>
-
-
                                             </ul>
 
                                             <div class="tab-content">
@@ -132,20 +124,14 @@
                                                     <p>
 
                                                         @item.Details
-
                                                     </p>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
-
 
                         <div class="row product-detail-bottom">
                             <div class="col-lg-12">
@@ -163,7 +149,7 @@
                                     <div id="reviews" class="container tab-pane fade">
                                         <div class="reviews-submitted">
                                             <div class="reviewer">Đánh giá của khách hàng - <span>@DateTime.Now</span></div>
-                                          
+
                                             @foreach (var comment in item.Comments)
                                             {
 
@@ -182,27 +168,35 @@
                                                                 <P class="font-weight-bold">@comment.Content</P>
                                                             </div>
                                                         </a>
-
                                                     </td>
                                                 </tr>
                                             }
-
                                         </div>
                                         <div class="reviews-submit">
                                             <h4> Để lại đánh giá của bạn</h4>
 
-                                         
-                                            @using (Html.BeginForm("saveFeedbacksLuaChon", "Home", FormMethod.Post))
+                                            @using (Html.BeginForm("saveFeedbacksLuaChon", "Home", FormMethod.Post, new {onsubmit="return VerifyRating()"}))
                                             {
                                                 <div class="row form">
-                                                    
-                                                   
+
                                                     <div class="col-sm-12">
                                                         <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
                                                     </div>
-                                                    <div class="col-sm-12">
-                                                        <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
-                                                    </div>
+
+                                                </div>
+                                                <div class="row form" onmouseout="CreateSelected()">
+
+                                                    <span id="span1" onmouseout="CreateOut(1)" onmouseover="CreateOver(1)" onclick="CreateClick(1)" class="glyphicon glyphicon-star-empty"></span>
+                                                    <span id="span2" onmouseout="CreateOut(2)" onmouseover="CreateOver(2)" onclick="CreateClick(2)" class="glyphicon glyphicon-star-empty"></span>
+                                                    <span id="span3" onmouseout="CreateOut(3)" onmouseover="CreateOver(3)" onclick="CreateClick(3)" class="glyphicon glyphicon-star-empty"></span>
+                                                    <span id="span4" onmouseout="CreateOut(4)" onmouseover="CreateOver(4)" onclick="CreateClick(4)" class="glyphicon glyphicon-star-empty"></span>
+                                                    <span id="span5" onmouseout="CreateOut(5)" onmouseover="CreateOver(5)" onclick="CreateClick(5)" class="glyphicon glyphicon-star-empty"></span>
+                                                </div>
+                                                <div>
+                                                    <input name="rating" type="hidden" id="lbrating" />
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
                                                 </div>
                                             }
                                         </div>
@@ -211,24 +205,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="form-horizontal" role="form" method="post" action="@Url.Action("Index", "Product")">
-                            <div class="sidebar-widget tag">
-                                <h2 class="title">Sản phẩm tìm kiếm nhiều</h2>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Áo thun nu"})">Áo thun nữ</a>
-
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Táo"})">Hoa quả</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Balo"})">Balo</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Túi"})">Túi xách nữ</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Ví"})">Ví da nam</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Giày"})">Giày Gucci</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Dép"})">Dép quai ngang</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="iphone"})">Iphone 12 Pro Max</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Mac"})">Macbook</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Samsung"})">Samsung Note 10</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Tivi"})">Tivi 97"</a>
-                                <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
-                            </div>
-                        </form>
+                        @Html.Action("BagProductRecommend", "Product")
 
                         @section Upload {
 
@@ -247,13 +224,54 @@
                                     };
                                     window.setTimeout(show_popup, 5000); // 5 seconds
                                 });
+                                function CreateOut(rating) {
+                                    for (var i = 1; i <= rating; i++) {
+                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star-empty');
+
+                                    }
+                                }
+
+                                function CreateOver(rating) {
+                                    for (var i = 1; i <= rating; i++) {
+                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star');
+
+                                    }
+                                }
+
+                                function CreateClick(rating) {
+                                    $("#lbRating").val(rating);
+                                    for (var i = 1; i <= rating; i++) {
+                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star');
+
+                                    }
+                                    for (var i = 1; i <= 5; i++) {
+                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star-empty');
+
+                                    }
+
+                                }
+
+                                function CreateSelected() {
+                                    var rating = $("#lbRating").val();
+                                    for (var i = 1; i <= rating; i++) {
+                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star');
+
+                                    }
+                                }
+
+                                function VerifyRating() {
+                                    var rating = $("#lbRating").val();
+                                    if (rating == 0) {
+                                        alert("Vui lòng chọn đánh giá");
+                                        return false;
+                                    }
+                                }
                             </script>
                         }
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- JavaScript Libraries -->

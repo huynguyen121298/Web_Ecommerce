@@ -47,7 +47,7 @@ namespace DataAndServices.Admin_Services.Products
             try
             {
                 Product products = new Product();
-                
+
                 products.Name = product_Item_Type.Name;
                 products.Photo = product_Item_Type.Photo;
                 products.Photo2 = product_Item_Type.Photo2;
@@ -55,6 +55,7 @@ namespace DataAndServices.Admin_Services.Products
                 products.Price = product_Item_Type.Price;
                 products.Details = product_Item_Type.Details;
                 products.AccountId = product_Item_Type.AccountId;
+                products.Rating = 5;
 
                 var itemType = _dbItemtype.Find(s => s.Type_Product == product_Item_Type.Type_Product).FirstOrDefault();
 
@@ -126,7 +127,7 @@ namespace DataAndServices.Admin_Services.Products
                                   AccountId = product.AccountId,
                                   Color = item.Color,
                                   Size = item.Size,
-                                  
+                                  Rating = product.Rating
                               };
             return await infoProduct.ToListAsync();
         }
@@ -151,7 +152,8 @@ namespace DataAndServices.Admin_Services.Products
                                   Quantity = item.Quantity,
                                   AccountId = product.AccountId,
                                   Color = item.Color,
-                                  Size = item.Size
+                                  Size = item.Size,
+                                  Rating = product.Rating
                               };
             foreach (var item in infoProduct)
             {
@@ -184,7 +186,7 @@ namespace DataAndServices.Admin_Services.Products
             foreach (Item_type item in item_Types)
             {
                 List<Dis_Product> products = GetProductById_Item(item._id);
-                
+
                 productsByType.Add(products);
             }
             return productsByType.ToList();
@@ -223,7 +225,7 @@ namespace DataAndServices.Admin_Services.Products
                             Start = dis.Start,
                             End = dis.End,
                             AccountId = product.AccountId,
-
+                            Rating = product.Rating
                         });
 
             return Info.ToList();
@@ -250,7 +252,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Rating = product.Rating
                         });
 
             return Info.ToList();
@@ -263,7 +266,7 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Dis_Product> GetProductById_Item(string id)
         {
-            var typeProduct = _dbItemtype.Find(s => s._id == id).FirstOrDefault();   
+            var typeProduct = _dbItemtype.Find(s => s._id == id).FirstOrDefault();
             var discountCollection = _dbDis;
             var productCollection = _db;
             var itemTypeCollection = _dbItemtype;
@@ -285,7 +288,8 @@ namespace DataAndServices.Admin_Services.Products
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Rating = product.Rating
                         });
 
             return Info.ToList();
@@ -311,7 +315,8 @@ namespace DataAndServices.Admin_Services.Products
                             Quantity = item.Quantity,
                             AccountId = product.AccountId,
                             Color = item.Color,
-                            Size = item.Size
+                            Size = item.Size,
+                            Rating = product.Rating
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
@@ -354,7 +359,8 @@ namespace DataAndServices.Admin_Services.Products
                             Quantity = item.Quantity,
                             AccountId = product.AccountId,
                             Color = item.Color,
-                            Size = item.Size
+                            Size = item.Size,
+                            Rating = product.Rating
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
@@ -382,7 +388,8 @@ namespace DataAndServices.Admin_Services.Products
                             Quantity = item.Quantity,
                             AccountId = product.AccountId,
                             Color = item.Color,
-                            Size = item.Size
+                            Size = item.Size,
+                            Rating = product.Rating
                         }).FirstOrDefault();
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == id).ToList();
             Info.Comments = productComment;
@@ -408,6 +415,7 @@ namespace DataAndServices.Admin_Services.Products
                             IdItemType = product.IdItemType,
                             Type_Product = item.Type_Product,
                             AccountId = product.AccountId,
+                            Rating = product.Rating
                         }).ToList();
 
             foreach (var item in Info)
@@ -442,7 +450,8 @@ namespace DataAndServices.Admin_Services.Products
                             Quantity = item.Quantity,
                             AccountId = product.AccountId,
                             Color = item.Color,
-                            Size = item.Size
+                            Size = item.Size,
+                            Rating = product.Rating
                         });
 
             return Info.ToList();

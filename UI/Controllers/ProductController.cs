@@ -1,5 +1,4 @@
 ﻿using Model.Common;
-using Model.DTO.DTO_Ad;
 using Model.DTO.DTO_Client;
 using Model.DTO_Model;
 using PagedList;
@@ -15,7 +14,7 @@ namespace UI.Controllers
 {
     public class ProductController : Controller
     {
-        ServiceRepository service = new ServiceRepository();
+        private ServiceRepository service = new ServiceRepository();
 
         public ActionResult TypeProduct()
         {
@@ -26,13 +25,13 @@ namespace UI.Controllers
 
             return View(view);
         }
+
         public ActionResult Index(FormCollection fc, int? page, int? gia, int? gia_, string searchName1)
         {
             var searchName = fc["searchName"];
             var priceGiaMin = Request.Form["priceGiaMin"];
             var priceGiaMax = Request.Form["priceGiaMax"];
             var searchMerchant = fc["searchMerchant"];
-
 
             if (page == null) page = 1;
             int pageSize = 25;
@@ -56,10 +55,9 @@ namespace UI.Controllers
 
                     List<DTO_Dis_Product> dTO_Accounts3 = responseMessage3.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
                     return View(dTO_Accounts3.ToPagedList(pageNumber, pageSize));
-
                 }
             }
-            
+
             if (priceGiaMin != null && priceGiaMax != null && priceGiaMin != "" && priceGiaMax != "")
             {
                 HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByPrice/" + priceGiaMin + "/" + priceGiaMax);
@@ -71,14 +69,13 @@ namespace UI.Controllers
             if (searchMerchant != null && searchMerchant != "")
             {
                 // create session
-                
-                Session.Add(Constants.SEARCHMERCHANT,searchMerchant );
+
+                Session.Add(Constants.SEARCHMERCHANT, searchMerchant);
                 return RedirectToAction("Index", "Merchant");
                 //return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
             }
             try
             {
-
                 HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByPrice/" + gia_ + "/" + gia);
                 responseMessage2.EnsureSuccessStatusCode();
 
@@ -91,13 +88,7 @@ namespace UI.Controllers
                 responseMessage.EnsureSuccessStatusCode();
                 List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
                 return View(dTO_Accounts.ToPagedList(pageNumber, pageSize));
-
             }
-        }
-
-        public ActionResult hi()
-        {
-            return View();
         }
 
         public ActionResult Index_(DTO_Dis_Product dTO_Product, int? page)
@@ -112,6 +103,7 @@ namespace UI.Controllers
 
             return View(dTO_Accounts.ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult Search(int? page, string searchName)
         {
             if (page == null) page = 1;
@@ -124,9 +116,9 @@ namespace UI.Controllers
 
             return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult Index2(string id, string seachBy, string search, int? page, int? gia, int? gia_)
         {
-
             if (page == null) page = 1;
 
             int pageSize = 10;
@@ -143,13 +135,11 @@ namespace UI.Controllers
             }
             if (seachBy == "Price")
             {
-
                 HttpResponseMessage responseMessage2 = service.GetResponse("api/product/GetAllProductByPrice/" + gia_ + "/" + gia);
                 responseMessage2.EnsureSuccessStatusCode();
                 List<DTO_Dis_Product> dTO_Accounts2 = responseMessage2.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
 
                 return View(dTO_Accounts2.ToPagedList(pageNumber, pageSize));
-
             }
             HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByIdItem/" + id);
             responseMessage.EnsureSuccessStatusCode();
@@ -161,11 +151,10 @@ namespace UI.Controllers
 
             var view = dTO_Accounts.ToPagedList(1, 10);
             return View(view);
-
         }
+
         public ActionResult Details()
         {
-
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (cart == null)
             {
@@ -174,61 +163,8 @@ namespace UI.Controllers
             return View();
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
         public PartialViewResult BagCart()
         {
-
             try
             {
                 if (Session["cart"] != null)
@@ -237,17 +173,24 @@ namespace UI.Controllers
 
                     int total = cart.Count();
                     ViewBag.Quantity = total;
-
                 }
             }
             catch
             {
-
                 ViewBag.Quantity = 0;
-
             }
             return PartialView("BagCart");
         }
+
+        public PartialViewResult BagProductRecommend()
+        {
+            HttpResponseMessage response2 = service.GetResponse("api/Product/GetProductRecommends");
+            response2.EnsureSuccessStatusCode();
+            var productRecommends = response2.Content.ReadAsAsync<DTO_Product>().Result;
+
+            return PartialView(productRecommends);
+        }
+
         public PartialViewResult BagCart_()
         {
             try
@@ -261,9 +204,7 @@ namespace UI.Controllers
             }
             catch
             {
-
                 ViewBag.yeuthich = 0;
-
             }
             return PartialView("BagCart_");
         }
@@ -289,6 +230,7 @@ namespace UI.Controllers
             }
             return 1;
         }
+
         public ActionResult Remove(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -298,7 +240,6 @@ namespace UI.Controllers
             return RedirectToAction("Details");
         }
 
-
         [AuthorizeLoginEndUser]
         public ActionResult Buy(string Id)
         {
@@ -307,16 +248,13 @@ namespace UI.Controllers
             {
                 return RedirectToAction("HetHang", "Cart");
             }
+
             return RedirectToAction("Details", "Product");
-
-
-
         }
 
         [AuthorizeLoginEndUser]
         public ActionResult Buy_Favorite(string Id)
         {
-                    
             int checkBuy = CheckBuy(Id);
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
             if (checkBuy == 0)
@@ -326,17 +264,14 @@ namespace UI.Controllers
             }
             if (checkBuy == 1)
             {
-                
                 return Json(new { buy = cart, status = "Thành công" });
             }
-           
-            return Json(new { buy = cart, status = "Thành công" });
 
+            return Json(new { buy = cart, status = "Thành công" });
         }
 
         public ActionResult Giam(string Id)
         {
-
             List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
             HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
             responseUser.EnsureSuccessStatusCode();
@@ -350,18 +285,15 @@ namespace UI.Controllers
                     li[index].Quantity--;
                     li[index].Price = proItem.Price * li[index].Quantity;
                 }
-
             }
 
             Session["cart"] = li;
             return Json(new { soLuong = li });
-
         }
 
         [AuthorizeLoginEndUser]
         public ActionResult Update(string Id)
         {
-
             List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
             HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
             responseUser.EnsureSuccessStatusCode();
@@ -378,7 +310,6 @@ namespace UI.Controllers
                 newProduct = proItem;
                 newProduct.Quantity = 1;
                 li.Add(newProduct);
-
             }
             Session["cart"] = li;
             return RedirectToAction("Details", "Product");
@@ -399,15 +330,12 @@ namespace UI.Controllers
             int index = isExist(Id);
             if (index != -1)
             {
-
                 li[index].Price = proItem.Price * li[index].Quantity;
             }
             Session["cart"] = li;
             return Json(new { soLuong = li });
-
         }
 
-        
         public ActionResult Details1(string Id)
         {
             if (Session["cart__"] == null)
@@ -419,7 +347,6 @@ namespace UI.Controllers
 
                 //var product = db.Products.Find(Id);
 
-              
                 Session["cart__"] = proItem;
             }
             else
@@ -429,19 +356,30 @@ namespace UI.Controllers
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
 
-               
                 Session["cart__"] = proItem;
             }
             return RedirectToAction("LuaChon", "Cart");
         }
+
         public PartialViewResult Search()
         {
             return PartialView("Search");
-        }      
+        }
 
         public int CheckBuy(string Id)
         {
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            var productRecommend = new DtoProductRecommend
+            {
+                ProductId = Id,
+                UserId = userLogin._id,
+            };
+            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommends/", productRecommend);
+            bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
+            if (!checkSuccess)
+                return 0;
+
             if (cart != null)
             {
                 foreach (var item in cart)
@@ -497,7 +435,6 @@ namespace UI.Controllers
 
                 if (quantity <= 0)
                 {
-
                     return 0;
                 }
                 List<DTO_Product_Item_Type> li = new List<DTO_Product_Item_Type>();

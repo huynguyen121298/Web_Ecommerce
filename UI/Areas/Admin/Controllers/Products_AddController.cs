@@ -1,4 +1,5 @@
 ﻿using Model.DTO.DTO_Ad;
+using Model.DTO.DTO_Client;
 using Model.DTO_Model;
 using System;
 using System.Collections.Generic;

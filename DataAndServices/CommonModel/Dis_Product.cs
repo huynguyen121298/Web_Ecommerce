@@ -40,5 +40,7 @@ namespace DataAndServices.CommonModel
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string AccountId { get; set; }
+
+        public int Rating { get; set; }
     }
 }

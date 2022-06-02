@@ -33,5 +33,7 @@ namespace DataAndServices.CommonModel
 
         public List<string> Size { get; set; }
 
+        public int Rating { get; set; }
+
     }
 }

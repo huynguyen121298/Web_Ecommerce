@@ -20,10 +20,10 @@ namespace UI.Controllers
 
         public ActionResult Index()
         {
-            if (Request.Cookies["idCustomer"] != null && (UserLogin)Session[Constants.USER_SESSION] ==null)
+            if (Request.Cookies["idCustomer"] != null && (UserLogin)Session[Constants.USER_SESSION] == null)
             {
                 var userId = Request.Cookies["idCustomer"].Value;
-                HttpResponseMessage responseUser = service.GetResponse("api/User_Acc/GetAccountById/" +userId);
+                HttpResponseMessage responseUser = service.GetResponse("api/User_Acc/GetAccountById/" + userId);
 
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Users_Acc result = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
@@ -40,7 +40,6 @@ namespace UI.Controllers
                 };
                 Session.Add(Constants.USER_SESSION, u);
                 Session.Timeout = 1000;
-
             }
             return View();
         }
@@ -130,7 +129,7 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult saveFeedbacksLuaChon(FormCollection fc, DTO_Product_Item_Type product)
+        public ActionResult saveFeedbacksLuaChon(FormCollection fc, DTO_Product_Item_Type product, int rating)
         {
             try
             {
@@ -143,10 +142,14 @@ namespace UI.Controllers
                     FullName = Request.Cookies["firstname"].Value,
                     Content = fc["details"]
                 };
+                var productRating = new DTO_Product()
+                {
+                    _id = product._id,
+                    Rating = rating,
+                };
+                HttpResponseMessage response2 = service.PutResponse("api/Product/UpdateRating/", productRating);
 
-                ServiceRepository serviceObj = new ServiceRepository();
-                HttpResponseMessage response = serviceObj.PostResponse("api/Home/AddComment/", dtoComment);
-                response.EnsureSuccessStatusCode();
+                HttpResponseMessage response = service.PostResponse("api/Home/AddComment/", dtoComment);
 
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + item._id);
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;

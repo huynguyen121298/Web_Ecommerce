@@ -1,8 +1,4 @@
-﻿using Model.DTO_Model;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace Model.DTO.DTO_Client
+﻿namespace Model.DTO.DTO_Client
 {
     public class DTO_Product
     {
@@ -25,6 +21,8 @@ namespace Model.DTO.DTO_Client
         public string IdItemType { get; set; }
 
         public string AccountId { get; set; }
+
+        public int Rating { get; set; }
 
     }
 }

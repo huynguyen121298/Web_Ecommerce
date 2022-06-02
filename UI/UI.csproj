@@ -2976,11 +2976,11 @@
     <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
     <Content Include="Views\Cart\PaymentConfirm.cshtml" />
     <Content Include="Views\Customer\SignUpFacebook.cshtml" />
-    <Content Include="Views\Product\hi.cshtml" />
     <Content Include="Views\Shared\_LayoutMerchant2.cshtml" />
     <Content Include="Views\Home\ListTypeProductMerchant.cshtml" />
     <Content Include="Views\Merchant\Index2.cshtml" />
     <Content Include="Views\Merchant\Index_.cshtml" />
+    <Content Include="Views\Product\BagProductRecommend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

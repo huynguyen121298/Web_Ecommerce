@@ -2,7 +2,6 @@
 using DataAndServices.Data;
 using DataAndServices.DataModel;
 using Model.Common;
-using Model.DTO_Model;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -19,7 +18,8 @@ namespace DataAndServices.Client_Services
         private readonly IMongoCollection<Account> _dbAcc;
         private readonly IMongoCollection<ProductComment> _dbProductComment;
         private readonly IMongoCollection<ProductAction> _dbProductAction;
-        //private DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
+        private readonly IMongoCollection<ProductRecommend> _dbProductRecommend;
+
         public ProductClientService(DataContext db)
         {
             _db = db.GetProductClientCollection();
@@ -28,7 +28,9 @@ namespace DataAndServices.Client_Services
             _dbAcc = db.GetAccountCollection();
             _dbProductComment = db.GetProductCommentCollection();
             _dbProductAction = db.GetProductActionCollection();
+            _dbProductRecommend = db.GetProductRecommendCollection();
         }
+
         public List<Dis_Product> GetAllProductByName(string name)
         {
             var discountCollection = _dbDis;
@@ -55,7 +57,7 @@ namespace DataAndServices.Client_Services
 
         public List<Account> GetMerchantByName(string merchantName)
         {
-            var merchantByName = _dbAcc.Find(s=>s.MerchantName.StartsWith(merchantName)).ToList();            
+            var merchantByName = _dbAcc.Find(s => s.MerchantName.StartsWith(merchantName)).ToList();
             return merchantByName;
         }
 
@@ -100,7 +102,6 @@ namespace DataAndServices.Client_Services
                     {
                         dis_Product5.Add(item);
                     }
-
                 }
                 else
                 {
@@ -109,7 +110,6 @@ namespace DataAndServices.Client_Services
                     {
                         dis_Product2.Add(item);
                     }
-
                 }
             }
             dis_Product6.AddRange(dis_Product2);
@@ -117,6 +117,7 @@ namespace DataAndServices.Client_Services
 
             return dis_Product6;
         }
+
         public double GetPriceDiscountById(string id)
         {
             DateTime dateTime = DateTime.Today;
@@ -134,7 +135,6 @@ namespace DataAndServices.Client_Services
             return await _db.Find(s => true).ToListAsync();
         }
 
-
         public async Task<int> GetSoLuong(string id)
         {
             var temp = await _dbItem.Find(s => s._id == id).FirstOrDefaultAsync();
@@ -147,7 +147,6 @@ namespace DataAndServices.Client_Services
 
         public List<Dis_Product> GetProductByMerchant(string merchantId)
         {
-
             var discountCollection = _dbDis;
             var productCollection = _db;
 
@@ -168,25 +167,22 @@ namespace DataAndServices.Client_Services
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Rating = product.Rating
                         });
 
             return Info.ToList();
             //var productsByMerchant = await _db.FindAsync(a => a.AccountId == merchantId);
-            //return productsByMerchant.ToList(); 
+            //return productsByMerchant.ToList();
         }
 
         public bool InsertComment(ProductComment product)
         {
             try
             {
-
                 _dbProductComment.InsertOne(product);
 
                 return true;
-
-            
-
             }
             catch
             {
@@ -199,7 +195,7 @@ namespace DataAndServices.Client_Services
             try
             {
                 var checkTypeAction = productActions.FirstOrDefault();
-                if(checkTypeAction.Status == ProductActionConstant.PRODUCT_FAVORITE)
+                if (checkTypeAction.Status == ProductActionConstant.PRODUCT_FAVORITE)
                 {
                     var proAction = _dbProductAction.Find(a => a.UserId == checkTypeAction.UserId
                                                            && a.Status == ProductActionConstant.PRODUCT_FAVORITE
@@ -229,7 +225,6 @@ namespace DataAndServices.Client_Services
 
                 var deleteFilter = Builders<ProductAction>.Filter.Eq("_id", productByEnduser._id);
                 _dbProductAction.DeleteOne(deleteFilter);
-               
 
                 return true;
             }
@@ -262,7 +257,8 @@ namespace DataAndServices.Client_Services
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Rating = product.Rating
                         }).ToList();
 
             foreach (var product in prAction)
@@ -273,14 +269,11 @@ namespace DataAndServices.Client_Services
                     products.Add(pro);
             }
 
-            return products;       
-    
-            
+            return products;
         }
 
         public List<Product> GetProductsFavorite(string userId)
         {
-
             var prAction = _dbProductAction.Find(a => a.UserId == userId && a.Status == ProductActionConstant.PRODUCT_FAVORITE).ToList();
 
             var products = new List<Product>();
@@ -292,6 +285,96 @@ namespace DataAndServices.Client_Services
             }
 
             return products;
+        }
+
+        public async Task<bool> InsertProductRecommend(ProductRecommend productRecommend)
+        {
+            try
+            {
+                var dbProductRecommend = await _dbProductRecommend.Find(pr => pr.ProductId == productRecommend.ProductId).FirstOrDefaultAsync();
+                if (dbProductRecommend == null)
+                {
+                    var product = await _db.Find(p => p._id == productRecommend.ProductId).FirstOrDefaultAsync();
+                    var dbproductRecommend = new ProductRecommend
+                    {
+                        ItemTypeId = product.IdItemType,
+                        Frequency = 1,
+                        ProductId = productRecommend.ProductId,
+                        UserId = productRecommend.UserId,
+                    };
+                    await _dbProductRecommend.InsertOneAsync(dbproductRecommend);
+                    return true;
+                }
+
+                var eqfilter = Builders<ProductRecommend>.Filter.Where(s => s.ProductId == productRecommend.ProductId);
+
+                var update = Builders<ProductRecommend>.Update.Set(s => s.Frequency, dbProductRecommend.Frequency++);
+
+                var options = new UpdateOptions { IsUpsert = true };
+
+                await _dbProductRecommend.UpdateOneAsync(eqfilter, update, options);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<List<Product>> GetProductRecommend()
+        {
+            var recommends = await _dbProductRecommend.Find(p => true).ToListAsync();
+            var orderByDescendingResult = (from product in recommends
+                                           orderby product.Frequency descending
+                                           select product).ToList();
+
+            orderByDescendingResult.Take(10);
+
+            var products = await _db.Find(p => true).ToListAsync();
+            //var productRecomends = new List<Product>();
+
+            var prod = (from recommend in orderByDescendingResult.AsQueryable()
+                        join product in products.AsQueryable() on recommend.ProductId equals product._id
+                        select new Product()
+                        {
+                            _id = product._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            IdItemType = product.IdItemType,
+                            AccountId = product.AccountId,
+                            Rating = product.Rating
+                        }).ToList();
+
+            //foreach (var productId in orderByDescendingResult.Select(p=>p.ProductId))
+            //{
+            //    var productRecomend = products.Find(p => p._id == productId);
+            //    if
+            //}
+
+            //return orderByDescendingResult;
+            return prod;
+        }
+
+        public async Task<bool> UpdateRating(Product productRating)
+        {
+            var product = await _db.Find(p => p._id == productRating._id).FirstOrDefaultAsync();
+            if (product == null)
+                return false;
+            var newRating = (product.Rating + productRating.Rating) / 2;
+            var eqfilter = Builders<Product>.Filter.Where(s => s._id == productRating._id);
+
+            var update = Builders<Product>.Update.Set(s => s.Rating, newRating);
+
+            var options = new UpdateOptions { IsUpsert = true };
+
+            await _db.UpdateOneAsync(eqfilter, update, options);
+
+            return true;
         }
     }
 }

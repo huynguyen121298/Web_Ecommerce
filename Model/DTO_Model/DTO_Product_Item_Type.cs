@@ -45,5 +45,8 @@ namespace Model.DTO_Model
 
         public List<string> Size { get; set; }
 
+        public int Rating { get; set; }
+
+
     }
 }

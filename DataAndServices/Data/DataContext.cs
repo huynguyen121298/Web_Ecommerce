@@ -45,6 +45,11 @@ namespace DataAndServices.Data
             return Database.GetCollection<ProductComment>("ProductComment");
         }
 
+        public IMongoCollection<ProductRecommend> GetProductRecommendCollection()
+        {
+            return Database.GetCollection<ProductRecommend>("ProductRecommend");
+        }
+
         public IMongoCollection<MerchantNotification> GetMerchantNotificationCollection()
         {
             return Database.GetCollection<MerchantNotification>("MerchantNotification");

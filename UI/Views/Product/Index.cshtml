@@ -42,7 +42,6 @@
             line-height: 1.1;
         }
 
-
         ins {
             color: green;
             font-size: 32px;
@@ -99,11 +98,16 @@
                                         <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
 
                                         <div class="ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+
+                                            @for (int i = 0; i < item.Rating; i++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            @for (int i = item.Rating; i < 5; i++)
+                                            {
+                                                <i class="glyphicon glyphicon-star-empty"></i>
+
+                                            }
                                         </div>
                                         <div style="color:red" class="ratting">
                                             @{
@@ -114,13 +118,12 @@
 
                                                 }
                                             }
-
                                         </div>
                                     </div>
 
                                     <div class="product-image">
                                         <a href="product-detail.html">
-                                            <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                            <img style="height:100%;width:100%" src="@Url.Content(item.Photo)" />
                                         </a>
                                         <div class="product-action">
                                             @{
@@ -142,43 +145,34 @@
                                                     </a>
                                                 }
                                             }
-
-
                                         </div>
                                     </div>
-                                    <div style="height:106px" class="product-price">
+                                    <div style="height:100%" class="product-price">
                                         @{
                                             if (price != null && totalday == true && checkPrice == true)
                                             {
-                                                <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
-                                                <br />
-
+                                                <h3 class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </h3>
                                                 <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
                                             }
                                             else
                                             {
                                                 string newprice = string.Format("{0:0,0}", item.Price);
-
                                                 <h3>@newprice<span> VNĐ </span></h3>
+
                                             }
 
                                         }
 
                                         <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
-
                                     </div>
-
                                 </div>
                             </div>
                         }
-
                     </div>
-
                 </div>
 
                 <!-- Side Bar Start -->
                 <div class="col-lg-4 sidebar">
-
                 </div>
                 <!-- Side Bar End -->
             </div>

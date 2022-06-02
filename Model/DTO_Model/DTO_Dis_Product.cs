@@ -33,6 +33,8 @@ namespace Model.DTO_Model
 
         public string IdItemType { get; set; }
 
-        public string Type_Product { get; set; }    
+        public string Type_Product { get; set; }
+        
+        public int Rating { get; set; }
     }
 }
