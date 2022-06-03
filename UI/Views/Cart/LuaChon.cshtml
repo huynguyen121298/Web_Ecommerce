@@ -30,6 +30,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="~/lib/slick/slick.css" rel="stylesheet">
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <!-- Template Stylesheet -->
@@ -94,15 +95,19 @@
                                     @item.Name
                                     <p id="message" style="color:red;font-style:italic">@ViewData["MessQuantity"]</p>
                                     <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        @for (int i = 0; i < item.Rating; i++)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                        @for (int i = item.Rating; i < 5; i++)
+                                        {
+                                            <i  class="fa fa-star-o"></i>
+
+                                        }
                                     </div>
                                     <div>
                                         <h4 class="product-price-range"> giá sản phẩm</h4>
-                                        <p><span style="color:red"> @item.Price </span> VNĐ</p>
+                                        <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
                                     </div>
 
                                     @*<div class="p-color">
@@ -184,17 +189,18 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="row form" onmouseout="CreateSelected()">
+                                                <div class="form" onmouseout="CreateSelected()">
 
-                                                    <span id="span1" onmouseout="CreateOut(1)" onmouseover="CreateOver(1)" onclick="CreateClick(1)" class="glyphicon glyphicon-star-empty"></span>
-                                                    <span id="span2" onmouseout="CreateOut(2)" onmouseover="CreateOver(2)" onclick="CreateClick(2)" class="glyphicon glyphicon-star-empty"></span>
-                                                    <span id="span3" onmouseout="CreateOut(3)" onmouseover="CreateOver(3)" onclick="CreateClick(3)" class="glyphicon glyphicon-star-empty"></span>
-                                                    <span id="span4" onmouseout="CreateOut(4)" onmouseover="CreateOver(4)" onclick="CreateClick(4)" class="glyphicon glyphicon-star-empty"></span>
-                                                    <span id="span5" onmouseout="CreateOut(5)" onmouseover="CreateOver(5)" onclick="CreateClick(5)" class="glyphicon glyphicon-star-empty"></span>
+                                                    <i id="span1" onmouseout="CreateOut(1)" onmouseover="CreateOver(1)" onclick="CreateClick(1)" class="fa fa-star-o"></i>
+                                                    <i id="span2" onmouseout="CreateOut(2)" onmouseover="CreateOver(2)" onclick="CreateClick(2)" class="fa fa-star-o"></i>
+                                                    <i id="span3" onmouseout="CreateOut(3)" onmouseover="CreateOver(3)" onclick="CreateClick(3)" class="fa fa-star-o"></i>
+                                                    <i id="span4" onmouseout="CreateOut(4)" onmouseover="CreateOver(4)" onclick="CreateClick(4)" class="fa fa-star-o"></i>
+                                                    <i id="span5" onmouseout="CreateOut(5)" onmouseover="CreateOver(5)" onclick="CreateClick(5)" class="fa fa-star-o"></i>
                                                 </div>
                                                 <div>
-                                                    <input name="rating" type="hidden" id="lbrating" />
+                                                    <input name="rating" type="hidden" id="lbRating" />
                                                 </div>
+                                                <br />
                                                 <div class="col-sm-12">
                                                     <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
                                                 </div>
@@ -226,14 +232,14 @@
                                 });
                                 function CreateOut(rating) {
                                     for (var i = 1; i <= rating; i++) {
-                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star-empty');
+                                        $("#span" + i).attr('class', 'fa fa-star-o');
 
                                     }
                                 }
 
                                 function CreateOver(rating) {
                                     for (var i = 1; i <= rating; i++) {
-                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star');
+                                        $("#span" + i).attr('class', 'fa fa-star');
 
                                     }
                                 }
@@ -241,11 +247,11 @@
                                 function CreateClick(rating) {
                                     $("#lbRating").val(rating);
                                     for (var i = 1; i <= rating; i++) {
-                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star');
+                                        $("#span" + i).attr('class', 'fa fa-star');
 
                                     }
                                     for (var i = 1; i <= 5; i++) {
-                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star-empty');
+                                        $("#span" + i).attr('class', 'fa fa-star-o');
 
                                     }
 
@@ -254,7 +260,7 @@
                                 function CreateSelected() {
                                     var rating = $("#lbRating").val();
                                     for (var i = 1; i <= rating; i++) {
-                                        $("#span" + i).attr('class', 'glyphicon glyphicon-star');
+                                        $("#span" + i).attr('class', 'fa fa-star');
 
                                     }
                                 }

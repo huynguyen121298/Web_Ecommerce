@@ -55,9 +55,9 @@ namespace H_Shop.NetCore.Controllers.API_Admin
 
         [HttpGet]
         [Route("GetDateRevenue")]
-        public IActionResult GetDateRevenue(DateTime date )
+        public IActionResult GetDateRevenue()
         {
-            var listMonthlyRevenue = _checkoutCustomerService.GetDateRevenue(date);
+            var listMonthlyRevenue = _checkoutCustomerService.GetDateRevenue();
             return Ok(listMonthlyRevenue);
 
         }

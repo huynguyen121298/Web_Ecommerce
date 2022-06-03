@@ -23,6 +23,8 @@
 
     <!-- Custom styles for this template-->
     <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 
     <script>
@@ -156,22 +158,9 @@
                                     <br />
 
 
-                                    <div class="sidebar-widget tag">
-                                        <h2 class="title">Sản phẩm tìm kiếm nhiều</h2>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Áo thun nu"})">Áo thun nữ</a>
+                                 
+                                        @Html.Action("BagProductRecommend", "Product")
 
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Táo"})">Hoa quả</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Balo"})">Balo</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Túi"})">Túi xách nữ</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ví"})">Ví da nam</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Giày"})">Giày Gucci</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Dép"})">Dép quai ngang</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="iphone"})">Iphone 12 Pro Max</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Mac"})">Macbook</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Samsung"})">Samsung Note 10</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Tivi"})">Tivi 97"</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
-                                    </div>
 
                                     <div class="sidebar-widget tag">
                                         <h2 style="color:cornflowerblue" class="title">Sắp xếp theo</h2>

@@ -26,6 +26,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="~/lib/slick/slick.css" rel="stylesheet">
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link href="~/css/style_SP.css" rel="stylesheet">
     <style>
 
@@ -105,7 +107,7 @@
                                             }
                                             @for (int i = item.Rating; i < 5; i++)
                                             {
-                                                <i class="glyphicon glyphicon-star-empty"></i>
+                                                <i style="color:red" class="fa fa-star-o"></i>
 
                                             }
                                         </div>
@@ -193,7 +195,7 @@
 
                 },
                 success: function (res) {
-                    console.log("Into function of buy fav: ")
+                    console.log("Into function of buy fav: "+res)
                     for (let i = 0; i < res.buy.length; i++) {
                         if (res.buy[i]["_id"] == id_temp) {
                             console.log("Into if in function of buy fav: ");

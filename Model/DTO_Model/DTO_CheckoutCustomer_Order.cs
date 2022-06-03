@@ -22,7 +22,7 @@ namespace Model.DTO_Model
 
         public string Zipcode { get; set; }
 
-        public Nullable<System.DateTime> NgayTao { get; set; }
+        public DateTime? NgayTao { get; set; }
 
         public Nullable<double> GiamGia { get; set; }
 

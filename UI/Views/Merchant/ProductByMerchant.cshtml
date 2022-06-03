@@ -25,6 +25,8 @@
     <link href="~/lib/slick/slick.css" rel="stylesheet">
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
     <link href="~/css/style_SP.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <style>
 
         .old-price {
@@ -97,11 +99,16 @@
                                         <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
 
                                         <div class="ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+
+                                            @for (int i = 0; i < item.Rating; i++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            @for (int i = item.Rating; i < 5; i++)
+                                            {
+                                                <i style="color:red" class="fa fa-star-o"></i>
+
+                                            }
                                         </div>
                                         <div style="color:red" class="ratting">
                                             @{

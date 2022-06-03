@@ -1,13 +1,10 @@
-﻿@{
+﻿@model IEnumerable<Model.DTO.DTO_Client.DTO_Product>
+
+@{
     ViewBag.Title = "YeuThich";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
-    //var total = cart.Sum(item => item.Product.Price * item.Quantity);
-    //var total1 = cart.Count();
-}
 @using Model.DTO_Model;
 
 <!DOCTYPE html>
@@ -51,7 +48,7 @@
     <!-- Breadcrumb End -->
     <!-- Product Detail Start -->
     @{
-        if (cart.Count != 0)
+        if (Model != null)
         {
             <div class="product-detail">
                 <div class="container-fluid">
@@ -59,7 +56,7 @@
                         <div class="col-lg-8">
                             <div class="product-detail-top">
 
-                                @foreach (DTO_Product_Item_Type item in (List<DTO_Product_Item_Type>)Session["cart_"])
+                                @foreach (var item in Model)
                                 {
                                     <div class="row align-items-center">
                                         <div class="col-md-5">

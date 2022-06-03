@@ -104,11 +104,15 @@
                                                 <div style="height:102px" class="product-title">
                                                     <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
                                                     <div class="ratting">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        @for (int i = 0; i < item.Rating; i++)
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        @for (int i = item.Rating; i < 5; i++)
+                                                        {
+                                                            <i style="color:red" class="fa fa-star-o"></i>
+
+                                                        }
                                                     </div>
                                                     <div style="color:red" class="ratting">
                                                         @{

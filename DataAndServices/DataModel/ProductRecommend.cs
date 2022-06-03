@@ -1,7 +1,12 @@
-﻿namespace DataAndServices.DataModel
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace DataAndServices.DataModel
 {
     public class ProductRecommend
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
 
         public int Frequency { get; set; }

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
@@ -35,10 +34,10 @@ namespace UI.Controllers
             else
                 return View();
         }
+
         [AuthorizeLoginEndUser]
         public ActionResult Checkout()
         {
-
             var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
             if (cart == null)
             {
@@ -48,7 +47,6 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-
         public ActionResult LuaChon()
         {
             return View();
@@ -62,7 +60,7 @@ namespace UI.Controllers
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
 
             var productCarts = new List<DtoProductCart>();
-          
+
             foreach (var item in cart)
             {
                 HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item._id);
@@ -81,7 +79,7 @@ namespace UI.Controllers
                 productCart._id = item._id;
                 productCart.Name = item.Name;
                 productCart.Quantity = item.Quantity;
-                productCart.Price = item.Price; 
+                productCart.Price = item.Price;
                 productCart.IdItemType = item.IdItemType;
                 productCart.Photo = item.Photo;
                 productCart.AccountId = item.AccountId;
@@ -91,10 +89,9 @@ namespace UI.Controllers
                     productCart.Size = formCollection["selectSize" + item._id];
 
                 productCarts.Add(productCart);
-                
             }
 
-            Session.Add(Constants.CART_SESSION,productCarts);
+            Session.Add(Constants.CART_SESSION, productCarts);
             ViewData["messages"] = messages;
             if (flag)
                 return RedirectToAction("Index", "Cart");
@@ -105,18 +102,18 @@ namespace UI.Controllers
         public async Task<ActionResult> saveOrder1(bool isPayOnline = false)
         {
             var cart = (List<DtoProductCart>)Session[Constants.CART_SESSION];
-            if(cart == null)
+            if (cart == null)
             {
                 return ViewBag.Error;
             }
             var price = Request.Form["gia1"];
             var checkPayOnl = Request.Form["checkPayOnl"];
-            if(isPayOnline == false)
+            if (isPayOnline == false)
             {
                 var check = new DTOCheckoutCustomerOrder();
 
                 check.Zipcode = Request.Form["zip"];
-                check.NgayTao = DateTime.Now.AddHours(-5);
+                check.NgayTao = DateTime.Now.AddHours(+7);
                 check.FirstName = Request.Form["FirstName"];
                 check.LastName = Request.Form["LastName"];
                 check.Email = Request.Form["Email"];
@@ -133,21 +130,17 @@ namespace UI.Controllers
                 }
                 Session.Add("PayOrder", check);
             }
-            
+
             if (checkPayOnl == String.Empty || checkPayOnl == null)
             {
-                
-
                 try
                 {
                     var checkSession = (DTOCheckoutCustomerOrder)Session["PayOrder"];
                     if (isPayOnline == true) checkSession.State = true;
-                    var userLogin = (UserLogin)Session[Constants.USER_SESSION];                   
-                   
+                    var userLogin = (UserLogin)Session[Constants.USER_SESSION];
 
                     checkSession.ProductOrder = new List<DTO_Checkout_Order>();
 
-                  
                     foreach (var item in cart)
                     {
                         DTO_Checkout_Order dTO_Checkout_Order = new DTO_Checkout_Order();
@@ -171,7 +164,7 @@ namespace UI.Controllers
                     foreach (var item in cart)
                     {
                         var notification = new DtoMerchantNotification();
-                        notification.DateTime = DateTime.Now;
+                        notification.DateTime = DateTime.Now.AddHours(+7);
                         notification.AccountId = item.AccountId;
                         notification.Subject = "Đơn hàng mới";
                         notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + checkSession.FirstName + " " + checkSession.LastName;
@@ -185,7 +178,6 @@ namespace UI.Controllers
                             ProductId = item._id
                         };
                         dtoProductActions.Add(dtoProductAction);
-
                     }
 
                     HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
@@ -194,7 +186,7 @@ namespace UI.Controllers
                     var fullName = checkSession.FirstName + "" + checkSession.LastName;
 
                     var subject = "Đơn hàng được xác nhận";
-                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + " đã đặt hàng thành công vào lúc " + checkSession.NgayTao;
+                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + " đã đặt hàng thành công vào lúc " + DateTime.Now;
 
                     var sendMail = SendEmail(checkSession.Email, body, subject);
                     if (sendMail == false)
@@ -222,24 +214,23 @@ namespace UI.Controllers
             string hashSecret = ConfigurationManager.AppSettings["HashSecret"];
             PayLib pay = new PayLib();
 
-            pay.AddRequestData("vnp_Version", "2.0.0"); 
-            pay.AddRequestData("vnp_Command", "pay"); 
-            pay.AddRequestData("vnp_TmnCode", tmnCode); 
-            pay.AddRequestData("vnp_Amount", price + "00"); 
+            pay.AddRequestData("vnp_Version", "2.0.0");
+            pay.AddRequestData("vnp_Command", "pay");
+            pay.AddRequestData("vnp_TmnCode", tmnCode);
+            pay.AddRequestData("vnp_Amount", price + "00");
             pay.AddRequestData("vnp_BankCode", "");
-            pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss")); 
-            pay.AddRequestData("vnp_CurrCode", "VND"); 
-            pay.AddRequestData("vnp_IpAddr", Util.GetIpAddress()); 
+            pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            pay.AddRequestData("vnp_CurrCode", "VND");
+            pay.AddRequestData("vnp_IpAddr", Util.GetIpAddress());
             pay.AddRequestData("vnp_Locale", "vn");
-            pay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang"); 
-            pay.AddRequestData("vnp_OrderType", "other"); 
-            pay.AddRequestData("vnp_ReturnUrl", returnUrl); 
+            pay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang");
+            pay.AddRequestData("vnp_OrderType", "other");
+            pay.AddRequestData("vnp_ReturnUrl", returnUrl);
             pay.AddRequestData("vnp_TxnRef", DateTime.Now.Ticks.ToString());
 
             string paymentUrl = pay.CreateRequestUrl(url, hashSecret);
 
             return Redirect(paymentUrl);
-
         }
 
         [AuthorizeLoginEndUser]
@@ -276,13 +267,18 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public ActionResult YeuThich()
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
-            if (cart == null)
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+
+            HttpResponseMessage responseUser = service.GetResponse("api/Product/GetProductsFavorite/" + userLogin._id);
+            responseUser.EnsureSuccessStatusCode();
+            var proItem = responseUser.Content.ReadAsAsync<List<DTO_Product>>().Result;
+
+            if (proItem == null)
             {
                 return View("Thankyou1");
             }
 
-            return View();
+            return View(proItem);
         }
 
         [AuthorizeLoginEndUser]
@@ -295,8 +291,19 @@ namespace UI.Controllers
         public ActionResult Details_(string Id)
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
-            if(userLogin != null)
+
+            if (userLogin != null)
             {
+                var productRecommend = new DtoProductRecommend
+                {
+                    ProductId = Id,
+                    UserId = userLogin._id,
+                };
+                HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommend/", productRecommend);
+                bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
+                if (!checkSuccess)
+                    return null;
+
                 var dtoProductActions = new List<DtoProductAction>();
                 var dtoProductAction = new DtoProductAction()
                 {
@@ -305,53 +312,21 @@ namespace UI.Controllers
                     ProductId = Id
                 };
                 dtoProductActions.Add(dtoProductAction);
-                if (Session["cart_"] == null)
-                {
-                    List<DTO_Product_Item_Type> li = new List<DTO_Product_Item_Type>();
 
-                    HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
-                    responseUser.EnsureSuccessStatusCode();
-                    DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
+                HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
+                response.EnsureSuccessStatusCode();
 
-                    var newProduct = new DTO_Product_Item_Type();
-                    newProduct = proItem;
-                    newProduct.Quantity = 1;
-                    li.Add(newProduct);
+                HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
+                responseUser.EnsureSuccessStatusCode();
+                DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
 
-                    Session["cart_"] = li;
-                    return Json(new { buy = li });
+                var newProduct = new List<DTO_Product_Item_Type>();
+                proItem.Quantity=1;
+                newProduct.Add(proItem);
 
-                }
-                else
-                {
-                    List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart_"];
-                    HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
-                    responseUser.EnsureSuccessStatusCode();
-                    DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
-
-                    int index = isExist_(Id);
-                    if (index != -1)
-                    {
-                        li[index].Quantity++;
-                    }
-                    else
-                    {
-                        var newProduct = new DTO_Product_Item_Type();
-                        newProduct = proItem;
-                        newProduct.Quantity = 1;
-                        li.Add(newProduct);
-                    }
-
-
-                    HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
-                    response.EnsureSuccessStatusCode();
-                    Session["cart_"] = li;
-                    ViewBag.IdPorduct = Id;
-                    return Json(new { buy = li });
-                }
+                return Json(new { buy = newProduct });
             }
             return Json(new { buy = 0 });
-
         }
 
         private int isExist_(string Id)
@@ -366,14 +341,6 @@ namespace UI.Controllers
         public ActionResult Remove_(string Id)
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
-            if(cart != null)
-            {
-                int index = isExist_(Id);
-                cart.RemoveAt(index);
-                Session["cart_"] = cart;
-            }
-            
 
             var dtoProductAction = new DtoProductAction()
             {
@@ -404,7 +371,6 @@ namespace UI.Controllers
             Session["cart"] = cart;
             return RedirectToAction("Index");
         }
-
 
         public ActionResult Thankyou()
         {
@@ -493,7 +459,7 @@ namespace UI.Controllers
                 ProductId = Id,
                 UserId = userLogin._id,
             };
-            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommends/", productRecommend);
+            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommend/", productRecommend);
             bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
             if (!checkSuccess)
                 return 0;
@@ -560,7 +526,7 @@ namespace UI.Controllers
             string returnUrl = ConfigurationManager.AppSettings["ReturnUrl"];
             string tmnCode = ConfigurationManager.AppSettings["TmnCode"];
             string hashSecret = ConfigurationManager.AppSettings["HashSecret"];
-            var price =Request.Form["gia1"]+"00";
+            var price = Request.Form["gia1"] + "00";
             PayLib pay = new PayLib();
 
             pay.AddRequestData("vnp_Version", "2.0.0"); //Phiên bản api mà merchant kết nối. Phiên bản hiện tại là 2.0.0
@@ -606,8 +572,8 @@ namespace UI.Controllers
             {
                 return false;
             }
-
         }
+
         public async Task<ActionResult> PaymentConfirm()
         {
             if (Request.QueryString.Count > 0)
@@ -637,8 +603,7 @@ namespace UI.Controllers
                     if (vnp_ResponseCode == "00")
                     {
                         var test = await saveOrder1(true);
-                        
-                        
+
                         //Thanh toán thành công
                         ViewBag.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
                     }

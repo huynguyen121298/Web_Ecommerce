@@ -62,6 +62,11 @@ namespace UI.Areas.Admin.Controllers
         public ActionResult Edit(DTOCheckoutCustomerOrder dtocustomer)
         {
             dtocustomer.TrangThai = Request.Form["stt"];
+            var state = Request.Form["state"];
+            if (state == "Đã thanh toán")
+                dtocustomer.State = true ;
+            dtocustomer.State = false;
+
             HttpResponseMessage response = service.PostResponse("api/Checkout_Customer/Update/", dtocustomer);
             response.EnsureSuccessStatusCode();
             if(dtocustomer.TrangThai == "Đã lên đơn")

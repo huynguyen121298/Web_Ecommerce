@@ -32,7 +32,7 @@ namespace DataAndServices.Client_Services
 
         Task<bool> InsertProductRecommend(ProductRecommend productRecommend);
 
-        Task<List<Product>> GetProductRecommend();
+        List<Product> GetProductRecommend();
 
         Task<bool> UpdateRating(Product product);
     }

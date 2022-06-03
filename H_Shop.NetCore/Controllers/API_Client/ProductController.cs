@@ -133,7 +133,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
         }
 
         [HttpPost]
-        [Route("InsertProductRecomend")]
+        [Route("InsertProductRecommend")]
         public async Task<bool> InsertProductRecomend(ProductRecommend productRecommend)
         {
             return await _productClientService.InsertProductRecommend(productRecommend);
@@ -141,9 +141,9 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         [HttpGet]
         [Route("GetProductRecommends")]
-        public async Task<IActionResult> GetProductRecommends()
+        public ActionResult GetProductRecommends()
         {
-            var productRecomends = await _productClientService.GetProductRecommend();
+            var productRecomends = _productClientService.GetProductRecommend();
             return Ok(productRecomends);
         }
 

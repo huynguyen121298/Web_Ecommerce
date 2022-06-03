@@ -159,22 +159,14 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return monthTotal;
         }
 
-        public double? GetDateRevenue(DateTime date)
+        public double? GetDateRevenue()
         {
+            var date = DateTime.Now.Date;
 
-            var checkoutCustomers = _db.Find(s => s.State == true  && s.NgayTao == date ).ToList();
+            var checkoutCustomers = _db.Find(s => s.State == true).ToList();
+            var dateTotal = checkoutCustomers.Where(s => s.NgayTao.Value.Date == date).Select(a => a.TongTien).Sum();
 
-            var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
-
-            var yearTotal = dtocheckoutCustomers.Select(s => s.TongTien).Sum();
-
-            //foreach (var dtocheckoutCustomer in dtocheckoutCustomers)
-            //{
-            //    dtocheckoutCustomer.TongTienNam = monthTotal;
-            //}
-
-            //return dtocheckoutCustomers;
-            return yearTotal;
+            return dateTotal;
         }
 
         public async Task<List<CheckoutCustomerOrder>> GetListAccountById(string id)

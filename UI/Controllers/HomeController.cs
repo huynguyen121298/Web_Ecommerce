@@ -129,7 +129,7 @@ namespace UI.Controllers
         }
 
         [AuthorizeLoginEndUser]
-        public ActionResult saveFeedbacksLuaChon(FormCollection fc, DTO_Product_Item_Type product, int rating)
+        public ActionResult saveFeedbacksLuaChon(int rating)
         {
             try
             {
@@ -138,13 +138,13 @@ namespace UI.Controllers
                 var dtoComment = new DtoProductComment()
                 {
                     ProductId = item._id,
-                    DateTimeComment = DateTime.Now.AddHours(-5),
+                    DateTimeComment = DateTime.Now.AddHours(+7),
                     FullName = Request.Cookies["firstname"].Value,
-                    Content = fc["details"]
+                    Content = Request.Form["details"]
                 };
                 var productRating = new DTO_Product()
                 {
-                    _id = product._id,
+                    _id = item._id,
                     Rating = rating,
                 };
                 HttpResponseMessage response2 = service.PutResponse("api/Product/UpdateRating/", productRating);

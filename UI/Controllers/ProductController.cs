@@ -186,7 +186,7 @@ namespace UI.Controllers
         {
             HttpResponseMessage response2 = service.GetResponse("api/Product/GetProductRecommends");
             response2.EnsureSuccessStatusCode();
-            var productRecommends = response2.Content.ReadAsAsync<DTO_Product>().Result;
+            List<DTO_Product> productRecommends = response2.Content.ReadAsAsync<List<DTO_Product>>().Result;
 
             return PartialView(productRecommends);
         }
@@ -195,10 +195,14 @@ namespace UI.Controllers
         {
             try
             {
-                if (Session["cart_"] != null)
+                var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+
+                HttpResponseMessage responseUser = service.GetResponse("api/Product/GetProductsFavorite/" + userLogin._id);
+                responseUser.EnsureSuccessStatusCode();
+                var proItem = responseUser.Content.ReadAsAsync<List<DTO_Product>>().Result;
+                if (proItem.Any())
                 {
-                    List<DTO_Product_Item_Type> cart_ = (List<DTO_Product_Item_Type>)Session["cart_"];
-                    int total1 = cart_.Count();
+                    int total1 = proItem.Count();
                     ViewBag.yeuthich = total1;
                 }
             }
@@ -338,6 +342,16 @@ namespace UI.Controllers
 
         public ActionResult Details1(string Id)
         {
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            var productRecommend = new DtoProductRecommend
+            {
+                ProductId = Id,
+                UserId = userLogin._id,
+            };
+            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommend/", productRecommend);
+            bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
+            if (!checkSuccess)
+                return null;
             if (Session["cart__"] == null)
             {
                 List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
@@ -375,7 +389,7 @@ namespace UI.Controllers
                 ProductId = Id,
                 UserId = userLogin._id,
             };
-            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommends/", productRecommend);
+            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommend/", productRecommend);
             bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
             if (!checkSuccess)
                 return 0;

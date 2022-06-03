@@ -25,7 +25,7 @@ namespace DataAndServices.DataModel
 
         public string Zipcode { get; set; }
 
-        public DateTime NgayTao { get; set; }
+        public DateTime? NgayTao { get; set; }
 
         public string GiamGia { get; set; }
 

@@ -17,7 +17,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         DtoSalesVM GetMonthlyRevenue(string month);
 
-        double? GetDateRevenue(DateTime date);
+        double? GetDateRevenue();
 
         bool Update_Ad_acc(CheckoutCustomerOrder dTO_Account);
 

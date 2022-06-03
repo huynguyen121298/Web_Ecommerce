@@ -32,8 +32,11 @@ namespace DataAndServices.Admin_Services.NotificationService
 
         public async Task<List<MerchantNotification>> GetMerchantNotification(string merchantId)
         {
-            var merchantNotis = await _db.FindAsync(n => n.AccountId == merchantId);
-            return merchantNotis.ToList();
+            var merchantNotis = await _db.Find(n => n.AccountId == merchantId).ToListAsync();
+            var orderByDescendingResult = (from noti in merchantNotis
+                                           orderby noti.DateTime descending
+                                           select noti).ToList();
+            return orderByDescendingResult;
         }
 
         public MerchantNotification ChangeStatusNotification(string notiId)

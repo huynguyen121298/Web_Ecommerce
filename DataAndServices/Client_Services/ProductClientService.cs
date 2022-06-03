@@ -194,6 +194,7 @@ namespace DataAndServices.Client_Services
         {
             try
             {
+                //case 1: favorite
                 var checkTypeAction = productActions.FirstOrDefault();
                 if (checkTypeAction.Status == ProductActionConstant.PRODUCT_FAVORITE)
                 {
@@ -203,11 +204,23 @@ namespace DataAndServices.Client_Services
 
                     if (proAction == null)
                     {
-                        _dbProductAction.InsertOne(proAction);
+                        _dbProductAction.InsertOne(checkTypeAction);
                     }
                     return true;
                 }
-                _dbProductAction.InsertMany(productActions);
+
+                //case 2: history
+                var actions = _dbProductAction.Find(a => a.UserId == productActions.FirstOrDefault().UserId).ToList();
+                var newProductActions = new List<ProductAction>();
+                foreach(var action in productActions)
+                {
+                    var userAction = actions.Where(a => a.ProductId == action.ProductId).FirstOrDefault();
+                    if (userAction ==null)
+                    {
+                        newProductActions.Add(userAction);
+                    }
+                }
+                _dbProductAction.InsertMany(newProductActions);
                 return true;
             }
             catch
@@ -220,10 +233,11 @@ namespace DataAndServices.Client_Services
         {
             try
             {
-                var userAction = _dbProductAction.Find(p => p.UserId == product.UserId).ToList();
-                var productByEnduser = userAction.FirstOrDefault(s => s.ProductId == product.ProductId);
+                var userAction = _dbProductAction.Find(p => p.UserId == product.UserId
+                                                       && p.ProductId == product.ProductId
+                                                       && p.Status==product.Status).FirstOrDefault();
 
-                var deleteFilter = Builders<ProductAction>.Filter.Eq("_id", productByEnduser._id);
+                var deleteFilter = Builders<ProductAction>.Filter.Eq("_id", userAction._id);
                 _dbProductAction.DeleteOne(deleteFilter);
 
                 return true;
@@ -307,8 +321,9 @@ namespace DataAndServices.Client_Services
                 }
 
                 var eqfilter = Builders<ProductRecommend>.Filter.Where(s => s.ProductId == productRecommend.ProductId);
+                var newFrequency = dbProductRecommend.Frequency + 1;
 
-                var update = Builders<ProductRecommend>.Update.Set(s => s.Frequency, dbProductRecommend.Frequency++);
+                var update = Builders<ProductRecommend>.Update.Set(s => s.Frequency,newFrequency );
 
                 var options = new UpdateOptions { IsUpsert = true };
 
@@ -322,16 +337,16 @@ namespace DataAndServices.Client_Services
             }
         }
 
-        public async Task<List<Product>> GetProductRecommend()
+        public List<Product> GetProductRecommend()
         {
-            var recommends = await _dbProductRecommend.Find(p => true).ToListAsync();
+            var recommends = _dbProductRecommend.Find(p => true).ToList();
             var orderByDescendingResult = (from product in recommends
                                            orderby product.Frequency descending
                                            select product).ToList();
 
             orderByDescendingResult.Take(10);
 
-            var products = await _db.Find(p => true).ToListAsync();
+            var products = _db.Find(p => true).ToList();
             //var productRecomends = new List<Product>();
 
             var prod = (from recommend in orderByDescendingResult.AsQueryable()
