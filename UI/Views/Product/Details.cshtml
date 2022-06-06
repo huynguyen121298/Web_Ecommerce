@@ -108,33 +108,39 @@
                                                             }
                                                         </div>
 
-                                                        @if (item.Color != null)
+                                                        @if (item.Items.Any())
                                                         {
+                                                            var colors = item.Items.Select(s => s.Color);
+                                                            var sizes = item.Items.Select(s => s.Size).FirstOrDefault();
+                                                           
                                                             <div class="flex-column align-items-center">
                                                                 <label>Chọn màu</label>
                                                                 @{ string selectColor = "selectColor" + item._id; }
                                                                 <select name="@selectColor" required>
-                                                                    @foreach (var color in item.Color)
+                                                                    @foreach (var item2 in item.Items)
                                                                     {
-                                                                        <option>@color</option>
+                                                                        
+                                                                        <option value="@item2._id">@item2.Color</option>
                                                                     }
                                                                 </select>
                                                             </div>
+
+                                                            if (sizes != null)
+                                                            {
+                                                                <div class="flex-column align-items-center">
+                                                                    <label>Chọn size</label>
+                                                                    @{ string selectSize = "selectSize" + item._id; }
+                                                                    <select name="@selectSize">
+                                                                        @foreach (var size in sizes)
+                                                                        {
+                                                                            <option>@size</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                            }
                                                         }
 
-                                                        @if (item.Size != null)
-                                                        {
-                                                            <div class="flex-column align-items-center">
-                                                                <label>Chọn size</label>
-                                                                @{ string selectSize = "selectSize" + item._id; }
-                                                                <select name="@selectSize">
-                                                                    @foreach (var size in item.Size)
-                                                                    {
-                                                                        <option>@size</option>
-                                                                    }
-                                                                </select>
-                                                            </div>
-                                                        }
+
 
                                                         <div>
                                                             <h4 class="product-price-range">Tổng giá sản phẩm</h4>

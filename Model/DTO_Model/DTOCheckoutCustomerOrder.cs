@@ -15,7 +15,7 @@ namespace Model.DTO_Model
 
         public string Email { get; set; }
 
-        public int SDT { get; set; }
+        public string SDT { get; set; }
 
         public string DiaChi { get; set; }
 

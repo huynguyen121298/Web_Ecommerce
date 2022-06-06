@@ -62,15 +62,21 @@ namespace DataAndServices.Admin_Services.Products
                 products.IdItemType = itemType._id;
                 _db.InsertOne(products);
 
-                Item item = new Item();
-                item.Quantity = product_Item_Type.Quantity;
-                item._id = products._id;
-                item.Size = product_Item_Type.Size;
-                item.Color = product_Item_Type.Color;
-                _dbItem.InsertOne(item);
+                var items = new List<Item>();
+                foreach (var i in product_Item_Type.Items)
+                {
+                    var item = new Item();
+                    item.Quantity = i.Quantity;
+                    item.ProductId = products._id;
+                    item.Size = i.Size;
+                    item.Color = i.Color;
+                    items.Add(item);
+                }
+               
+                _dbItem.InsertMany(items);
 
                 Discount_Product dis = new Discount_Product();
-                dis._id = item._id;
+                dis._id = products._id;
                 _dbDis.InsertOne(dis);
 
                 return 1;
@@ -86,13 +92,13 @@ namespace DataAndServices.Admin_Services.Products
             try
             {
                 var deleteFilter = Builders<Product>.Filter.Eq("_id", id);
-                var deleteFilter2 = Builders<Item>.Filter.Eq("_id", id);
+                var deleteFilter2 = Builders<Item>.Filter.Eq("ProductId", id);
                 var deleteFilter3 = Builders<Discount_Product>.Filter.Eq("_id", id);
                 var deleteFilter4 = Builders<ProductComment>.Filter.Eq("ProductId", id);
 
                 _db.DeleteOne(deleteFilter);
 
-                _dbItem.DeleteOne(deleteFilter2);
+                _dbItem.DeleteMany(deleteFilter2);
 
                 _dbDis.DeleteOne(deleteFilter3);
                 _dbProductComment.DeleteOne(deleteFilter4);
@@ -108,9 +114,10 @@ namespace DataAndServices.Admin_Services.Products
         public async Task<List<Product_Item_Type>> GetAllProductItem(string userLogin)
         {
             var itemCollection = _dbItem;
+            var items = _dbItem.Find(s => true).ToList();
             var productCollection = _db;
-            var infoProduct = from item in itemCollection.AsQueryable()
-                              join product in productCollection.AsQueryable() on item._id equals product._id
+            var infoProduct = (from item in itemCollection.AsQueryable()
+                              join product in productCollection.AsQueryable() on item.ProductId equals product._id
                               where product.AccountId == userLogin
 
                               select new Product_Item_Type()
@@ -123,21 +130,21 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo2 = product.Photo2,
                                   Photo3 = product.Photo3,
                                   IdItemType = product.IdItemType,
-                                  Quantity = item.Quantity,
                                   AccountId = product.AccountId,
-                                  Color = item.Color,
-                                  Size = item.Size,
-                                  Rating = product.Rating
-                              };
-            return await infoProduct.ToListAsync();
+                                  Rating = product.Rating,
+                                  Items = items.Where(s=>s.ProductId==product._id).ToList(),
+                              }).ToListAsync();
+            
+            return await infoProduct;
         }
 
         public async Task<List<Product_Item_Type>> GetAllProductItemByEndUser()
         {
             var itemCollection = _dbItem;
+            var items = _dbItem.Find(s => true).ToList();
             var productCollection = _db;
             var infoProduct = from item in itemCollection.AsQueryable()
-                              join product in productCollection.AsQueryable() on item._id equals product._id
+                              join product in productCollection.AsQueryable() on item.ProductId equals product._id
 
                               select new Product_Item_Type()
                               {
@@ -149,11 +156,9 @@ namespace DataAndServices.Admin_Services.Products
                                   Photo2 = product.Photo2,
                                   Photo3 = product.Photo3,
                                   IdItemType = product.IdItemType,
-                                  Quantity = item.Quantity,
                                   AccountId = product.AccountId,
-                                  Color = item.Color,
-                                  Size = item.Size,
-                                  Rating = product.Rating
+                                  Items = items.Where(s => s.ProductId == product._id).ToList(),
+                                  Rating = product.Rating,
                               };
             foreach (var item in infoProduct)
             {
@@ -253,7 +258,8 @@ namespace DataAndServices.Admin_Services.Products
                             Start = dis.Start,
                             End = dis.End,
                             AccountId = product.AccountId,
-                            Rating = product.Rating
+                            Rating = product.Rating,
+                                  
                         });
 
             return Info.ToList();
@@ -298,13 +304,11 @@ namespace DataAndServices.Admin_Services.Products
         public Product_Item_Type GetProductItemById(string id)
         {
             var itemCollection = _dbItem;
-            var productCollection = _db;
-            var Info = (from item in itemCollection.AsQueryable()
-                        join product in productCollection.AsQueryable() on item._id equals product._id
-                        where item._id == id
-                        select new Product_Item_Type()
+            var product = _db.Find(p=>p._id == id).FirstOrDefault();
+            var Info =
+                        new Product_Item_Type()
                         {
-                            _id = item._id,
+                            _id = product._id,
                             Name = product.Name,
                             Price = product.Price,
                             Details = product.Details,
@@ -312,12 +316,12 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
-                            Quantity = item.Quantity,
                             AccountId = product.AccountId,
-                            Color = item.Color,
-                            Size = item.Size,
                             Rating = product.Rating
-                        }).FirstOrDefault();
+                        };
+            var itemPros = _dbItem.Find(s => s.ProductId == id).ToList();
+            Info.Items = itemPros;
+
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
 
@@ -343,10 +347,9 @@ namespace DataAndServices.Admin_Services.Products
         public Product_Item_Type GetProductItemById2(string id)
         {
             var itemCollection = _dbItem;
-            var productCollection = _db;
-            var Info = (from item in itemCollection.AsQueryable()
-                        join product in productCollection.AsQueryable() on item._id equals product._id
-                        select new Product_Item_Type()
+            var product = _db.Find(p => p._id == id).FirstOrDefault();
+            var Info =
+                        new Product_Item_Type()
                         {
                             _id = product._id,
                             Name = product.Name,
@@ -356,12 +359,12 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
-                            Quantity = item.Quantity,
                             AccountId = product.AccountId,
-                            Color = item.Color,
-                            Size = item.Size,
                             Rating = product.Rating
-                        }).FirstOrDefault();
+                        };
+            var itemPros = _dbItem.Find(s => s.ProductId == id).ToList();
+            Info.Items = itemPros;
+
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == Info._id).ToList();
             Info.Comments = productComment;
 
@@ -371,13 +374,11 @@ namespace DataAndServices.Admin_Services.Products
         public Product_Item_Type GetProductItemById_admin(string id)
         {
             var itemCollection = _dbItem;
-            var productCollection = _db;
-            var Info = (from item in itemCollection.AsQueryable()
-                        join product in productCollection.AsQueryable() on item._id equals product._id
-                        where item._id == id
-                        select new Product_Item_Type()
+            var product = _db.Find(p => p._id == id).FirstOrDefault();
+            var Info =
+                        new Product_Item_Type()
                         {
-                            _id = item._id,
+                            _id = product._id,
                             Name = product.Name,
                             Price = product.Price,
                             Details = product.Details,
@@ -385,12 +386,12 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
-                            Quantity = item.Quantity,
                             AccountId = product.AccountId,
-                            Color = item.Color,
-                            Size = item.Size,
                             Rating = product.Rating
-                        }).FirstOrDefault();
+                        };
+            var itemPros = _dbItem.Find(s => s.ProductId == id).ToList();
+            Info.Items = itemPros;
+
             var productComment = _dbProductComment.Find(cmt => cmt.ProductId == id).ToList();
             Info.Comments = productComment;
             return Info;
@@ -432,14 +433,12 @@ namespace DataAndServices.Admin_Services.Products
 
         public List<Product_Item_Type> GetProductItemByPageList()
         {
-            var itemCollection = _dbItem;
             var productCollection = _db;
-            var Info = (from item in itemCollection.AsQueryable()
-                        join product in productCollection.AsQueryable() on item._id equals product._id
-                        orderby item._id
+            var Info = (from product in productCollection.AsQueryable()
+                        orderby product._id
                         select new Product_Item_Type()
                         {
-                            _id = item._id,
+                            _id = product._id,
                             Name = product.Name,
                             Price = product.Price,
                             Details = product.Details,
@@ -447,10 +446,7 @@ namespace DataAndServices.Admin_Services.Products
                             Photo2 = product.Photo2,
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
-                            Quantity = item.Quantity,
                             AccountId = product.AccountId,
-                            Color = item.Color,
-                            Size = item.Size,
                             Rating = product.Rating
                         });
 
@@ -526,15 +522,16 @@ namespace DataAndServices.Admin_Services.Products
                 var options = new UpdateOptions { IsUpsert = true };
                 _db.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);
 
-                var eqfilter2 = Builders<Item>.Filter.Where(s => s._id == custom._id);
-                var update2 = Builders<Item>.Update.Set(s => s._id, custom._id)
-                    .Set(s => s.Quantity, custom.Quantity)
-                    .Set(s => s.Color, custom.Color)
-                    .Set(s => s.Size, custom.Size);
-
-                var options2 = new UpdateOptions { IsUpsert = true };
-                _dbItem.UpdateOneAsync(eqfilter2, update2, options2).ConfigureAwait(false);
-
+                foreach(var item in custom.Items)
+                {
+                    var eqfilter2 = Builders<Item>.Filter.Where(s => s._id == item._id);
+                    var update2 = Builders<Item>.Update
+                        .Set(s => s.Quantity, item.Quantity)
+                        .Set(s => s.Color, item.Color)
+                        .Set(s => s.Size, item.Size);
+                    var options2 = new UpdateOptions { IsUpsert = true };
+                    _dbItem.UpdateOneAsync(eqfilter2, update2, options2).ConfigureAwait(false);
+                }
                 return true;
             }
             catch (Exception)

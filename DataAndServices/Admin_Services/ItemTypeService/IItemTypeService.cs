@@ -12,7 +12,14 @@ namespace DataAndServices.Admin_Services.ItemTypeService
 
         Task<List<Item_type>> GetAllItemType();
 
-        Task<Item_type> GetItemType(string codeId);  
-        
+        Task<Item_type> GetItemType(string codeId);
+
+        Task<List<Item>> GetItem(string productId);
+
+        Task<bool> UpdateItem (Item item);
+
+        Task<Item> GetItemDetails(string itemId);
+
+
     }
 }

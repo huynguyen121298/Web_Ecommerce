@@ -12,10 +12,10 @@ namespace DataAndServices.DataModel
 
         public int? Quantity { get; set; }
 
-        public List<string> Color { get; set; } 
+        public string Color { get; set; }
 
-        public List<string> Size { get; set; }
+        public string Size { get; set; }
 
-
+        public string ProductId { get; set; }
     }
 }

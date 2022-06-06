@@ -58,23 +58,24 @@ namespace UI.Controllers
             bool flag = true;
             List<string> messages = new List<string>();
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
-
+          
             var productCarts = new List<DtoProductCart>();
 
             foreach (var item in cart)
             {
-                HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item._id);
-
-                response.EnsureSuccessStatusCode();
-                int quantity = response.Content.ReadAsAsync<int>().Result;
-                int quantityAfterBuy = quantity - (int)item.Quantity;
-                if (quantityAfterBuy < 0)
+                foreach (var item2 in item.Items)
                 {
-                    flag = false;
-                    string message = (item.Name + " đã vượt quá số lượng đang có");
-                    messages.Add(message);
+                    HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item2._id);
+                    response.EnsureSuccessStatusCode();
+                    int quantity = response.Content.ReadAsAsync<int>().Result;
+                    int quantityAfterBuy = quantity - (int)item.Quantity;
+                    if (quantityAfterBuy < 0)
+                    {
+                        flag = false;
+                        string message = (item.Name + " đã vượt quá số lượng đang có");
+                        messages.Add(message);
+                    }
                 }
-
                 var productCart = new DtoProductCart();
                 productCart._id = item._id;
                 productCart.Name = item.Name;
@@ -120,7 +121,7 @@ namespace UI.Controllers
                 check.DiaChi = Request.Form["diaChi"];
                 check.TongTien = Convert.ToInt32(price);
                 check.City = Request.Form["city"];
-                check.SDT = Int32.Parse(Request.Form["sdt"]);
+                check.SDT = Request.Form["sdt"];
                 check.TrangThai = "Đang chờ";
                 check.State = false;
                 if (check.Zipcode != "")

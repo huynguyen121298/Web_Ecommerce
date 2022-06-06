@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Model.DTO.DTO_Ad;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Model.DTO_Model
@@ -41,9 +42,7 @@ namespace Model.DTO_Model
 
         public List<DtoProductComment> Comments { get; set; }
 
-        public List<string> Color { get; set; }
-
-        public List<string> Size { get; set; }
+        public List<DTO_Item> Items { get; set; }
 
         public int Rating { get; set; }
 

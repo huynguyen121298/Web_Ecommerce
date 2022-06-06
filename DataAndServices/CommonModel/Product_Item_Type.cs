@@ -29,11 +29,11 @@ namespace DataAndServices.CommonModel
 
         public List<ProductComment> Comments { get; set; }
 
-        public List<string> Color { get; set; }
-
-        public List<string> Size { get; set; }
+        public List<Item> Items { get; set; }
 
         public int Rating { get; set; }
+
+
 
     }
 }

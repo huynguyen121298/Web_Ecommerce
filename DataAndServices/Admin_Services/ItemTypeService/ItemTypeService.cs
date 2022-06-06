@@ -9,18 +9,21 @@ namespace DataAndServices.Admin_Services.ItemTypeService
     public class ItemTypeService : IItemTypeService
     {
         private readonly IMongoCollection<Item_type> _dbItemType;
+        private readonly IMongoCollection<Item> _dbItem;
 
         public ItemTypeService(DataContext db)
         {
             _dbItemType = db.GetItem_TypeCollection();
+            _dbItem = db.GetItemCollection();
         }
+
         public async Task<bool> CreateItemType(Item_type request)
         {
             try
             {
                 request.Status = "Đã kích hoạt";
-               await _dbItemType.InsertOneAsync(request);
-               return true;
+                await _dbItemType.InsertOneAsync(request);
+                return true;
             }
             catch
             {
@@ -58,6 +61,35 @@ namespace DataAndServices.Admin_Services.ItemTypeService
             return false;
         }
 
+        public async Task<List<Item>> GetItem(string productId)
+        {
+            return await _dbItem.Find(i=>i.ProductId==productId).ToListAsync();
+        }
 
+        public async Task<Item> GetItemDetails(string itemId)
+        {
+            return await _dbItem.Find(i => i._id == itemId).FirstOrDefaultAsync();
+        }
+
+
+
+        public async Task<bool> UpdateItem(Item item)
+        {
+            var dbItem = GetItemDetails(item._id);
+            if (dbItem != null)
+            {
+                var eqfilter = Builders<Item>.Filter.Where(s => s._id == item._id);
+
+                var update = Builders<Item>.Update.Set(s => s.Quantity, item.Quantity)
+                    .Set(s => s.Size, item.Size)
+                    .Set(s=>s.Color, item.Color);
+
+                var options = new UpdateOptions { IsUpsert = true };
+
+                await _dbItem.UpdateOneAsync(eqfilter, update, options);
+                return true;
+            }
+            return false;
+        }
     }
 }

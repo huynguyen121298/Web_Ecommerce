@@ -42,5 +42,7 @@ namespace DataAndServices.CommonModel
         public string AccountId { get; set; }
 
         public int Rating { get; set; }
+
+        public string ItemId { get; set; }
     }
 }

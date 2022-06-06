@@ -24,7 +24,7 @@ namespace DataAndServices.Client_Services
 
         bool InsertProductAction(List<ProductAction> productActions);
 
-        Task<int> GetSoLuong(string id);
+        Task<int> GetSoLuong(string itemId);
 
         List<Dis_Product> GetProductsBought(string userId);
 

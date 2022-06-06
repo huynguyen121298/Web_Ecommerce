@@ -151,6 +151,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\Admin_accController.cs" />
     <Compile Include="Areas\Admin\Controllers\Checkout_CustomerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ItemController.cs" />
     <Compile Include="Areas\Admin\Controllers\TypeProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\CodeDiscountController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
@@ -2572,6 +2573,8 @@
     <Content Include="Areas\Admin\Views\Admin\ListTypeProductUsed.cshtml" />
     <Content Include="ckeditor\bender-runner.config.json" />
     <Content Include="ckeditor\SECURITY.md" />
+    <Content Include="Areas\Admin\Views\Item\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Item\Details.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />

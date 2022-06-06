@@ -196,6 +196,8 @@ namespace UI.Controllers
             try
             {
                 var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+                if(userLogin == null)
+                    return ViewBag.yeuthich = 0;
 
                 HttpResponseMessage responseUser = service.GetResponse("api/Product/GetProductsFavorite/" + userLogin._id);
                 responseUser.EnsureSuccessStatusCode();
@@ -208,7 +210,7 @@ namespace UI.Controllers
             }
             catch
             {
-                ViewBag.yeuthich = 0;
+                
             }
             return PartialView("BagCart_");
         }
@@ -398,26 +400,23 @@ namespace UI.Controllers
             {
                 foreach (var item in cart)
                 {
+                   
                     if (item._id == Id)
                     {
-                        HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item._id);
-
-                        response.EnsureSuccessStatusCode();
-                        int quantity = response.Content.ReadAsAsync<int>().Result;
-                        int quantityAfterBuy = quantity - (int)item.Quantity;
-                        if (quantityAfterBuy <= 0)
+                        foreach (var item2 in item.Items)
                         {
-                            return 0;
+                            HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item2._id);
+                            response.EnsureSuccessStatusCode();
+                            int quantity = response.Content.ReadAsAsync<int>().Result;
+                            int quantityAfterBuy = quantity - (int)item.Quantity;
+                            if (quantityAfterBuy <= 0)
+                            {
+                                return 0;
+                            }
                         }
                     }
                 }
-                HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + Id);
-                response2.EnsureSuccessStatusCode();
-                int quantity2 = response2.Content.ReadAsAsync<int>().Result;
-                if (quantity2 <= 0)
-                {
-                    return 0;
-                }
+
                 List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
                 responseUser.EnsureSuccessStatusCode();
@@ -442,15 +441,15 @@ namespace UI.Controllers
             }
             else
             {
-                HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + Id);
+                //HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + Id);
 
-                response.EnsureSuccessStatusCode();
-                int quantity = response.Content.ReadAsAsync<int>().Result;
+                //response.EnsureSuccessStatusCode();
+                //int quantity = response.Content.ReadAsAsync<int>().Result;
 
-                if (quantity <= 0)
-                {
-                    return 0;
-                }
+                //if (quantity <= 0)
+                //{
+                //    return 0;
+                //}
                 List<DTO_Product_Item_Type> li = new List<DTO_Product_Item_Type>();
 
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
