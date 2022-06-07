@@ -7,9 +7,35 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Cập nhật thêm cho sản phẩm</h6>
+        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Cập nhật thuộc tính</h6>
+
+        <br />
+
+        <p style="text-align:center"><a class="btn btn-success " href=" @Url.Action("Create", "Item", new {productId = ViewBag.productId })"> Thêm thuộc tính </a></p>
+
+        <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bạn xác nhận xóa không?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bấm Xóa để xác nhận Xóa, Đóng để hủy
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <a class="btn btn-primary " onclick="xoaSanPham() ">Xóa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    @if (Model.Count() > 0)
+
+    @if (Model.Count()>0 )
     {
         <div class="card-body">
             <div class="table-responsive">
@@ -58,6 +84,9 @@
 
                                 <td>
                                     <a class="btn btn-outline-warning " href=" @Url.Action("Details", "Item", new { itemId = item._id })">Chỉnh sửa</a>
+                                    <button type="button" style="width:100px;height:40px" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
+                                        Xóa
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -72,3 +101,24 @@
         <span class="font-weight-bold" style="text-align:center">Chưa có danh mục nào</span>
     }
 </div>
+
+<script>
+    var del;
+    function target(id) {
+        del = id;
+    }
+    function xoaSanPham() {
+        $.ajax({
+            url: '/Item/Delete',
+            data: { id: del },
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.mes)
+                    location.reload();
+                else
+                    alert("Không thể xóa vui lòng kiểm tra lại ");
+            }
+        });
+    }
+</script>

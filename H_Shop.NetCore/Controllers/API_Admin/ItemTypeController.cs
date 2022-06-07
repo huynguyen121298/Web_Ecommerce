@@ -72,5 +72,27 @@ namespace H_Shop.NetCore.Controllers.API_Admin
             var listAccount = await _itemTypeService.GetItemDetails(itemId);
             return Ok(listAccount);
         }
+
+        [HttpGet]
+        [Route("GetItemByName/{itemName}")]
+        public async Task<IActionResult> GetItemByName(string itemName)
+        {
+            var listAccount = await _itemTypeService.GetItemByName(itemName);
+            return Ok(listAccount);
+        }
+
+        [HttpDelete]
+        [Route("DeleteItem/{itemId}")]
+        public async Task<bool> DeleteItem(string itemId)
+        {
+            return await _itemTypeService.DeleteItem(itemId);
+        }
+
+        [HttpPost]
+        [Route("CreateItem")]
+        public async Task<bool> CreateItem(Item request)
+        {
+            return await _itemTypeService.CreateItem(request);
+        }
     }
 }

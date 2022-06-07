@@ -1,20 +1,19 @@
 ﻿@model Model.DTO.DTO_Ad.DTO_Item
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Cập nhật thuộc tính</h6>
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Tạo thuộc tính</h6>
 </div>
-@using (Html.BeginForm("Update", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm(Html.BeginForm("Create", "Item", FormMethod.Post, new { enctype = "multipart/form-data" })))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    @Html.HiddenFor(model => model._id)
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -22,7 +21,6 @@
         Chon màu sản phẩm
         <div class="col-md-10">
             <select style="margin-left: 10%; width: 200px" name="selectColor" required>
-                <option selected> @Model.Color</option>
                 <option>Xanh </option>
                 <option>Đỏ</option>
                 <option>Tím</option>
@@ -39,16 +37,7 @@
         Chon size
         <div class="col-md-10">
             <select style="margin-left: 10% ;width:200px" name="sizeProduct" id="sizeProduct">
-                @if (Model.Size != null)
-                {
-                    <option selected> @Model.Size</option>
-
-                }
-                else
-                {
-                    <option></option>
-
-                }
+                <option></option>
                 <option>S</option>
                 <option>M</option>
                 <option>L</option>
@@ -62,19 +51,19 @@
     <div class="form-group">
         Nhập số lượng
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" ,required = "required" }  })
             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Lưu" class="btn btn-outline-success" />
+            <input type="submit" value="Thêm" class="btn btn-outline-success" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Trở về", "Index")
 </div>

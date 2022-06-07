@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
+    var colors = Model.Items.Select(s => s.Color).FirstOrDefault();
+    var sizes = Model.Items.Select(s => s.Size).FirstOrDefault();}
 
 <link href="~/css/css_color.css" rel="stylesheet" />
 
@@ -29,35 +30,9 @@
         <dt>
             Chi tiết sản phẩm:  @Html.DisplayFor(model => model.Details)
         </dt>
-        @if (Model.Size != null)
-        {
-            <dt>
-                Size sản phẩm: @foreach (var item in Model.Size)
-                {
-                    <div class="flex-column align-items-center">@item</div>
-
-                }
-            </dt>
-        }
-
-        @if (Model.Color != null)
-        {
-            <dt>
-                Màu sản phẩm sản phẩm:
-                <ol>
-                    @foreach (var item in Model.Color)
-                    {
-                        <li>
-                            <div class="flex-column align-items-center">@item</div>
-                        </li>
 
 
-                    }
-                </ol>
 
-            </dt>
-
-        }
         <dt>
             Hình ảnh<ol>
                 @if (Model.Photo != null)
@@ -83,15 +58,52 @@
             </ol>
         </dt>
 
+        @if (Model.Items.Any())
+        {
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Màu</th>
+                                    <th>Size</th>
+                                    <th>Số lượng</th>
 
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Màu</th>
+                                    <th>Size</th>
+                                    <th>Số lượng</th>
 
+                                </tr>
+                            </tfoot>
+                            <tbody>
 
-        <dt>
-            Số lượng còn trong kho:   @Html.DisplayFor(model => model.Quantity)
-        </dt>
+                                @foreach (var item1 in Model.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item1.Color)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item1.Size)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item1.Quantity)
+                                        </td>
 
-        <dd>
-        </dd>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        }
     </dl>
 </div>
 <p>

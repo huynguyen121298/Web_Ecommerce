@@ -20,6 +20,9 @@ namespace DataAndServices.Admin_Services.ItemTypeService
 
         Task<Item> GetItemDetails(string itemId);
 
+        Task<bool> CreateItem(Item request);
 
+        Task<bool> DeleteItem(string itemId);
+        Task<string> GetItemByName(string itemName);
     }
 }

@@ -18,7 +18,11 @@ namespace DataAndServices.DataModel
 
         public string Size { get; set; }
 
+        public string Color { get; set; }
+
         public string Photo { get; set; }
+
+        public string ItemId { get; set; }
 
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

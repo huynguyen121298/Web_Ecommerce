@@ -101,20 +101,51 @@
                                         }
                                         @for (int i = item.Rating; i < 5; i++)
                                         {
-                                            <i  class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
 
                                         }
                                     </div>
+
+                                    @if (item.Items.Any())
+                                    {
+                                        var colors = item.Items.Select(s => s.Color);
+                                        var sizes = item.Items.Select(s => s.Size).ToList();
+
+                                        <div class="flex-column align-items-center">
+                                            <label>Chọn màu</label>
+                                            @{ string selectColor = "selectColor" + item._id; }
+                                            <select name="@selectColor" required>
+                                                @foreach (var item2 in item.Items)
+                                                {
+
+                                                    <option value="@item2._id">@item2.Color</option>
+                                                }
+                                            </select>
+                                        </div>
+
+
+                                        <div class="flex-column align-items-center">
+                                            <label>Chọn size</label>
+                                            @{ string selectSize = "selectSize" + item._id; }
+                                            <select name="@selectSize">
+                                                @foreach (var size in sizes)
+                                                {
+                                                    <option>@size</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                    }
                                     <div>
                                         <h4 class="product-price-range"> giá sản phẩm</h4>
                                         <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
                                     </div>
 
                                     @*<div class="p-color">
-                                            <div class="btn-group btn-group-sm">
-                                                <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item.Id_SanPham })">Xóa khỏi sản phẩm yêu thích </a>
-                                            </div>
-                                        </div>*@
+            <div class="btn-group btn-group-sm">
+                <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item.Id_SanPham })">Xóa khỏi sản phẩm yêu thích </a>
+            </div>
+        </div>*@
                                     <div class="row product-detail-bottom">
                                         <div class="col-lg-12">
                                             <ul class="nav nav-pills nav-justified">

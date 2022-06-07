@@ -109,7 +109,7 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         [Route("UpdateProduct")]
         public bool UpdateProduct(Product_Item_Type dTO_Product_Item)
         {
-            return  _productService.UpdateProduct(dTO_Product_Item);
+             return  _productService.UpdateProduct(dTO_Product_Item);
         }
 
         [HttpDelete]

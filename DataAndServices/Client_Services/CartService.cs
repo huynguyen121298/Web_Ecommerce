@@ -41,9 +41,13 @@ namespace DataAndServices.Client_Services
             {
                 foreach (var item in checkoutCustomer_Order.ProductOrder)
                 {
-                    int quantity = (int)item.SoLuong;
-                  
-                  UpdateQuantityItem(item.Id_SanPham, quantity);
+                    if(item.ItemId != null && item.ItemId!= string.Empty)
+                    {
+                        int quantity = (int)item.SoLuong;
+
+                        UpdateQuantityItem(item.ItemId, quantity);
+                    }
+                   
                 }
            
                 await _dbCheckCustomerOrder.InsertOneAsync(checkoutCustomer_Order);

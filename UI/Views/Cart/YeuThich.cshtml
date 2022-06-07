@@ -95,12 +95,18 @@
                                             <div class="product-content">
                                                 @item.Name
                                                 <div class="ratting">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
+                                                    @for (int i = 0; i < item.Rating; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    @for (int i = item.Rating; i < 5; i++)
+                                                    {
+                                                        <i style="color:red" class="fa fa-star-o"></i>
+
+                                                    }
                                                 </div>
+
+                                               
                                                 <div>
                                                     <h4 class="product-price-range"> giá sản phẩm</h4>
                                                     <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>

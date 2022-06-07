@@ -62,18 +62,18 @@ namespace DataAndServices.Admin_Services.Products
                 products.IdItemType = itemType._id;
                 _db.InsertOne(products);
 
-                var items = new List<Item>();
-                foreach (var i in product_Item_Type.Items)
-                {
-                    var item = new Item();
-                    item.Quantity = i.Quantity;
-                    item.ProductId = products._id;
-                    item.Size = i.Size;
-                    item.Color = i.Color;
-                    items.Add(item);
-                }
+                //var items = new List<Item>();
+                //foreach (var i in product_Item_Type.Items)
+                //{
+                //    var item = new Item();
+                //    item.Quantity = i.Quantity;
+                //    item.ProductId = products._id;
+                //    item.Size = i.Size;
+                //    item.Color = i.Color;
+                //    items.Add(item);
+                //}
                
-                _dbItem.InsertMany(items);
+                //_dbItem.InsertMany(items);
 
                 Discount_Product dis = new Discount_Product();
                 dis._id = products._id;
@@ -507,7 +507,8 @@ namespace DataAndServices.Admin_Services.Products
         {
             try
             {
-                var itemType = _dbItemtype.Find(s => s.Type_Product == custom.Type_Product).FirstOrDefault();
+                var itemType = _db.Find(s => s._id == custom._id).FirstOrDefault();
+                var newItemType = _dbItemtype.Find(s => s.Type_Product == custom.Type_Product).FirstOrDefault();
 
                 var eqfilter = Builders<Product>.Filter.Where(s => s._id == custom._id);
                 var update = Builders<Product>.Update.Set(s => s.Name, custom.Name)
@@ -517,21 +518,30 @@ namespace DataAndServices.Admin_Services.Products
                     .Set(s => s.Details, custom.Details)
                     .Set(s => s.Price, custom.Price)
                     .Set(s => s._id, custom._id)
-                    .Set(s => s.IdItemType, itemType._id);
+                    .Set(s => s.IdItemType, newItemType._id);
 
                 var options = new UpdateOptions { IsUpsert = true };
                 _db.UpdateOneAsync(eqfilter, update, options).ConfigureAwait(false);
 
-                foreach(var item in custom.Items)
-                {
-                    var eqfilter2 = Builders<Item>.Filter.Where(s => s._id == item._id);
-                    var update2 = Builders<Item>.Update
-                        .Set(s => s.Quantity, item.Quantity)
-                        .Set(s => s.Color, item.Color)
-                        .Set(s => s.Size, item.Size);
-                    var options2 = new UpdateOptions { IsUpsert = true };
-                    _dbItem.UpdateOneAsync(eqfilter2, update2, options2).ConfigureAwait(false);
-                }
+                //if(itemType.IdItemType != newItemType._id)
+                //{
+                //    var eqfilter2 = Builders<Item>.Filter.Where(s => s.ProductId == custom._id);
+
+                //    _dbItem.DeleteMany(eqfilter2);
+                //}
+
+                //var items = new List<Item>();
+                //foreach (var i in custom.Items)
+                //{
+                //    var item = new Item();
+                //    item.Quantity = i.Quantity;
+                //    item.ProductId = custom._id;
+                //    item.Size = i.Size;
+                //    item.Color = i.Color;
+                //    items.Add(item);
+                //}
+
+                //_dbItem.InsertMany(items);
                 return true;
             }
             catch (Exception)

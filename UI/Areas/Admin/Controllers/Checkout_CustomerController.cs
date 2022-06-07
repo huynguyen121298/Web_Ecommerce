@@ -101,29 +101,33 @@ namespace UI.Areas.Admin.Controllers
                 //var reason = Request.Form["reason"];
                 if(reason != "")
                 {
-                   
+                    HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id);
+                    responseMessage.EnsureSuccessStatusCode();
+                    DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
+                    if(dtocustomer.State != true && dtocustomer.TrangThai!="Hoàn thành")
+                    {
+                        var fullName = dtocustomer.FirstName + "" + dtocustomer.LastName;
+
+                        var subject = "Hủy đơn hàng";
+                        var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + dtocustomer._id + " được đặt ngày " + dtocustomer.NgayTao + " đã bị từ chối vì lý do "
+                            + reason;
+
+                        var sendMail = SendEmail(dtocustomer.Email, body, subject);
+                        if (sendMail == false)
+                        {
+                            ViewBag.Mess = "Có lỗi ngoài ý muốn, vui lòng kiểm tra lại";
+                            return Json(new { mes = false });
+                        }
+                    }
+
+                  
                     HttpResponseMessage response = service.DeleteResponse("api/Checkout_Customer/Deletecustomer/" + id);
                     response.EnsureSuccessStatusCode();
                     bool checkSuccess = response.Content.ReadAsAsync<bool>().Result;
                     if(checkSuccess == false)
                         return Json(new { mes = false });
 
-                    HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id);
-                    responseMessage.EnsureSuccessStatusCode();
-                    DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
-
-                    var fullName = dtocustomer.FirstName + "" + dtocustomer.LastName;
-
-                    var subject = "Hủy đơn hàng";
-                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + dtocustomer._id + " được đặt ngày " + dtocustomer.NgayTao + " đã bị từ chối vì lý do "
-                        + reason;
-
-                    var sendMail = SendEmail(dtocustomer.Email, body, subject);
-                    if (sendMail == false)
-                    {
-                        ViewBag.Mess = "Có lỗi ngoài ý muốn, vui lòng kiểm tra lại";
-                        return Json(new { mes = false });
-                    }
+                    
 
                     return Json(new { mes = true });
                 }

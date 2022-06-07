@@ -4,7 +4,6 @@ using Model.DTO_Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
@@ -107,58 +106,7 @@ namespace UI.Areas.Admin.Controllers
         {
             var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
             dTO_Product_Item_Type.AccountId = dTO_Account._id;
-
-            var items = new List<DTO_Item>();
-
-            //if (dTO_Product_Item_Type.Items.Any())
-            //{
-            //    foreach (var i in dTO_Product_Item_Type.Items)
-            //    {
-            //        var item = new DTO_Item();
-            //        item.ProductId = dTO_Product_Item_Type._id;
-            //        item.Color = i.Color;
-            //        item.Quantity = i.Quantity;
-            //        if (dTO_Product_Item_Type.Type_Product == "Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
-            //        {
-            //            item.Size = i.Size;
-            //        }
-            //        items.Add(item);
-            //    }
-            //}
-
-            var colors = Request.Form["selectColor"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
-            if (colors.Length > 0)
-            {
-                foreach (var color in colors)
-                {
-                    var item = new DTO_Item();
-                    item.ProductId = dTO_Product_Item_Type._id;
-                    item.Color = color;
-                    item.Quantity = dTO_Product_Item_Type.Quantity;
-                    items.Add(item);
-                }
-            }
-
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
-            if (dTO_Product_Item_Type.Type_Product == "Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
-            {
-                var sizes = Request.Form["sizeProduct"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
-                if (sizes.Length > 0)
-                {
-                    foreach (var size in sizes)
-                    {
-                        var item = new DTO_Item();
-                        item.ProductId = dTO_Product_Item_Type._id;
-                        item.Quantity = dTO_Product_Item_Type.Quantity;
-                        item.Size = size;
-                        items.Add(item);
-                    }
-                }
-                else
-                    ViewData["ErrorMessage"] = "Bạn chưa chọn size cho sản phẩm";
-            }
-            dTO_Product_Item_Type.Items = items;
-
 
             try
             {
@@ -254,7 +202,7 @@ namespace UI.Areas.Admin.Controllers
             HttpResponseMessage responseMessage2 = service.GetResponse("api/ItemType/GetById/" + dtoAccounts.IdItemType);
 
             var itemType = responseMessage2.Content.ReadAsAsync<DTO_Item_Type>().Result;
-            dtoAccounts.Type_Product = itemType.Type_Product;
+            Session.Add("typeProduct", itemType.Type_Product) ;
             return View(dtoAccounts);
         }
 
@@ -263,45 +211,8 @@ namespace UI.Areas.Admin.Controllers
         public ActionResult Edit(FormCollection collection, DTO_Product_Item_Type dTO_Product_Item_Type, HttpPostedFileBase ImageUpload,
             HttpPostedFileBase ImageUpload2, HttpPostedFileBase ImageUpload3)
         {
-            foreach(var itemPro in dTO_Product_Item_Type.Items)
-            {
-
-            }
-
-            var items = new List<DTO_Item>();
-
-            var colors = Request.Form["selectColor"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
-            if (colors.Length > 0)
-            {
-                foreach (var color in colors)
-                {
-                    var item = new DTO_Item();
-                    item.ProductId = dTO_Product_Item_Type._id;
-                    item.Color = color;
-                    item.Quantity = dTO_Product_Item_Type.Quantity;
-                    items.Add(item);
-                }
-            }
-
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
-            if (dTO_Product_Item_Type.Type_Product == "Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
-            {
-                var sizes = Request.Form["sizeProduct"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
-                if (sizes.Length > 0)
-                {
-                    foreach (var size in sizes)
-                    {
-                        var item = new DTO_Item();
-                        item.ProductId = dTO_Product_Item_Type._id;
-                        item.Quantity = dTO_Product_Item_Type.Quantity;
-                        item.Size = size;
-                        items.Add(item);
-                    }
-                }
-                else
-                    ViewData["ErrorMessage"] = "Bạn chưa chọn size cho sản phẩm";
-            }
-            dTO_Product_Item_Type.Items = items;
+          
             try
             {
                 if (ModelState.IsValid)

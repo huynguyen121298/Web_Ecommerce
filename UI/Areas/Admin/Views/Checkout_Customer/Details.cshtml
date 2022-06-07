@@ -70,6 +70,8 @@
                         <th>Mã sản phẩm</th>
                         <th>Tên sản phẩm</th>
                         <th>Số lượng</th>
+                        <th>Màu</th>
+                        <th>Size</th>
                         <th>Hình ảnh</th>
                         <th>Tổng giá</th>
                     </tr>
@@ -79,6 +81,8 @@
                         <th>Mã sản phẩm</th>
                         <th>Tên sản phẩm</th>
                         <th>Số lượng</th>
+                        <th>Màu</th>
+                        <th>Size</th>
                         <th>Hình ảnh</th>
                         <th>Tổng giá</th>
 
@@ -98,6 +102,29 @@
                         <td>
                             @Html.DisplayFor(model => item1.SoLuong)
                         </td>
+                        @if (item1.Size != null)
+                        {
+                            <td>
+                                @Html.DisplayFor(model => item1.Color)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                            </td>
+                        }
+
+                        @if (item1.Size != null)
+                        {
+                            <td>
+                                @Html.DisplayFor(model => item1.Size)
+                            </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+
                         <td> <img src="@Url.Content(item1.Photo)" style="height:50px; width:50px; margin:10px;" /></td>
 
                         <td>

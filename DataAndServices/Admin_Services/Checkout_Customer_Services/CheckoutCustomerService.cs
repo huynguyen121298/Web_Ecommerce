@@ -16,11 +16,13 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
     {
         private readonly IMongoCollection<CheckoutCustomerOrder> _db;
         private readonly IMongoCollection<MerchantNotification> _dbNoti;
+        private readonly IMongoCollection<Item> _dbItem;
         private readonly IMapper _mapper;
 
         public CheckoutCustomerService(DataContext db,
             IMapper mapper)
         {
+            _dbItem = db.GetItemCollection();
             _db = db.GetCheckoutCustomerOrderCollection();
             _dbNoti = db.GetMerchantNotificationCollection();
             _mapper = mapper;
@@ -52,7 +54,25 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         public async Task<CheckoutCustomerOrder> GetAccountById(string id)
         {
-            return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
+            var checkout = await _db.Find(s => s._id == id).FirstOrDefaultAsync();
+
+           
+
+            foreach (var customer in checkout.ProductOrder)
+            {
+                if (customer.ItemId != null)
+                {
+                    var item = _dbItem.Find(s => s._id == customer.ItemId).FirstOrDefault();
+                    customer.Size = item.Size;
+                    customer.Color = item.Color;
+                }
+              
+
+            }
+            return checkout;
+
+           
+
         }
 
         public List<CheckoutCustomerOrder> GetAllAccounts(string userLogin)

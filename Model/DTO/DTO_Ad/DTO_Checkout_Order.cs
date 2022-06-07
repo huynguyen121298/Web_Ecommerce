@@ -22,5 +22,7 @@ namespace Model.DTO.DTO_Ad
 
         public string AccountId { get; set; }
 
+        public string ItemId { get; set; }
+
     }
 }

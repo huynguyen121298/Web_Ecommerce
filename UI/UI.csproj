@@ -2575,6 +2575,7 @@
     <Content Include="ckeditor\SECURITY.md" />
     <Content Include="Areas\Admin\Views\Item\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Item\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Item\Create.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />

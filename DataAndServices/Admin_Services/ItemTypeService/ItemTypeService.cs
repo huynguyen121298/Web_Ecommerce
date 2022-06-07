@@ -91,5 +91,39 @@ namespace DataAndServices.Admin_Services.ItemTypeService
             }
             return false;
         }
+
+        public async Task<bool> CreateItem(Item request)
+        {
+            try
+            {
+                await _dbItem.InsertOneAsync(request);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteItem(string itemId)
+        {
+            try
+            {
+                var eqfilter = Builders<Item>.Filter.Where(s => s._id == itemId);
+                await _dbItem.DeleteOneAsync(eqfilter); 
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
+        }
+
+        public async Task<string> GetItemByName(string itemName)
+        {
+            var item =await _dbItem.Find(s=>s.Color.StartsWith(itemName)).FirstOrDefaultAsync();
+            return item._id;
+        }
     }
 }

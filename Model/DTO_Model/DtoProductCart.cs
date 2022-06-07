@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Model.DTO_Model
 {
@@ -38,5 +39,7 @@ namespace Model.DTO_Model
         public string Color { get; set; }
 
         public string Size { get; set; }
+
+        public string ItemId { get; set; }
     }
 }

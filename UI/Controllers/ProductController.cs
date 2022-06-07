@@ -398,24 +398,24 @@ namespace UI.Controllers
 
             if (cart != null)
             {
-                foreach (var item in cart)
-                {
+                //foreach (var item in cart)
+                //{
                    
-                    if (item._id == Id)
-                    {
-                        foreach (var item2 in item.Items)
-                        {
-                            HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item2._id);
-                            response.EnsureSuccessStatusCode();
-                            int quantity = response.Content.ReadAsAsync<int>().Result;
-                            int quantityAfterBuy = quantity - (int)item.Quantity;
-                            if (quantityAfterBuy <= 0)
-                            {
-                                return 0;
-                            }
-                        }
-                    }
-                }
+                //    if (item._id == Id)
+                //    {
+                //        foreach (var item2 in item.Items)
+                //        {
+                //            HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item2._id);
+                //            response.EnsureSuccessStatusCode();
+                //            int quantity = response.Content.ReadAsAsync<int>().Result;
+                //            int quantityAfterBuy = quantity - (int)item.Quantity;
+                //            if (quantityAfterBuy <= 0)
+                //            {
+                //                return 0;
+                //            }
+                //        }
+                //    }
+                //}
 
                 List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);

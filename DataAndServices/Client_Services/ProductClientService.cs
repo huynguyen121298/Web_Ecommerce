@@ -217,7 +217,7 @@ namespace DataAndServices.Client_Services
                     var userAction = actions.Where(a => a.ProductId == action.ProductId).FirstOrDefault();
                     if (userAction ==null)
                     {
-                        newProductActions.Add(userAction);
+                        newProductActions.Add(action);
                     }
                 }
                 _dbProductAction.InsertMany(newProductActions);

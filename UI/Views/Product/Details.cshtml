@@ -111,7 +111,7 @@
                                                         @if (item.Items.Any())
                                                         {
                                                             var colors = item.Items.Select(s => s.Color);
-                                                            var sizes = item.Items.Select(s => s.Size).FirstOrDefault();
+                                                            var sizes = item.Items.Select(s => s.Size).ToList();
                                                            
                                                             <div class="flex-column align-items-center">
                                                                 <label>Chọn màu</label>
@@ -125,8 +125,7 @@
                                                                 </select>
                                                             </div>
 
-                                                            if (sizes != null)
-                                                            {
+                                                            
                                                                 <div class="flex-column align-items-center">
                                                                     <label>Chọn size</label>
                                                                     @{ string selectSize = "selectSize" + item._id; }
@@ -137,7 +136,7 @@
                                                                         }
                                                                     </select>
                                                                 </div>
-                                                            }
+                                                            
                                                         }
 
 
@@ -147,7 +146,7 @@
                                                             <p><span id="total-price_@item._id" style="color:red"> @string.Format("{0:0,0}", (item.Price * item.Quantity))</span> VNĐ</p>
                                                         </div>
                                                         <div class="quantity">
-                                                            <h4>Số lượng:</h4>
+                                                            <h4 class="product-price-range">Số lượng:</h4>
                                                             <br />
 
                                                             <a class="btn btn-minus" id="giam" onclick="giamSoLuong('@item._id')"><i class="fa fa-minus"></i> Giảm số lượng </a>

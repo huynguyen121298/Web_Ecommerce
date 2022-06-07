@@ -58,14 +58,17 @@ namespace UI.Controllers
             bool flag = true;
             List<string> messages = new List<string>();
             List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
-          
+
             var productCarts = new List<DtoProductCart>();
 
             foreach (var item in cart)
             {
-                foreach (var item2 in item.Items)
+                var itemId = formCollection["selectColor" + item._id];
+                if(itemId != null)
                 {
-                    HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + item2._id);
+         
+
+                    HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + itemId);
                     response.EnsureSuccessStatusCode();
                     int quantity = response.Content.ReadAsAsync<int>().Result;
                     int quantityAfterBuy = quantity - (int)item.Quantity;
@@ -76,6 +79,8 @@ namespace UI.Controllers
                         messages.Add(message);
                     }
                 }
+                
+
                 var productCart = new DtoProductCart();
                 productCart._id = item._id;
                 productCart.Name = item.Name;
@@ -84,10 +89,10 @@ namespace UI.Controllers
                 productCart.IdItemType = item.IdItemType;
                 productCart.Photo = item.Photo;
                 productCart.AccountId = item.AccountId;
-                productCart.Color = formCollection["selectColor" + item._id];
+                productCart.ItemId = itemId;
 
-                if (item.Type_Product == "Thời trang nam" || item.Type_Product == "Thời trang nữ")
-                    productCart.Size = formCollection["selectSize" + item._id];
+                //if (item.Type_Product == "Thời trang nam" || item.Type_Product == "Thời trang nữ")
+                //    productCart.Size = formCollection["selectSize" + item._id];
 
                 productCarts.Add(productCart);
             }
@@ -154,6 +159,7 @@ namespace UI.Controllers
                         dTO_Checkout_Order.Size = item.Size;
                         dTO_Checkout_Order.Color = item.Color;
                         dTO_Checkout_Order.Photo = item.Photo;
+                        dTO_Checkout_Order.ItemId = item.ItemId;
                         checkSession.ProductOrder.Add(dTO_Checkout_Order);
                     }
 
@@ -322,7 +328,7 @@ namespace UI.Controllers
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
 
                 var newProduct = new List<DTO_Product_Item_Type>();
-                proItem.Quantity=1;
+                proItem.Quantity = 1;
                 newProduct.Add(proItem);
 
                 return Json(new { buy = newProduct });
@@ -391,19 +397,28 @@ namespace UI.Controllers
             {
                 foreach (var item in cart)
                 {
+
+
                     if (item._id == Id)
                     {
-                        HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + item._id);
-                        response2.EnsureSuccessStatusCode();
-                        int quantity = response2.Content.ReadAsAsync<int>().Result;
-                        int quantityAfterBuy = quantity - (int)item.Quantity;
-                        if (quantityAfterBuy <= 0)
+                        var itemId = Request.Form["selectColor" + item._id];
+                        if (itemId != null)
                         {
-                            string message = (item.Name + " đã vượt quá số lượng đang có");
-                            ViewData["MessQuantity"] = message;
 
-                            return View("LuaChon");
+                            HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + item._id);
+                            response2.EnsureSuccessStatusCode();
+                            int quantity = response2.Content.ReadAsAsync<int>().Result;
+                            int quantityAfterBuy = quantity - (int)item.Quantity;
+                            if (quantityAfterBuy <= 0)
+                            {
+                                string message = (item.Name + " đã vượt quá số lượng đang có");
+                                ViewData["MessQuantity"] = message;
+
+                                return View("LuaChon");
+                            }
+
                         }
+                      
                     }
                 }
             }
@@ -420,27 +435,7 @@ namespace UI.Controllers
         [AuthorizeLoginEndUser]
         public ActionResult BuyLove(string Id)
         {
-            List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart"];
-            if (cart != null)
-            {
-                foreach (var item in cart)
-                {
-                    if (item._id == Id)
-                    {
-                        HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + item._id);
-                        response2.EnsureSuccessStatusCode();
-                        int quantity = response2.Content.ReadAsAsync<int>().Result;
-                        int quantityAfterBuy = quantity - (int)item.Quantity;
-                        if (quantityAfterBuy <= 0)
-                        {
-                            string message = (item.Name + " đã vượt quá số lượng đang có");
-                            ViewData["MessQuantity"] = message;
-
-                            return View("YeuThich");
-                        }
-                    }
-                }
-            }
+           
             int checkBuy = CheckBuy_(Id);
             if (checkBuy == 0)
             {
@@ -466,13 +461,13 @@ namespace UI.Controllers
                 return 0;
             if (cart != null)
             {
-                HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + Id);
-                response2.EnsureSuccessStatusCode();
-                int quantity2 = response2.Content.ReadAsAsync<int>().Result;
-                if (quantity2 <= 0)
-                {
-                    return 0;
-                }
+                //HttpResponseMessage response2 = service.GetResponse("api/Product/GetSoLuong/" + Id);
+                //response2.EnsureSuccessStatusCode();
+                //int quantity2 = response2.Content.ReadAsAsync<int>().Result;
+                //if (quantity2 <= 0)
+                //{
+                //    return 0;
+                //}
                 List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
                 responseUser.EnsureSuccessStatusCode();
@@ -496,15 +491,15 @@ namespace UI.Controllers
             }
             else
             {
-                HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + Id);
+                //HttpResponseMessage response = service.GetResponse("api/Product/GetSoLuong/" + Id);
 
-                response.EnsureSuccessStatusCode();
-                int quantity = response.Content.ReadAsAsync<int>().Result;
+                //response.EnsureSuccessStatusCode();
+                //int quantity = response.Content.ReadAsAsync<int>().Result;
 
-                if (quantity <= 0)
-                {
-                    return 0;
-                }
+                //if (quantity <= 0)
+                //{
+                //    return 0;
+                //}
                 List<DTO_Product_Item_Type> li = new List<DTO_Product_Item_Type>();
 
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
