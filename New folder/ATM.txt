@@ -29,6 +29,6 @@ Tên chủ thẻ:NGUYEN VAN A
 Ngày phát hành:07/15
 Thẻ bị hết hạn
 
-
-Đổi ngày checkout admin bị sai
-đổi checkout sdt thành sing
+send mail	
+test product new merchant
+test a round enduser

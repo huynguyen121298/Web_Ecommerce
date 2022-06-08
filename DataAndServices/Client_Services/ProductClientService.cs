@@ -341,7 +341,7 @@ namespace DataAndServices.Client_Services
             }
         }
 
-        public List<Product> GetProductRecommend()
+        public List<Product> GetProductRecommend(string userId)
         {
             var recommends = _dbProductRecommend.Find(p => true).ToList();
             var orderByDescendingResult = (from product in recommends
@@ -369,6 +369,19 @@ namespace DataAndServices.Client_Services
                             Rating = product.Rating
                         }).ToList();
 
+
+            var recommendUserLogin = _dbProductRecommend.Find(p => p.UserId == userId).ToList();
+            if (recommendUserLogin == null)
+            {
+
+            }
+            else
+            {
+                var selectedUserLogin = recommendUserLogin.Select(s=>s.ItemTypeId).ToList();
+            }
+
+
+           
             //foreach (var productId in orderByDescendingResult.Select(p=>p.ProductId))
             //{
             //    var productRecomend = products.Find(p => p._id == productId);
