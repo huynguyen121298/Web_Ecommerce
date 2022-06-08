@@ -7,7 +7,7 @@ namespace DataAndServices.CommonModel
     {
         public string _id { get; set; }
 
-        public int? Quantity { get; set; }
+        public int? QuantityBuy { get; set; }
 
         public string IdItemType { get; set; }
 

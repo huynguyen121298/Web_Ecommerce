@@ -1,11 +1,27 @@
-﻿@model IEnumerable<Model.DTO.DTO_Client.DTO_Product>
+﻿@model IEnumerable<Model.DTO_Model.DTO_Product_Item_Type>
+@using Model.DTO_Model;
 
 @{
     ViewBag.Title = "YeuThich";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using Model.DTO_Model;
+@{
+    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
+    //var total = cart.Sum(item => item.Product.Price * item.Quantity);
+    //var total1 = cart.Count();
+    var products = new List<DTO_Product_Item_Type>();
+    if (Model != null)
+    {
+        products = Model.ToList();
+    }
+    else
+    {
+        products = cart;
+    }
+
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +64,7 @@
     <!-- Breadcrumb End -->
     <!-- Product Detail Start -->
     @{
-        if (Model != null)
+        if (products.Count() > 0)
         {
             <div class="product-detail">
                 <div class="container-fluid">
@@ -56,11 +72,11 @@
                         <div class="col-lg-8">
                             <div class="product-detail-top">
 
-                                @foreach (var item in Model)
+
+                                @foreach (DTO_Product_Item_Type item in products)
                                 {
                                     <div class="row align-items-center">
                                         <div class="col-md-5">
-
                                             <div class="product-slider-single normal-slider">
                                                 @if (item.Photo != null)
                                                 {
@@ -93,7 +109,10 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="product-content">
-                                                @item.Name
+                                                <a href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                    @item.Name
+                                                </a>
+                                                <p id="message" style="color:red;font-style:italic">@ViewData["MessQuantity"]</p>
                                                 <div class="ratting">
                                                     @for (int i = 0; i < item.Rating; i++)
                                                     {
@@ -101,56 +120,58 @@
                                                     }
                                                     @for (int i = item.Rating; i < 5; i++)
                                                     {
-                                                        <i style="color:red" class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
 
                                                     }
                                                 </div>
 
-                                               
-                                                <div>
-                                                    <h4 class="product-price-range"> giá sản phẩm</h4>
-                                                    <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
+
+                                                <h4 class="product-price-range"> giá sản phẩm</h4>
+                                                <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
+                                            </div>
+
+                                            <div class="p-color">
+
+                                                <div class="btn-group btn-group-sm">
+                                                    <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item._id })">Xóa khỏi sản phẩm yêu thích </a>
+                                                    <a onclick="AddCart()" class="btn" href="@Url.Action("BuyLove", "Cart", new { id = item._id })"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
+
                                                 </div>
+                                                <script>
 
-                                                <div class="p-color">
+                                                    function AddCart() {
+                                                        Swal.fire({
+                                                            position: 'top',
+                                                            icon: 'success',
+                                                            title: 'Thêm sản phẩm thành công',
+                                                            showConfirmButton: false,
+                                                            timer: 300000
+                                                        })
+                                                    }
+                                                </script>
+                                            </div>
+                                            <div class="row product-detail-bottom">
+                                                <div class="col-lg-12">
+                                                    <ul class="nav nav-pills nav-justified">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
+                                                        </li>
+                                                    </ul>
 
-                                                    <div class="btn-group btn-group-sm">
-                                                        <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item._id })">Xóa khỏi sản phẩm yêu thích </a>
-                                                        <a onclick="AddCart()" class="btn" href="@Url.Action("BuyLove", "Cart", new { id = item._id })"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
-                                                    </div>
-                                                    <script>
-
-                                                        function AddCart() {
-                                                            Swal.fire({
-                                                                position: 'top',
-                                                                icon: 'success',
-                                                                title: 'Thêm sản phẩm thành công',
-                                                                showConfirmButton: false,
-                                                                timer: 300000
-                                                            })
-                                                        }
-                                                    </script>
-                                                </div>
-                                                <div class="row product-detail-bottom">
-                                                    <div class="col-lg-12">
-                                                        <ul class="nav nav-pills nav-justified">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
-                                                            </li>
-                                                        </ul>
-
-                                                        <div class="tab-content">
-                                                            <div id="description" class="container tab-pane active">
-                                                                <p>
-                                                                    @item.Details
-                                                                </p>
-                                                            </div>
+                                                    <div class="tab-content">
+                                                        <div id="description" class="container tab-pane active">
+                                                            <p>
+                                                                @item.Details
+                                                            </p>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
+
                                 }
                                 <div class="row product-detail-bottom">
 
@@ -166,6 +187,7 @@
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </div>
+
                                                 </div>
                                                 <div class="reviews-submit">
                                                     <h4>Để lại phản hồi của bạn</h4>
@@ -206,11 +228,30 @@
                                     </div>
                                 </div>
 
-                                @Html.Action("BagProductRecommend", "Product")
+                                <form class="form-horizontal" role="form" method="post" action="@Url.Action("Index", "Product")">
+                                    <div class="sidebar-widget tag">
+                                        <h2 class="title">Sản phẩm được gợi ý</h2>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Áo thun nu"})">Áo thun nữ</a>
+
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Táo"})">Hoa quả</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Balo"})">Balo</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Túi"})">Túi xách nữ</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ví"})">Ví da nam</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Giày"})">Giày Gucci</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Dép"})">Dép quai ngang</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="iphone"})">Iphone 12 Pro Max</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Mac"})">Macbook</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Samsung"})">Samsung Note 10</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Tivi"})">Tivi 97"</a>
+                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         }
         else

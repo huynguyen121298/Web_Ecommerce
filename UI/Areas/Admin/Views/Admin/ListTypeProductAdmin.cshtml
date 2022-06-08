@@ -4,7 +4,7 @@
    var typed= (string)Session["typeProduct"];
 }
 
-<select style="width:200px;margin-left:10%" name="typeProduct" id="typeProduct ">
+<select style="width:200px;margin-left:10%" onchange="ShowOptionSize()" name="typeProduct" id="typeProduct" required>
     <option selected>@typed</option>
 
     @foreach (DTO_Item_Type item in Model)
@@ -12,7 +12,7 @@
         <option>@item.Type_Product</option>
     }
 </select>
-@*<select name="sizeProduct" id="sizeProduct" style="display:none;width:200px" multiple>
+<select name="sizeProduct" id="sizeProduct" style="display:none;width:200px">
 
         <option selected>S</option>
         <option>M</option>
@@ -29,11 +29,9 @@
             var valueTypeProduct = $("#typeProduct").val();
             if (valueTypeProduct == "Thời trang nam" || valueTypeProduct == "Thời trang nữ") {
                 $("#sizeProduct").show();
-                $("#quantity").show();
             }
             else {
                 $("#sizeProduct").hide();
-                $("#quantity").hide();
             }
         }
-    </script>*@
+    </script>

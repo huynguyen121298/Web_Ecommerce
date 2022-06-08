@@ -44,6 +44,8 @@
                             <th>LastName</th>
                             <th>FirstName</th>
                             <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Thành phố</th>
                             <th>Loại tài khoản</th>
                             <th>Action</th>
                         </tr>
@@ -54,6 +56,8 @@
                             <th>LastName</th>
                             <th>FirstName</th>
                             <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Thành phố</th>
                             <th>Loại tài khoản</th>
                             <th>Action</th>
                         </tr>
@@ -71,6 +75,12 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
                     </td>
 
                     @if (item.RoleId == 1)

@@ -83,11 +83,11 @@ namespace UI.Areas.Admin.Controllers
                 var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + dtocustomer._id + " đã được xác nhận vào lúc " + dtocustomer.NgayTao;
 
                 var sendMail = SendEmail(dtocustomer.Email, body, subject);
-                if (sendMail == false)
-                {
-                    ViewBag.Mess = "Có lỗi gửi mail ngoài ý muốn, vui lòng kiểm tra lại";
-                    return View();
-                }
+                //if (sendMail == false)
+                //{
+                //    ViewBag.Mess = "Có lỗi gửi mail ngoài ý muốn, vui lòng kiểm tra lại";
+                //    return View();
+                //}
             }
 
             return RedirectToAction("Index");
@@ -113,11 +113,11 @@ namespace UI.Areas.Admin.Controllers
                             + reason;
 
                         var sendMail = SendEmail(dtocustomer.Email, body, subject);
-                        if (sendMail == false)
-                        {
-                            ViewBag.Mess = "Có lỗi ngoài ý muốn, vui lòng kiểm tra lại";
-                            return Json(new { mes = false });
-                        }
+                        //if (sendMail == false)
+                        //{
+                        //    ViewBag.Mess = "Có lỗi ngoài ý muốn, vui lòng kiểm tra lại";
+                        //    return Json(new { mes = false });
+                        //}
                     }
 
                   

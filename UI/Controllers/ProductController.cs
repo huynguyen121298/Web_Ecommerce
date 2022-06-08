@@ -286,10 +286,10 @@ namespace UI.Controllers
             int index = isExist(Id);
             if (index != -1)
             {
-                if (li[index].Quantity - 1 > 0)
+                if (li[index].QuantityBuy - 1 > 0)
                 {
-                    li[index].Quantity--;
-                    li[index].Price = proItem.Price * li[index].Quantity;
+                    li[index].QuantityBuy--;
+                    li[index].Price = proItem.Price * li[index].QuantityBuy;
                 }
             }
 
@@ -308,13 +308,13 @@ namespace UI.Controllers
             int index = isExist(Id);
             if (index != -1)
             {
-                li[index].Quantity++;
+                li[index].QuantityBuy++;
             }
             else
             {
                 var newProduct = new DTO_Product_Item_Type();
                 newProduct = proItem;
-                newProduct.Quantity = 1;
+                newProduct.QuantityBuy = 1;
                 li.Add(newProduct);
             }
             Session["cart"] = li;
@@ -336,7 +336,7 @@ namespace UI.Controllers
             int index = isExist(Id);
             if (index != -1)
             {
-                li[index].Price = proItem.Price * li[index].Quantity;
+                li[index].Price = proItem.Price * li[index].QuantityBuy;
             }
             Session["cart"] = li;
             return Json(new { soLuong = li });
@@ -356,7 +356,6 @@ namespace UI.Controllers
                 return null;
             if (Session["cart__"] == null)
             {
-                List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
@@ -367,7 +366,6 @@ namespace UI.Controllers
             }
             else
             {
-                List<DTO_Product_Item_Type> li = (List<DTO_Product_Item_Type>)Session["cart"];
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);
                 responseUser.EnsureSuccessStatusCode();
                 DTO_Product_Item_Type proItem = responseUser.Content.ReadAsAsync<DTO_Product_Item_Type>().Result;
@@ -425,7 +423,7 @@ namespace UI.Controllers
                 int index = isExist(Id);
                 if (index != -1)
                 {
-                    li[index].Quantity++;
+                    li[index].QuantityBuy++;
                     Session["cart"] = li;
                     return 1;
                 }
@@ -433,7 +431,7 @@ namespace UI.Controllers
                 {
                     var newProduct = new DTO_Product_Item_Type();
                     newProduct = proItem;
-                    newProduct.Quantity = 1;
+                    newProduct.QuantityBuy = 1;
                     li.Add(newProduct);
 
                     return 2;
@@ -458,7 +456,7 @@ namespace UI.Controllers
 
                 var newProduct = new DTO_Product_Item_Type();
                 newProduct = proItem;
-                newProduct.Quantity = 1;
+                newProduct.QuantityBuy = 1;
                 li.Add(newProduct);
 
                 Session["cart"] = li;

@@ -25,5 +25,11 @@ namespace Model.DTO.DTO_Ad
 
         //1 : default , 2 facebook
         public int? RoleId { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string City { get; set; }
+
+        public string Address { get; set; }
     }
 }

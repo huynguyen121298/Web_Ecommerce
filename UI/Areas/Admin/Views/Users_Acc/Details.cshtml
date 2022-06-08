@@ -28,6 +28,41 @@
             @Html.DisplayNameFor(model => model.Email) :  @Html.DisplayFor(model => model.Email)
         </dt>
 
+        <dt>
+            Số điện thoại :  
+            @if (Model.PhoneNumber != null)
+            {
+                Html.DisplayFor(model => model.PhoneNumber);
+            }
+            else
+            {
+                <label>Chưa cung cấp</label>
+            }
+        </dt>
+
+        <dt>
+            Thành phố :
+            @if (Model.City != null)
+            {
+                Html.DisplayFor(model => model.City);
+            }
+            else
+            {
+                <label>Chưa cung cấp</label>
+            }
+        </dt>
+        <dt>
+            Địa chỉ :
+            @if (Model.Address != null)
+            {
+                Html.DisplayFor(model => model.Address);
+            }
+            else
+            {
+                <label>Chưa cung cấp</label>
+            }
+        </dt>
+
 
     </dl>
 </div>

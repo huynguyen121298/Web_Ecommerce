@@ -48,6 +48,8 @@ namespace DataAndServices.Client_Services
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Content = dis.Content,
+                            Rating = product.Rating,
+                            AccountId = product.AccountId,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End
@@ -79,6 +81,8 @@ namespace DataAndServices.Client_Services
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Content = dis.Content,
+                            Rating = product.Rating,
+                            AccountId = product.AccountId,                         
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End

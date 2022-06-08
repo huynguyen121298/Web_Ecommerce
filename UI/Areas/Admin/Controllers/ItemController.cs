@@ -45,7 +45,7 @@ namespace UI.Areas.Admin.Controllers
                 responseMessage.EnsureSuccessStatusCode();
                 bool result = responseMessage.Content.ReadAsAsync<bool>().Result;
                 if (result)
-                    return View("Index");
+                    return RedirectToAction("Index", "Item");
                 else
                     return View();
             }

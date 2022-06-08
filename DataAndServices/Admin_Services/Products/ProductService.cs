@@ -62,18 +62,18 @@ namespace DataAndServices.Admin_Services.Products
                 products.IdItemType = itemType._id;
                 _db.InsertOne(products);
 
-                //var items = new List<Item>();
-                //foreach (var i in product_Item_Type.Items)
-                //{
-                //    var item = new Item();
-                //    item.Quantity = i.Quantity;
-                //    item.ProductId = products._id;
-                //    item.Size = i.Size;
-                //    item.Color = i.Color;
-                //    items.Add(item);
-                //}
-               
-                //_dbItem.InsertMany(items);
+                var items = new List<Item>();
+                foreach (var i in product_Item_Type.Items)
+                {
+                    var item = new Item();
+                    item.Quantity = product_Item_Type.QuantityBuy;
+                    item.ProductId = products._id;
+                    item.Size = i.Size;
+                    item.Color = i.Color;
+                    items.Add(item);
+                }
+
+                _dbItem.InsertMany(items);
 
                 Discount_Product dis = new Discount_Product();
                 dis._id = products._id;

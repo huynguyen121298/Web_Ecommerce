@@ -475,6 +475,11 @@ namespace UI.Controllers
 
             responseUser.EnsureSuccessStatusCode();
             List<DTO_Product_Item_Type> result = responseUser.Content.ReadAsAsync<List<DTO_Product_Item_Type>>().Result;
+            if (result == null)
+            {
+                return RedirectToAction("Thankyou1","Cart");
+            }
+
 
             return PartialView(result);
         }

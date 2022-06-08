@@ -108,6 +108,29 @@ namespace UI.Areas.Admin.Controllers
             dTO_Product_Item_Type.AccountId = dTO_Account._id;
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
 
+            var items = new List<DTO_Item>();
+            var item = new DTO_Item();
+            item.Quantity = dTO_Product_Item_Type.QuantityBuy;
+
+            if (Request.Form["selectColor"] !=null)
+            {               
+                item.Color = Request.Form["selectColor"];
+            }
+
+            if (dTO_Product_Item_Type.Type_Product == "Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
+            {
+                var sizes = Request.Form["sizeProduct"];
+                if (sizes!=null)
+                {
+                   
+                    item.Size = sizes;
+                }
+                else
+                    ViewData["ErrorMessage"] = "Bạn chưa chọn size cho sản phẩm";
+            }
+            items.Add(item);
+            dTO_Product_Item_Type.Items = items;
+
             try
             {
                 if (ImageUpload != null)

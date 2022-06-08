@@ -75,74 +75,103 @@
 
                                 @foreach (DTO_Product_Item_Type item in products)
                                 {
-                                    <div class="row align-items-center">
-                                        <div class="col-md-5">
-                                            <div class="product-slider-single normal-slider">
-                                                <img src="@Url.Content(item.Photo)" />
-
-                                            </div>
-                                            <div class="product-slider-single-nav normal-slider">
-                                                <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
-
-                                            </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-5">
+                                        <div class="product-slider-single normal-slider">
+                                            @if (item.Photo != null)
+                                            {
+                                                <img src="@Url.Content(item.Photo)" style="width:200px;height:300px;margin:auto" />
+                                            }
+                                            @if (item.Photo2 != null)
+                                            {
+                                                <img src="@Url.Content(item.Photo2)" style="width:200px;height:300px;margin:auto" />
+                                            }
+                                            @if (item.Photo3 != null)
+                                            {
+                                                <img src="@Url.Content(item.Photo3)" style="width:200px;height:300px;margin:auto" />
+                                            }
                                         </div>
-                                        <div class="col-md-7">
-                                            <div class="product-content">
-                                                @item.Name
-                                                <div class="ratting">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div>
-                                                    <h4 class="product-price-range"> giá sản phẩm</h4>
-                                                    <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
-                                                </div>
+                                        <div class="product-slider-single-nav normal-slider">
+                                            @if (item.Photo != null)
+                                            {
+                                                <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
+                                            }
 
-                                                <div class="p-color">
-
-                                                    <div class="btn-group btn-group-sm">
-                                                        <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item._id })">Xóa khỏi sản phẩm yêu thích </a>
-                                                        <a onclick="AddCart()" class="btn" href="@Url.Action("BuyLove", "Cart", new { id = item._id })"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
-
-                                                    </div>
-                                                    <script>
-
-                                                        function AddCart() {
-                                                            Swal.fire({
-                                                                position: 'top',
-                                                                icon: 'success',
-                                                                title: 'Thêm sản phẩm thành công',
-                                                                showConfirmButton: false,
-                                                                timer: 300000
-                                                            })
-                                                        }
-                                                    </script>
-                                                </div>
-                                                <div class="row product-detail-bottom">
-                                                    <div class="col-lg-12">
-                                                        <ul class="nav nav-pills nav-justified">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
-                                                            </li>
-                                                        </ul>
-
-                                                        <div class="tab-content">
-                                                            <div id="description" class="container tab-pane active">
-                                                                <p>
-                                                                    @item.Details
-                                                                </p>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                            @if (item.Photo2 != null)
+                                            {
+                                                <div class="slider-nav-img"> <img src="@Url.Content(item.Photo2)" /></div>
+                                            }
+                                            @if (item.Photo3 != null)
+                                            {
+                                                <div class="slider-nav-img"> <img src="@Url.Content(item.Photo3)" /></div>
+                                            }
                                         </div>
                                     </div>
+                                    <div class="col-md-7">
+                                        <div class="product-content">
+                                            <a  href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                @item.Name
+                                            </a>
+                                            <p id="message" style="color:red;font-style:italic">@ViewData["MessQuantity"]</p>
+                                            <div class="ratting">
+                                                @for (int i = 0; i < item.Rating; i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (int i = item.Rating; i < 5; i++)
+                                                {
+                                                    <i class="fa fa-star-o"></i>
+
+                                                }
+                                            </div>
+
+
+                                            <h4 class="product-price-range"> giá sản phẩm</h4>
+                                            <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
+                                        </div>
+
+                                        <div class="p-color">
+
+                                            <div class="btn-group btn-group-sm">
+                                                <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item._id })">Xóa khỏi sản phẩm yêu thích </a>
+                                                <a onclick="AddCart()" class="btn" href="@Url.Action("BuyLove", "Cart", new { id = item._id })"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
+
+                                            </div>
+                                            <script>
+
+                                                function AddCart() {
+                                                    Swal.fire({
+                                                        position: 'top',
+                                                        icon: 'success',
+                                                        title: 'Thêm sản phẩm thành công',
+                                                        showConfirmButton: false,
+                                                        timer: 300000
+                                                    })
+                                                }
+                                            </script>
+                                        </div>
+                                        <div class="row product-detail-bottom">
+                                            <div class="col-lg-12">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="tab-content">
+                                                    <div id="description" class="container tab-pane active">
+                                                        <p>
+                                                            @item.Details
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                    
                                 }
                                 <div class="row product-detail-bottom">
 

@@ -3,7 +3,6 @@ using DataAndServices.Data;
 using DataAndServices.DataModel;
 using Model.DTO.DTO_Ad;
 using Model.DTO_Model;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -26,24 +25,23 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             _db = db.GetCheckoutCustomerOrderCollection();
             _dbNoti = db.GetMerchantNotificationCollection();
             _mapper = mapper;
-            
         }
+
         public async Task<bool> DeleteAccount(string id)
         {
             try
             {
                 var checkout = await GetAccountById(id);
-                if(checkout.State == true && checkout.TrangThai=="Hoàn thành")
+                if (checkout.State == true && checkout.TrangThai == "Hoàn thành")
                 {
                     return false;
                 }
                 var noti = Builders<MerchantNotification>.Filter.Eq("CheckoutId", id);
                 var deleteFilter3 = Builders<CheckoutCustomerOrder>.Filter.Eq("_id", id);
 
-                 _db.DeleteOne(deleteFilter3);
+                _db.DeleteOne(deleteFilter3);
                 _dbNoti.DeleteOne(noti);
 
-              
                 return true;
             }
             catch
@@ -56,8 +54,6 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         {
             var checkout = await _db.Find(s => s._id == id).FirstOrDefaultAsync();
 
-           
-
             foreach (var customer in checkout.ProductOrder)
             {
                 if (customer.ItemId != null)
@@ -66,37 +62,33 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
                     customer.Size = item.Size;
                     customer.Color = item.Color;
                 }
-              
-
             }
             return checkout;
-
-           
-
         }
 
         public List<CheckoutCustomerOrder> GetAllAccounts(string userLogin)
-        
+
         {
-            var ckCustomers =   _db.Find(s=>true).ToList();
+            var ckCustomers = _db.Find(s => true).ToList();
+
+        
             var ckCustomerOrders = new List<CheckoutCustomerOrder>();
-            foreach(var c in ckCustomers)
+            foreach (var c in ckCustomers)
             {
                 var ckOrders = new List<Checkout_Oder>();
                 foreach (var order in c.ProductOrder)
                 {
-                  
-                    if(order.AccountId == userLogin)
+                    if (order.AccountId == userLogin)
                     {
                         ckOrders.Add(order);
-                    }               
+                        c.ProductOrder = ckOrders;
+                        ckCustomerOrders.Add(c);
+                    }
                 }
-                c.ProductOrder = ckOrders;
-                ckCustomerOrders.Add(c);
+                
             }
-            return ckCustomerOrders;          
+            return ckCustomerOrders;
         }
-
 
         public static string[] SplitBitforBit(string text, int bitforbit)
         {
@@ -133,28 +125,21 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             Out /= Math.Pow(10, Position);
             return Out;
         }
+
         public DtoSalesVM GetMonthlyRevenue(string monthDate)
         {
-
-
             string[] splitted = SplitBitforBit(monthDate, 4);
             string[] splitted2 = SplitBitforBit(monthDate, 1);
-           
-            int year = Convert.ToInt32(splitted[0]);
-            int month = Convert.ToInt32((""+splitted2[5] +splitted2[6]+""));
 
-           
+            int year = Convert.ToInt32(splitted[0]);
+            int month = Convert.ToInt32(("" + splitted2[5] + splitted2[6] + ""));
+
             int daysInMonth = DateTime.DaysInMonth(year, month);
             var days = Enumerable.Range(1, daysInMonth);
-           
-           
-          
 
-            var checkoutCustomers = _db.Find(s => s.State == true && s.TrangThai == "Hoàn thành").ToList();
-
+            var checkoutCustomers = _db.Find(s => s.State == true).ToList();
 
             var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
-
 
             var test = dtocheckoutCustomers.Where(x => x.NgayTao.Year == year && x.NgayTao.Month == month).Select(g => new
             {
@@ -163,7 +148,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             }); ;
 
             var monthTotal = new DtoSalesVM
-            { 
+            {
                 Date = new DateTime(year, month, 1),
                 Days = days.GroupJoin(test, d => d, q => q.Day, (d, q) => new DtoDayTotalVM
                 {
@@ -199,7 +184,6 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             var acc = GetAccountById(custom._id);
             if (acc != null)
             {
-                
                 var eqfilter = Builders<CheckoutCustomerOrder>.Filter.Where(s => s._id == custom._id);
 
                 var update = Builders<CheckoutCustomerOrder>.Update.Set(s => s.Email, custom.Email)
@@ -207,18 +191,15 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
                     .Set(s => s.LastName, custom.LastName)
                     .Set(s => s.City, custom.City)
                     .Set(s => s.GiamGia, custom.GiamGia)
-                    .Set(s => s.NgayTao, custom.NgayTao)
                     .Set(s => s.SDT, custom.SDT)
                     .Set(s => s.TongTien, custom.TongTien)
                     .Set(s => s.TrangThai, custom.TrangThai)
                     .Set(s => s.State, custom.State);
 
-
                 var options = new UpdateOptions { IsUpsert = true };
 
                 _db.UpdateOneAsync(eqfilter, update, options);
                 return true;
-
             }
             return false;
         }

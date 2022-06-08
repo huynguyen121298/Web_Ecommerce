@@ -171,19 +171,12 @@
         
         <div  class="col-md-10" id="typeLayout2">
 
-            @Html.Action("ListTypeProductAdmin", "Admin")
+            @Html.Action("ListTypeProductAdmin2", "Admin")
         </div>
 
        
     </div>
 
-    <div class="form-group" id="quantity" style="display:none">
-        Nhập số lượng
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
-            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
     <div class="form-group">
         <p style="color:red">@ViewData["ErrorMessage2"]</p>
