@@ -109,7 +109,7 @@
                             </p>
                             <p style="display:none">
                                 Tổng thanh toán
-                                <input readonly id="gia1" name="gia1" class="form-control" type="text" value="@total " />
+                                <input readonly id="gia1" name="gia1" class="form-control" type="text" value="@total" />
                             </p>
                             <p>
                                 Tổng thanh toán
@@ -157,6 +157,9 @@
                 console.log();
                 $("#discount").val(res.checkout * 100)
                 var dis = res.checkout;
+                if (dis == 0) {
+                    alert("Mã code " + priceCode + " không hợp lệ");
+                }
                 $('#gia1').val(@total -(@total* dis));
                 $('#gia2').val(formatter.format(@total -(@total* dis)));
 

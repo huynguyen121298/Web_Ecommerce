@@ -1,12 +1,9 @@
-﻿
-@using Model.DTO.DTO_Ad;
+﻿@using Model.DTO.DTO_Ad;
 @using PagedList.Mvc;
 @model PagedList.IPagedList<Model.DTO.DTO_Ad.DTO_Account2>
 
-
-
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CodePen - Popular Products Section Using HTML , CSS , Bootstrap</title>
@@ -40,39 +37,34 @@
                 @foreach (var item in Model)
                 {
 
-
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-1" class="single-product">
                             <div class="part-1">
+                                @if (item.Photo != null)
+                                {
+                                    <img style="height:250px" src="@Url.Content(item.Photo)" />
 
-                                <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                }
+                                else
+                                {
+                                    <img style="height:250px;background-color:black;color:black" src="https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg" />
+                                }
                                 <ul>
 
                                     <li><a href=" @Url.Action("ProductByMerchant", "Merchant", new { merchantId = item._id })"><i class="fa fa-shopping-cart"></i>chọn </a></li>
-
-
-
-
                                 </ul>
                                 <br />
                                 <div class="part-2">
                                     <h3 class="product-title">@item.MerchantName</h3>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
                 }
-
-
-
             </div>
-
         </div>
     </section>
     <!-- partial -->
-
 </body>
 </html>

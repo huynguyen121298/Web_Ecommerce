@@ -8,7 +8,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách tài khoản Admin</h6>
+        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách mã giảm giá</h6>
     </div>
     <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -74,15 +74,15 @@
                                 @content
                             </td>
                             <td>
-                                <a class="btn btn-success style="width:100px;height:40px" " href=" @Url.Action("Edit", "CodeDiscount", new { id = item._id })">Chỉnh sửa</a>
+                                <a class="btn btn-success" style=" width:100px;height:40px"  href=" @Url.Action("Edit", "CodeDiscount", new { id = item._id })">Chỉnh sửa</a>
                                 <button style="width:100px;height:40px" type="button" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
                                     Xóa
                                 </button>
                             </td>
                         </tr>
-                    }
+                        }
 
-                </tbody>
+                    </tbody>
             </table>
         </div>
     </div>

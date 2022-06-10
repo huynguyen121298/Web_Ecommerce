@@ -53,13 +53,13 @@ namespace DataAndServices.Client_Services
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End
-                        }).Where(s => s.Name.StartsWith(name)).ToList();
+                        }).Where(s => s.Name.ToLower().Contains(name.ToLower())).ToList();
             return Info;
         }
 
         public List<Account> GetMerchantByName(string merchantName)
         {
-            var merchantByName = _dbAcc.Find(s => s.MerchantName.StartsWith(merchantName)).ToList();
+            var merchantByName = _dbAcc.Find(s => s.MerchantName.ToLower().Contains(merchantName.ToLower())).ToList();
             return merchantByName;
         }
 
@@ -346,7 +346,7 @@ namespace DataAndServices.Client_Services
             var recommends = _dbProductRecommend.Find(p => true).ToList();
             var orderByDescendingResult = (from product in recommends
                                            orderby product.Frequency descending
-                                           select product).ToList();
+                                           select product);
 
             orderByDescendingResult.Take(10);
 

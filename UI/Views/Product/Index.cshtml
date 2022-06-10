@@ -26,7 +26,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="~/lib/slick/slick.css" rel="stylesheet">
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="~/css/style_SP.css" rel="stylesheet">
     <style>
@@ -119,6 +119,10 @@
                                                     <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
 
                                                 }
+                                                else
+                                                {
+                                                    <div style="width:30px;height:20px"></div>
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -153,13 +157,19 @@
                                         @{
                                             if (price != null && totalday == true && checkPrice == true)
                                             {
-                                                <h3 class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </h3>
-                                                <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
+                                                <div style="width:10%;height:20%">
+                                                    <h3 class="old-price"> @string.Format("{0:0,0}", item.Price)đ </h3>
+                                                    <span style="width:10%;height:20%" class="new-price">@string.Format("{0:0,0}", item.Price_Dis)đ </span>
+                                                </div>
+
                                             }
                                             else
                                             {
-                                                string newprice = string.Format("{0:0,0}", item.Price);
-                                                <h3>@newprice<span> VNĐ </span></h3>
+
+                                                <div style="width:30%;height:50%">
+                                                    <h3> @string.Format("{0:0,0}", item.Price)đ</h3>
+                                                    <div style="width:10%;height:20%; opacity:0.05">sds</div>
+                                                </div>
 
                                             }
 
@@ -195,7 +205,7 @@
 
                 },
                 success: function (res) {
-                    console.log("Into function of buy fav: "+res)
+                    console.log("Into function of buy fav: " + res)
                     for (let i = 0; i < res.buy.length; i++) {
                         if (res.buy[i]["_id"] == id_temp) {
                             console.log("Into if in function of buy fav: ");

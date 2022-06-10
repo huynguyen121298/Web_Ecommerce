@@ -82,7 +82,6 @@
     <Compile Include="DTO\DTO_Client\DTO_Item_Client.cs" />
     <Compile Include="DTO\DTO_Client\DTO_Product.cs" />
     <Compile Include="DTO\DTO_Client\DTO_Users_Acc.cs" />
-    <Compile Include="DTO_Model\DTO_CheckoutCustomer_Order.cs" />
     <Compile Include="DTO_Model\DTO_Discount_Product.cs" />
     <Compile Include="DTO_Model\DTO_Dis_Product.cs" />
     <Compile Include="DTO_Model\DTO_Product_Item_Type.cs" />

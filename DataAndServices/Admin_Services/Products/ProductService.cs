@@ -243,6 +243,7 @@ namespace DataAndServices.Admin_Services.Products
 
             var Info = (from dis in discountCollection.AsQueryable()
                         join product in productCollection.AsQueryable() on dis._id equals product._id
+                        orderby product._id descending
                         select new Dis_Product()
                         {
                             _id = dis._id,

@@ -639,8 +639,6 @@ C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\roslyn\vbc.rsp
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\roslyn\VBCSCompiler.exe
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Antlr3.Runtime.dll
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\EntityFramework.dll
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\EntityFramework.SqlServer.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Facebook.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\log4net.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll

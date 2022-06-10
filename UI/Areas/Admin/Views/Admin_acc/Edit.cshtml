@@ -167,11 +167,13 @@
 <div>
     @if (id == 1)
     {
-        @Html.ActionLink("Trở về", "Index","Admin")
-    }
-    @if (id == 2)
-    {
         @Html.ActionLink("Trở về", "Index")
+
+    }
+    else
+    {
+        @Html.ActionLink("Trở về", "Index", "Admin")
+
     }
 </div>
 @section Scripts {

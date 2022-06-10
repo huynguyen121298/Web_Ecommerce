@@ -50,7 +50,9 @@ namespace UI.Areas.Admin.Controllers
         [AuthorizeLoginAdmin]
         public ActionResult Details(string id)
         {
-            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id);
+            var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+
+            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id+"/"+dTO_Account._id);
             responseMessage.EnsureSuccessStatusCode();
             DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
 

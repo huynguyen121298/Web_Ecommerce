@@ -43,6 +43,7 @@ namespace DataAndServices.Client_Services
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
+                            Rating = product.Rating,
                             End = dis.End
                         }).Where(s => s.Name.StartsWith(name)).ToList();
             return Info;
@@ -68,6 +69,7 @@ namespace DataAndServices.Client_Services
                             Content = dis.Content,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
+                            Rating = product.Rating,
                             End = dis.End
                         });
             List<Dis_Product> dis_Product = new List<Dis_Product>();
@@ -135,7 +137,8 @@ namespace DataAndServices.Client_Services
                             Photo3 = product.Photo3,
                             IdItemType = product.IdItemType,
                             Type_Product = item.Type_Product,
-                            AccountId = product.AccountId
+                            AccountId = product.AccountId,
+                            Rating = product.Rating,
                         }).ToList();
             var products = Info.Where(p => p.AccountId == merchantId);
             foreach (var item in products)
@@ -185,6 +188,7 @@ namespace DataAndServices.Client_Services
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End,
+                            Rating = product.Rating,
                             AccountId = product.AccountId
                         });
 

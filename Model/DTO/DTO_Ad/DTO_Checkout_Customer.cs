@@ -1,5 +1,4 @@
-﻿using Model.DTO_Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -44,6 +43,11 @@ namespace Model.DTO.DTO_Ad
         public double? TongTienNam { get; set; }
 
         public double? TongTienThang { get; set; }
+
+        public bool State { get; set; }
+
+        public string MerchantId { get; set; }
+
 
         public IList<DTO_Checkout_Order> ProductOrder { get; set; }
 

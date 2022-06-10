@@ -41,7 +41,7 @@ namespace UI.Areas.Admin.Controllers
                 HttpResponseMessage responseMessage = service.PostResponse("api/CodeDiscount/create/",request);
                 responseMessage.EnsureSuccessStatusCode();
                 bool result = responseMessage.Content.ReadAsAsync<bool>().Result;
-                return View("Index");
+                return RedirectToAction("Index");
                 // TODO: Add insert logic here
 
             }

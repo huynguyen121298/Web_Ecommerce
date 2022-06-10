@@ -19,7 +19,8 @@ namespace UI.Areas.Admin.Controllers
         [AuthorizeLoginAdmin]
         public ActionResult Index()
         {
-            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetDateRevenue");
+            var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetDateRevenue/"+dTO_Account._id);
             responseMessage.EnsureSuccessStatusCode();
             double? dTO_Accounts = responseMessage.Content.ReadAsAsync<double>().Result;
             ViewData["SaleDate"] = dTO_Accounts;
@@ -29,6 +30,7 @@ namespace UI.Areas.Admin.Controllers
         [AuthorizeLoginAdmin]
         public ActionResult MonthlySalesByDate(FormCollection formCollection)
         {
+            var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
             string monthlySalesByDate = formCollection["saleByDate2"];
             //check if year is null
             if (monthlySalesByDate == "")
@@ -37,7 +39,7 @@ namespace UI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Admin");
             }
 
-            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetMonthlyRevenue/"+monthlySalesByDate);
+            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetMonthlyRevenue/"+monthlySalesByDate+"/" +dTO_Account._id);
             responseMessage.EnsureSuccessStatusCode();
             DtoSalesVM dTO_Accounts = responseMessage.Content.ReadAsAsync<DtoSalesVM>().Result;
             return View(dTO_Accounts);

@@ -188,7 +188,7 @@ namespace UI.Controllers
             response2.EnsureSuccessStatusCode();
             List<DTO_Product> productRecommends = response2.Content.ReadAsAsync<List<DTO_Product>>().Result;
 
-            return PartialView(productRecommends);
+            return PartialView(productRecommends.Take(10));
         }
 
         public PartialViewResult BagCart_()

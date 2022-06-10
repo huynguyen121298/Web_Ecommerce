@@ -128,6 +128,8 @@ namespace UI.Controllers
                 check.State = false;
                 if (check.Zipcode != "")
                 {
+                    var checkDiscount = saveOrder2(check.Zipcode);
+                    checkDiscount.Equals(0);
                     check.Zipcode = Request.Form["zip"];
                     check.GiamGia = Request.Form["discount1"] + "%";
                 }
@@ -204,7 +206,7 @@ namespace UI.Controllers
                         Session.Remove("cart");
                         Session.Remove("PayOrder");
                         Session.Remove(Constants.CART_SESSION);
-                        return View("Thankyou");
+                        return RedirectToAction("Thankyou","Cart",new {Id = idBill});
                     }
                     return RedirectToAction("Error", "Home");
                 }
@@ -246,6 +248,8 @@ namespace UI.Controllers
                 HttpResponseMessage responseUser = service.GetResponse("api/Cart/GetGiamGia/" + priceCode);
                 responseUser.EnsureSuccessStatusCode();
                 Double giamgia = responseUser.Content.ReadAsAsync<Double>().Result;
+                if (giamgia == 0)
+                    return Json(new { checkout = 0 });
                 string messsage = ("Mã code " + priceCode.ToString() + " hợp lệ");
                 ViewBag.Message = messsage;
                 return Json(new { checkout = giamgia });
@@ -400,9 +404,13 @@ namespace UI.Controllers
             return -1;
         }
 
-        public ActionResult Thankyou()
+        public ActionResult Thankyou(string Id)
         {
-            return View();
+            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetcustomerById/" + Id);
+            responseMessage.EnsureSuccessStatusCode();
+            DTOCheckoutCustomerOrder dtocustomer = responseMessage.Content.ReadAsAsync<DTOCheckoutCustomerOrder>().Result;
+
+            return View(dtocustomer);
         }
 
         public ActionResult Thankyou1()
@@ -614,9 +622,10 @@ namespace UI.Controllers
                     if (vnp_ResponseCode == "00")
                     {
                         var test = await saveOrder1(true);
+                        
 
                         //Thanh toán thành công
-                        ViewBag.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
+                        ViewBag.Message = "Thanh toán online thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
                     }
                     else
                     {

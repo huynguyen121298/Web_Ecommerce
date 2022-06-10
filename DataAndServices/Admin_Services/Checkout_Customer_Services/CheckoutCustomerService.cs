@@ -31,7 +31,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         {
             try
             {
-                var checkout = await GetAccountById(id);
+                var checkout = await _db.Find(s => s._id == id).FirstOrDefaultAsync();
                 if (checkout.State == true && checkout.TrangThai == "Hoàn thành")
                 {
                     return false;
@@ -50,20 +50,33 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             }
         }
 
-        public async Task<CheckoutCustomerOrder> GetAccountById(string id)
+        public async Task<CheckoutCustomerOrder> GetAccountById(string id, string userLogin)
         {
             var checkout = await _db.Find(s => s._id == id).FirstOrDefaultAsync();
 
+            double newTotals = 0;
+            var newProductOrders = new List<Checkout_Oder>();
             foreach (var customer in checkout.ProductOrder)
             {
-                if (customer.ItemId != null)
+                if (customer.ItemId != null && customer.AccountId == userLogin)
                 {
                     var item = _dbItem.Find(s => s._id == customer.ItemId).FirstOrDefault();
                     customer.Size = item.Size;
                     customer.Color = item.Color;
+                    newTotals += (double)((customer.Gia) * (customer.SoLuong));
+                    newProductOrders.Add(customer);
                 }
             }
+            checkout.TongTien = newTotals;
+            checkout.ProductOrder = newProductOrders;
             return checkout;
+        }
+
+        public async Task<CheckoutCustomerOrder> GetAccountById2(string id)
+        {
+            var checkout = await _db.Find(s => s._id == id).FirstOrDefaultAsync();
+            return checkout;
+           
         }
 
         public List<CheckoutCustomerOrder> GetAllAccounts(string userLogin)
@@ -71,7 +84,6 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         {
             var ckCustomers = _db.Find(s => true).ToList();
 
-        
             var ckCustomerOrders = new List<CheckoutCustomerOrder>();
             foreach (var c in ckCustomers)
             {
@@ -85,7 +97,6 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
                         ckCustomerOrders.Add(c);
                     }
                 }
-                
             }
             return ckCustomerOrders;
         }
@@ -126,7 +137,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return Out;
         }
 
-        public DtoSalesVM GetMonthlyRevenue(string monthDate)
+        public DtoSalesVM GetMonthlyRevenue(string monthDate, string merchantId)
         {
             string[] splitted = SplitBitforBit(monthDate, 4);
             string[] splitted2 = SplitBitforBit(monthDate, 1);
@@ -139,7 +150,22 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
             var checkoutCustomers = _db.Find(s => s.State == true).ToList();
 
-            var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(checkoutCustomers);
+            var ckCustomerOrders = new List<CheckoutCustomerOrder>();
+            foreach (var c in checkoutCustomers)
+            {
+                var ckOrders = new List<Checkout_Oder>();
+                foreach (var order in c.ProductOrder)
+                {
+                    if (order.AccountId == merchantId)
+                    {
+                        ckOrders.Add(order);
+                        c.ProductOrder = ckOrders;
+                        ckCustomerOrders.Add(c);
+                    }
+                }
+            }
+
+            var dtocheckoutCustomers = _mapper.Map<IEnumerable<CheckoutCustomerOrder>, IEnumerable<DTO_Checkout_Customer>>(ckCustomerOrders);
 
             var test = dtocheckoutCustomers.Where(x => x.NgayTao.Year == year && x.NgayTao.Month == month).Select(g => new
             {
@@ -164,12 +190,27 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
             return monthTotal;
         }
 
-        public double? GetDateRevenue()
+        public double? GetDateRevenue(string userLogin)
         {
             var date = DateTime.Now.Date;
 
             var checkoutCustomers = _db.Find(s => s.State == true).ToList();
-            var dateTotal = checkoutCustomers.Where(s => s.NgayTao.Value.Date == date).Select(a => a.TongTien).Sum();
+
+            var ckCustomerOrders = new List<CheckoutCustomerOrder>();
+            foreach (var c in checkoutCustomers)
+            {
+                var ckOrders = new List<Checkout_Oder>();
+                foreach (var order in c.ProductOrder)
+                {
+                    if (order.AccountId == userLogin)
+                    {
+                        ckOrders.Add(order);
+                        c.ProductOrder = ckOrders;
+                        ckCustomerOrders.Add(c);
+                    }
+                }
+            }
+            var dateTotal = ckCustomerOrders.Where(s => s.NgayTao.Value.Date == date).Select(a => a.TongTien).Sum();
 
             return dateTotal;
         }
@@ -181,7 +222,7 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 
         public bool Update_Ad_acc(CheckoutCustomerOrder custom)
         {
-            var acc = GetAccountById(custom._id);
+            var acc = _db.Find(s => s._id == custom._id).FirstOrDefault();
             if (acc != null)
             {
                 var eqfilter = Builders<CheckoutCustomerOrder>.Filter.Where(s => s._id == custom._id);
