@@ -35,6 +35,8 @@ namespace DataAndServices.DataModel
 
         public bool State { get; set; }
 
+        public string AccountId { get; set; }
+
         public IList<Checkout_Oder> ProductOrder { get; set; }
     }
 }

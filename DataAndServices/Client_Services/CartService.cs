@@ -1,6 +1,7 @@
 ﻿using DataAndServices.Data;
 using DataAndServices.DataModel;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,11 +35,12 @@ namespace DataAndServices.Client_Services
             return 0;
         }
 
-        public async Task<string> InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
+        public async Task<List<string>> InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
         {
           
             try
             {
+                var accs = checkoutCustomer_Order.ProductOrder.Select(s => s.AccountId).Distinct();
                 foreach (var item in checkoutCustomer_Order.ProductOrder)
                 {
                     if(item.ItemId != null && item.ItemId!= string.Empty)
@@ -49,10 +51,18 @@ namespace DataAndServices.Client_Services
                     }
                    
                 }
+                var newCheckouts = new List<CheckoutCustomerOrder>();
+                foreach(var item in accs)
+                {
+                    var checkoutCustomerOrder = new CheckoutCustomerOrder();
+                    checkoutCustomerOrder = checkoutCustomer_Order;
+                    checkoutCustomerOrder.AccountId = item;
+                    newCheckouts.Add(checkoutCustomerOrder);
+                }
            
-                await _dbCheckCustomerOrder.InsertOneAsync(checkoutCustomer_Order);
+                await _dbCheckCustomerOrder.InsertManyAsync(newCheckouts);
 
-                return checkoutCustomer_Order._id;
+                return newCheckouts.Select(s=>s.AccountId).ToList();
             }
             catch
             {

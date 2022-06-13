@@ -194,7 +194,7 @@ namespace UI.Controllers
                     var subject = "Đơn hàng được xác nhận";
                     var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + " đã đặt hàng thành công vào lúc " + DateTime.Now;
 
-                    var sendMail = SendEmail(checkSession.Email, body, subject);
+                    //var sendMail = SendEmail(checkSession.Email, body, subject);
                     //if (sendMail == false)
                     //{
                     //    ViewBag.Mess = "Có lỗi gửi mail ngoài ý muốn, vui lòng kiểm tra lại";
