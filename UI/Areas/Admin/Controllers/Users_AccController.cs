@@ -48,19 +48,19 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(DTO_User_Acc DTO_User_Acc)
         {
-            var pass =  Request.Form["pass"];
+            var pass = Request.Form["pass"];
             if (pass != "")
             {
                 DTO_User_Acc.Password = pass;
-                HttpResponseMessage response =  service.PostResponse("api/User_acc/UpdateUser/", DTO_User_Acc);
-                 response.EnsureSuccessStatusCode();
+                HttpResponseMessage response = service.PostResponse("api/User_acc/UpdateUser/", DTO_User_Acc);
+                response.EnsureSuccessStatusCode();
             }
             else
             {
                 HttpResponseMessage response = service.PostResponse("api/User_acc/UpdateUserTwo/", DTO_User_Acc);
                 response.EnsureSuccessStatusCode();
             }
-            return  RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         [AuthorizeLoginAdmin]

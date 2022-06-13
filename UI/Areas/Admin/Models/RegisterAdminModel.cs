@@ -5,7 +5,7 @@ namespace UI.Areas.Admin.Models
 {
     public class RegisterAdminModel
     {
-        
+
         public string _id { get; set; }
 
         [Required(ErrorMessage = "Yêu cầu nhập tên")]

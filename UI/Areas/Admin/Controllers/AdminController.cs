@@ -37,7 +37,7 @@ namespace UI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Admin");
             }
 
-            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetMonthlyRevenue/"+monthlySalesByDate);
+            HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetMonthlyRevenue/" + monthlySalesByDate);
             responseMessage.EnsureSuccessStatusCode();
             DtoSalesVM dTO_Accounts = responseMessage.Content.ReadAsAsync<DtoSalesVM>().Result;
             return View(dTO_Accounts);

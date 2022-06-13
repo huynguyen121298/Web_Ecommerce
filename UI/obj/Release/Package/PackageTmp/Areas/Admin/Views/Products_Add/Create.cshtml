@@ -18,7 +18,35 @@
 <div class="form-horizontal">
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model._id)
+    @Html.HiddenFor(model => model.Id_SanPham)
+
+    @*<div class="form-group">
+        Nhập Mã sản phẩm
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Id_SanPham, new { htmlAttributes = new { @class = "form-control " } })
+            @Html.ValidationMessageFor(model => model.Id_SanPham, "", new { @class = "text-danger" })
+
+            <p style="color:red">@ViewData["ErrorMessage1"]</p>
+
+        </div>
+    </div>*@
+
+    @*<div class="form-group">
+            Nhập Mã sản phẩm
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.Id_SanPham, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Id_SanPham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            Nhập Mã Item sản phẩm(Trùng với Mã sản phẩm)
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.Item.Id_SanPham, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Item.Id_SanPham, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
     <div class="form-group">
         Tên sản phẩm
@@ -35,6 +63,18 @@
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
     </div>
+    <!--<div class="form-group">
+        Chi tiết sản phẩm
+        <div class="col-md-10">-->
+            @*@Html.EditorFor(model => model.Details, new { @id = "ckeditor", htmlAttributes = new { @class = "form-control" } })*@
+            @*@Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })*@
+            <!--<input name="details" id="details" class="form-control" style="height:300px" />
+
+          
+        </div>
+    </div>-->
+
+
 
     <div class="form-group">
         Chi tiết sản phẩm
@@ -50,49 +90,33 @@
                 CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
                 CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
             });
+            
+
+
+
         </script>
     </div>
+
+
+
+    @*div class="form-group">
+            Hỉnh ảnh sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control" } })
+
+                <input type="file" name="ImageUpload" onchange="ShowImagePreview( document.getElementById('PreviewImage')" />
+                <input type="file" id="fileUpload" name=" fileUpload" style="display:none" />
+                    <input type="button" id="btnUpload" value="..." class="btn btn-success" />
+                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
     <div class="form-group">
         Chọn hình ảnh cho sản phẩm
         <div class="col-md-10">
-            <ol>
 
-                
-                    <ol>
-                                <li>
-                                    <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
-
-                                    <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
-                                </li>
-                        
-
-                                <li>
-                                    <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
-
-                                    <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
-                                </li>
-                        
-
-                     
-                                <li>
-
-                                    <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
-
-                                    <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
-                                </li>
-                        
-
-
-
-                    </ol>
-             
-
-            </ol>
-
-            
-
-        
-
+            <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
+            <br />
+            <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh" />
 
             <p style="color:red">@ViewData["ErrorMessage"]</p>
         </div>
@@ -109,32 +133,34 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-
-            function upAnh2(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#chonAnh2").attr("src", e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            function upAnh3(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#chonAnh3").attr("src", e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
         </script>
     </div>
+    @*<div class="form-group">
+            Nhập Mã loại sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Id_Item, new { htmlAttributes = new { @class = "form-control " } })
+                @Html.ValidationMessageFor(model => model.Id_Item, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
     <div class="form-group">
         Chon loại sản phẩm
         <div class="col-md-10">
-            @Html.Action("ListTypeProductAdmin", "Admin")
+            <select name="stt" id="stt">
+
+                <option>Máy ảnh và máy quay phim</option>
+                <option>Đồng hồ</option>
+                <option>Mẹ và bé</option>
+                <option>Sức khỏe và sắc đẹp </option>
+                <option>Thể thao và du lịch</option>
+                <option>Thiết bị gia dụng</option>
+                <option>Thời trang nam</option>
+                <option>Thời trang nữ</option>
+                <option>Máy tính và laptop</option>
+                <option>Điện thoại</option>
+
+
+
+            </select>
         </div>
     </div>
     <div class="form-group">
@@ -142,8 +168,23 @@
         <div class="col-md-10">
             @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            @*<input type="number" name="sl" id="sl" class="form-control" />*@
+            @*<label style="color:palegreen" class="label-success">@ViewBag.Message</label>*@
         </div>
     </div>
+
+
+    @*<script>
+            function ShowImagePreview(imageUploader, PreviewImage) {
+                if (imageUploader.flle && imageUploader.flle[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#PreviewImage').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(imageUploader.flle[0]);
+                }
+            }
+        </script>*@
 
     <div class="form-group">
         <p style="color:red">@ViewData["ErrorMessage2"]</p>

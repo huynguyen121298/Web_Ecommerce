@@ -5,18 +5,18 @@
     Layout = "~/Areas/Admin/Views/Shared/View_2.cshtml";
 }
 
-<h2 style="text-align:center;color:aquamarine ">Thêm tài khoản mới</h2>
+<h2 style="text-align:center;color:aquamarine " >Thêm Admin</h2>
 
-@using (Html.BeginForm("AddRegister", "Account", FormMethod.Post))
+@using (Html.BeginForm("AddRegister","Account",FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
-
+    
 <div class="form-horizontal">
 
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
+     @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -36,18 +36,9 @@
     <div class="form-group">
         @Html.Label(" Email", htmlAttributes: new { @class = "fa fa-envelope-square" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" ,@oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             <label style="color:red" class="label-success col-md-offset-2 col-md-10">@ViewBag.error</label>
-        </div>
-
-    </div>
-
-    <div class="form-group" id="merchantInput" style="display:none">
-        @Html.Label(" Nhập Tên doanh nghiệp", htmlAttributes: new { @class = "fa fa-user" })
-        <div class="col-md-10">
-            <input type="text" class="form-control" name="merchantInput"/>
-            @Html.ValidationMessageFor(model => model.MerchantName, "", new { @class = "text-danger" })
         </div>
 
     </div>
@@ -72,7 +63,7 @@
     <div class="form-group">
         @Html.Label(" Chọn quyền:", htmlAttributes: new { @class = "fa fa-lock-open" })
         <div class="col-md-10">
-            <select name="stt" id="stt" onchange="ShowInput()" >
+            <select name="stt" id="stt">
 
                 <option>Admin</option>
                 <option>User</option>
@@ -99,21 +90,13 @@
 <div class="form-group">
 
     <div style="text-align:center" class="col-md-10">
-        @Html.ActionLink("Trở về trang đăng nhập", "Logout","Account")
+        @Html.ActionLink("Trở về trang đăng nhập", "Login")
         <br />
-        @Html.ActionLink("Trở về trang chủ", "Index", "Admin")
+        @Html.ActionLink("Trở về trang chủ", "Index","Admin")
     </div>
 
+
+    @*<button type="submit" class="btn" style="background-color:#ffb0bd;color:white;width:100%;height:50px;border-radius:10px;margin-bottom:10px">ĐĂNG KÝ</button><br />*@
+
+
 </div>
-<script>
-    function ShowInput() {
-        var valueSelect = $("#stt").val();
-        console.log("value is :" +valueSelect)
-        if (valueSelect == "Admin") {
-            $("#merchantInput").hide();
-        } else {
-            $("#merchantInput").show();
-        }
-        
-    }
-</script>

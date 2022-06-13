@@ -64,12 +64,12 @@ namespace UI.Areas.Admin.Controllers
             dtocustomer.TrangThai = Request.Form["stt"];
             var state = Request.Form["state"];
             if (state == "Đã thanh toán")
-                dtocustomer.State = true ;
+                dtocustomer.State = true;
             dtocustomer.State = false;
 
             HttpResponseMessage response = service.PostResponse("api/Checkout_Customer/Update/", dtocustomer);
             response.EnsureSuccessStatusCode();
-            if(dtocustomer.TrangThai == "Đã lên đơn")
+            if (dtocustomer.TrangThai == "Đã lên đơn")
             {
                 var fullName = dtocustomer.FirstName + "" + dtocustomer.LastName;
 
@@ -93,13 +93,13 @@ namespace UI.Areas.Admin.Controllers
             try
             {
                 //var reason = Request.Form["reason"];
-                if(reason != "")
+                if (reason != "")
                 {
-                   
+
                     HttpResponseMessage response = service.DeleteResponse("api/Checkout_Customer/Deletecustomer/" + id);
                     response.EnsureSuccessStatusCode();
                     bool checkSuccess = response.Content.ReadAsAsync<bool>().Result;
-                    if(checkSuccess == false)
+                    if (checkSuccess == false)
                         return Json(new { mes = false });
 
                     HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetCustomerById/" + id);
@@ -155,7 +155,7 @@ namespace UI.Areas.Admin.Controllers
             {
                 return false;
             }
-           
+
         }
     }
 }

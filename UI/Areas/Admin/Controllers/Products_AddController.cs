@@ -110,7 +110,7 @@ namespace UI.Areas.Admin.Controllers
 
             dTO_Product_Item_Type.Type_Product = Request.Form["typeProduct"];
             var colors = Request.Form["selectColor"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
-            if(colors.Length > 0)
+            if (colors.Length > 0)
             {
                 var newColors = new List<string>();
                 foreach (var color in colors)
@@ -121,10 +121,10 @@ namespace UI.Areas.Admin.Controllers
 
             }
 
-            if(dTO_Product_Item_Type.Type_Product =="Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
+            if (dTO_Product_Item_Type.Type_Product == "Thời trang nam" || dTO_Product_Item_Type.Type_Product == "Thời trang nữ")
             {
                 var sizes = Request.Form["sizeProduct"].Split(new Char[] { ' ', ',', '.', '-', '\n', '\t' });
-                if(sizes.Length > 0)
+                if (sizes.Length > 0)
                 {
                     var newSizes = new List<string>();
                     foreach (var size in sizes)
@@ -136,7 +136,7 @@ namespace UI.Areas.Admin.Controllers
                 else
                     ViewData["ErrorMessage"] = "Bạn chưa chọn size cho sản phẩm";
             }
-           
+
             try
             {
                 if (ImageUpload != null)
@@ -299,7 +299,7 @@ namespace UI.Areas.Admin.Controllers
                         dTO_Product_Item_Type.Photo3 = "~/images_product/" + fileName;
                         ImageUpload3.SaveAs(Path.Combine(Server.MapPath("~/images_product/"), fileName));
                     }
-                    if ((ImageUpload == null && ImageUpload2 == null && ImageUpload3 == null) 
+                    if ((ImageUpload == null && ImageUpload2 == null && ImageUpload3 == null)
                         && dTO_Product_Item_Type.Photo == null && dTO_Product_Item_Type.Photo2 == null && dTO_Product_Item_Type.Photo3 == null)
                     {
                         ViewData["ErrorMessage"] = "Bạn chưa chọn hình ảnh cho sản phẩm";

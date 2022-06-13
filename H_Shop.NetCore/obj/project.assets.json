@@ -1388,9 +1388,6 @@
       },
       "DataAndServices/1.0.0": {
         "type": "project",
-        "dependencies": {
-          "Model": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/DataAndServices.dll": {}
         },
@@ -4718,20 +4715,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\huy.nguyen\\.nuget\\packages\\": {}
+    "C:\\Users\\engla\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\H_Shop.NetCore\\H_Shop.NetCore.csproj",
+      "projectUniqueName": "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\H_Shop.NetCore\\H_Shop.NetCore.csproj",
       "projectName": "H_Shop.NetCore",
-      "projectPath": "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\H_Shop.NetCore\\H_Shop.NetCore.csproj",
-      "packagesPath": "C:\\Users\\huy.nguyen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\H_Shop.NetCore\\obj\\",
+      "projectPath": "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\H_Shop.NetCore\\H_Shop.NetCore.csproj",
+      "packagesPath": "C:\\Users\\engla\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\H_Shop.NetCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\huy.nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\engla\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4745,11 +4741,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\DataAndServices\\DataAndServices.csproj": {
-              "projectPath": "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\DataAndServices\\DataAndServices.csproj"
+            "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\DataAndServices\\DataAndServices.csproj": {
+              "projectPath": "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\DataAndServices\\DataAndServices.csproj"
             },
-            "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\Model\\Model.csproj": {
-              "projectPath": "C:\\Users\\huy.nguyen\\Documents\\GitHub\\Web_Ecommerce\\Model\\Model.csproj"
+            "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\Model\\Model.csproj": {
+              "projectPath": "C:\\Users\\engla\\Documents\\GitHub\\Web_Ecommerce\\Model\\Model.csproj"
             }
           }
         }
@@ -4819,7 +4815,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.105\\RuntimeIdentifierGraph.json"
       }
     }
   }

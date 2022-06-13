@@ -26,7 +26,7 @@ namespace UI.Areas.Admin.Controllers
 
         [AuthorizeLoginAdmin]
         public ActionResult Edit(string id)
-        {           
+        {
             ServiceRepository service = new ServiceRepository();
             HttpResponseMessage responseMessage = service.GetResponse("api/Admin_acc/GetAccountById/" + id);
             responseMessage.EnsureSuccessStatusCode();
@@ -87,8 +87,8 @@ namespace UI.Areas.Admin.Controllers
                     ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/images_merchant/"), fileName));
                     var adminLogin = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
 
-                    
-                    
+
+
                     if (dTO_Account._id == adminLogin._id)
                     {
                         var userSession = new DTO_Account();
@@ -112,7 +112,7 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
-                Response.Cookies["firstname1"].Value = dTO_Account.FirstName +""+ dTO_Account.LastName;
+                Response.Cookies["firstname1"].Value = dTO_Account.FirstName + "" + dTO_Account.LastName;
 
                 //HttpCookie cknameAccount1 = new HttpCookie("firstname1");
                 //cknameAccount1.Value = dTO_Account.FirstName + dTO_Account.LastName;

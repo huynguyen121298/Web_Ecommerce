@@ -1,9 +1,8 @@
-﻿@model IEnumerable<Model.DTO.DTO_Ad.DTO_Account>
+﻿@model IEnumerable< Model.DTO.DTO_Ad.DTO_Account>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    
 }
 
 <div class="card shadow mb-4">
@@ -34,22 +33,22 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                       
+                        @*<th>RoleName</th>*@
                         <th>LastName</th>
                         <th>FirstName</th>
                         <th>Email</th>
-                        <th>Vai trò</th>
+                        <th>Password</th>
                         <th>Action</th>
 
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                       
+                        @*<th>RoleName</th>*@
                         <th>LastName</th>
                         <th>FirstName</th>
                         <th>Email</th>
-                        <th>Vai trò</th>
+                        <th>Password</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -57,18 +56,12 @@
 
                     @foreach (var item in Model)
                     {
-                        string accountType = null;
-                        if(item.RoleId == 1)
-                        {
-                            accountType = "Quản trị viên";
-                        }
-                        else
-                        {
-                            accountType = "Doanh nghiệp";
-                        }
+
                         <tr>
 
-                           
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.Role.RoleName)
+                                </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.FirstName)
                             </td>
@@ -79,12 +72,12 @@
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
                             <td>
-                                @accountType
+                                @Html.DisplayFor(modelItem => item.Password)
                             </td>
                             <td>
-                                <a class="btn btn-success " href=" @Url.Action("Edit", "Admin_acc", new { id = item._id })">Chỉnh sửa</a>
-                                <a class="btn btn-primary " href=" @Url.Action("Details", "Admin_acc", new { id = item._id })">Chi tiết</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
+                                <a class="btn btn-success " href=" @Url.Action("Edit", "Admin_acc", new { id = item.idUser })">Chỉnh sửa</a>
+                                <a class="btn btn-primary " href=" @Url.Action("Details", "Admin_acc", new { id = item.idUser })">Chi tiết</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target(@item.idUser)" data-target="#del">
                                     Xóa
                                 </button>
                             </td>
@@ -98,7 +91,7 @@
 </div>
 
 <script>
-
+  
     var del;
     function target(id) {
         del = id;

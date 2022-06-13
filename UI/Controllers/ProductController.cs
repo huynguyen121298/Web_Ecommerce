@@ -340,6 +340,7 @@ namespace UI.Controllers
             return Json(new { soLuong = li });
         }
 
+        [AuthorizeLoginEndUser]
         public ActionResult Details1(string Id)
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];

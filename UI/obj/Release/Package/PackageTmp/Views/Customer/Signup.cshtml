@@ -6,43 +6,6 @@
 }
 
 <h2 style="text-align:center ">Đăng Ký </h2>
-<!-- Messenger Plugin chat Code -->
-<div id="fb-root"></div>
-
-<!-- Your Plugin chat code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
-
-<!-- Messenger Plugin chat Code -->
-<div id="fb-root"></div>
-
-<!-- Your Plugin chat code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
-
-<script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "102128368471833");
-    chatbox.setAttribute("attribution", "biz_inbox");
-</script>
-
-<!-- Your SDK code -->
-<script>
-    window.fbAsyncInit = function () {
-        FB.init({
-            xfbml: true,
-            version: 'v13.0'
-        });
-    };
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 
 @using (Html.BeginForm("Signup", "Customer", FormMethod.Post))
 {
@@ -53,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
+           @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -75,7 +38,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
+               
             </div>
 
         </div>
@@ -91,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label(" Xác nhận mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
+           @Html.Label(" Xác nhận mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
@@ -105,31 +68,46 @@
                 <label style="color:red" class="label-success">@ViewData["ErrorMessage"]</label>
                 <label style="color:red" class="label-success">@ViewData["ErrorMessage5"]</label>
             </div>
+
+
+            @*<button type="submit" class="btn" style="background-color:#ffb0bd;color:white;width:100%;height:50px;border-radius:10px;margin-bottom:10px">ĐĂNG KÝ</button><br />*@
+
+
         </div>
 
         <div class="form-group">
 
             <div class="col-md-offset-2 col-md-10">
+                <input id="btnGetAuthCode" class="btn btn-primary btn-user btn-block" type="submit" value="Lấy mã xác thực">
                 <input type="submit" value="Đăng ký" class="btn btn-google btn-user btn-block fab fa-google fa-fw" />
                 <label style="color:red" class="label-success col-md-offset-2 col-md-10">@ViewBag.error</label>
             </div>
         </div>
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label style="color:palegreen" class="label-success">@ViewData["ErrorMessage"]</label>
+                </div>
+
+            </div>*@
     </div>
 }
-<div class="form-group">
 
-    <div class="col-md-offset-2 col-md-10">
-        <input id="btnGetAuthCode" class="btn btn-primary btn-user btn-block" type="submit" value="Lấy mã xác thực">
-    </div>
-</div>
+
 <div class="form-group">
 
     <div style="text-align:center" class="col-md-10">
         @Html.ActionLink("Trở về trang đăng nhập", "Login")
     </div>
 
+
+    @*<button type="submit" class="btn" style="background-color:#ffb0bd;color:white;width:100%;height:50px;border-radius:10px;margin-bottom:10px">ĐĂNG KÝ</button><br />*@
+
+
 </div>
 <hr>
+@*<div  style="margin-left:100px">
+    <a class="small" href="ForgotPassword">Forgot Password?</a>
+</div>*@
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -161,3 +139,11 @@
     });
 
 </script>
+@*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9TyMQ4y3OFtS9ho3C1wB7Lwh-10PtdVY&libraries=places&language=vi&region=VN"></script>
+    <script>
+        var input = document.getElementById('DiaChi');
+        autocomplete = new google.maps.places.Autocomplete(input);
+    </script>*@
+@*<script>
+        document.getElementById("input").attributes["required"] = "Mời nhập ma";
+    </script>*@

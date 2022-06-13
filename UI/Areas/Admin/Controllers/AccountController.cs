@@ -15,7 +15,7 @@ namespace UI.Areas.Admin.Controllers
     {
         private string url;
         private ServiceRepository serviceObj;
-      
+
         public AccountController()
         {
             serviceObj = new ServiceRepository();
@@ -46,7 +46,7 @@ namespace UI.Areas.Admin.Controllers
 
             string firstname = string.Empty;
             string accountId = string.Empty;
-            int roleId = 0; 
+            int roleId = 0;
 
             if (Request.Cookies["firstname1"] != null)
                 firstname = Request.Cookies["firstname1"].Value;
@@ -59,7 +59,7 @@ namespace UI.Areas.Admin.Controllers
 
 
             if (!string.IsNullOrEmpty(firstname))
-                result = new DTO_Account { FirstName = firstname, _id = accountId ,RoleId = roleId};
+                result = new DTO_Account { FirstName = firstname, _id = accountId, RoleId = roleId };
             return result;
         }
         [DeatAuthorize(Order = 2)]
@@ -106,9 +106,9 @@ namespace UI.Areas.Admin.Controllers
                 }
                 else
                 {
-                    if(merchantInput == "")
+                    if (merchantInput == "")
                     {
-                        
+
                         ViewData["ErrorMessage"] = "Tên doanh nghiệp không được để trống";
                         return View();
                     }
@@ -160,7 +160,7 @@ namespace UI.Areas.Admin.Controllers
                 ck2.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck2);
 
-                HttpCookie ck3 = new HttpCookie("roleId",(resultLogin.RoleId).ToString());
+                HttpCookie ck3 = new HttpCookie("roleId", (resultLogin.RoleId).ToString());
                 ck2.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck3);
 
@@ -177,7 +177,7 @@ namespace UI.Areas.Admin.Controllers
                 ViewData["ErrorMessage"] = ("Tên đăng nhập hoặc mật khẩu không tồn tại.");
                 return this.View();
             }
-            
+
 
         }
         public ActionResult Logout()
@@ -188,7 +188,7 @@ namespace UI.Areas.Admin.Controllers
                 {
                     Session.Remove(CommonConstants.ACCOUNT_SESSION);
                 }
-                
+
 
 
                 if (Request.Cookies["firstname1"] != null)

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,10 +46,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
@@ -59,6 +58,10 @@
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Model\bin\Debug\Model.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\..\..\..\Desktop\UI_\bin\MongoDB.Bson.dll</HintPath>
     </Reference>
@@ -151,10 +154,10 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\Admin_accController.cs" />
     <Compile Include="Areas\Admin\Controllers\Checkout_CustomerController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TypeProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\CodeDiscountController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\Products_AddController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TypeProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\Users_AccController.cs" />
     <Compile Include="Areas\Admin\Models\AdminLogin.cs" />
     <Compile Include="Areas\Admin\Models\RegisterAdminModel.cs" />
@@ -167,13 +170,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\PayCompare.cs" />
+    <Compile Include="Helper\PayLib.cs" />
     <Compile Include="Helper\Util.cs" />
     <Compile Include="Models\AccountSocial.cs" />
     <Compile Include="Models\AuthenticationEmail.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MailHelper.cs" />
-    <Compile Include="Helper\PayLib.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\ResetPasswordModel2.cs" />
@@ -345,7 +348,6 @@
     <Content Include="ckeditor\plugins\magicline\images\icon-rtl.png" />
     <Content Include="ckeditor\plugins\magicline\images\icon.png" />
     <Content Include="ckeditor\plugins\pastefromgdocs\filter\default.js" />
-    <Content Include="ckeditor\plugins\pastefromlibreoffice\filter\default.js" />
     <Content Include="ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="ckeditor\plugins\pastetools\filter\common.js" />
     <Content Include="ckeditor\plugins\pastetools\filter\image.js" />
@@ -512,7 +514,6 @@
     <Content Include="Content\admin\css\sb-admin-2.min.css" />
     <Content Include="Content\admin\css\style.css" />
     <Content Include="Content\admin\css\style_register.css" />
-    <Content Include="Content\admin\img\profile-Icon-SVG.jpg" />
     <Content Include="Content\admin\img\undraw_posting_photo.svg" />
     <Content Include="Content\admin\img\undraw_profile.svg" />
     <Content Include="Content\admin\img\undraw_profile_1.svg" />
@@ -2280,9 +2281,74 @@
     <Content Include="images\TMDT.png" />
     <Content Include="images\TMDT_login.png" />
     <Content Include="images\tuixach.jpg" />
+    <Content Include="images_merchant\1.jpg" />
+    <Content Include="images_merchant\2.jpg" />
+    <Content Include="images_merchant\3.jpg" />
+    <Content Include="images_merchant\4.jpg" />
+    <Content Include="images_merchant\5.jpg" />
+    <Content Include="images_merchant\6.jpg" />
+    <Content Include="images_merchant\ab1-alt.jpg" />
+    <Content Include="images_merchant\ab1.jpg" />
+    <Content Include="images_merchant\ab2-alt.jpg" />
+    <Content Include="images_merchant\ab2.jpg" />
+    <Content Include="images_merchant\ap.jpg" />
+    <Content Include="images_merchant\background.jpg" />
+    <Content Include="images_merchant\banner1.jpg" />
+    <Content Include="images_merchant\banner2.jpg" />
+    <Content Include="images_merchant\banner3.jpg" />
+    <Content Include="images_merchant\bg.jpg" />
+    <Content Include="images_merchant\brand-1.png" />
+    <Content Include="images_merchant\brand-2.png" />
+    <Content Include="images_merchant\brand-3.png" />
+    <Content Include="images_merchant\brand-4.png" />
+    <Content Include="images_merchant\brand-5.png" />
+    <Content Include="images_merchant\brand-6.png" />
+    <Content Include="images_merchant\category-1.jpg" />
+    <Content Include="images_merchant\category-2.jpg" />
+    <Content Include="images_merchant\category-3.jpg" />
+    <Content Include="images_merchant\category-4.jpg" />
+    <Content Include="images_merchant\category-5.jpg" />
+    <Content Include="images_merchant\category-6.jpg" />
+    <Content Include="images_merchant\category-7.jpg" />
+    <Content Include="images_merchant\category-8.jpg" />
+    <Content Include="images_merchant\giay.jpg" />
+    <Content Include="images_merchant\godaddy.svg" />
+    <Content Include="images_merchant\Icon-la-gi.jpg" />
+    <Content Include="images_merchant\imageCartNo.png" />
+    <Content Include="images_merchant\iphone.jpg" />
+    <Content Include="images_merchant\iphone12.jpg" />
+    <Content Include="images_merchant\logo.png" />
+    <Content Include="images_merchant\macbook.jpg" />
+    <Content Include="images_merchant\macbook1.jpg" />
+    <Content Include="images_merchant\noProduct.png" />
+    <Content Include="images_merchant\norton.svg" />
+    <Content Include="images_merchant\payment-method.png" />
+    <Content Include="images_merchant\product-1.jpg" />
+    <Content Include="images_merchant\product-10.jpg" />
+    <Content Include="images_merchant\product-2.jpg" />
+    <Content Include="images_merchant\product-3.jpg" />
+    <Content Include="images_merchant\product-4.jpg" />
+    <Content Include="images_merchant\product-5.jpg" />
+    <Content Include="images_merchant\product-6.jpg" />
+    <Content Include="images_merchant\product-7.jpg" />
+    <Content Include="images_merchant\product-8.jpg" />
+    <Content Include="images_merchant\product-9.jpg" />
+    <Content Include="images_merchant\quan.jpg" />
+    <Content Include="images_merchant\review-1.jpg" />
+    <Content Include="images_merchant\review-2.jpg" />
+    <Content Include="images_merchant\review-3.jpg" />
+    <Content Include="images_merchant\sale.jpg" />
+    <Content Include="images_merchant\shopping-cart-icon.jpg" />
+    <Content Include="images_merchant\slider-1.jpg" />
+    <Content Include="images_merchant\slider-2.jpg" />
+    <Content Include="images_merchant\slider-3.jpg" />
+    <Content Include="images_merchant\ssl.svg" />
+    <Content Include="images_merchant\thoitrangnam.jpg" />
+    <Content Include="images_merchant\TMDT.png" />
+    <Content Include="images_merchant\TMDT_login.png" />
+    <Content Include="images_merchant\tuixach.jpg" />
     <Content Include="images_product\aonam2.jpg" />
     <Content Include="images_product\aothunnu.jpg" />
-    <Content Include="images_product\ap.jpg" />
     <Content Include="images_product\balo.jpg" />
     <Content Include="images_product\bep2.jpg" />
     <Content Include="images_product\bep3.jpg" />
@@ -2547,7 +2613,7 @@
     <Content Include="Areas\Admin\Views\Products_Add\GetAllProductByType.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Index2.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutClone.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_1.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_2.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_Acc.cshtml" />
@@ -2558,20 +2624,14 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Product_Discount.cshtml" />
-    <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\MonthlySalesByDate.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Notification\BagNotification.cshtml" />
-    <Content Include="Areas\Admin\Views\CodeDiscount\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CodeDiscount\Create.cshtml" />
     <Content Include="Areas\Admin\Views\CodeDiscount\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\ListTypeProductAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\CodeDiscount\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\BagNotification.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TypeProduct\Create.cshtml" />
     <Content Include="Areas\Admin\Views\TypeProduct\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\TypeProduct\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\ListTypeProductUsed.cshtml" />
-    <Content Include="ckeditor\bender-runner.config.json" />
-    <Content Include="ckeditor\SECURITY.md" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />
@@ -2969,22 +3029,9 @@
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Error.cshtml" />
-    <Content Include="Views\Merchant\Index.cshtml" />
-    <Content Include="Views\Merchant\ProductByMerchant.cshtml" />
-    <Content Include="Views\Customer\ProductBought.cshtml" />
-    <Content Include="Views\Customer\ProductFavorite.cshtml" />
-    <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
-    <Content Include="Views\Cart\PaymentConfirm.cshtml" />
-    <Content Include="Views\Customer\SignUpFacebook.cshtml" />
-    <Content Include="Views\Shared\_LayoutMerchant2.cshtml" />
-    <Content Include="Views\Home\ListTypeProductMerchant.cshtml" />
-    <Content Include="Views\Merchant\Index2.cshtml" />
-    <Content Include="Views\Merchant\Index_.cshtml" />
-    <Content Include="Views\Product\BagProductRecommend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images_merchant\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -3001,12 +3048,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{919cfaf9-a80c-4567-8130-24aa1a65d33b}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -3041,10 +3082,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
