@@ -8,8 +8,8 @@ namespace DataAndServices.DataModel
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string _id { get; set; }
 
-        public int Id_Item { get; set; }
-
         public string Type_Product { get; set; }
+
+        public string Status { get; set; }  
     }
 }

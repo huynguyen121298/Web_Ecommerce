@@ -12,7 +12,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Mã sản phẩm: @Html.DisplayFor(model => model.Id_SanPham)
+            Mã sản phẩm: @Html.DisplayFor(model => model._id)
         </dt>
 
         <dd>
@@ -37,27 +37,39 @@
         <dt>
             Chi tiết sản phẩm:  @Html.DisplayFor(model => model.Details)
         </dt>
+        <ol>
+            
+            <li>
+                Hình ảnh<ol>
+    @if (Model.Photo != null)
+    {
+        <li>
+            <img src="@Url.Content(Model.Photo)" style="height:100px ;width:100px ; margin:10px " />
+        </li>
+    }
 
-        <dd>
+    @if (Model.Photo2 != null)
+    {
+        <li>
+            <img src="@Url.Content(Model.Photo2)" style="height:100px ;width:100px ; margin:10px " />
+        </li>
+    }
 
-        </dd>
-        <dt>
-            Link hình ảnh:  @Html.DisplayFor(model => model.Photo)
-        </dt>
+    @if (Model.Photo3 != null)
+    {
+        <li>
+            <img src="@Url.Content(Model.Photo3)" style="height:100px ;width:100px ; margin:10px " />
+        </li>
+    }
 
-        <dd>
+    
 
-        </dd>
+</ol>
+            </li>
+            
+        </ol>
 
-        <dt>
-            Hỉnh ảnh sản phẩm
 
-        </dt>
-
-        <dd>
-            <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
-
-        </dd>
         <dt>
             Số lượng còn trong kho:   @Html.DisplayFor(model => model.Quantity)
         </dt>
@@ -70,6 +82,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.Id_SanPham }) |
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model._id }) |
     @Html.ActionLink("Trở về", "Index")
 </p>

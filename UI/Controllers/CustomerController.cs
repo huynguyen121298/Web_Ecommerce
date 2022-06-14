@@ -1,6 +1,9 @@
 ﻿using Facebook;
 using Model.Common;
 using Model.DTO.DTO_Client;
+using Model.DTO_Model;
+using MongoDB.Bson;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +16,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using UI.Models;
+using UI.Security_;
 using UI.Service;
 
 namespace UI.Controllers
@@ -31,13 +35,15 @@ namespace UI.Controllers
         {
             serviceObj = new ServiceRepository();
             url = "api/Customer/";
-
         }
+
         public ActionResult Logout()
         {
             try
             {
                 Session.Remove(Constants.USER_SESSION);
+                Session.Clear();
+
                 if (Request.Cookies["usernameCustomer"] != null)
                 {
                     HttpCookie ckUserAccount = new HttpCookie("usernameCustomer");
@@ -107,13 +113,14 @@ namespace UI.Controllers
                 return View();
             else
             {
+                HttpCookie ck1 = new HttpCookie("firstname", (model.FirstName + "  " + model.LastName).ToString());
+                ck1.Expires = DateTime.Now.AddHours(48);
+                Response.Cookies.Add(ck1);
                 //Save token API
                 Session[Constants.USER_SESSION] = model;
-                string tokenUser = GetToken(model.Email);
-                HttpCookie cookie = new HttpCookie(Constants.TOKEN_NUMBER, tokenUser);
-                cookie.Expires = DateTime.Now.AddHours(-48);
-                Response.Cookies.Add(cookie);
-                return RedirectToAction("ProfileUser", "Customer", new { usr = model.Email });
+                Session.Timeout = 100;
+
+                return RedirectToAction("ProfileUser", "Customer");
             }
         }
 
@@ -122,7 +129,6 @@ namespace UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserLogin model)
         {
-
             HttpResponseMessage response = serviceObj.GetResponse(url + "GetLoginResultByUsernamePassword?user=" + model.Email + "&pass=" + model.Password);
             response.EnsureSuccessStatusCode();
             DTO_Users_Acc resultLogin = response.Content.ReadAsAsync<DTO_Users_Acc>().Result;
@@ -130,70 +136,56 @@ namespace UI.Controllers
             bool acc = (resultLogin.Email != null);
             if (acc)
             {
-
-                HttpResponseMessage responseUser = serviceObj.GetResponse(url + "GetCustomerByUsername?user=" + model.Email);
-                responseUser.EnsureSuccessStatusCode();
-                DTO_Users_Acc customLogin = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
-
-                UserLogin u = new UserLogin
-                {
-                    _id = customLogin._id,
-                    FirstName = customLogin.FirstName,
-                    LastName = customLogin.LastName,
-                    Email = customLogin.Email,
-                    Password = customLogin.Password
-                };
-                Session.Add(Constants.USER_SESSION, u);
+                //HttpResponseMessage responseUser = serviceObj.GetResponse(url + "GetCustomerByUsername?user=" + model.Email);
+                //responseUser.EnsureSuccessStatusCode();
+                //DTO_Users_Acc customLogin = responseUser.Content.ReadAsAsync<DTO_Users_Acc>().Result;
 
                 if (model.RememberMe)
                 {
-                    HttpCookie ckUser = new HttpCookie("email");
-                    ckUser.Expires = DateTime.Now.AddHours(48);
-                    ckUser.Value = model.Email;
-                    Response.Cookies.Add(ckUser);
+                    
 
-                    HttpCookie ckPass = new HttpCookie("password");
-                    ckPass.Expires = DateTime.Now.AddHours(48);
-                    ckPass.Value = model.Password;
-                    Response.Cookies.Add(ckPass);
-                    //Save token API
-                    string tokenUser = GetToken(u.Email);
-                    HttpCookie cookie = new HttpCookie(Constants.TOKEN_NUMBER, tokenUser);
-                    HttpContext.Response.Cookies.Remove(Constants.TOKEN_NUMBER);
-                    Response.Cookies.Add(cookie);
-                    cookie.Expires = DateTime.Now.AddDays(1);
-                    cookie.Value = tokenUser;
-                    HttpContext.Response.SetCookie(cookie);
-
+               
                     //Save cookies
                     HttpCookie ckUserAccount = new HttpCookie("usernameCustomer");
                     ckUserAccount.Expires = DateTime.Now.AddHours(48);
-                    ckUserAccount.Value = u.Email;
+                    ckUserAccount.Value = resultLogin.Email;
                     Response.Cookies.Add(ckUserAccount);
                     HttpCookie ckIDAccount = new HttpCookie("idCustomer");
                     ckIDAccount.Expires = DateTime.Now.AddHours(48);
-                    ckIDAccount.Value = u._id + "";
+                    ckIDAccount.Value = resultLogin._id + "";
                     Response.Cookies.Add(ckIDAccount);
 
                     HttpCookie ckNameAccount = new HttpCookie("nameCustomer");
                     ckNameAccount.Expires = DateTime.Now.AddHours(48);
-                    ckNameAccount.Value = u.LastName;
+                    ckNameAccount.Value = resultLogin.FirstName + "  " + resultLogin.LastName;
                     Response.Cookies.Add(ckNameAccount);
                 }
+                UserLogin u = new UserLogin
+                {
+                    _id = resultLogin._id,
+                    FirstName = resultLogin.FirstName,
+                    LastName = resultLogin.LastName,
+                    Email = resultLogin.Email,
+                    PhoneNumber = resultLogin.PhoneNumber,
+                    Address = resultLogin.Address,
+                    City = resultLogin.City,
+                };
+                Session.Add(Constants.USER_SESSION, u);
+                Session.Timeout = 1000;
                 HttpCookie ck1 = new HttpCookie("firstname", (resultLogin.FirstName + "  " + resultLogin.LastName).ToString());
                 ck1.Expires = DateTime.Now.AddHours(48);
                 Response.Cookies.Add(ck1);
 
                 ViewBag.SuccessMessage = "Đăng nhập thành công";
-                return RedirectToAction("Index", "Home", new { usr = customLogin.Email });
+                return RedirectToAction("Index", "Home");
             }
             else
             {
                 ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
             }
             return this.View();
-
         }
+
         public ActionResult Signup()
         {
             return View();
@@ -201,7 +193,7 @@ namespace UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  ActionResult Signup([Bind(Include = "FirstName,LastName,Email,Password,ConfirmPassword")] RegisterModel model, string AuthenticationCode)
+        public ActionResult Signup([Bind(Include = "FirstName,LastName,Email,Password,ConfirmPassword")] RegisterModel model, string AuthenticationCode)
         {
             var id = Request.Form["AuthenticationCode"];
             if (id == "")
@@ -221,7 +213,7 @@ namespace UI.Controllers
                         return View(model);
                     }
 
-                    DTO_Users_Acc c = new DTO_Users_Acc 
+                    DTO_Users_Acc c = new DTO_Users_Acc
                     {
                         FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.FirstName.Trim().ToLower()),
                         LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.LastName.Trim().ToLower()),
@@ -231,16 +223,8 @@ namespace UI.Controllers
 
                     HttpResponseMessage response = serviceObj.PostResponse(url + "InsertCustomer/", c);
                     response.EnsureSuccessStatusCode();
-                    UserLogin u = new UserLogin
 
-                    {
-                        FirstName = c.FirstName,
-                        Password = c.Password,
-                        Email = c.Email
-                    };
                     Session[Constants.USER_SESSION] = null;
-                    Session[Constants.USER_SESSION] = u;
-
                     return RedirectToAction("Login", "Customer");
                 }
                 else
@@ -248,16 +232,18 @@ namespace UI.Controllers
                     ViewData["ErrorMessage"] = "Mã xác thực không hợp lệ";
                     return View(model);
                 }
-            }          
+            }
             return View(model);
         }
+
         public DTO_Users_Acc GetCustomerByEmail(string mail)
         {
-            HttpResponseMessage response =  serviceObj.GetResponse(url + "GetCustomerByEmail?mail=" + mail);
+            HttpResponseMessage response = serviceObj.GetResponse(url + "GetCustomerByEmail?mail=" + mail);
             response.EnsureSuccessStatusCode();
-            DTO_Users_Acc  result =  response.Content.ReadAsAsync<DTO_Users_Acc>().Result;
-            return  result;
+            DTO_Users_Acc result = response.Content.ReadAsAsync<DTO_Users_Acc>().Result;
+            return result;
         }
+
         public string GetCustomerByPassword(string email)
         {
             HttpResponseMessage response = serviceObj.GetResponse(url + "GetCustomerByPassword?email=" + email);
@@ -265,6 +251,7 @@ namespace UI.Controllers
             string result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
+
         private Uri RedirectUri
         {
             get
@@ -283,6 +270,7 @@ namespace UI.Controllers
             response.EnsureSuccessStatusCode();
             return response.Content.ReadAsAsync<string>().Result;
         }
+
         public UserLogin CheckAccount()
         {
             UserLogin result = null;
@@ -300,18 +288,12 @@ namespace UI.Controllers
             if (Request.Cookies["nameCustomer"] != null)
                 firstname = Request.Cookies["nameCustomer"].Value;
 
-            if (Request.Cookies["nameCustomer1"] != null)
-                lastname = Request.Cookies["nameCustomer1"].Value;
-
-            if (Request.Cookies["email"] != null)
-                email = Request.Cookies["email"].Value;
-            if (Request.Cookies["password"] != null)
-                password = Request.Cookies["password"].Value;
             if (!string.IsNullOrEmpty(username) & !string.IsNullOrEmpty(password))
                 if (!string.IsNullOrEmpty(firstname) & !string.IsNullOrEmpty(id) & !string.IsNullOrEmpty(firstname))
                     result = new UserLogin { _id = id, Password = password, Email = email, FirstName = firstname, LastName = lastname };
             return result;
         }
+
         public ActionResult ForgotPassword()
         {
             return View();
@@ -320,7 +302,6 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult ForgotPassword(ForgotPasswordModel model)
         {
-
             if (ModelState.IsValid)
             {
                 string resetCode = Guid.NewGuid().ToString();
@@ -350,9 +331,10 @@ namespace UI.Controllers
             }
             return View();
         }
+
         private void SendEmail(string emailAddress, string body, string subject)
         {
-            using (MailMessage mm = new MailMessage("nguyentuanhuy301198@gmail.com", emailAddress))
+            using (MailMessage mm = new MailMessage("huytuannguyen.301198@gmail.com", emailAddress))
             {
                 mm.Subject = subject;
                 mm.Body = body;
@@ -360,7 +342,7 @@ namespace UI.Controllers
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
-                NetworkCredential NetworkCred = new NetworkCredential("nguyentuanhuy301198@gmail.com", "HuyHuyTuanNguyen");
+                NetworkCredential NetworkCred = new NetworkCredential("huytuannguyen.301198@gmail.com", "Huyhuy123");
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;
@@ -370,7 +352,6 @@ namespace UI.Controllers
 
         public ActionResult ResetPassword2(string id, string mail)
         {
-
             return View();
         }
 
@@ -432,6 +413,7 @@ namespace UI.Controllers
             ViewBag.Warning = "Có lỗi xảy ra trong quá trình đặt lại mật khẩu.";
             return this.View();
         }
+
         public DTO_Users_Acc GetCustomerByUsername()
         {
             UserLogin sess = (UserLogin)Session[Constants.USER_SESSION];
@@ -440,6 +422,7 @@ namespace UI.Controllers
             DTO_Users_Acc result = response.Content.ReadAsAsync<DTO_Users_Acc>().Result;
             return result;
         }
+
         public DTO_Users_Acc GetCustomerByToken(string token)
         {
             HttpResponseMessage response = serviceObj.GetResponse(url + "GetCustomerByToken?token=" + token);
@@ -453,26 +436,60 @@ namespace UI.Controllers
             //var findThisEmail = GetCustomerByEmail(Email);
             //if (findThisEmail == null)
             //{
-                Session[Constants.AUTHENTICATIONEMAIL_SESSION] = null;
-                int authCode = new Random().Next(1000, 9999);
-                AuthenticationEmail authenticationEmail = new AuthenticationEmail();
-                authenticationEmail.Email = Email;
-                authenticationEmail.AuthenticationCode = authCode.ToString();
-                Session[Constants.AUTHENTICATIONEMAIL_SESSION] = authenticationEmail;
+            Session[Constants.AUTHENTICATIONEMAIL_SESSION] = null;
+            int authCode = new Random().Next(1000, 9999);
+            AuthenticationEmail authenticationEmail = new AuthenticationEmail();
+            authenticationEmail.Email = Email;
+            authenticationEmail.AuthenticationCode = authCode.ToString();
+            Session[Constants.AUTHENTICATIONEMAIL_SESSION] = authenticationEmail;
 
-                MailHelper.SendMailAuthentication(Email, "Mã xác thực từ H_Shop", authCode.ToString());
+            MailHelper.SendMailAuthentication(Email, "Mã xác thực từ H_Shop", authCode.ToString());
 
-                return Json(new { status = true });
+            return Json(new { status = true });
             //}
             //else
             //    return Json(new { status = false });
         }
 
+        [AuthorizeLoginEndUser]
+        public PartialViewResult ProductBought(int? page)
+        {
+            if (page == null) page = 1;
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            HttpResponseMessage responseUser = serviceObj.GetResponse("api/product/GetProductsBought/" + userLogin._id);
+
+            responseUser.EnsureSuccessStatusCode();
+            List<DTO_Dis_Product> result = responseUser.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
+
+            return PartialView(result.ToPagedList(pageNumber,pageSize));
+        }
+
+        [AuthorizeLoginEndUser]
+        public ActionResult ProductFavorite()
+        {
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            HttpResponseMessage responseUser = serviceObj.GetResponse("api/product/GetProductsFavorite/" + userLogin._id);
+
+            responseUser.EnsureSuccessStatusCode();
+            List<DTO_Product_Item_Type> result = responseUser.Content.ReadAsAsync<List<DTO_Product_Item_Type>>().Result;
+            if (result == null)
+            {
+                return RedirectToAction("Thankyou1","Cart");
+            }
+
+
+            return PartialView(result);
+        }
 
         public ActionResult UserPartial()
         {
             return PartialView();
         }
+
+        [AuthorizeLoginEndUser]
         [HttpGet]
         public ActionResult ProfileUser()
 
@@ -480,16 +497,39 @@ namespace UI.Controllers
             DTO_Users_Acc cus = GetCustomerByUsername();
             return View(cus);
         }
+
+        [AuthorizeLoginEndUser]
         [HttpPost]
         public ActionResult ProfileUser(DTO_Users_Acc model)
         {
             HttpResponseMessage response = serviceObj.PutResponse(url + "UpdateCustomer", model);
-            //Change token
-            HttpCookie cookie = HttpContext.Request.Cookies.Get(Constants.TOKEN_NUMBER);
-            //string token = cookie.Value.ToString();
-
-            response.EnsureSuccessStatusCode();
             bool resultUpdate = response.Content.ReadAsAsync<bool>().Result;
+
+            var newUserLogin = new UserLogin()
+            {
+                _id = model._id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                City = Request.Form["city"].ToString(),
+            };
+            
+           
+            Session.Add(Constants.USER_SESSION,newUserLogin);
+
+            if (Request.Cookies["firstname"] != null)
+            {
+                HttpCookie ck = new HttpCookie("firstname");
+                ck.Expires = DateTime.Now.AddHours(-50);
+                Response.Cookies.Add(ck);
+            }
+
+            HttpCookie ck1 = new HttpCookie("firstname", (model.FirstName + "  " + model.LastName).ToString());
+            ck1.Expires = DateTime.Now.AddHours(48);
+            Response.Cookies.Add(ck1);
+
             if (resultUpdate)
                 ViewBag.Result = "Cập nhật thông tin thành công.";
             else
@@ -500,7 +540,8 @@ namespace UI.Controllers
 
         //start function login use FB,GG..
 
-        #region 
+        #region
+
         public ActionResult LoginFacebook()
         {
             var fb = new FacebookClient();
@@ -515,77 +556,53 @@ namespace UI.Controllers
 
             return Redirect(loginUrl.AbsoluteUri);
         }
+
+        public ActionResult SignUpFacebook()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SignUpFacebook(DTO_Users_Acc model)
+        {
+            var objId = new ObjectId();
+
+            UserLogin u = new UserLogin
+            {
+                _id = objId.ToString(),
+            };
+            Session.Add(Constants.USER_SESSION, u);
+
+            HttpCookie ck1 = new HttpCookie("firstname", ("Facebook").ToString());
+            ck1.Expires = DateTime.Now.AddHours(48);
+            Response.Cookies.Add(ck1);
+            ViewBag.SuccessMessage = "Đăng nhập thành công";
+            Session.Remove(Constants.SESSION_CREDENTIALS);
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult FacebookCallback(string code)
         {
-            var fb = new FacebookClient();
-            dynamic result = fb.Post("oauth/access_token", new
+            if (code != null)
             {
-                client_id = ConfigurationManager.AppSettings["FbAppId"],
-                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
-                redirect_uri = RedirectUri.AbsoluteUri,
-                code = code
-            });
+                var objId = new ObjectId();
 
-            var accessToken = result.access_token;
-            if (!string.IsNullOrEmpty(accessToken))
-            {
-                fb.AccessToken = accessToken;
-                // Get the user's information, like email, first name, middle name etc
-                dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
-                string email = me.email;
-                string userName = me.email;
-                string firstname = me.first_name;
-                string middlename = me.middle_name;
-                string lastname = me.last_name;
-
-                var user = new DTO_Users_Acc();
-                user.Email = email;
-                user.LastName = email;
-                user.FirstName = email;
-                user.FirstName = firstname + " " + middlename + " " + lastname;
-
-                var resultInsert = InsertByFacebook(user);
-                if (resultInsert !=null)
+                UserLogin u = new UserLogin
                 {
-                    UserLogin u = new UserLogin
-                    {
-                        Email = email,
-                        _id = resultInsert,
-                        LastName = user.LastName,
-                        FirstName = user.FirstName
-                    };
-                    Session.Add(Constants.USER_SESSION, u);
+                    _id = objId.ToString(),
+                };
+                Session.Add(Constants.USER_SESSION, u);
 
-                    //Save token API
-                    string token = GetToken(u.Email);
-                    HttpCookie cookie = new HttpCookie(Constants.TOKEN_NUMBER);
-                    HttpContext.Response.Cookies.Remove(Constants.TOKEN_NUMBER);
-                    cookie.Expires = DateTime.Now.AddDays(1);
-                    cookie.Value = token;
-                    HttpContext.Response.SetCookie(cookie);
-
-                    HttpCookie ckUserAccount = new HttpCookie("usernameCustomer");
-                    ckUserAccount.Expires = DateTime.Now.AddHours(48);
-                    ckUserAccount.Value = email;
-                    Response.Cookies.Add(ckUserAccount);
-
-                    HttpCookie ck1 = new HttpCookie("firstname", (u.LastName).ToString());
-                    ck1.Expires = DateTime.Now.AddHours(48);
-                    Response.Cookies.Add(ck1);
-
-                    HttpCookie ckIDAccount = new HttpCookie("idCustomer");
-                    ckIDAccount.Expires = DateTime.Now.AddHours(48);
-                    ckIDAccount.Value = resultInsert.ToString();
-                    Response.Cookies.Add(ckIDAccount);
-
-                    HttpCookie ckNameAccount = new HttpCookie("nameCustomer");
-                    ckNameAccount.Expires = DateTime.Now.AddHours(48);
-                    ckNameAccount.Value = u.Email;
-                    Response.Cookies.Add(ckNameAccount);
-                }
+                HttpCookie ck1 = new HttpCookie("firstname", ("Facebook").ToString());
+                ck1.Expires = DateTime.Now.AddHours(48);
+                Response.Cookies.Add(ck1);
+                ViewBag.SuccessMessage = "Đăng nhập thành công";
+                Session.Remove(Constants.SESSION_CREDENTIALS);
+                return RedirectToAction("Index", "Home");
             }
-            return Redirect("/");
+            return View();
         }
+
         [HttpPost]
         public JsonResult LoginGoogle(string googleACModel)
         {
@@ -635,6 +652,7 @@ namespace UI.Controllers
 
             return Json(new { status = true });
         }
+
         public string InsertByFacebook(DTO_Users_Acc customer)
         {
             HttpResponseMessage response = serviceObj.PostResponse(url + "InsertForFacebook/", customer);
@@ -642,6 +660,7 @@ namespace UI.Controllers
             string resultInsert = response.Content.ReadAsAsync<string>().Result;
             return resultInsert;
         }
+
         public int InsertByGoogle(DTO_Users_Acc customer)
         {
             HttpResponseMessage response = serviceObj.PostResponse(url + "InsertForGoogle/", customer);
@@ -650,6 +669,6 @@ namespace UI.Controllers
             return resultInsert;
         }
     }
-
 }
+
 #endregion

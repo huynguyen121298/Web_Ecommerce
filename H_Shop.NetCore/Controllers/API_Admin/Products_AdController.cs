@@ -41,24 +41,41 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         }
 
         [HttpGet]
-        [Route("GetAllProducts")]
-        public async Task<IActionResult> GetAllProducts()
+        [Route("GetAllProducts/{userLogin}")]
+        public async Task<IActionResult> GetAllProducts(string userLogin)
         {
-            var listPro= await _productService.GetAllProducts();
+            var listPro= await _productService.GetAllProducts(userLogin);
             return Ok(listPro);
         }
 
         [HttpGet]
-        [Route("GetAllProduct")]
-        public async Task<IActionResult> GetAllProduct()
+        [Route("GetAllProductsByEndUser")]
+        public async Task<IActionResult> GetAllProductsByEndUser()
         {
-            var listPro = await _productService.GetAllProductItem();
+            var listPro = await _productService.GetAllProductsByEndUser();
             return Ok(listPro);
         }
- 
+
+        [HttpGet]
+        [Route("GetAllProduct/{userLogin}")]
+        public async Task<IActionResult> GetAllProduct(string userLogin)
+        {
+            var listPro = await _productService.GetAllProductItem(userLogin);
+            return Ok(listPro);
+        }
+
+        [HttpGet]
+        [Route("GetAllProductByEndUser")]
+        public async Task<IActionResult> GetAllProductByEndUser()
+        {
+            var listPro = await _productService.GetAllProductItemByEndUser();
+            return Ok(listPro);
+        }
+
+
         [HttpGet]
         [Route("GetAllProductByIdItem/{id}")]
-        public IActionResult GetAllProductByIdItem(int id)
+        public IActionResult GetAllProductByIdItem(string id)
         {
            var listProItemById=  _productService.GetProductById_Item(id);
             return Ok(listProItemById);
@@ -66,12 +83,21 @@ namespace H_Shop.NetCore.Controllers.API_Admin
 
      
         [HttpGet]
-        [Route("GetAllProductByType")]
-        public IActionResult GetAllProductByType()
+        [Route("GetAllProductByType/{userLogin}")]
+        public IActionResult GetAllProductByType(string userLogin)
         {
-           var listlistProItem=  _productService.GetAllProductItem_Type();
+           var listlistProItem=  _productService.GetAllProductItem_Type(userLogin);
             return Ok(listlistProItem);
         }
+
+        [HttpGet]
+        [Route("GetAllProductByTypeByEndUser")]
+        public IActionResult GetAllProductByTypeByEndUser()
+        {
+            var listlistProItem = _productService.GetAllProductItem_TypeByEndUser();
+            return Ok(listlistProItem);
+        }
+
         [HttpPost]
         [Route("CreateProduct")]
         public int CreateProduct(Product_Item_Type dTO_Product_Item)
@@ -83,7 +109,7 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         [Route("UpdateProduct")]
         public bool UpdateProduct(Product_Item_Type dTO_Product_Item)
         {
-            return  _productService.UpdateProduct(dTO_Product_Item);
+             return  _productService.UpdateProduct(dTO_Product_Item);
         }
 
         [HttpDelete]
@@ -94,10 +120,18 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         }
 
         [HttpGet]
-        [Route("GetAllProduct_Discount")]
+        [Route("GetAllProduct_Discount/{userLogin}")]
+        public IActionResult GetAllProduct_Discount(string userLogin)
+        {
+            var listProDis=  _productService.GetAllProduct_Discount(userLogin);
+            return Ok(listProDis);
+        }
+
+        [HttpGet]
+        [Route("GetAllProduct_DiscountByEndUser")]
         public IActionResult GetAllProduct_Discount()
         {
-            var listProDis=  _productService.GetAllProduct_Discount();
+            var listProDis = _productService.GetAllProduct_Discount();
             return Ok(listProDis);
         }
 

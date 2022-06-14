@@ -10,7 +10,7 @@ namespace UI.Models
     public class RegisterModel
     {
         [Key, Column(Order = 1)]
-        [Required(ErrorMessage = "Yêu cầu nhập id")]
+        //[Required(ErrorMessage = "Yêu cầu nhập id")]
         //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public string _id { get; set; }
         [Required(ErrorMessage = "Yêu cầu nhập tên")]

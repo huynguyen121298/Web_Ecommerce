@@ -8,7 +8,6 @@
 }
 
 
-<h2>Sản Phẩm</h2>
 
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
    aria-expanded="true" aria-controls="collapseTwo">
@@ -22,27 +21,8 @@
         <a class="collapse-item" href="~/Admin/Products_Add/Index">Tất cả sản phẩm</a><br />
         <a class="collapse-item" href="~/Admin/Products_Add/GetAllProductByType">Theo thể loại sản phẩm</a><br />
         <a class="collapse-item" href="~/Admin/Products_Add/Product_Discount">Sản phẩm đang giảm giá</a><br />
+        @Html.Action("ListTypeProductUsed", "Admin")
 
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 1 })">Đồng hồ</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id =  8})">Thời trang nam</a>
-        <br />
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 9 })">Thời trang nữ</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 4 })">Mẹ và bé</a>
-        <br />
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 7 })">Thiết bị gia dụng</a>
-        <br />
-        <a class="collapse-item" href="@Url.Action("Index2", "Products_Add", new { id = 2 })">Máy ảnh và Máy Quay Phim</a>
-        <br />
-
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 3 })">Máy tính và LapTop</a>
-        <br />
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 6 })">Thể thao và du lịch</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 5 })">Sức khỏe và sắc đẹp</a>
-        <br>
-        <a class="collapse-item" href=" @Url.Action("Index2", "Products_Add", new { id = 5 })">Điện thoại</a>
 
     </div>
 </div>
@@ -50,11 +30,13 @@
 <p style="font-size:larger ;text-align:center">
 
     <a class="btn btn-warning " href=" @Url.Action("Create", "Products_Add")"> Tạo sản phẩm mới </a>
-    <a class="btn btn-info " href="~/Admin/Products_Add/Product_Discount"> Sản phẩm đang được giảm giá! </a>
+    @if (Model.Count() != 0)
+    {
+        <a class="btn btn-info " href="~/Admin/Products_Add/Product_Discount"> Sản phẩm đang được giảm giá! </a>
+    }
 
 </p>
-
-<div class="card shadow mb-4">
+@if (Model.Count() != 0) {<div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách sản phẩm</h6>
     </div>
@@ -149,29 +131,58 @@
 
                                     }
 
+
+
+}
+
+                            </td>
+                            <td>
+                                @if (item.Photo != null)
+                                {
+                                    <img src=" @Url.Content(item.Photo)" style="height:100px; width:100px;margin:10px" />
+
                                 }
+                                else
+                                {
+                                    if (item.Photo2 != null)
+                                    {
+                                        <img src=" @Url.Content(item.Photo2)" style="height:100px; width:100px;margin:10px" />
 
-                            </td>
-                            <td>
-                                <img src=" @Url.Content(item.Photo)" style="height:100px; width:100px;margin:10px" />
+                                    }
+                                    else
+                                    {
+                                        <img src=" @Url.Content(item.Photo3)" style="height:100px; width:100px;margin:10px" />
+
+                                    }
+
+                                }
+                              
                             </td>
 
                             <td>
-                                <a class="btn btn-success " href=" @Url.Action("Edit", "Products_Add", new { Id = item._id })">Chỉnh sửa</a>
-                                <a class="btn btn-primary " href=" @Url.Action("Details", "Products_Add", new { Id = item._id })">Chi tiết</a>
-                                <a class="btn btn-info " href=" @Url.Action("Create_Discount", "Products_Add", new { Id = item._id })">Tùy chỉnh giảm giá</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
+                                <a class="btn btn-success " style="width:100px;height:40px" href=" @Url.Action("Edit", "Products_Add", new { Id = item._id })">Chỉnh sửa</a>
+                                <a class="btn btn-primary " style="width:100px;height:40px" href=" @Url.Action("Details", "Products_Add", new { Id = item._id })">Chi tiết</a>
+                                <a class="btn btn-outline-danger " style="width:100px;height:40px" href=" @Url.Action("Index", "Item", new { productId = item._id })">Tùy chỉnh</a>
+                                <a class="btn btn-info " style="width:100px;height:40px" href=" @Url.Action("Create_Discount", "Products_Add", new { Id = item._id })">Giảm giá</a>
+                                <button type="button" style="width:100px;height:40px" class="btn btn-danger" data-toggle="modal" onclick="target('@item._id')" data-target="#del">
                                     Xóa
                                 </button>
                             </td>
                         </tr>
-                    }
+                                    }
+
+
+
 
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+                                    }
+                                    else { <span class="font-weight-bold" style="text-align:center">Chưa có sản phẩm nào</span>}
+
+
 <script>
     var del;
     function target(id) {

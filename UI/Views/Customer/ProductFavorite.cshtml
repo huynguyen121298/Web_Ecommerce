@@ -1,0 +1,279 @@
+﻿@model IEnumerable<Model.DTO_Model.DTO_Product_Item_Type>
+@using Model.DTO_Model;
+
+@{
+    ViewBag.Title = "YeuThich";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<DTO_Product_Item_Type> cart = (List<DTO_Product_Item_Type>)Session["cart_"];
+    //var total = cart.Sum(item => item.Product.Price * item.Quantity);
+    //var total1 = cart.Count();
+    var products = new List<DTO_Product_Item_Type>();
+    if(Model != null)
+    {
+        products = Model.ToList();
+    }
+    else
+    {
+        products = cart;
+    }
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="eCommerce HTML Template Free Download" name="keywords">
+    <meta content="eCommerce HTML Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link href="~/images/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="~/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/lib/slick/slick-theme.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <!-- Template Stylesheet -->
+    <link href="~/css/style_SP.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="breadcrumb-wrap">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item active">Sản phẩm yêu thích</li>
+            </ul>
+        </div>
+    </div>
+    <p id="message" style="color:red;font-style:italic">@ViewData["MessQuantity"]</p>
+
+    <!-- Breadcrumb End -->
+    <!-- Product Detail Start -->
+    @{
+        if (products.Count() > 0)
+        {
+            <div class="product-detail">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8">
+                                <div class="product-detail-top">
+
+
+                                    @foreach (DTO_Product_Item_Type item in products)
+                                    {
+                                        <div class="row align-items-center">
+                                            <div class="col-md-5">
+                                                <div class="product-slider-single normal-slider">
+                                                    @if (item.Photo != null)
+                                                    {
+                                                        <img src="@Url.Content(item.Photo)" style="width:200px;height:300px;margin:auto" />
+                                                    }
+                                                    @if (item.Photo2 != null)
+                                                    {
+                                                        <img src="@Url.Content(item.Photo2)" style="width:200px;height:300px;margin:auto" />
+                                                    }
+                                                    @if (item.Photo3 != null)
+                                                    {
+                                                        <img src="@Url.Content(item.Photo3)" style="width:200px;height:300px;margin:auto" />
+                                                    }
+                                                </div>
+                                                <div class="product-slider-single-nav normal-slider">
+                                                    @if (item.Photo != null)
+                                                    {
+                                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo)" /></div>
+                                                    }
+
+                                                    @if (item.Photo2 != null)
+                                                    {
+                                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo2)" /></div>
+                                                    }
+                                                    @if (item.Photo3 != null)
+                                                    {
+                                                        <div class="slider-nav-img"> <img src="@Url.Content(item.Photo3)" /></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="product-content">
+                                                    <a href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                        @item.Name
+                                                    </a>
+                                                    <p id="message" style="color:red;font-style:italic">@ViewData["MessQuantity"]</p>
+                                                    <div class="ratting">
+                                                        @for (int i = 0; i < item.Rating; i++)
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        @for (int i = item.Rating; i < 5; i++)
+                                                        {
+                                                            <i class="fa fa-star-o"></i>
+
+                                                        }
+                                                    </div>
+
+
+                                                    <h4 class="product-price-range"> giá sản phẩm</h4>
+                                                    <p><span style="color:red"> @string.Format("{0:0,0}", item.Price) </span> VNĐ</p>
+                                                </div>
+
+                                                <div class="p-color">
+
+                                                    <div class="btn-group btn-group-sm">
+                                                        <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item._id })">Xóa khỏi sản phẩm yêu thích </a>
+
+                                                    </div>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <a onclick="AddCart()" class="btn" href="@Url.Action("BuyLove", "Cart", new { id = item._id })"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
+
+                                                    </div>
+                                                    <script>
+
+                                                        function AddCart() {
+                                                            Swal.fire({
+                                                                position: 'top',
+                                                                icon: 'success',
+                                                                title: 'Thêm sản phẩm thành công',
+                                                                showConfirmButton: false,
+                                                                timer: 300000
+                                                            })
+                                                        }
+                                                    </script>
+                                                </div>
+                                                <br />
+                                                <div class="row product-detail-bottom">
+                                                    <div class="col-lg-12">
+                                                        <ul class="nav nav-pills nav-justified">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" data-toggle="pill" href="#description">Chi tiết sản phẩm</a>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div class="tab-content">
+                                                            <div id="description" class="container tab-pane active">
+                                                                <p>
+                                                                    @item.Details
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    }
+                                    <div class="row product-detail-bottom">
+
+                                        <div class="col-lg-12">
+                                            <div class="tab-content">
+                                                <div id="reviews" class="container tab-pane fade">
+                                                    <div class="reviews-submitted">
+                                                        <div class="reviewer"> Để lại đánh giá của bạn - <span>@DateTime.Today</span></div>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="reviews-submit">
+                                                        <h4>Để lại phản hồi của bạn</h4>
+                                                        <div class="ratting">
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                        </div>
+                                                        @using (Html.BeginForm("saveFeedbacksYeuThich", "Home", FormMethod.Post))
+                                                        {
+                                                            <div class="row form">
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @Html.Action("BagProductRecommend", "Product")
+
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <img src="~/images/imageCartNo.png" style="width:600px;height:300px" />
+        }
+    }
+
+    @section Upload {
+
+        <script>
+            $(document).ready(function submitPoll() {
+                $('#message').html(data);
+                refreshButton.disabled = true;
+                setTimeout(function () {
+                    refreshButton.disabled = false;
+                }, 5000);
+            });
+
+            $(function () {
+                function show_popup() {
+                    $("#message").hide();
+                    //alert("1");
+                };
+                window.setTimeout(show_popup, 5000); // 5 seconds
+            });
+        </script>
+    }
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/slick/slick.min.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>

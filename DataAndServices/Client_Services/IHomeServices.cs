@@ -10,6 +10,8 @@ namespace DataAndServices.Client_Services
 
         Task<List<Item_type>> GetAllItemType();
 
+        Task<List<Item_type>> GetAllItemTypeUsed();
+
         List<Feedback> GetAllFeedbacks();
 
         bool InsertCustomer(User_Acc_Client cusInsert);

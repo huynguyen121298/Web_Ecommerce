@@ -7,8 +7,7 @@ author URL: http://w3layouts.com
 
 <head>
     <title>
-        HShop_
-        Ecommerce
+        NTH_Ecom
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -23,7 +22,6 @@ author URL: http://w3layouts.com
             window.scrollTo(0, 1);
         }
     </script>
-
 
     <style>
         .menuli {
@@ -45,7 +43,6 @@ author URL: http://w3layouts.com
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <!-- //google fonts -->
-
 </head>
 
 <body>
@@ -67,11 +64,9 @@ author URL: http://w3layouts.com
                         Nếu bạn có bất kỳ thắc mắc nào hoặc muốn nói chuyện với chúng tôi, vui lòng liên hệ với chúng tôi để biết thêm chi tiết theo bên dưới
                         thông tin đã cho.
                     </p>
-
                 </div>
                 <div class="col-lg-8 about-text">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15676.273867632177!2d106.71046386775461!3d10.80606817682145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a16940b30b%3A0x1b25a34b7a3ab959!2zUGjGsOG7nW5nIDI1LCBCw6xuaCBUaOG6oW5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1606188970470!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-
                 </div>
                 <div class="col-lg-8 mt-5">
                     <form action="#" method="post">
@@ -157,7 +152,7 @@ author URL: http://w3layouts.com
 
                 <!-- footer logo -->
                 <div class="footer-logo text-center">
-                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> HShop_Ecommerce </a>
+                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span>NTH_Ecom </a>
                 </div>
                 <!-- //footer logo -->
                 <!-- footer nav links -->
@@ -192,7 +187,7 @@ author URL: http://w3layouts.com
                 <!-- copyright -->
                 <div class="copy-right text-center">
                     <p>
-                        © 2020 HShop_Ecommerce | Design by Nguyễn Tuấn Huy
+                        © 2020 NTH_Ecom | Design by Nguyễn Tuấn Huy
                         <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
                     <br />
@@ -201,15 +196,18 @@ author URL: http://w3layouts.com
                     </a>
                 </div>
                 <!-- //copyright -->
-
-
             </div>
         </div>
     </footer>
     <!-- //footer -->
     <!-- main slider -->
-    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+
     <script src="~/js/owl.carousel.js"></script>
+
+    @RenderSection("Upload", required: false)
+    @RenderSection("UpProduct", required: false)
     <script>
         $(document).ready(function () {
             $('.owl-one').owlCarousel({
@@ -244,7 +242,5 @@ author URL: http://w3layouts.com
         })
     </script>
     <!-- /main slider -->
-
 </body>
-
 </html>

@@ -29,35 +29,35 @@ namespace H_Shop.NetCore.Controllers.API_Admin
 
         [HttpDelete]
         [Route("DeleteCustomer/{id}")]
-        public bool DeleteCustomer(string id)
+        public async Task<bool> DeleteCustomer(string id)
         {
-            return  _checkoutCustomerService.DeleteAccount(id);
+            return await _checkoutCustomerService.DeleteAccount(id);
         }
 
         [HttpGet]
-        [Route("GetAllCustomer")]
-        public IActionResult GetAllCustomer()
+        [Route("GetAllCustomer/{userLogin}")]
+        public IActionResult GetAllCustomer(string userLogin)
         {   
-             var listAccount=  _checkoutCustomerService.GetAllAccounts();
+             var listAccount=  _checkoutCustomerService.GetAllAccounts(userLogin);
             return Ok(listAccount);
 
             
         }
 
         [HttpGet]
-        [Route("GetMonthlyRevenue/{month}")]
-        public IActionResult GetMonthlyRevenue(int month)
+        [Route("GetMonthlyRevenue/{monthDate}/{merchantId}")]
+        public IActionResult GetMonthlyRevenue(string monthDate, string merchantId)
         {
-            var listMonthlyRevenue = _checkoutCustomerService.GetMonthlyRevenue(month);
+            var listMonthlyRevenue = _checkoutCustomerService.GetMonthlyRevenue(monthDate,merchantId);
             return Ok(listMonthlyRevenue);
 
         }
 
         [HttpGet]
-        [Route("GetYearRevenue/{year}")]
-        public IActionResult GetYearRevenue(int year)
+        [Route("GetDateRevenue/{merchantId}")]
+        public IActionResult GetDateRevenue(string merchantId)
         {
-            var listMonthlyRevenue = _checkoutCustomerService.GetMonthlyRevenue(year);
+            var listMonthlyRevenue = _checkoutCustomerService.GetDateRevenue(merchantId);
             return Ok(listMonthlyRevenue);
 
         }
@@ -70,11 +70,19 @@ namespace H_Shop.NetCore.Controllers.API_Admin
         //}
 
         [HttpGet]
-        [Route("GetCustomerById/{Id}")]
-        public async Task<IActionResult> GetCustomerById(string Id)
+        [Route("GetCustomerById/{Id}/{userLogin}")]
+        public async Task<IActionResult> GetCustomerById(string Id,string userLogin)
         {
-            var listAccount = await _checkoutCustomerService.GetAccountById(Id);
+            var listAccount = await _checkoutCustomerService.GetAccountById(Id,userLogin);
             return Ok(listAccount);  
+        }
+
+        [HttpGet]
+        [Route("GetCustomerById/{Id}")]
+        public async Task<IActionResult> GetCustomerById2(string Id)
+        {
+            var listAccount = await _checkoutCustomerService.GetAccountById2(Id);
+            return Ok(listAccount);
         }
 
         [HttpGet]

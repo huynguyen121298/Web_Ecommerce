@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -46,10 +47,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
@@ -150,6 +151,10 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\Admin_accController.cs" />
     <Compile Include="Areas\Admin\Controllers\Checkout_CustomerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ItemController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TypeProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CodeDiscountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\Products_AddController.cs" />
     <Compile Include="Areas\Admin\Controllers\Users_AccController.cs" />
     <Compile Include="Areas\Admin\Models\AdminLogin.cs" />
@@ -157,20 +162,26 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\PayCompare.cs" />
+    <Compile Include="Helper\Util.cs" />
     <Compile Include="Models\AccountSocial.cs" />
     <Compile Include="Models\AuthenticationEmail.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MailHelper.cs" />
+    <Compile Include="Helper\PayLib.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\ResetPasswordModel2.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security_\AuthorizeLoginAdmin.cs" />
+    <Compile Include="Security_\AuthorizeLoginEndUser.cs" />
     <Compile Include="Security_\DeatAuthorizeAttribute.cs" />
     <Compile Include="Service\ServiceRepository.cs" />
   </ItemGroup>
@@ -335,6 +346,7 @@
     <Content Include="ckeditor\plugins\magicline\images\icon-rtl.png" />
     <Content Include="ckeditor\plugins\magicline\images\icon.png" />
     <Content Include="ckeditor\plugins\pastefromgdocs\filter\default.js" />
+    <Content Include="ckeditor\plugins\pastefromlibreoffice\filter\default.js" />
     <Content Include="ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="ckeditor\plugins\pastetools\filter\common.js" />
     <Content Include="ckeditor\plugins\pastetools\filter\image.js" />
@@ -501,6 +513,7 @@
     <Content Include="Content\admin\css\sb-admin-2.min.css" />
     <Content Include="Content\admin\css\style.css" />
     <Content Include="Content\admin\css\style_register.css" />
+    <Content Include="Content\admin\img\profile-Icon-SVG.jpg" />
     <Content Include="Content\admin\img\undraw_posting_photo.svg" />
     <Content Include="Content\admin\img\undraw_profile.svg" />
     <Content Include="Content\admin\img\undraw_profile_1.svg" />
@@ -2188,6 +2201,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="css\bootstrap.css" />
+    <Content Include="css\calendar.css" />
+    <Content Include="css\css_color.css" />
+    <Content Include="css\css_new.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\main.css" />
@@ -2267,6 +2283,7 @@
     <Content Include="images\tuixach.jpg" />
     <Content Include="images_product\aonam2.jpg" />
     <Content Include="images_product\aothunnu.jpg" />
+    <Content Include="images_product\ap.jpg" />
     <Content Include="images_product\balo.jpg" />
     <Content Include="images_product\bep2.jpg" />
     <Content Include="images_product\bep3.jpg" />
@@ -2531,7 +2548,7 @@
     <Content Include="Areas\Admin\Views\Products_Add\GetAllProductByType.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Index2.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutClone.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_1.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_2.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\View_Acc.cshtml" />
@@ -2542,6 +2559,24 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Products_Add\Product_Discount.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\MonthlySalesByDate.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\BagNotification.cshtml" />
+    <Content Include="Areas\Admin\Views\CodeDiscount\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CodeDiscount\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\CodeDiscount\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ListTypeProductAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\TypeProduct\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TypeProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TypeProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ListTypeProductUsed.cshtml" />
+    <Content Include="ckeditor\bender-runner.config.json" />
+    <Content Include="ckeditor\SECURITY.md" />
+    <Content Include="Areas\Admin\Views\Item\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Item\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Item\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ListTypeProductAdmin2.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />
@@ -2939,9 +2974,22 @@
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Merchant\Index.cshtml" />
+    <Content Include="Views\Merchant\ProductByMerchant.cshtml" />
+    <Content Include="Views\Customer\ProductBought.cshtml" />
+    <Content Include="Views\Customer\ProductFavorite.cshtml" />
+    <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
+    <Content Include="Views\Cart\PaymentConfirm.cshtml" />
+    <Content Include="Views\Customer\SignUpFacebook.cshtml" />
+    <Content Include="Views\Shared\_LayoutMerchant2.cshtml" />
+    <Content Include="Views\Home\ListTypeProductMerchant.cshtml" />
+    <Content Include="Views\Merchant\Index2.cshtml" />
+    <Content Include="Views\Merchant\Index_.cshtml" />
+    <Content Include="Views\Product\BagProductRecommend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images_merchant\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2998,7 +3046,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -131,6 +131,12 @@
     <Compile Include="Admin_Services\Admin_Acc_Services\IAdminAccService.cs" />
     <Compile Include="Admin_Services\Checkout_Customer_Services\CheckoutCustomerService.cs" />
     <Compile Include="Admin_Services\Checkout_Customer_Services\ICheckoutCustomerService.cs" />
+    <Compile Include="Admin_Services\ItemTypeService\ItemTypeService.cs" />
+    <Compile Include="Admin_Services\ItemTypeService\IItemTypeService.cs" />
+    <Compile Include="Admin_Services\CodeDiscountService\CodeDiscountService.cs" />
+    <Compile Include="Admin_Services\CodeDiscountService\ICodeDiscountService.cs" />
+    <Compile Include="Admin_Services\NotificationService\INotificationService.cs" />
+    <Compile Include="Admin_Services\NotificationService\NotificationService.cs" />
     <Compile Include="Admin_Services\Products\IProductService.cs" />
     <Compile Include="Admin_Services\Products\ProductService.cs" />
     <Compile Include="Admin_Services\UserServices\IUsers.cs" />
@@ -141,7 +147,9 @@
     <Compile Include="Client_Services\HomeService.cs" />
     <Compile Include="Client_Services\ICartServices.cs" />
     <Compile Include="Client_Services\IHomeServices.cs" />
+    <Compile Include="Client_Services\IMerchantService.cs" />
     <Compile Include="Client_Services\IProductClientServices.cs" />
+    <Compile Include="Client_Services\MerchantService.cs" />
     <Compile Include="Client_Services\ProductClientService.cs" />
     <Compile Include="CommonModel\Account_Role.cs" />
     <Compile Include="CommonModel\BoolResult.cs" />
@@ -150,6 +158,7 @@
     <Compile Include="CommonModel\Product_Item_Type.cs" />
     <Compile Include="CommonModel\UpdateAccount.cs" />
     <Compile Include="Common\Encrypt.cs" />
+    <Compile Include="Common\NotificationConstant.cs" />
     <Compile Include="DataModel\Account.cs" />
     <Compile Include="DataModel\CheckoutCustomerOrder.cs" />
     <Compile Include="DataModel\Checkout_Customer.cs" />
@@ -160,8 +169,11 @@
     <Compile Include="DataModel\Item.cs" />
     <Compile Include="DataModel\Item_Client.cs" />
     <Compile Include="DataModel\Item_type.cs" />
-    <Compile Include="DataModel\Product_Admin.cs" />
-    <Compile Include="DataModel\Product_Client.cs" />
+    <Compile Include="DataModel\MerchantNotification.cs" />
+    <Compile Include="DataModel\Product.cs" />
+    <Compile Include="DataModel\ProductAction.cs" />
+    <Compile Include="DataModel\ProductComment.cs" />
+    <Compile Include="DataModel\ProductRecommend.cs" />
     <Compile Include="DataModel\Role.cs" />
     <Compile Include="DataModel\User_Acc.cs" />
     <Compile Include="DataModel\User_Acc_Client.cs" />

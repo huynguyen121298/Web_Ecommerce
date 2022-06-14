@@ -85,7 +85,7 @@ namespace DataAndServices.Admin_Services.AccountService
             string hash = Encryptor.MD5Hash(pass);
             var cus = await _db.Find(x => x.Email == user & x.Password == hash).FirstOrDefaultAsync();
             if (cus != null)
-                return new Account() { _id = cus._id, Email = cus.Email, LastName = cus.LastName, FirstName = cus.FirstName, RoleId = cus.RoleId };
+                return new Account() { _id = cus._id, Email = cus.Email, LastName = cus.LastName, FirstName = cus.FirstName, RoleId = cus.RoleId, MerchantName = cus.MerchantName, Photo = cus.Photo };
             return new Account();
 
         }
@@ -104,7 +104,9 @@ namespace DataAndServices.Admin_Services.AccountService
                         .Set(s => s.FirstName, custom.FirstName)
                         .Set(s => s.LastName, custom.LastName)
                         .Set(s => s.Password, Encryptor.MD5Hash(custom.Password))
-                        .Set(s => s._id, custom._id);
+                        .Set(s => s._id, custom._id)
+                        .Set(s => s.MerchantName, custom.MerchantName)
+                        .Set(s=>s.Photo,custom.Photo);
 
                     var options = new UpdateOptions { IsUpsert = true };
                     _db.UpdateOneAsync(eqfilter, update, options);

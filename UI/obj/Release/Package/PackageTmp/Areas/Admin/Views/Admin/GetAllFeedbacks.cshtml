@@ -3,66 +3,74 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+
 }
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Góp ý của khách hàng</h6>
+</div>
+@if (Model.Count() > 0)
+{
+    <div class="card shadow mb-4">
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Danh sách tài khoản Admin</h6>
-    </div>
-   
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        @*<th>RoleName</th>*@
-                        <th>Số điện thoại</th>
-                        <th>Họ tên</th>
-                        <th>Email</th>
-                        <th>Nội dung</th>
-                    
 
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Số điện thoại</th>
-                        <th>Họ tên</th>
-                        <th>Email</th>
-                        <th>Nội dung</th>
-                        
-                    </tr>
-                </tfoot>
-                <tbody>
-
-                    @foreach (var item in Model)
-                    {
-
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
                         <tr>
+                            <th>Số điện thoại</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Nội dung</th>
 
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.Role.RoleName)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SDT)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>s
-                                @Html.DisplayFor(modelItem => item.Details)
-                            </td>
-                            
+
                         </tr>
-                    }
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Số điện thoại</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Nội dung</th>
 
-                </tbody>
-            </table>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SDT)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    s
+                                    @Html.DisplayFor(modelItem => item.Details)
+                                </td>
+
+                            </tr>
+                        }
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <span class="font-weight-bold" style="text-align:center">Chưa có góp ý nào</span>
+}
 
 

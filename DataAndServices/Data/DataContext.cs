@@ -7,9 +7,14 @@ namespace DataAndServices.Data
     {
         private MongoClient mongoClient { get; }
         private IMongoDatabase Database { get; }
+        //public DataContext(string connectionString, string dbName)
+        //{
+        //    mongoClient = new MongoClient("mongodb://localhost:27017");
+        //    Database = mongoClient.GetDatabase("OnlineShop");
+        //}
         public DataContext(string connectionString, string dbName)
         {
-            mongoClient = new MongoClient("mongodb://localhost:27017");
+            mongoClient = new MongoClient("mongodb+srv://huyadmin2:Huyhuy123@cluster0.plas1.mongodb.net/OnlineShop?retryWrites=true&w=majority");
             Database = mongoClient.GetDatabase("OnlineShop");
         }
 
@@ -17,17 +22,37 @@ namespace DataAndServices.Data
         {
             return Database.GetCollection<Account>("Account");
         }
-        public IMongoCollection<Product_Admin> GetProductAdminCollection()
+        public IMongoCollection<Product> GetProductAdminCollection()
         {
-            return Database.GetCollection<Product_Admin>("Product");
+            return Database.GetCollection<Product>("Product");
         }
-        public IMongoCollection<Product_Client> GetProductClientCollection()
+
+        public IMongoCollection<ProductAction> GetProductActionCollection()
         {
-            return Database.GetCollection<Product_Client>("Product");
+            return Database.GetCollection<ProductAction>("ProductAction");
+        }
+        public IMongoCollection<Product> GetProductClientCollection()
+        {
+            return Database.GetCollection<Product>("Product");
         }
         public IMongoCollection<Checkout_Customer> GetCheckout_CustomerCollection()
         {
             return Database.GetCollection<Checkout_Customer>("Checkout_Customer");
+        }
+
+        public IMongoCollection<ProductComment> GetProductCommentCollection()
+        {
+            return Database.GetCollection<ProductComment>("ProductComment");
+        }
+
+        public IMongoCollection<ProductRecommend> GetProductRecommendCollection()
+        {
+            return Database.GetCollection<ProductRecommend>("ProductRecommend");
+        }
+
+        public IMongoCollection<MerchantNotification> GetMerchantNotificationCollection()
+        {
+            return Database.GetCollection<MerchantNotification>("MerchantNotification");
         }
         public IMongoCollection<Checkout_Oder> GetCheckout_OderCollection()
         {

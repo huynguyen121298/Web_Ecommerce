@@ -3,7 +3,7 @@
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-@{ 
+@{
     var stt = Model.RoleId;
     string quyen;
     if (stt == 1)
@@ -14,22 +14,26 @@
     {
         quyen = "User";
     }
+
 }
 
-<h2 style="color:aquamarine">Details</h2>
 
 <div>
-    <h4>Tài Khoản Admin</h4>
+    @{
+        if (stt != 1)
+        {
+            <h4 style="text-align:center">Tài Khoản doanh nghiệp @Model.MerchantName</h4>
+
+        }
+        else
+        {
+            <h4 style="text-align:center">Tài Khoản admin @Model.FirstName  @Model.LastName</h4>
+        }
+
+    }
+
     <hr />
     <dl class="dl-horizontal">
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
-        </dt>*@
-
-        @*<dd>
-            <input type="text" />
-            @Html.DisplayFor(model => model.Role.RoleName)
-        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -55,24 +59,55 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+       
+        @{
+            if (stt == 1)
+            {
+                <dt>
+                    Quyền
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt>
-           Quyền
-        </dt>
+                <dd>
+                    @quyen
+                </dd>
+            }
+            if (Model.MerchantName != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.MerchantName)
+                </dt>
 
-        <dd>
-            @quyen
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.MerchantName)
+                </dd>
+            }
+            if (Model.Photo != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </dt>
 
+                <dd>
+                    <img src="@Url.Content(Model.Photo)" style="height:200px ;width:200px ; margin:10px " />
+                </dd>
+            }
+
+
+
+
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.idUser }) |
-    @Html.ActionLink("Trở về", "Index")
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model._id }) |
+
+    @if (Model.RoleId == 1)
+    {
+        @Html.ActionLink("Trở về", "Index")
+    }
+    @if (Model.RoleId == 2)
+    {
+        @Html.ActionLink("Trở về", "Index", "Admin")
+    }
+
 </p>

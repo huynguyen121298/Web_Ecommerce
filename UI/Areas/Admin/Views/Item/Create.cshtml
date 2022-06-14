@@ -1,0 +1,69 @@
+﻿@model Model.DTO.DTO_Ad.DTO_Item
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Tạo thuộc tính</h6>
+</div>
+
+@using (Html.BeginForm(Html.BeginForm("Create", "Item", FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        Chon màu sản phẩm
+        <div class="col-md-10">
+            <select style="margin-left: 10%; width: 200px" name="selectColor" required>
+                <option>Xanh </option>
+                <option>Đỏ</option>
+                <option>Tím</option>
+                <option>Vàng</option>
+                <option>Cam</option>
+                <option>Trắng</option>
+                <option>Đen</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        Chon size
+        <div class="col-md-10">
+            <select style="margin-left: 10% ;width:200px" name="sizeProduct" id="sizeProduct">
+                <option></option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+            </select>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        Nhập số lượng
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" ,required = "required" }  })
+            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Thêm" class="btn btn-outline-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>

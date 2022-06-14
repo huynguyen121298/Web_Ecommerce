@@ -1,6 +1,8 @@
 ﻿using DataAndServices.Client_Services;
 using DataAndServices.DataModel;
 using Microsoft.AspNetCore.Mvc;
+using Model.DTO_Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace H_Shop.NetCore.Controllers.API_Client
@@ -17,9 +19,10 @@ namespace H_Shop.NetCore.Controllers.API_Client
 
         [HttpPost]
         [Route("InsertBill")]
-        public  int InsertBill(CheckoutCustomerOrder checkoutCustomerOrder)
+        public List<DTOCheckoutCustomerOrder> InsertBill(CheckoutCustomerOrder checkoutCustomerOrder)
         {
-            return  _cartServices.InsertBill(checkoutCustomerOrder);
+            var idBill = _cartServices.InsertBill(checkoutCustomerOrder);
+            return idBill;
         }
 
         [HttpPost]

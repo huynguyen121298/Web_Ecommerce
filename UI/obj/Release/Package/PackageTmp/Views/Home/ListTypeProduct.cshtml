@@ -4,17 +4,6 @@
 
 @foreach (DTO_Item_Type item in Model)
     {
-
-
-
-
-
-
-       <li><a href="@Url.Action("Index2", "Product", new { id =item.Id_Item }) ">@item.Type_Product</a></li>
-
-
-
-
-
+       <li><a href="@Url.Action("Index2", "Product", new { id =item._id }) ">@item.Type_Product</a></li>
     }
 

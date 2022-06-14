@@ -21,15 +21,15 @@ namespace UI.Security_
         {
             //Account acc = new Account();
             //DbModels db = new DbModels();
-            var session = (DTO_Account)HttpContext.Current.Session[CommonConstants.ACCOUNT_SESSION];
-            if (session == null)
+               var session = (DTO_Account)HttpContext.Current.Session[CommonConstants.ACCOUNT_SESSION];
+            if (session == null || session.RoleId ==null)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "Login", area = "Admin" }));
             }
             else
             {
                 var hasRole = session.RoleId;
-                if (hasRole == Order)
+                if (hasRole == Order || hasRole ==null)
                 {
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "NotAuthorize" }));
                 }

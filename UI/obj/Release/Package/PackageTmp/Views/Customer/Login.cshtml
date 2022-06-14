@@ -6,7 +6,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,12 +55,9 @@
                                         <div class="form-group">
                                             <label><i class="fa fa-user" aria-hidden="true"></i> Email </label>
                                             <input type="text" name="Email" class="form-control form-control-user" placeholder="Enter Email" required="" />
-                                            @*@Html.TextBoxFor(model => model.Email, new { @placeholder = "Tên đăng nhập ...", @class = "txt" })*@
                                         </div>
                                         <div class="form-group">
                                             <label><i class="fa fa-unlock-alt" aria-hidden="true"></i> Password </label>
-                                            @*@Html.PasswordFor(model => model.Password, new { @placeholder = "Mật khẩu ...", @class = "txt" })*@
-
                                             <input class="form-control form-control-user" type="password" name="Password" placeholder="Enter Password" required="" id="myInput" />
                                         </div>
                                         <div class="form-group">
@@ -70,8 +66,6 @@
                                                 <input class="custom-control-input" id="check3" name="check3" type="checkbox" value="show password" onclick="myFunction()">
                                                 @Html.CheckBoxFor(model => model.RememberMe, new { @style = "text-align:left;display:inline-block;", @class = " pull-left" })<label style="margin-left: 3px; display:inline-block;">Remember me </label>
                                                 <br />
-                                                @*@Html.LabelFor("check3", "Show password")*@
-                                                @*<label class="custom-control-label " style="margin-left:23px" ;display:inline-block;" for="check3">Show password</label>*@
                                                 <div class="agile_label">
                                                     <input id="check3" name="check3" type="checkbox" value="show password" onclick="myFunction()">
                                                     <label class="check" for="check3">Show password</label>
@@ -111,16 +105,11 @@
                                         </div>
 
                                         @*<a id="btnGoogle" class="btn btn-google btn-user btn-block">
-                                                <i class="fab fa-google fa-fw"></i> Login with Google
-                                            </a>*@
+                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a>*@
                                         @*<button class="btn btn-danger btn-classic" id="btnGoogle">Đăng nhập bằng Google</button>*@
 
-
-
                                     }
-
-
-
 
                                     <hr>
                                     <div class="text-center">
@@ -141,6 +130,36 @@
             </div>
 
         </div>
+        <!-- Messenger Plugin chat Code -->
+        <div id="fb-root"></div>
+
+        <!-- Your Plugin chat code -->
+        <div id="fb-customer-chat" class="fb-customerchat">
+        </div>
+
+        <script>
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "102128368471833");
+            chatbox.setAttribute("attribution", "biz_inbox");
+        </script>
+
+        <!-- Your SDK code -->
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    xfbml: true,
+                    version: 'v13.0'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
 
 
     </div>
@@ -155,58 +174,58 @@
     <!-- Custom scripts for all pages-->
     <script src="~/Content/admin/js/sb-admin-2.min.js"></script>
     <script>
-        //$(document).ready(function () {
-        //    // Useful data for your client-side scripts:
-        //    const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
-        //    console.log("GoogleUser is:" + googleUser)
-        //    var profile = googleUser.getBasicProfile();
-        //    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        //    console.log('Full Name: ' + profile.getName());
-        //    console.log('Given Name: ' + profile.getGivenName());
-        //    console.log('Family Name: ' + profile.getFamilyName());
-        //    console.log("Image URL: " + profile.getImageUrl());
-        //    console.log("Email: " + profile.getEmail());
-        //    // The ID token you need to pass to your backend:
-        //    var id_token = googleUser.getAuthResponse().id_token;
-        //    console.log("ID Token: " + id_token);
-        //    var googleAC = [];
-        //    googleAC.push({
-        //        AccountId: profile.getId(),
-        //        FullName: profile.getName(),
-        //        Email: profile.getEmail(),
-        //        IdToken: googleUser.getAuthResponse().id_token
-        //    });
-        //    $('#btnGoogle').click(function () {
-        //        console.log("Press a button!!!!");
-        //        $.ajax({
-        //            url: '/Customer/LoginGoogle',
-        //            data: { googleACModel: JSON.stringify(googleAC) },
-        //            dataType: 'json',
-        //            type: 'POST',
-        //            success: function (data) {
-        //                if (data.status == true) {
-        //                    alert('Login Success');
-        //                    window.location.href = "/";
-        //                }
-        //            }
-        //        });
-        //    });
-        //});
-        //$('#btnGoogle').click(function () {
-        //    console.log("Press a button!!!!");
-        //    $.ajax({
-        //        url: '/Customer/LoginGoogle',
-        //        data: { googleACModel: JSON.stringify(googleAC) },
-        //        dataType: 'json',
-        //        type: 'POST',
-        //        success: function (data) {
-        //            if (data.status == true) {
-        //                alert('Login Success');
-        //                window.location.href = "/";
-        //            }
-        //        }
-        //    });
-        //});
+        $(document).ready(function () {
+            // Useful data for your client-side scripts:
+            const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+            console.log("GoogleUser is:" + googleUser)
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+            var googleAC = [];
+            googleAC.push({
+                AccountId: profile.getId(),
+                FullName: profile.getName(),
+                Email: profile.getEmail(),
+                IdToken: googleUser.getAuthResponse().id_token
+            });
+            $('#btnGoogle').click(function () {
+                console.log("Press a button!!!!");
+                $.ajax({
+                    url: '/Customer/LoginGoogle',
+                    data: { googleACModel: JSON.stringify(googleAC) },
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.status == true) {
+                            alert('Login Success');
+                            window.location.href = "/";
+                        }
+                    }
+                });
+            });
+        });
+        $('#btnGoogle').click(function () {
+            console.log("Press a button!!!!");
+            $.ajax({
+                url: '/Customer/LoginGoogle',
+                data: { googleACModel: JSON.stringify(googleAC) },
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+                    if (data.status == true) {
+                        alert('Login Success');
+                        window.location.href = "/";
+                    }
+                }
+            });
+        });
 
         function onSignIn(googleUser) {
             //    // Useful data for your client-side scripts:
@@ -246,6 +265,7 @@
 
         }
     </script>
+
     <script>
         window.fbAsyncInit = function () {
             FB.init({

@@ -1,11 +1,10 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "LuaChon";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @{
-    
+
     DTO_Product_Item_Type item = (DTO_Product_Item_Type)Session["cart__"];
     //var total = cart.Sum(item => item.Product.Price * item.Quantity);
     //var total1 = cart.Count();
@@ -88,12 +87,10 @@
                                     </div>
 
                                     @*<div class="p-color">
-
-                        <div class="btn-group btn-group-sm">
-                            <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item.Id_SanPham })">Xóa khỏi sản phẩm yêu thích </a>
-                        </div>
-
-                    </div>*@
+                                            <div class="btn-group btn-group-sm">
+                                                <a class="btn" href="@Url.Action("Remove_", "Cart", new { id = item.Id_SanPham })">Xóa khỏi sản phẩm yêu thích </a>
+                                            </div>
+                                        </div>*@
                                     <div class="row product-detail-bottom">
                                         <div class="col-lg-12">
                                             <ul class="nav nav-pills nav-justified">
@@ -129,7 +126,7 @@
                             <div class="col-lg-12">
                                 <ul class="nav nav-pills nav-justified">
                                     <li class="nav-item">
-                                        <a onclick="AddCart()" class="btn" href="@Url.Action("Details_Buy", "Cart", new { id = item.Id_SanPham })"><i class="fa fa-shopping-bag"></i>Mua hàng</a>
+                                        <a onclick="AddCart()" class="btn" href="@Url.Action("Details_Buy", "Cart", new { id = item._id })"><i class="fa fa-shopping-bag"></i>Mua hàng</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -138,14 +135,6 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    <!--<div id="description" class="container tab-pane active">
-    <div class="action">-->
-                                    @*<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Add to Cart</a>*@
-                                    <!--<a class="btn" href="@Url.Action("Buy", "Cart")"><i class="fa fa-shopping-bag"></i>Xác nhận mua</a>
-
-        </div>
-    </div>-->
-
                                     <div id="reviews" class="container tab-pane fade">
                                         <div class="reviews-submitted">
                                             <div class="reviewer"> Để lại đánh giá của bạn - <span>@DateTime.Now</span></div>
@@ -156,6 +145,28 @@
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                             </div>
+                                            @foreach (var comment in item.Comments)
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                                            <div class="mr-3">
+                                                                <div class="icon-circle bg-primary">
+                                                                    <i class="fas fa-file-alt text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="small text-gray-500">@comment.DateTimeComment</div>
+                                                                <span class="font-weight-bold">@comment.FullName</span>
+                                                                <br />
+                                                                <P class="font-weight-bold">@comment.Content</P>
+                                                            </div>
+                                                        </a>
+
+                                                    </td>
+                                                </tr>
+                                            }
 
                                         </div>
                                         <div class="reviews-submit">
@@ -171,18 +182,8 @@
                                             @using (Html.BeginForm("saveFeedbacksLuaChon", "Home", FormMethod.Post))
                                             {
                                                 <div class="row form">
-                                                    <div class="col-sm-6">
-                                                        <input type="text" value="" placeholder="Nhập tên" name="Name" required oninvalid="this.setCustomValidity('Vui lòng nhập tên')" oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" value="" placeholder="Nhập Email" name="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập Email')" oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <input type="text" placeholder="Nhập SDT" name="SDT" required oninvalid="this.setCustomValidity('Vui lòng nhập SDT')" oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <input class="form-control" type="text" placeholder="Nhập tiêu đề" name="content" required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề')" oninput="this.setCustomValidity('')">
-                                                    </div>
+                                                    
+                                                   
                                                     <div class="col-sm-12">
                                                         <textarea name="details" placeholder="Nhập nội dung của bạn" required oninvalid="this.setCustomValidity('Vui lòng nhập nội dung')" oninput="this.setCustomValidity('')"></textarea>
                                                     </div>
@@ -190,19 +191,7 @@
                                                         <input class="btn btn-outline-primary" onclick="AddCart()" type="submit" value="Gửi">
                                                     </div>
                                                 </div>
-                                                @*<script>
-                                                    function AddCart() {
-                                                        alert("Gửi phản hồi thành công");
-
-
-
-                                                    }
-
-                                                </script>*@
                                             }
-
-
-
                                         </div>
                                     </div>
                                     @ViewData["ErrorMessage"]
@@ -228,46 +217,26 @@
                             </div>
                         </form>
 
-                            @section Upload {
-                                <script>
-                                    $('#tang').click(function (event) {
-                                        event.preventDefault();
-                                        $.ajax({
-                                            url: '/Product/Tang',
-                                            type: 'POST',
-                                            data: { increment: true },
-                                            success: function () { alert('Request has returned') }
-                                        });
-                                        return +val + 1;
-                                    });
+                        @section Upload {
 
-                                </script>
-                                <script>
-
-                                  
-                                    $(document).ready(function submitPoll() {
-                                        $('#message').html(data);
-                                        refreshButton.disabled = true;
-                                        setTimeout(function () {
-                                            refreshButton.disabled = false;
-                                        }, 5000);
-                                    });
-
-                                    $(function () {
-                                        function show_popup() {
-                                            $("#message").hide();
-                                            //alert("1");
-                                        };
-                                        window.setTimeout(show_popup, 5000); // 5 seconds
-                                    });
-                                </script>
-
-
-                            }
+                            <script>
+                                $(document).ready(function submitPoll() {
+                                    $('#message').html(data);
+                                    refreshButton.disabled = true;
+                                    setTimeout(function () {
+                                        refreshButton.disabled = false;
+                                    }, 5000);
+                                });
+                                $(function () {
+                                    function show_popup() {
+                                        $("#message").hide();
+                                        //alert("1");
+                                    };
+                                    window.setTimeout(show_popup, 5000); // 5 seconds
+                                });
+                            </script>
+                        }
                     </div>
-
-                    <!-- Side Bar Start -->
-                    <!-- Side Bar End -->
                 </div>
             </div>
         </div>
@@ -279,24 +248,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/slick/slick.min.js"></script>
-
-    <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 </body>
 </html>
-
-
-@*<script type="text/javascript">
-        $('#quantity').data('count', 0);
-        $('#tang').click(function () {
-            $('#quantity').html(function () {
-                var $this = $(this),
-                    count = $this.data('count') + 1;
-
-                $this.data('count', count);
-                return count;
-            });
-        });
-    </script>*@
-
-

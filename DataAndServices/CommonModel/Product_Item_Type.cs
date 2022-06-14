@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataAndServices.DataModel;
+using System.Collections.Generic;
 
 namespace DataAndServices.CommonModel
 {
@@ -6,9 +7,9 @@ namespace DataAndServices.CommonModel
     {
         public string _id { get; set; }
 
-        public int? Quantity { get; set; }
+        public int? QuantityBuy { get; set; }
 
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
 
         public string Type_Product { get; set; }
 
@@ -22,8 +23,17 @@ namespace DataAndServices.CommonModel
 
         public string Photo3 { get; set; }
 
+        public string AccountId { get; set; }
 
         public string Details { get; set; }
+
+        public List<ProductComment> Comments { get; set; }
+
+        public List<Item> Items { get; set; }
+
+        public int Rating { get; set; }
+
+
 
     }
 }

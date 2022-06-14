@@ -17,5 +17,11 @@ namespace DataAndServices.DataModel
         public string Password { get; set; }
 
         public int? RoleId { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string City { get; set; }
+
+        public string Address { get; set; }
     }
 }

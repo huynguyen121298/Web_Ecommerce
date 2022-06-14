@@ -22,6 +22,9 @@ namespace UI.Areas.Admin.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Độ dài của tên tối thiểu là 3 chữ")]
+        public string MerchantName { get; set; }
+
         [Required(ErrorMessage = "Yêu cầu nhập mật khẩu")]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Độ dài mật khẩu tối thiểu là 6 chữ số")]
 

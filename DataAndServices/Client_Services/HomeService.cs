@@ -42,6 +42,11 @@ namespace DataAndServices.Client_Services
             return await _dbitemType.Find(s => true).ToListAsync();
         }
 
+        public async Task<List<Item_type>> GetAllItemTypeUsed()
+        {
+            return await _dbitemType.Find(s =>s.Status =="Đã kích hoạt").ToListAsync();
+        }
+
         public async Task<User_Acc_Client> GetCustomerByEmail(string mail)
         {
             return await _dbUser.Find(s => s.Email==mail).FirstOrDefaultAsync();
@@ -124,6 +129,10 @@ namespace DataAndServices.Client_Services
             var user = _dbUser.Find(x => x.Email == cusInsert.Email).SingleOrDefault();
             if (user == null)
             {
+                cusInsert.RoleId = 2;
+                cusInsert.FirstName =cusInsert.Email;
+                cusInsert.Password = Encryptor.MD5Hash(cusInsert.Email);
+
                 _dbUser.InsertOne(cusInsert);
 
                 return cusInsert._id;
@@ -173,7 +182,10 @@ namespace DataAndServices.Client_Services
                     var update = Builders<User_Acc_Client>.Update.Set(s => s.Email, custom.Email)
                         .Set(s => s.FirstName, custom.FirstName)
                         .Set(s => s.LastName, custom.LastName)
-                       .Set(s => s._id, custom._id);
+                        .Set(s => s._id, custom._id)
+                        .Set(s => s.PhoneNumber, custom.PhoneNumber)
+                        .Set(s => s.Address, custom.Address)
+                        .Set(s => s.City, custom.City);
                     var options = new UpdateOptions { IsUpsert = true };
 
                     _dbUser.UpdateOneAsync(eqfilter, update, options);

@@ -1,0 +1,49 @@
+﻿@model Model.DTO.DTO_Client.DTO_Users_Acc
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Areas/Admin/Views/Shared/View_1.cshtml";
+}
+
+<h2 style="text-align:center "> Xác nhận email của bạn </h2>
+
+@using (Html.BeginForm("SignUpFacebook", "Customer", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.Label(" Email", htmlAttributes: new { @class = "fa fa-envelope-square" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+
+       
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Xác nhận" class="btn btn-google btn-user btn-block fab fa-google fa-fw" />
+                <label style="color:red" class="label-success col-md-offset-2 col-md-10">@ViewBag.error</label>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group">
+
+    <div style="text-align:center" class="col-md-10">
+        @Html.ActionLink("Trở về trang đăng nhập", "Login")
+    </div>
+
+</div>
+<hr>
+
+

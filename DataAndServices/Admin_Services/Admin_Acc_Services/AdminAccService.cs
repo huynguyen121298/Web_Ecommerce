@@ -13,11 +13,14 @@ namespace DataAndServices.Admin_Services.Admin_Acc_Services
     public class AdminAccService : IAdminAccService
     {
         private readonly IMongoCollection<Account> _db;
-        private readonly DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
+        private readonly IMongoCollection<Role> _dbRole;
+        //private readonly DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
 
         public AdminAccService(DataContext db)
         {
             _db = db.GetAccountCollection();
+            _dbRole = db.GetRoleCollection();
+            
         }
         public bool Create_Ad_acc(Account account)
         {
@@ -60,8 +63,8 @@ namespace DataAndServices.Admin_Services.Admin_Acc_Services
         public List<Account_Role> GetAllAccounts2()
         {
 
-            var acccountCollection = db.GetAccountCollection();
-            var roleCollection = db.GetRoleCollection();
+            var acccountCollection = _db;
+            var roleCollection = _dbRole;
             var accountInfo = from account in acccountCollection.AsQueryable()
                               join role in roleCollection.AsQueryable() on account.RoleId equals role.RoleId
                               select new Account_Role()
@@ -85,7 +88,9 @@ namespace DataAndServices.Admin_Services.Admin_Acc_Services
                     .Set(s => s.FirstName, custom.FirstName)
                     .Set(s => s.LastName, custom.LastName)
                     .Set(s => s.Password, Encryptor.MD5Hash(custom.Password))
-                    .Set(s => s._id, custom._id);
+                    .Set(s => s._id, custom._id)
+                    .Set(s => s.MerchantName, custom.MerchantName)
+                    .Set(s=>s.Photo,custom.Photo);
 
                 var options = new UpdateOptions { IsUpsert = true };
 
@@ -105,7 +110,9 @@ namespace DataAndServices.Admin_Services.Admin_Acc_Services
                 var update = Builders<Account>.Update.Set(s => s.Email, custom.Email)
                     .Set(s => s.FirstName, custom.FirstName)
                     .Set(s => s.LastName, custom.LastName)
-                    .Set(s => s._id, custom._id);
+                    .Set(s => s._id, custom._id)
+                    .Set(s => s.MerchantName, custom.MerchantName)
+                    .Set(s => s.Photo, custom.Photo);
 
                 var options = new UpdateOptions { IsUpsert = true };
 

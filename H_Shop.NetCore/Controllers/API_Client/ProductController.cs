@@ -1,17 +1,20 @@
 ﻿using DataAndServices.Admin_Services.Products;
 using DataAndServices.Client_Services;
+using DataAndServices.DataModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace H_Shop.NetCore.Controllers.API_Client
 {
     [ApiController]
-    [Route("api/Product")]   
+    [Route("api/Product")]
     public class ProductController : ControllerBase
     {
         private readonly IProductClientServices _productClientService;
         private readonly IProductService _productAdminService;
-        public ProductController(IProductClientServices productClientServices,IProductService productService)
+
+        public ProductController(IProductClientServices productClientServices, IProductService productService)
         {
             _productClientService = productClientServices;
             _productAdminService = productService;
@@ -21,7 +24,7 @@ namespace H_Shop.NetCore.Controllers.API_Client
         [Route("GetAllproducts")]
         public async Task<IActionResult> GetAllProducts()
         {
-            var listPro= await _productClientService.GetAllProducts();
+            var listPro = await _productClientService.GetAllProducts();
             return Ok(listPro);
         }
 
@@ -29,15 +32,41 @@ namespace H_Shop.NetCore.Controllers.API_Client
         [Route("GetAllProductByPrice/{giaMin:int}/{giaMax:int}")]
         public IActionResult GetAllProductByPrice(int giaMin, int giaMax)
         {
-           var listProByPrice= _productClientService.GetAllProductByPrice(giaMin, giaMax);
+            var listProByPrice = _productClientService.GetAllProductByPrice(giaMin, giaMax);
             return Ok(listProByPrice);
         }
-      
+
         [HttpGet]
         [Route("GetAllProductByName/{name}")]
         public IActionResult GetAllProductByName(string name)
         {
-           var proByName=  _productClientService.GetAllProductByName(name);
+            var proByName = _productClientService.GetAllProductByName(name);
+            return Ok(proByName);
+        }
+
+        /// <summary>
+        /// Get merchant by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetMerchantByName/{merchantName}")]
+        public IActionResult GetMerchantByName(string merchantName)
+        {
+            var proByName = _productClientService.GetMerchantByName(merchantName);
+            return Ok(proByName);
+        }
+
+        /// <summary>
+        /// Get merchant by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetProductByMerchant/{merchantId}")]
+        public IActionResult GetProductByMerchant(string merchantId)
+        {
+            var proByName = _productClientService.GetProductByMerchant(merchantId);
             return Ok(proByName);
         }
 
@@ -45,7 +74,23 @@ namespace H_Shop.NetCore.Controllers.API_Client
         [Route("GetAllProductItemByPageList")]
         public IActionResult GetAllProductItemByPageList()
         {
-           var listProItemByPage=  _productAdminService.GetProductItemByPageList();
+            var listProItemByPage = _productAdminService.GetProductItemByPageList();
+            return Ok(listProItemByPage);
+        }
+
+        [HttpGet]
+        [Route("GetProductsBought/{userId}")]
+        public IActionResult GetProductsBought(string userId)
+        {
+            var listProItemByPage = _productClientService.GetProductsBought(userId);
+            return Ok(listProItemByPage);
+        }
+
+        [HttpGet]
+        [Route("GetProductsFavorite/{userId}")]
+        public IActionResult GetProductsFavorite(string userId)
+        {
+            var listProItemByPage = _productClientService.GetProductsFavorite(userId);
             return Ok(listProItemByPage);
         }
 
@@ -53,32 +98,67 @@ namespace H_Shop.NetCore.Controllers.API_Client
         [Route("GetAllProductItem")]
         public async Task<IActionResult> GetAllProductItem()
         {
-            var listProItem= await _productAdminService.GetAllProductItem();
+            var listProItem = await _productAdminService.GetAllProductItemByEndUser();
             return Ok(listProItem);
         }
 
         [HttpGet]
         [Route("GetAllProductByIdItemClient/{id}")]
-        public IActionResult GetAllProductByIdItem(int id)
+        public IActionResult GetAllProductByIdItem(string id)
         {
-            var proItemById =  _productAdminService.GetProductItemById_client(id);
+            var proItemById = _productAdminService.GetProductItemById_client(id);
             return Ok(proItemById);
-           
         }
 
         [HttpGet]
         [Route("GetProductItemById/{Id}")]
         public IActionResult GetProductItemById(string Id)
         {
-            var proItemById=  _productAdminService.GetProductItemById(Id);
+            var proItemById = _productAdminService.GetProductItemById(Id);
             return Ok(proItemById);
         }
 
         [HttpGet]
         [Route("GetSoLuong/{Id}")]
-        public int GetSoLuong(string Id)
+        public async Task<int> GetSoLuong(string Id)
         {
-            return  _productClientService.GetSoLuong(Id);
+            return await _productClientService.GetSoLuong(Id);
+        }
+
+        [HttpPost]
+        [Route("AddProductAction")]
+        public bool InsertProductAction(List<ProductAction> productActions)
+        {
+            return _productClientService.InsertProductAction(productActions);
+        }
+
+        [HttpPost]
+        [Route("InsertProductRecommend")]
+        public async Task<bool> InsertProductRecomend(ProductRecommend productRecommend)
+        {
+            return await _productClientService.InsertProductRecommend(productRecommend);
+        }
+
+        [HttpGet]
+        [Route("GetProductRecommends")]
+        public ActionResult GetProductRecommends()
+        {
+            var productRecomends = _productClientService.GetProductRecommend();
+            return Ok(productRecomends);
+        }
+
+        [HttpPut]
+        [Route("DeleteProductAction")]
+        public bool DeleteProductAction(ProductAction productAction)
+        {
+            return _productClientService.DeleteProductAction(productAction);
+        }
+
+        [HttpPut]
+        [Route("UpdateRating")]
+        public async Task<bool> UpdateRating(Product product)
+        {
+            return await _productClientService.UpdateRating(product);
         }
     }
 }

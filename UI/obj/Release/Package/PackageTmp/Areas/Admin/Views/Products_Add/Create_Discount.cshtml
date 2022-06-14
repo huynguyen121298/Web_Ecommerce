@@ -6,6 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @{
+    var codeDiscount = Model.Content;
     string id = Model.Content;
     string show;
     switch (id)
@@ -49,13 +50,7 @@
             break;
     }
 
-
-
-
-
 }
-
-
 <h2>Tùy chọn giảm giá sản phẩm</h2>
 
 @using (Html.BeginForm("Create_Discount_Product", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -65,9 +60,9 @@
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID_Discount)
-        @Html.HiddenFor(model => model.Id_Item)
+        @Html.HiddenFor(model => model.IdItemType)
         @Html.HiddenFor(model => model.Details)
+        @Html.HiddenFor(model => model._id)
 
 
 
@@ -75,8 +70,8 @@
         <div class="form-group">
             Mã sản phẩm
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Id_SanPham, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Id_SanPham, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model._id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model._id, "", new { @class = "text-danger" })
             </div>
         </div>
 

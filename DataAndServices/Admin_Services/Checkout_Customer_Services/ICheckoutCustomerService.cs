@@ -1,5 +1,5 @@
 ﻿using DataAndServices.DataModel;
-using Model.DTO.DTO_Ad;
+using Model.DTO_Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,19 +7,21 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
 {
     public interface ICheckoutCustomerService
     {
-        List<CheckoutCustomerOrder> GetAllAccounts();
+        List<CheckoutCustomerOrder> GetAllAccounts(string userLogin);
 
-        Task<CheckoutCustomerOrder> GetAccountById(string id);
+        Task<CheckoutCustomerOrder> GetAccountById(string id, string userLogin);
+
+        Task<CheckoutCustomerOrder> GetAccountById2(string id);
 
         Task<List<CheckoutCustomerOrder>> GetListAccountById(string id);
 
-        IEnumerable<DTO_Checkout_Customer> GetMonthlyRevenue(int month);
+        DtoSalesVM GetMonthlyRevenue(string month, string merchantId);
 
-        IEnumerable<DTO_Checkout_Customer> GetYearRevenue(int year);
+        double? GetDateRevenue(string merchantId);
 
         bool Update_Ad_acc(CheckoutCustomerOrder dTO_Account);
 
-        bool DeleteAccount(string id);
+        Task<bool> DeleteAccount(string id);
     }
 }
 

@@ -1,4 +1,4 @@
-﻿@model Model.DTO.DTO_Ad.DTO_Checkout_Customer
+﻿@model Model.DTO_Model.DTOCheckoutCustomerOrder
 
 @{
     ViewBag.Title = "Details";
@@ -8,107 +8,104 @@
 
 
 <div>
-    <h4 style="text-align:center;color:red">Chi tiết đơn đặt bởi khách hàng</h4>
+    <h4 style="text-align:center;color:red">Chi tiết đơn đặt bởi khách hàng @Model.FirstName  @Model.LastName</h4>
     <hr />
-    @*<dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Checkout_Customer.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Checkout_Customer.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_SanPham)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id_SanPham)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TenSP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenSP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayTao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NgayTao)
-        </dd>
-
-    </dl>*@
+   
     <dl class="dl-horizontal">
         <dt>
             Họ và tên:   @Html.DisplayFor(model => model.FirstName)   @Html.DisplayFor(model => model.LastName)
         </dt>
-
-        
 
         <dt>
             Email:   @Html.DisplayFor(model => model.Email)
         </dt>
 
         <dd>
-           
+
         </dd>
 
         <dt>
             Số điện thoại:   @Html.DisplayFor(model => model.SDT)
         </dt>
 
-        
-
         <dt>
             Địa chỉ:  @Html.DisplayFor(model => model.DiaChi)
         </dt>
-
 
         <dt>
             Thành phố:   @Html.DisplayFor(model => model.City)
         </dt>
 
-
         <dt>
             Ngày tạo:  @Html.DisplayFor(model => model.NgayTao)
         </dt>
 
-       
-
         <dt>
-           Giảm giá: @string.Format("{0:0,0}", Model.GiamGia) VNĐ
+            Giảm giá: @string.Format("{0:0,0}", Model.GiamGia) 
         </dt>
 
         <dt>
             Tổng tiền: @string.Format("{0:0,0}", Model.TongTien) VNĐ
         </dt>
-
-
+        <dt>
+            Trạng thái:  @Html.DisplayFor(model => model.TrangThai)
+        </dt>
     </dl>
+
 </div>
-<p>
-   
-    @Html.ActionLink("Trở về", "Index")
-</p>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th> Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th> Giá sản phẩm</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th> Tên sản phẩm</th>
+
+                        <th>Số lượng</th>
+                        <th> Giá sản phẩm</th>
+
+                      
+
+                    </tr>
+                </tfoot>
+                <tbody>
+
+                    @foreach (var item1 in Model.ProductOrder)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => item1.Id_SanPham)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item1.TenSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item1.SoLuong)
+                            </td>
+                            <td>
+                                @string.Format("{0:0,0}", item1.Gia) VNĐ
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    </div>
+    <p>
+
+        @Html.ActionLink("Trở về", "Index")
+    </p>

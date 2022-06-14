@@ -1,9 +1,9 @@
 ﻿@using Model.DTO_Model;
 @using Model.DTO.DTO_Ad;
 @using PagedList.Mvc;
+@using UI.Models;
+@using Model.Common;
 @model PagedList.IPagedList<List<Model.DTO_Model.DTO_Dis_Product>>
-
-
 
 @{
     ViewBag.Title = "Index";
@@ -15,6 +15,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <style>
+    h4 {
+        color: peru
+    }
 
     .old-price {
         margin-top: 10px;
@@ -28,7 +31,6 @@
         font-size: 1.45em;
         line-height: 1.1;
     }
-
 
     ins {
         color: green;
@@ -58,22 +60,30 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
                 <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
-                <li class="breadcrumb-item active">Sản phẩm</li>
+                <li class="breadcrumb-item active">Sản phẩm theo loại</li>
             </ul>
         </div>
     </div>
 
     <div class="product-view">
         <div class="container-fluid">
-            <div class="row">
 
+            @foreach (List<DTO_Dis_Product> item1 in @Model)
+            {
+                if (item1.Count() > 0)
+                {
+                    <div class="content-heading-anchor">
+                        @{ var itemType = item1.Select(i => i.IdItemType).FirstOrDefault();}
+                        <h4 style="font-size:35px" class="title">
+                            @item1.Select(s => s.Type_Product).FirstOrDefault()
+                        <a style="font-size:20px" class="read-more-1" href="@Url.Action("Index2", "Product", new { id =itemType }) "> Xem thêm -></a>
+                    </h4>
+                </div>
                 <div class="col-lg-12">
                     <div class="row">
-                        @foreach (List<DTO_Dis_Product> item1 in @Model)
-                        {
 
-                            //List<DTO_PDis> dTO_Products1 = new List<DTO_Product>();
-                            foreach (DTO_Dis_Product item in item1)
+                        @{
+                            foreach (DTO_Dis_Product item in item1.Take(5))
                             {
                                 var price = item.Price_Dis;
                                 var priceOld = item.Price;
@@ -86,66 +96,97 @@
 
                                 <div class="col-md-2">
                                     <div class="product-item">
-                                        <div style="height:102px" class="product-title">
+                                        <div class="product-title">
                                             <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
+
                                             <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+
+                                                @for (int i = 0; i < item.Rating; i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (int i = item.Rating; i < 5; i++)
+                                                {
+                                                    <i style="color:red" class="fa fa-star-o"></i>
+
+                                                }
                                             </div>
                                             <div style="color:red" class="ratting">
                                                 @{
-                                                    if (price != null  && totalday == true && checkPrice == true)
+
+                                                    if (price != null && totalday == true && checkPrice == true)
                                                     {
                                                         <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="width:30px;height:20px"></div>
                                                     }
                                                 }
                                             </div>
                                         </div>
+
                                         <div class="product-image">
                                             <a href="product-detail.html">
-                                                <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                                <img style="height:200px;width:200px" src="@Url.Content(item.Photo)" />
                                             </a>
                                             <div class="product-action">
-                                                <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
-                                                <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
-                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                    <i class="fa fa-search"></i>
-                                                </a>
+                                                @{
+                                                    var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
+                                                    if (session == null)
+                                                    {
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
+                                                        <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    }
+                                                }
                                             </div>
                                         </div>
-                                        <div style="height:106px" class="product-price">
+                                        <div style="height:100%" class="product-price">
                                             @{
-
-                                                if (price != null && totalday == true && checkPrice==true)
+                                                if (price != null && totalday == true && checkPrice == true)
                                                 {
-                                                    <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
-                                                    <br />
+                                                    <div style="width:10%;height:20%">
+                                                        <h3 class="old-price"> @string.Format("{0:0,0}", item.Price)đ </h3>
+                                                        <span style="width:10%;height:20%" class="new-price">@string.Format("{0:0,0}", item.Price_Dis)đ </span>
+                                                    </div>
 
-                                                    <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
                                                 }
                                                 else
                                                 {
-                                                    string newprice = string.Format("{0:0,0}", item.Price);
 
-                                                    <h3>@newprice<span> VNĐ </span></h3>
+                                                    <div style="width:30%;height:50%">
+                                                        <h3> @string.Format("{0:0,0}", item.Price)đ</h3>
+                                                        <div style="width:10%;height:20%; opacity:0.05">sds</div>
+                                                    </div>
+
                                                 }
 
                                             }
+
                                             <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
                                         </div>
-
                                     </div>
                                 </div>
+
                             }
                         }
-
                     </div>
-
                 </div>
-            </div>
+            }
+
+        }
         </div>
     </div>
     <script>
@@ -166,7 +207,6 @@
                     }
                     $("#sttbuy").text(res.buy.length);
                 }
-                                   
 
             });
         }
@@ -207,10 +247,3 @@
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 </body>
-
-
-
-
-
-
-

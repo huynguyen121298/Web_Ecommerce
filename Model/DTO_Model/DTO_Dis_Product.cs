@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.DTO_Model
 {
@@ -30,6 +27,17 @@ namespace Model.DTO_Model
 
         public string Details { get; set; }
 
-        public int Id_Item { get; set; }
+        public List<DtoProductComment> Comments { get; set; }
+
+        public string AccountId { get; set; }
+
+        public string IdItemType { get; set; }
+
+        public string Type_Product { get; set; }
+        
+        public int Rating { get; set; }
+
+        public string ItemId { get; set; }
+
     }
 }

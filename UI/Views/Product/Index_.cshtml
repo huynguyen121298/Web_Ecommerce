@@ -1,9 +1,9 @@
 ﻿@*@using Model.DTO_Model;*@
 @using Model.DTO_Model;
 @using PagedList.Mvc;
+@using UI.Models;
+@using Model.Common;
 @model PagedList.IPagedList<Model.DTO_Model.DTO_Dis_Product>
-
-
 
 @{
     ViewBag.Title = "Index";
@@ -34,6 +34,16 @@
     <!-- Template Stylesheet -->
     <link href="~/css/style_SP.css" rel="stylesheet">
     <style>
+        .tieude_giua {
+            text-align: center;
+            text-transform: uppercase;
+            color: #4d2b00;
+            font-size: 30px;
+            background: url(images/tieude_center.png) no-repeat bottom center;
+            padding-bottom: 10px;
+            margin-bottom: 2.5%;
+            font-family: 'UTM Impact';
+        }
 
         .old-price {
             margin-top: 10px;
@@ -48,7 +58,6 @@
             line-height: 1.1;
         }
 
-
         ins {
             color: green;
             font-size: 32px;
@@ -59,6 +68,7 @@
         .amount {
             position: relative;
         }
+
             .amount::after {
                 content: "";
                 width: 100%;
@@ -73,14 +83,8 @@
 
 <body>
 
-    <div class="breadcrumb-wrap">
-        <div class="container-fluid">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="~/Home/Index">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="~/Product/Index">Danh sách sản phẩm</a></li>
-                <li class="breadcrumb-item active">Sản phẩm</li>
-            </ul>
-        </div>
+    <div class="tieude_giua">
+        Sản phẩm đang giảm giá
     </div>
     <div class="product-view">
         <div class="container-fluid">
@@ -104,50 +108,92 @@
                                 <div class="col-md-2">
 
                                     <div class="product-item">
-                                        <div style="height:102px" class="product-title">
+                                        <div class="product-title">
                                             <span style="color:darkgoldenrod">@Html.DisplayFor(modelItem => item.Name)</span>
 
                                             <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+
+                                                @for (int i = 0; i < item.Rating; i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (int i = item.Rating; i < 5; i++)
+                                                {
+                                                    <i style="color:red" class="fa fa-star-o"></i>
+
+                                                }
                                             </div>
                                             <div style="color:red" class="ratting">
+                                                @{
 
-                                                <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
+                                                    if (price != null && totalday == true && checkPrice == true)
+                                                    {
+                                                        <img style="width:30px;height:20px" src="~/images/sale.jpg" /> @item.Content
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="width:30px;height:20px"></div>
+                                                    }
+                                                }
                                             </div>
                                         </div>
+
                                         <div class="product-image">
                                             <a href="product-detail.html">
-                                                <img style="height:250px" src="@Url.Content(item.Photo)" />
+                                                <img style="height:200px;width:200px" src="@Url.Content(item.Photo)" />
                                             </a>
                                             <div class="product-action">
-                                                <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
-                                                <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
-                                                <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
-                                                    <i class="fa fa-search"></i>
-                                                </a>
-
+                                                @{
+                                                    var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
+                                                    if (session == null)
+                                                    {
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn" onclick="Buy_Cart('@item._id')"><i class="fa fa-cart-plus"></i></a>
+                                                        <a class="btn" onclick="Buy_Favorite('@item._id')"><i class="fa fa-heart"></i></a>
+                                                        <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    }
+                                                }
                                             </div>
                                         </div>
-                                        <div style="height:106px" class="product-price">
+                                        <div style="height:100%" class="product-price">
+                                            @{
+                                                if (price != null && totalday == true && checkPrice == true)
+                                                {
+                                                    <div style="width:10%;height:20%">
+                                                        <h3 class="old-price"> @string.Format("{0:0,0}", item.Price)đ </h3>
+                                                        <span style="width:10%;height:20%" class="new-price">@string.Format("{0:0,0}", item.Price_Dis)đ </span>
+                                                    </div>
 
-                                            <span class="old-price"> @string.Format("{0:0,0}", item.Price) VNĐ </span>
-                                            <br />
+                                                }
+                                                else
+                                                {
 
-                                            <span class="new-price">@string.Format("{0:0,0}", item.Price_Dis) VNĐ</span>
+                                                    <div style="width:30%;height:50%">
+                                                        <h3> @string.Format("{0:0,0}", item.Price)đ</h3>
+                                                        <div style="width:10%;height:20%; opacity:0.05">sds</div>
+                                                    </div>
+
+                                                }
+
+                                            }
+
                                             <a onclick="AddCart()" class="btn" href=" @Url.Action("Buy", "Product", new { id = item._id })"><i class="fa fa-shopping-cart"></i>Mua hàng</a>
                                         </div>
-
                                     </div>
                                 </div>
                             }
                         }
-
                     </div>
-
                 </div>
                 <div class="col-lg-4 sidebar">
                 </div>
@@ -204,7 +250,6 @@
                 }
             });
         }
-
     </script>
 
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -219,4 +264,3 @@
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 </body>
-

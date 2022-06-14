@@ -33,6 +33,16 @@ namespace DataAndServices.CommonModel
 
         public string Details { get; set; }
 
-        public int Id_Item { get; set; }
+        public string IdItemType { get; set; }
+
+        public string Type_Product { get; set; }
+
+        [BsonId]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string AccountId { get; set; }
+
+        public int Rating { get; set; }
+
+        public string ItemId { get; set; }
     }
 }

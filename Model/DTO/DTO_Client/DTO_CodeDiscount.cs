@@ -2,6 +2,8 @@
 {
     public class DTO_CodeDiscount
     {
+        public string _id { get; set; }
+
         public string Zipcode { get; set; }
 
         public double Discount { get; set; }
