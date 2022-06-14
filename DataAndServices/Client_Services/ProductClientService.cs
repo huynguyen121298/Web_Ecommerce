@@ -282,9 +282,13 @@ namespace DataAndServices.Client_Services
             foreach (var product in prAction)
             {
                 var pro = prod.Find(p => p._id == product.ProductId);
-                var checkPro = products.Contains(pro);
-                if (!checkPro)
-                    products.Add(pro);
+                if (pro != null)
+                {
+                    var checkPro = products.Contains(pro);
+                    if (!checkPro)
+                        products.Add(pro);
+                }
+               
             }
 
             return products;

@@ -37,6 +37,8 @@ namespace Model.DTO_Model
 
         public bool State { get; set; }
 
+        public string AccountId { get; set; }
+
         public IList<DTO_Checkout_Order> ProductOrder { get; set; }
     }
 }

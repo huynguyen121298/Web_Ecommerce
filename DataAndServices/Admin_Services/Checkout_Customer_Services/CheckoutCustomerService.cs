@@ -82,22 +82,30 @@ namespace DataAndServices.Admin_Services.Checkout_Customer_Services
         public List<CheckoutCustomerOrder> GetAllAccounts(string userLogin)
 
         {
-            var ckCustomers = _db.Find(s => true).ToList();
+            var ckCustomers = _db.Find(s =>s.AccountId==userLogin).ToList();
 
             var ckCustomerOrders = new List<CheckoutCustomerOrder>();
+
             foreach (var c in ckCustomers)
             {
+                double newTotals = 0;
+
                 var ckOrders = new List<Checkout_Oder>();
                 foreach (var order in c.ProductOrder)
                 {
                     if (order.AccountId == userLogin)
                     {
                         ckOrders.Add(order);
-                        c.ProductOrder = ckOrders;
-                        ckCustomerOrders.Add(c);
+                       
+                        newTotals += (double)((order.Gia) * (order.SoLuong));
                     }
+
                 }
+                c.ProductOrder = ckOrders;
+                ckCustomerOrders.Add(c);
+                c.TongTien = newTotals;
             }
+
             return ckCustomerOrders;
         }
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
@@ -128,8 +129,15 @@ namespace UI.Controllers
                 check.State = false;
                 if (check.Zipcode != "")
                 {
-                    var checkDiscount = saveOrder2(check.Zipcode);
-                    checkDiscount.Equals(0);
+                    HttpResponseMessage responseUser = service.GetResponse("api/Cart/GetGiamGia/" + check.Zipcode);
+                    responseUser.EnsureSuccessStatusCode();
+                    Double giamgia = responseUser.Content.ReadAsAsync<Double>().Result;
+                    if (giamgia == 0)
+                    {
+                        ViewData["Message"] = "Mã code " + check.Zipcode + " không hợp lệ";
+                        return RedirectToAction("Checkout","Cart");
+                    }
+                       
                     check.Zipcode = Request.Form["zip"];
                     check.GiamGia = Request.Form["discount1"] + "%";
                 }
@@ -163,36 +171,40 @@ namespace UI.Controllers
                     }
 
                     HttpResponseMessage responseUser1 = service.PostResponse("api/Cart/InsertBill/", checkSession);
-                    var idBill = await responseUser1.Content.ReadAsStringAsync();
+                    List<DTOCheckoutCustomerOrder> bills = responseUser1.Content.ReadAsAsync<List<DTOCheckoutCustomerOrder>>().Result;
 
                     var notifications = new List<DtoMerchantNotification>();
                     var dtoProductActions = new List<DtoProductAction>();
-                    foreach (var item in cart)
+                    foreach (var item in bills)
                     {
-                        var notification = new DtoMerchantNotification();
-                        notification.DateTime = DateTime.Now.AddHours(+7);
-                        notification.AccountId = item.AccountId;
-                        notification.Subject = "Đơn hàng mới";
-                        notification.Content = "Đơn hàng " + item.Name + " đã được đặt bởi khách hàng " + checkSession.FirstName + " " + checkSession.LastName;
-                        notification.CheckoutId = idBill;
-                        notifications.Add(notification);
-
-                        var dtoProductAction = new DtoProductAction()
+                      
+                        foreach (var item2 in item.ProductOrder)
                         {
-                            Status = ProductActionConstant.PRODUCT_BOUGHT,
-                            UserId = userLogin._id,
-                            ProductId = item._id
-                        };
-                        dtoProductActions.Add(dtoProductAction);
+                            var notification = new DtoMerchantNotification();
+                            notification.DateTime = DateTime.Now.AddHours(+7);
+                            notification.AccountId = item2.AccountId;
+                            notification.Subject = "Đơn hàng mới";
+                            notification.Content = "Đơn hàng " + item2.TenSP + " đã được đặt bởi khách hàng " + checkSession.FirstName + "" + checkSession.LastName;
+                            notification.CheckoutId = item._id;
+                            notifications.Add(notification);
+
+                            var dtoProductAction = new DtoProductAction()
+                            {
+                                Status = ProductActionConstant.PRODUCT_BOUGHT,
+                                UserId = userLogin._id,
+                                ProductId = item._id
+                            };
+                            dtoProductActions.Add(dtoProductAction);
+                        }                    
                     }
 
                     HttpResponseMessage response2 = service.PostResponse("api/Notification/AddNotification/", notifications);
                     HttpResponseMessage response = service.PostResponse("api/Product/AddProductAction/", dtoProductActions);
 
-                    var fullName = checkSession.FirstName + "" + checkSession.LastName;
+                    //var fullName = checkSession.FirstName + "" + checkSession.LastName;
 
-                    var subject = "Đơn hàng được xác nhận";
-                    var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + idBill + " đã đặt hàng thành công vào lúc " + DateTime.Now;
+                    //var subject = "Đơn hàng được xác nhận";
+                    //var body = "Xin chào " + fullName + ", <br/> Đơn hàng " + bills.FirstOrDefault()._id + " đã đặt hàng thành công vào lúc " + DateTime.Now;
 
                     //var sendMail = SendEmail(checkSession.Email, body, subject);
                     //if (sendMail == false)
@@ -206,7 +218,7 @@ namespace UI.Controllers
                         Session.Remove("cart");
                         Session.Remove("PayOrder");
                         Session.Remove(Constants.CART_SESSION);
-                        return RedirectToAction("Thankyou","Cart",new {Id = idBill});
+                        return RedirectToAction("Thankyou","Cart",new {Id = bills.FirstOrDefault()._id });
                     }
                     return RedirectToAction("Error", "Home");
                 }

@@ -1,5 +1,8 @@
-﻿using DataAndServices.Data;
+﻿using AutoMapper;
+using DataAndServices.Data;
 using DataAndServices.DataModel;
+using Model.DTO_Model;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +17,18 @@ namespace DataAndServices.Client_Services
         private readonly IMongoCollection<Checkout_Customer> _dbCheckCustomer;
         private readonly IMongoCollection<CheckoutCustomerOrder> _dbCheckCustomerOrder;
         private readonly IMongoCollection<Item> _dbItem;
+        private readonly IMapper _mapper;
 
-        public CartService(DataContext db)
+
+        public CartService(DataContext db,
+            IMapper mapper)
         {
             _dbCheckOrder = db.GetCheckout_OderCollection();
             _dbCodeDis = db.GetCodeDiscountCollection();
             _dbCheckCustomer = db.GetCheckout_CustomerCollection();
             _dbCheckCustomerOrder = db.GetCheckoutCustomerOrderCollection();
             _dbItem = db.GetItemCollection();
+            _mapper = mapper;
             
         }
         public async Task<double> GetGiamGia(string zipcode)
@@ -35,34 +42,39 @@ namespace DataAndServices.Client_Services
             return 0;
         }
 
-        public async Task<List<string>> InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
+        public List<DTOCheckoutCustomerOrder> InsertBill(CheckoutCustomerOrder checkoutCustomer_Order)
         {
           
             try
             {
                 var accs = checkoutCustomer_Order.ProductOrder.Select(s => s.AccountId).Distinct();
+               
+                var newCheckouts = new List<DTOCheckoutCustomerOrder>();
+                foreach(var item in accs)
+                {
+                    checkoutCustomer_Order.AccountId = item;
+                    checkoutCustomer_Order._id = null;
+
+                    _dbCheckCustomerOrder.InsertOne(checkoutCustomer_Order);
+                    var dtocheckoutCustomers = _mapper.Map<CheckoutCustomerOrder, DTOCheckoutCustomerOrder>(checkoutCustomer_Order);
+
+
+                    newCheckouts.Add(dtocheckoutCustomers);
+                }
+
+
                 foreach (var item in checkoutCustomer_Order.ProductOrder)
                 {
-                    if(item.ItemId != null && item.ItemId!= string.Empty)
+                    if (item.ItemId != null && item.ItemId != string.Empty)
                     {
                         int quantity = (int)item.SoLuong;
 
                         UpdateQuantityItem(item.ItemId, quantity);
                     }
-                   
-                }
-                var newCheckouts = new List<CheckoutCustomerOrder>();
-                foreach(var item in accs)
-                {
-                    var checkoutCustomerOrder = new CheckoutCustomerOrder();
-                    checkoutCustomerOrder = checkoutCustomer_Order;
-                    checkoutCustomerOrder.AccountId = item;
-                    newCheckouts.Add(checkoutCustomerOrder);
-                }
-           
-                await _dbCheckCustomerOrder.InsertManyAsync(newCheckouts);
 
-                return newCheckouts.Select(s=>s.AccountId).ToList();
+                }
+
+                return newCheckouts;
             }
             catch
             {
