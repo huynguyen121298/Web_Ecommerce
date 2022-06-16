@@ -1,13 +1,14 @@
 ﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<List<Model.DTO_Model.DTO_Dis_Product>>
 @using Model.DTO_Model;
+@using Model.Common;
+@using UI.Models;
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>
-        HShop_
-        Ecommerce
+        NTH_Ecom
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -92,6 +93,8 @@
     <link href="//fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <!-- //google fonts -->
     <script src="~/js/jquery-3.3.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 
 </head>
@@ -120,20 +123,20 @@
                                 <div class="dropdown-menu " role="menu">
 
                                     @*<div class="form-group  ">
-            <label for="filter">Giá Sản phẩm</label>
+                                            <label for="filter">Giá Sản phẩm</label>
 
-            <ul>
-                <li>
-                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="0",gia="500000" })">0-500.000 </a>
-                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="500000",gia="1000000" })">500.000-1.000.000 </a>
-                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="1000000",gia="2000000" })">1.000.000-2.000.000 </a>
-                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="2000000",gia="1000000000" })">Lớn hơn 2 triệu </a>
+                                            <ul>
+                                                <li>
+                                                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="0",gia="500000" })">0-500.000 </a>
+                                                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="500000",gia="1000000" })">500.000-1.000.000 </a>
+                                                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="1000000",gia="2000000" })">1.000.000-2.000.000 </a>
+                                                    <a class="btn" href="@Url.Action("Index", "Product", new { gia_="2000000",gia="1000000000" })">Lớn hơn 2 triệu </a>
 
 
-                </li>
-            </ul>
+                                                </li>
+                                            </ul>
 
-        </div>*@
+                                        </div>*@
                                     <div class="form-group sidebar-widget tag">
                                         <label for="filter">Giá Sản phẩm</label>
 
@@ -159,22 +162,9 @@
                                     <br />
 
 
-                                    <div class="sidebar-widget tag">
-                                        <h2 class="title">Sản phẩm tìm kiếm nhiều</h2>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Áo thun nu"})">Áo thun nữ</a>
+                                 
+                                        @Html.Action("BagProductRecommend", "Product")
 
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Táo"})">Hoa quả</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Balo"})">Balo</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Túi"})">Túi xách nữ</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ví"})">Ví da nam</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Giày"})">Giày Gucci</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Dép"})">Dép quai ngang</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="iphone"})">Iphone 12 Pro Max</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Mac"})">Macbook</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Samsung"})">Samsung Note 10</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Tivi"})">Tivi 97"</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
-                                    </div>
 
                                     <div class="sidebar-widget tag">
                                         <h2 style="color:cornflowerblue" class="title">Sắp xếp theo</h2>
@@ -236,14 +226,14 @@
                                     <li><a href=" ~/Product/Index_">Sản phẩm đang giảm giá</a></li>
                                     @*<li><a href="@Url.Action("Index2", "Product", new { id = 8 })"> Thời trang nam</a></li>
 
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 9 })"> Thời trang nữ</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 3 })">Máy tính và Laptop</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 2 })">Máy ảnh và máy quay phim</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 1 })">Đồng hồ</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 7 })">Thiết bị gia dụng</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 6 })">Thể thao và du lịch</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 4 })"> Mẹ và bé</a></li>
-                                    <li><a href=" @Url.Action("Index2", "Product", new { id = 5 })">Sức khỏe và sắc đẹp</a></li>*@
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 9 })"> Thời trang nữ</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 3 })">Máy tính và Laptop</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 2 })">Máy ảnh và máy quay phim</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 1 })">Đồng hồ</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 7 })">Thiết bị gia dụng</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 6 })">Thể thao và du lịch</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 4 })"> Mẹ và bé</a></li>
+                                        <li><a href=" @Url.Action("Index2", "Product", new { id = 5 })">Sức khỏe và sắc đẹp</a></li>*@
                                     @Html.Action("ListTypeProduct", "Home")
 
 
@@ -271,7 +261,7 @@
 
 
 
-                            <li><a href="~/Cart/Index">Giỏ hàng <span style="color:red" id="total-product" class="fa fa-shopping-cart" aria-hidden="true">  @Html.Action("BagCart", "Product")/</span></a></li>
+                            <li><a href="~/Product/Details">Giỏ hàng <span style="color:red" id="total-product" class="fa fa-shopping-cart" aria-hidden="true">  @Html.Action("BagCart", "Product")/</span></a></li>
 
                             <li class="mr-3 icons">
                                 <a href="~/Cart/YeuThich">
@@ -302,7 +292,7 @@
 
 
 
-                            <li  class="mr-lg-3 mr-2 p-0" id="huy">
+                            <li class="mr-lg-3 mr-2 p-0" id="huy">
                                 <a href="#">Tài Khoản <span class="fa fa-angle-down" aria-hidden="true"></span></a>
                                 <ul style="background: rgba(76, 175, 80, 0.3)" class="inner-dropdown">
 
@@ -326,31 +316,30 @@
 
                             </li>
                             <li class="mr-lg-3 mr-2 p-0">
-                                @if (Request.Cookies["firstname"] != null)
+                                @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
-
-
                                         document.getElementById("huy").style.display = 'none';
-
-
-
-
-
                                     </script>
-                                    <p class="fa fa-angle-down" style="color:cadetblue">
-                                        Xin chào: @Request.Cookies["firstname"].Value
+                                    var fullname = Request.Cookies["firstname"].Value;
+                                    <p class="fa fa-angle-down" style="color:white">
+                                        Xin chào: @fullname
                                     </p>
+
+                                    <ul style="background: space" class="inner-dropdown  ">
+                                        @if (fullname != "Facebook")
+                                        {
+                                            <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+
+                                        }
+
+                                        <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
+                                        <li>
+
+                                            <a class="btn btn-google btn-user btn-block " href="@Url.Action("Logout","Customer")"> Thoát </a>
+                                        </li>
+                                    </ul>
                                 }
-                            <ul  style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
-                                <li><a class="btn btn-facebook btn-user btn-block" style="background-color:dodgerblue" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
-
-                                <li><a class="btn btn-success btn-user btn-block" style="background-color:forestgreen" href="#">Cài đặt</a></li>
-                                <li>
-
-                                    <a class="btn btn-google btn-user btn-block " style="background-color:red" href="@Url.Action("Logout","Customer")"> Thoát </a>
-                                </li>
-                            </ul>
                             </li>
 
 
@@ -558,7 +547,7 @@
 
                 <!-- footer logo -->
                 <div class="footer-logo text-center">
-                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> HShop_Ecommerce </a>
+                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span>NTH_Ecom </a>
                 </div>
                 <!-- pay -->
                 <div class="container-fluid">
@@ -616,7 +605,7 @@
                 <!-- copyright -->
                 <div class="copy-right text-center">
                     <p>
-                        @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
+                        @DateTime.Now  NTH_Ecom | Design by Nguyễn Tuấn Huy
                         <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
 

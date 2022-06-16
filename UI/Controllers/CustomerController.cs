@@ -203,7 +203,7 @@ namespace UI.Controllers
             var authenticationEmail = (AuthenticationEmail)Session[Constants.AUTHENTICATIONEMAIL_SESSION];
             if (ModelState.IsValid & authenticationEmail != null)
             {
-                if (model.Email == authenticationEmail.Email & authenticationEmail.AuthenticationCode == AuthenticationCode)
+                if (model.Email == authenticationEmail.Email & authenticationEmail.AuthenticationCode == AuthenticationCode)               
                 {
                     //check email đã đc dùng
                     var mail = GetCustomerByEmail(model.Email);
@@ -433,22 +433,24 @@ namespace UI.Controllers
 
         public JsonResult GetAuthenticationInEmail(string Email)
         {
-            //var findThisEmail = GetCustomerByEmail(Email);
-            //if (findThisEmail == null)
-            //{
+            var mail = GetCustomerByEmail(Email);
+            if (mail != null)
+            {
+                return Json(new { status = false });
+            }
             Session[Constants.AUTHENTICATIONEMAIL_SESSION] = null;
-            int authCode = new Random().Next(1000, 9999);
+            //int authCode = new Random().Next(1000, 9999);
+            int authCode = 123456;
+
             AuthenticationEmail authenticationEmail = new AuthenticationEmail();
             authenticationEmail.Email = Email;
             authenticationEmail.AuthenticationCode = authCode.ToString();
             Session[Constants.AUTHENTICATIONEMAIL_SESSION] = authenticationEmail;
 
-            MailHelper.SendMailAuthentication(Email, "Mã xác thực từ H_Shop", authCode.ToString());
+            //MailHelper.SendMailAuthentication(Email, "Mã xác thực từ H_Shop", authCode.ToString());
 
             return Json(new { status = true });
-            //}
-            //else
-            //    return Json(new { status = false });
+            
         }
 
         [AuthorizeLoginEndUser]

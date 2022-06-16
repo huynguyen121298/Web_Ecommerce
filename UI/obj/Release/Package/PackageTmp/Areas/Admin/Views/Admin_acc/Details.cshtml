@@ -16,9 +16,9 @@
     }
 
 }
+<link href="~/css/bootstrap.css" rel="stylesheet" />
 
-
-<div>
+<div class="justify-content-center">
     @{
         if (stt != 1)
         {
@@ -33,53 +33,41 @@
     }
 
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal justify-content-center">
 
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.FirstName) :  @Html.DisplayFor(model => model.FirstName)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+     
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.LastName) : @Html.DisplayFor(model => model.LastName)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
 
        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email) : @Html.DisplayFor(model => model.Email)
+        </dt>
+
         @{
             if (stt == 1)
             {
                 <dt>
-                    Quyền
+                    Quyền : @quyen
                 </dt>
 
                 <dd>
-                    @quyen
+                    
                 </dd>
             }
             if (Model.MerchantName != null)
             {
-                <dt>
-                    @Html.DisplayNameFor(model => model.MerchantName)
-                </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.MerchantName) :   @Html.DisplayFor(model => model.MerchantName)
+    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.MerchantName)
-                </dd>
             }
             if (Model.Photo != null)
             {
@@ -104,10 +92,12 @@
     @if (Model.RoleId == 1)
     {
         @Html.ActionLink("Trở về", "Index")
+
     }
     @if (Model.RoleId == 2)
     {
         @Html.ActionLink("Trở về", "Index", "Admin")
+
     }
 
 </p>

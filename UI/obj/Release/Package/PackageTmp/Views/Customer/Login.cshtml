@@ -99,14 +99,14 @@
                                         <a href="~/Customer/LoginFacebook" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a>
-                                        <div class="btn btn-google btn-user btn-block">
+                                        @*<div class="btn btn-google btn-user btn-block">
                                             <div class="g-signin2 " style="display:block;margin-left:105px" data-onsuccess="onSignIn"><i class="fab fa-google fa-fw"></i> Login with Google </div>
 
-                                        </div>
+                                        </div>*@
 
                                         @*<a id="btnGoogle" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>*@
+                                                <i class="fab fa-google fa-fw"></i> Login with Google
+                                            </a>*@
                                         @*<button class="btn btn-danger btn-classic" id="btnGoogle">Đăng nhập bằng Google</button>*@
 
                                     }
@@ -130,36 +130,6 @@
             </div>
 
         </div>
-        <!-- Messenger Plugin chat Code -->
-        <div id="fb-root"></div>
-
-        <!-- Your Plugin chat code -->
-        <div id="fb-customer-chat" class="fb-customerchat">
-        </div>
-
-        <script>
-            var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "102128368471833");
-            chatbox.setAttribute("attribution", "biz_inbox");
-        </script>
-
-        <!-- Your SDK code -->
-        <script>
-            window.fbAsyncInit = function () {
-                FB.init({
-                    xfbml: true,
-                    version: 'v13.0'
-                });
-            };
-
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
 
 
     </div>

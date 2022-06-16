@@ -34,7 +34,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Thu nhập (Ngày hôm nay)
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewData["SaleDate"]</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@string.Format("{0:0,0}",ViewData["SaleDate"])</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -158,16 +158,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 </div>
-
-<script>
-    if (@ViewData["MonthlySalesByDate"] != null) {
-    }
-
-
-
-
-
-</script>
 
 
 
