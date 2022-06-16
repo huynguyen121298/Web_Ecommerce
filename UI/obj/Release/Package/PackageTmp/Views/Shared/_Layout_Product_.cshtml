@@ -1,13 +1,15 @@
 ﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<Model.DTO_Model.DTO_Dis_Product>
 @using Model.DTO_Model;
+@using Model.Common;
+@using UI.Models;
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>
-        HShop_
-        Ecommerce
+        NTH_Ecom
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -21,6 +23,8 @@
 
     <!-- Custom styles for this template-->
     <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 
     <script>
@@ -128,7 +132,7 @@
                             <div class="dropdown dropdown-lg">
                                 <button style="height:35px" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span>Lựa chọn sản phẩm theo</button>
                                 <div class="dropdown-menu " role="menu">
-                 <div class="form-group sidebar-widget tag">
+                                    <div class="form-group sidebar-widget tag">
                                         <label for="filter">Giá Sản phẩm</label>
 
                                         <ul>
@@ -153,22 +157,8 @@
                                     <br />
 
 
-                                    <div class="sidebar-widget tag">
-                                        <h2 class="title">Sản phẩm tìm kiếm nhiều</h2>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Áo thun nu"})">Áo thun nữ</a>
+                                        @Html.Action("BagProductRecommend", "Product")
 
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Táo"})">Hoa quả</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Balo"})">Balo</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Túi"})">Túi xách nữ</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ví"})">Ví da nam</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Giày"})">Giày Gucci</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Dép"})">Dép quai ngang</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="iphone"})">Iphone 12 Pro Max</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Mac"})">Macbook</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Samsung"})">Samsung Note 10</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Tivi"})">Tivi 97"</a>
-                                        <a href="@Url.Action("Index", "Product", new {searchName1="Ghê"})">Ghế mátxa</a>
-                                    </div>
 
                                     <div class="sidebar-widget tag">
                                         <h2 style="color:cornflowerblue" class="title">Sắp xếp theo</h2>
@@ -177,7 +167,7 @@
                                         <a style="color:coral" href=" ~/Product/TypeProduct" class="btn btn-info">Sắp xếp theo từng mẫu</a>
                                         <a style="color:red" class="btn btn-info" href=" ~/Product/Index_">Sản phẩm đang giảm giá</a>
                                     </div>
-                                    
+
                                     <div class="sidebar-widget tag">
                                         <h2 style="color:cornflowerblue" class="title">Theo cửa hàng</h2>
 
@@ -191,7 +181,7 @@
                                             }
                                         </script>
                                     </div>
-                                
+
 
                                 </div>
                             </div>
@@ -266,7 +256,7 @@
 
 
 
-                            <li><a href="~/Cart/Index">Giỏ hàng <span style="color:red" id="total-product" class="fa fa-shopping-cart" aria-hidden="true">  @Html.Action("BagCart", "Product")/</span></a></li>
+                            <li><a href="~/Product/Details">Giỏ hàng <span style="color:red" id="total-product" class="fa fa-shopping-cart" aria-hidden="true">  @Html.Action("BagCart", "Product")/</span></a></li>
 
                             <li class="mr-3 icons">
                                 <a href="~/Cart/YeuThich">
@@ -321,31 +311,30 @@
 
                             </li>
                             <li class="mr-lg-3 mr-2 p-0">
-                                @if (Request.Cookies["firstname"] != null)
+                                @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
                                 {
                                     <script>
-
-
                                         document.getElementById("huy").style.display = 'none';
-
-
-
-
-
                                     </script>
+                                    var fullname = Request.Cookies["firstname"].Value;
                                     <p class="fa fa-angle-down" style="color:white">
-                                        Xin chào: @Request.Cookies["firstname"].Value
+                                        Xin chào: @fullname
                                     </p>
+
+                                    <ul style="background: space" class="inner-dropdown  ">
+                                        @if (fullname != "Facebook")
+                                        {
+                                            <li><a class="btn btn-facebook btn-user btn-block" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
+
+                                        }
+
+                                        <li><a class="btn btn-success btn-user btn-block" href="#">Cài đặt</a></li>
+                                        <li>
+
+                                            <a class="btn btn-google btn-user btn-block " href="@Url.Action("Logout","Customer")"> Thoát </a>
+                                        </li>
+                                    </ul>
                                 }
-                                <ul style="background: rgba(76, 175, 80, 0.5)" class="inner-dropdown  ">
-                                    <li><a class="btn btn-facebook btn-user btn-block" style="background-color:dodgerblue" href="~/Customer/ProfileUser">Trang cá nhân</a></li>
-
-                                    <li><a class="btn btn-success btn-user btn-block" style="background-color:forestgreen" href="#">Cài đặt</a></li>
-                                    <li>
-
-                                        <a class="btn btn-google btn-user btn-block " style="background-color:red" href="@Url.Action("Logout","Customer")"> Thoát </a>
-                                    </li>
-                                </ul>
                             </li>
 
 
@@ -553,7 +542,7 @@
 
                 <!-- footer logo -->
                 <div class="footer-logo text-center">
-                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> HShop_Ecommerce </a>
+                    <a href="index.html"><span class="fa fa-stumbleupon" aria-hidden="true"></span> NTH_Ecom </a>
                 </div>
                 <!-- pay -->
                 <div class="container-fluid">
@@ -611,7 +600,7 @@
                 <!-- copyright -->
                 <div class="copy-right text-center">
                     <p>
-                        @DateTime.Now   HShop_Ecommerce | Design by Nguyễn Tuấn Huy
+                        @DateTime.Now   NTH_Ecom | Design by Nguyễn Tuấn Huy
                         <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
 

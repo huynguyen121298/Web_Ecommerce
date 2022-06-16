@@ -6,43 +6,6 @@
 }
 
 <h2 style="text-align:center ">Đăng Ký </h2>
-<!-- Messenger Plugin chat Code -->
-<div id="fb-root"></div>
-
-<!-- Your Plugin chat code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
-
-<!-- Messenger Plugin chat Code -->
-<div id="fb-root"></div>
-
-<!-- Your Plugin chat code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
-
-<script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "102128368471833");
-    chatbox.setAttribute("attribution", "biz_inbox");
-</script>
-
-<!-- Your SDK code -->
-<script>
-    window.fbAsyncInit = function () {
-        FB.init({
-            xfbml: true,
-            version: 'v13.0'
-        });
-    };
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 
 @using (Html.BeginForm("Signup", "Customer", FormMethod.Post))
 {
@@ -53,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
+           @Html.Label(" Nhập Tên", htmlAttributes: new { @class = "fa fa-user" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -75,7 +38,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @oninvalid = "this.setCustomValidity('Email có dạng abc@xyz.com')", oninput = "this.setCustomValidity('')" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
+               
             </div>
 
         </div>
@@ -91,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label(" Xác nhận mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
+           @Html.Label(" Xác nhận mật khẩu", htmlAttributes: new { @class = "fa fa-key" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
@@ -119,7 +82,7 @@
 <div class="form-group">
 
     <div class="col-md-offset-2 col-md-10">
-        <input id="btnGetAuthCode" class="btn btn-primary btn-user btn-block" type="submit" value="Lấy mã xác thực">
+        <input id="btnGetAuthCode" class="btn btn-primary btn-user btn-block" type="submit" value="Lấy mã xác thực">       
     </div>
 </div>
 <div class="form-group">

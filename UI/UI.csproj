@@ -180,6 +180,11 @@
     <Compile Include="Models\ResetPasswordModel2.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Security_\AuthorizeLoginAdmin.cs" />
     <Compile Include="Security_\AuthorizeLoginEndUser.cs" />
     <Compile Include="Security_\DeatAuthorizeAttribute.cs" />
@@ -2578,6 +2583,10 @@
     <Content Include="Areas\Admin\Views\Item\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\ListTypeProductAdmin2.cshtml" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />
     <Content Include="Scripts\ckeditor\ckeditor_basic.js" />

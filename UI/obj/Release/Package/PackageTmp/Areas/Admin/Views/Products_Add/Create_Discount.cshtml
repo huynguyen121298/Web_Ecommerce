@@ -95,8 +95,25 @@
         <div class="form-group">
             Hình ảnh
             <div class="col-md-10">
-                <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh" />
-                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                @if (Model.Photo != null)
+                {
+                    <img src="@Url.Content(Model.Photo)" style="height:200px; width:200px; margin:10px; " id="chonAnh" />
+                }
+                else
+                {
+                    if (Model.Photo2 != null)
+                    {
+                        <img src=" @Url.Content(Model.Photo2)" style="height:100px; width:100px;margin:10px" />
+
+                    }
+                    else
+                    {
+                        <img src=" @Url.Content(Model.Photo3)" style="height:100px; width:100px;margin:10px" />
+
+                    }
+
+                }
+
             </div>
         </div>
 

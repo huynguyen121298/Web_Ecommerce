@@ -30,5 +30,5 @@ Ngày phát hành:07/15
 Thẻ bị hết hạn
 
 -send mail tạch( quên pass, đăng ký, gửi xác thực, xóa, và xác nhận đơn hàng)	
--ChatBox
+
 -Deploy

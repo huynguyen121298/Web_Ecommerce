@@ -1,16 +1,17 @@
 ﻿@model  Model.DTO_Model.DTO_Product_Item_Type
 
-
 @{
 
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<link href="~/css/css_color.css" rel="stylesheet" />
 
 <script src="~/Scripts/jquery-3.4.1.js"></script>
-
-
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">Tạo sản phẩm</h6>
+</div>
 @using (Html.BeginForm("Create", "Products_Add", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -42,57 +43,52 @@
             @Html.TextAreaFor(model => model.Details, new { @id = "ckeditor" })
             @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
         </div>
-        <script type="text/javascript">
+
+        <script>
             $(document).ready(function () {
                 CKEDITOR.replace('ckeditor');
+                CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+                CKEDITOR.config.pasteFromWordRemoveStyles = false;
+                CKEDITOR.config.htmlEncodeOutput = false;
+                CKEDITOR.config.ProcessHTMLEntities = false;
+                CKEDITOR.config.entities = false;
+                CKEDITOR.config.entities_latin = false;
+                CKEDITOR.config.ForceSimpleAmpersand = true;
                 CKEDITOR.config.autoParagraph = false;
                 CKEDITOR.config.language = 'vi';
                 CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR
                 CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;
             });
+
         </script>
+
     </div>
     <div class="form-group">
         Chọn hình ảnh cho sản phẩm
         <div class="col-md-10">
             <ol>
 
-                
-                    <ol>
-                                <li>
-                                    <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
+                <ol>
+                    <li>
+                        <input type="file" name="ImageUpload" id="ImageUpload" onchange="upAnh(this)" />
 
-                                    <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
-                                </li>
-                        
+                        <img src="" style="height:60px; width:50px; margin:10px; " id="chonAnh" />
+                    </li>
 
-                                <li>
-                                    <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
+                    <li>
+                        <input type="file" name="ImageUpload2" id="ImageUpload2" onchange="upAnh2(this)" />
 
-                                    <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
-                                </li>
-                        
+                        <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh2" />
+                    </li>
 
-                     
-                                <li>
+                    <li>
 
-                                    <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
+                        <input type="file" name="ImageUpload3" id="ImageUpload3" onchange="upAnh3(this)" />
 
-                                    <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
-                                </li>
-                        
-
-
-
-                    </ol>
-             
-
+                        <img src="" style="height:50px; width:50px; margin:10px; " id="chonAnh3" />
+                    </li>
+                </ol>
             </ol>
-
-            
-
-        
-
 
             <p style="color:red">@ViewData["ErrorMessage"]</p>
         </div>
@@ -137,14 +133,29 @@
             @Html.Action("ListTypeProductAdmin", "Admin")
         </div>
     </div>
+
     <div class="form-group">
-        Nhập số lượng
+        Chon màu sản phẩm
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
-            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            <select style="width:200px;margin-left:10%" name="selectColor" required>
+                <option>Xanh </option>
+                <option>Đỏ</option>
+                <option>Tím</option>
+                <option>Vàng</option>
+                <option>Cam</option>
+                <option>Trắng</option>
+                <option>Đen</option>
+            </select>
         </div>
     </div>
 
+    <div class="form-group">
+        Nhập số lượng
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QuantityBuy, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.QuantityBuy, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="form-group">
         <p style="color:red">@ViewData["ErrorMessage2"]</p>
         <div class="col-md-offset-2 col-md-10">
@@ -161,30 +172,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<script>
-    function getPlainText(strSrc) {
-        var resultStr = "";
 
-        // Ignore the <p> tag if it is in very start of the text
-        if (strSrc.indexOf('<p>') == 0)
-            resultStr = strSrc.substring(3);
-
-        // Replace <p> with two newlines
-        resultStr = resultStr.replace(/<p>/gi, "\r\n\r\n");
-        // Replace <br /> with one newline
-        resultStr = resultStr.replace(/<br \/>/gi, "\r\n");
-        resultStr = resultStr.replace(/<br>/gi, "\r\n");
-
-        //-+-+-+-+-+-+-+-+-+-+-+
-        // Strip off other HTML tags.
-        //-+-+-+-+-+-+-+-+-+-+-+
-
-        return resultStr.replace(/<[^<|>]+?>/gi, '');
-    }
-
-    var str = "<p>first line<br />second line <otherTag>Other Html tag data</otherTag></p><p>third line<br />fourth line</p>";
-    $("#myTextArea").val(getPlainText(str));
-</script>
 @section Upload {
     <script>
         $(function () {
