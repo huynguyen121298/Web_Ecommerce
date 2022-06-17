@@ -562,8 +562,6 @@ C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\System.Web.WebPages.Ra
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\WebGrease.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Model.pdb
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Model.dll.config
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\EntityFramework.xml
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\EntityFramework.SqlServer.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Facebook.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\log4net.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\PagedList.xml

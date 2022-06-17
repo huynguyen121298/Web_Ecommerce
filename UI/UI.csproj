@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Model">
-      <HintPath>..\..\NTH_Ecom\Core\Model\bin\Release\Model.dll</HintPath>
+      <HintPath>..\Core\Model\bin\Release\Model.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\..\..\..\Desktop\UI_\bin\MongoDB.Bson.dll</HintPath>

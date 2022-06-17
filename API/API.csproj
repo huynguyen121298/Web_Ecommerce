@@ -23,10 +23,10 @@
 
   <ItemGroup>
     <Reference Include="DataAndServices">
-      <HintPath>..\..\NTH_Ecom\Core\DataAndServices\bin\Release\DataAndServices.dll</HintPath>
+      <HintPath>..\Core\DataAndServices\bin\Release\DataAndServices.dll</HintPath>
     </Reference>
     <Reference Include="Model">
-      <HintPath>..\..\NTH_Ecom\Core\Model\bin\Release\Model.dll</HintPath>
+      <HintPath>..\Core\Model\bin\Release\Model.dll</HintPath>
     </Reference>
   </ItemGroup>
 
