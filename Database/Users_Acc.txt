@@ -1,9 +1,0 @@
-/* 1 */
-{
-    "_id" : ObjectId("60a5d6bcafa488242099924f"),
-    "FirstName" : "Huy ",
-    "LastName" : "Nguyễn",
-    "Email" : "nguyentuanhuy301198@gmail.com",
-    "Password" : "522aaa85cca63a7be28b14a5e3dbad1f",
-    "RoleId" : null
-}
