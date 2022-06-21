@@ -22,6 +22,8 @@ namespace DataAndServices.Admin_Services.Products
 
         Task<Product> GetProductById(string id);
 
+        List<Dis_Product> GetProductById_Item(string id,string userLogin);
+
         List<Dis_Product> GetProductById_Item(string id);
 
         Product_Item_Type GetProductItemById(string id);

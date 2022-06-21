@@ -271,6 +271,37 @@ namespace DataAndServices.Admin_Services.Products
             return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
         }
 
+        public List<Dis_Product> GetProductById_Item(string id,string userLogin)
+        {
+            var typeProduct = _dbItemtype.Find(s => s._id == id).FirstOrDefault();
+            var discountCollection = _dbDis;
+            var productCollection = _db;
+            var itemTypeCollection = _dbItemtype;
+            var Info = (from dis in discountCollection.AsQueryable()
+                        join product in productCollection.AsQueryable() on dis._id equals product._id
+                        where product.IdItemType == id && product.AccountId == userLogin
+                        select new Dis_Product()
+                        {
+                            _id = dis._id,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Details = product.Details,
+                            Photo = product.Photo,
+                            Photo2 = product.Photo2,
+                            Photo3 = product.Photo3,
+                            IdItemType = product.IdItemType,
+                            Content = dis.Content,
+                            Type_Product = typeProduct.Type_Product,
+                            Price_Dis = dis.Price_Dis,
+                            Start = dis.Start,
+                            End = dis.End,
+                            AccountId = product.AccountId,
+                            Rating = product.Rating
+                        });
+
+            return Info.ToList();
+        }
+
         public List<Dis_Product> GetProductById_Item(string id)
         {
             var typeProduct = _dbItemtype.Find(s => s._id == id).FirstOrDefault();

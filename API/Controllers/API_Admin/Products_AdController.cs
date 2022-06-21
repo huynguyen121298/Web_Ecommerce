@@ -74,14 +74,22 @@ namespace H_Shop.NetCore.Controllers.API_Admin
 
 
         [HttpGet]
-        [Route("GetAllProductByIdItem/{id}")]
-        public IActionResult GetAllProductByIdItem(string id)
+        [Route("GetAllProductByIdItem/{id}/{userLogin}")]
+        public IActionResult GetAllProductByIdItem(string id,string userLogin)
         {
-           var listProItemById=  _productService.GetProductById_Item(id);
+           var listProItemById=  _productService.GetProductById_Item(id,userLogin);
             return Ok(listProItemById);
         }
 
-     
+        [HttpGet]
+        [Route("GetAllProductByIdItem/{id}")]
+        public IActionResult GetAllProductByIdItem(string id)
+        {
+            var listProItemById = _productService.GetProductById_Item(id);
+            return Ok(listProItemById);
+        }
+
+
         [HttpGet]
         [Route("GetAllProductByType/{userLogin}")]
         public IActionResult GetAllProductByType(string userLogin)

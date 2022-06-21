@@ -68,7 +68,8 @@ namespace UI.Areas.Admin.Controllers
         [AuthorizeLoginAdmin]
         public ActionResult Index2(string id)
         {
-            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByIdItem/" + id);
+            var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByIdItem/" + id +"/" +dTO_Account._id);
             responseMessage.EnsureSuccessStatusCode();
             List<DTO_Dis_Product> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<DTO_Dis_Product>>().Result;
             return View(dTO_Accounts);
