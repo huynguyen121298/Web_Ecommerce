@@ -136,8 +136,8 @@
                                                 var session = (UserLogin)HttpContext.Current.Session[Constants.USER_SESSION];
                                                 if (session == null)
                                                 {
-                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
-                                                    <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
+                                                    <a class="btn" href=" @Url.Action("CheckLogin", "Product", new { id = item._id })"><i class="fa fa-cart-plus"></i></a>
+                                                    <a class="btn" href=" @Url.Action("CheckLogin", "Product", new { id = item._id })"><i class="fa fa-heart"></i></a>
                                                     <a class="btn" href=" @Url.Action("Details1", "Product", new { id = item._id })">
                                                         <i class="fa fa-search"></i>
                                                     </a>

@@ -32,7 +32,7 @@
             Số điện thoại :  
             @if (Model.PhoneNumber != null)
             {
-                Html.DisplayFor(model => model.PhoneNumber);
+            <label> @Model.PhoneNumber</label>
             }
             else
             {
@@ -44,7 +44,8 @@
             Thành phố :
             @if (Model.City != null)
             {
-                Html.DisplayFor(model => model.City);
+                <label>@Model.City</label>
+
             }
             else
             {
@@ -55,7 +56,7 @@
             Địa chỉ :
             @if (Model.Address != null)
             {
-                Html.DisplayFor(model => model.Address);
+                <label>@Model.Address</label>
             }
             else
             {

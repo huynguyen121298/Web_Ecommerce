@@ -34,7 +34,7 @@ namespace UI.Controllers
             var searchMerchant = fc["searchMerchant"];
 
             if (page == null) page = 1;
-            int pageSize = 25;
+            int pageSize = 24;
 
             int pageNumber = (page ?? 1);
 
@@ -342,18 +342,28 @@ namespace UI.Controllers
             return Json(new { soLuong = li });
         }
 
+        [AuthorizeLoginEndUser]
+        public ActionResult CheckLogin(string Id)
+        {
+            return View(Id);
+        }
+
         public ActionResult Details1(string Id)
         {
             var userLogin = (UserLogin)Session[Constants.USER_SESSION];
-            var productRecommend = new DtoProductRecommend
+            if (userLogin != null)
             {
-                ProductId = Id,
-                UserId = userLogin._id,
-            };
-            HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommend/", productRecommend);
-            bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
-            if (!checkSuccess)
-                return null;
+                var productRecommend = new DtoProductRecommend
+                {
+                    ProductId = Id,
+                    UserId = userLogin._id,
+                };
+                HttpResponseMessage responseProductRecommend = service.PostResponse("api/Product/InsertProductRecommend/", productRecommend);
+                bool checkSuccess = responseProductRecommend.Content.ReadAsAsync<bool>().Result;
+                if (!checkSuccess)
+                    return null;
+            }
+            
             if (Session["cart__"] == null)
             {
                 HttpResponseMessage responseUser = service.GetResponse("api/Products_Ad/GetProductItemById/" + Id);

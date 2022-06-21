@@ -205,8 +205,8 @@ namespace UI.Areas.Admin.Controllers
             }
 
             tO_Dis_Product.Content = stt + "%";
-            tO_Dis_Product.Start = Convert.ToDateTime(start);
-            tO_Dis_Product.End = Convert.ToDateTime(end);
+            tO_Dis_Product.Start = Convert.ToDateTime(start).AddHours(-7);
+            tO_Dis_Product.End = Convert.ToDateTime(end).AddHours(-7);
             ServiceRepository service = new ServiceRepository();
             HttpResponseMessage responseMessage = service.PostResponse("api/Products_Ad/CreateProduct_Discount/", tO_Dis_Product);
             responseMessage.EnsureSuccessStatusCode();

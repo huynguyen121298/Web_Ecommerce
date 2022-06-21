@@ -22,9 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DataAndServices">
-      <HintPath>..\Core\DataAndServices\bin\Release\DataAndServices.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Core\DataAndServices\DataAndServices.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Model">
       <HintPath>..\Core\Model\bin\Release\Model.dll</HintPath>
     </Reference>

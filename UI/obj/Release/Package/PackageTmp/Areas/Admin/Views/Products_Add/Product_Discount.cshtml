@@ -116,8 +116,15 @@
                                     </td>
                                     <td>
 
-                                        @{string newprice = string.Format("{0:0,0}", item.Price_Dis);}
-                                        <p>@newprice</p>
+                                        @{
+                                            if (price != null && totalday == true && checkPrice == true)
+                                            {
+                                                string newprice = string.Format("{0:0,0}", item.Price_Dis);
+                                                <p>@newprice VNĐ</p>
+
+                                            }
+
+                                        }
                                     </td>
                                     <td>
                                         <img src=" @Url.Content(item.Photo)" style="height:100px; width:100px;margin:10px" />

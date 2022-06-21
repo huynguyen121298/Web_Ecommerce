@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace UI.Service
@@ -14,6 +15,9 @@ namespace UI.Service
         public ServiceRepository()
         {
             Client = new HttpClient();
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
             Client.BaseAddress = new Uri(ConfigurationManager.AppSettings["ServiceUrl"].ToString());
         }
         public HttpResponseMessage GetResponse(String url)

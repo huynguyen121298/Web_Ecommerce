@@ -47,7 +47,6 @@ namespace UI.Controllers
             return View();
         }
 
-        [AuthorizeLoginEndUser]
         public ActionResult LuaChon()
         {
             return View();

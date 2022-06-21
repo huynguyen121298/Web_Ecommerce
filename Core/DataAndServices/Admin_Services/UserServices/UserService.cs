@@ -9,13 +9,13 @@ namespace DataAndServices.Admin_Services.UserServices
 {
     public class UserService : IUsers
     {
-
         private readonly IMongoCollection<User_Acc> _db;
 
         public UserService(DataContext db)
         {
             _db = db.GetUser_AccCollection();
         }
+
         public async Task<bool> DeleteAccount(string id)
         {
             try
@@ -33,7 +33,6 @@ namespace DataAndServices.Admin_Services.UserServices
         public async Task<User_Acc> GetAccountById(string id)
         {
             return await _db.Find(s => s._id == id).FirstOrDefaultAsync();
-
         }
 
         public async Task<List<User_Acc>> GetAllAccounts()
@@ -52,7 +51,10 @@ namespace DataAndServices.Admin_Services.UserServices
                     .Set(s => s.FirstName, custom.FirstName)
                     .Set(s => s.LastName, custom.LastName)
                     .Set(s => s.Password, Encryptor.MD5Hash(custom.Password))
-                    .Set(s => s._id, custom._id);
+                    .Set(s => s._id, custom._id)
+                    .Set(s => s.Address, custom.Address)
+                    .Set(s => s.PhoneNumber, custom.PhoneNumber)
+                    .Set(s => s.City, custom.City);
 
                 var options = new UpdateOptions { IsUpsert = true };
 
@@ -73,7 +75,10 @@ namespace DataAndServices.Admin_Services.UserServices
                 var update = Builders<User_Acc>.Update.Set(s => s.Email, custom.Email)
                     .Set(s => s.FirstName, custom.FirstName)
                     .Set(s => s.LastName, custom.LastName)
-                    .Set(s => s._id, custom._id);
+                    .Set(s => s._id, custom._id)
+                    .Set(s => s.Address, custom.Address)
+                    .Set(s => s.PhoneNumber, custom.PhoneNumber)
+                    .Set(s => s.City, custom.City);
 
                 var options = new UpdateOptions { IsUpsert = true };
 

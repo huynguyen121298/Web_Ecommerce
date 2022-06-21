@@ -3,7 +3,12 @@
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@using Model.DTO.DTO_Ad;
+@using UI.Areas.Admin.Common;
 @{
+
+    var adminLogin = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+
     var stt = Model.RoleId;
     string quyen;
     if (stt == 1)
@@ -39,13 +44,13 @@
             @Html.DisplayNameFor(model => model.FirstName) :  @Html.DisplayFor(model => model.FirstName)
         </dt>
 
-     
+
 
         <dt>
             @Html.DisplayNameFor(model => model.LastName) : @Html.DisplayFor(model => model.LastName)
         </dt>
 
-       
+
 
         <dt>
             @Html.DisplayNameFor(model => model.Email) : @Html.DisplayFor(model => model.Email)
@@ -59,14 +64,14 @@
                 </dt>
 
                 <dd>
-                    
+
                 </dd>
             }
             if (Model.MerchantName != null)
             {
-    <dt>
-        @Html.DisplayNameFor(model => model.MerchantName) :   @Html.DisplayFor(model => model.MerchantName)
-    </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.MerchantName) :   @Html.DisplayFor(model => model.MerchantName)
+                </dt>
 
             }
             if (Model.Photo != null)
@@ -89,12 +94,12 @@
 <p>
     @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model._id }) |
 
-    @if (Model.RoleId == 1)
+    @if (adminLogin.RoleId == 1)
     {
         @Html.ActionLink("Trở về", "Index")
 
     }
-    @if (Model.RoleId == 2)
+    @if (adminLogin.RoleId == 2)
     {
         @Html.ActionLink("Trở về", "Index", "Admin")
 

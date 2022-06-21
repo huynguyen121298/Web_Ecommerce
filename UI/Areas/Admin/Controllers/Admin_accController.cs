@@ -112,7 +112,7 @@ namespace UI.Areas.Admin.Controllers
                     HttpResponseMessage response = service.PostResponse("api/Admin_acc/UpdateAccTwo/", dTO_Account);
                     response.EnsureSuccessStatusCode();
                 }
-                Response.Cookies["firstname1"].Value = dTO_Account.FirstName +""+ dTO_Account.LastName;
+                Response.Cookies["firstname1"].Value = dTO_Account.FirstName +" "+ dTO_Account.LastName;
 
                 //HttpCookie cknameAccount1 = new HttpCookie("firstname1");
                 //cknameAccount1.Value = dTO_Account.FirstName + dTO_Account.LastName;

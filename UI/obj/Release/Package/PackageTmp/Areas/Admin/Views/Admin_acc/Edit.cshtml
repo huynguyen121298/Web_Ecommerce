@@ -3,7 +3,11 @@
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@using Model.DTO.DTO_Ad;
+@using UI.Areas.Admin.Common;
 @{
+    var adminLogin = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+
     var id = Model.RoleId;
     string show;
     if (id == 1)
@@ -165,7 +169,7 @@
 }
 
 <div>
-    @if (id == 1)
+    @if (adminLogin.RoleId == 1)
     {
         @Html.ActionLink("Trở về", "Index")
 
