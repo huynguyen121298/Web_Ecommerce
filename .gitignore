@@ -62,3 +62,4 @@ UI/bin/UI.dll
 *.dll
 *.cache
 *.pdb
+*.dll
