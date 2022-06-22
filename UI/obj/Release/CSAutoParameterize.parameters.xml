@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="UIContext-Web.config Connection String" description="UIContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=UIContext-20220429140814; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|UIContext-20220429140814.mdf" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\huy\.nguyen\\Documents\\GitHub\\Web_Ecommerce\\UI\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='UIContext']/@connectionString" />
-  </parameter>
-</parameters>

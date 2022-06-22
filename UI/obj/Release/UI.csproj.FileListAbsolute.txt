@@ -98,10 +98,6 @@ C:\Users\huy.nguyen\Documents\GitHub\H_Shop\UI\obj\Release\UI.csproj.CoreCompile
 C:\Users\huy.nguyen\Documents\GitHub\H_Shop\UI\obj\Release\UI.csproj.CopyComplete
 C:\Users\huy.nguyen\Documents\GitHub\H_Shop\UI\obj\Release\UI.dll
 C:\Users\huy.nguyen\Documents\GitHub\H_Shop\UI\obj\Release\UI.pdb
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.csproj.AssemblyReference.cache
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.csproj.CoreCompileInputs.cache
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.dll
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.pdb
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\UI.dll.config
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\UI.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\UI.pdb
@@ -172,10 +168,10 @@ C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\System.Web.WebPages.De
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\System.Web.WebPages.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\System.Web.WebPages.Razor.dll
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\WebGrease.dll
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Model.pdb
-C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Model.dll.config
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Facebook.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\log4net.xml
+C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Model.pdb
+C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Model.dll.config
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\PagedList.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\PagedList.Mvc.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\System.Net.Http.Formatting.xml
@@ -189,4 +185,8 @@ C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\System.Web.WebPages.Ra
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Newtonsoft.Json.xml
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Antlr3.Runtime.pdb
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.csproj.AssemblyReference.cache
+C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.csproj.CoreCompileInputs.cache
 C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.csproj.CopyComplete
+C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.dll
+C:\Users\huy.nguyen\Documents\GitHub\Web_Ecommerce\UI\obj\Release\UI.pdb
