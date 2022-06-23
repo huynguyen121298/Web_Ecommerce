@@ -20,6 +20,8 @@ namespace UI.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var dTO_Account = (DTO_Account)Session[CommonConstants.ACCOUNT_SESSION];
+            if (dTO_Account == null)
+                return RedirectToAction("Login", "Account");
             HttpResponseMessage responseMessage = service.GetResponse("api/Checkout_Customer/GetDateRevenue/"+dTO_Account._id);
             responseMessage.EnsureSuccessStatusCode();
             double? dTO_Accounts = responseMessage.Content.ReadAsAsync<double>().Result;
