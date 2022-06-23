@@ -17,6 +17,7 @@ namespace DataAndServices.Admin_Services.Products
         private readonly IMongoCollection<Item> _dbItem;
         private readonly IMongoCollection<Item_type> _dbItemtype;
         private readonly IMongoCollection<ProductComment> _dbProductComment;
+        private readonly IMongoCollection<ProductRecommend> _dbProductRecommend;
 
         //private readonly DataContext db = new DataContext("mongodb://localhost:27017", "OnlineShop");
 
@@ -27,6 +28,7 @@ namespace DataAndServices.Admin_Services.Products
             _dbItem = db.GetItemCollection();
             _dbItemtype = db.GetItem_TypeCollection();
             _dbProductComment = db.GetProductCommentCollection();
+            _dbProductRecommend = db.GetProductRecommendCollection();
         }
 
         public double GetPriceDiscountByIdList(string id)
@@ -95,6 +97,7 @@ namespace DataAndServices.Admin_Services.Products
                 var deleteFilter2 = Builders<Item>.Filter.Eq("ProductId", id);
                 var deleteFilter3 = Builders<Discount_Product>.Filter.Eq("_id", id);
                 var deleteFilter4 = Builders<ProductComment>.Filter.Eq("ProductId", id);
+                var deleteFilter5 = Builders<ProductRecommend>.Filter.Eq("ProductId", id);
 
                 _db.DeleteOne(deleteFilter);
 
@@ -102,6 +105,7 @@ namespace DataAndServices.Admin_Services.Products
 
                 _dbDis.DeleteOne(deleteFilter3);
                 _dbProductComment.DeleteOne(deleteFilter4);
+                _dbProductRecommend.DeleteOne(deleteFilter5);
 
                 return true;
             }

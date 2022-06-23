@@ -35,5 +35,7 @@ namespace DataAndServices.Client_Services
         List<Product> GetProductRecommend();
 
         Task<bool> UpdateRating(Product product);
+
+        List<Product> GetProductSuggestion(string userLogin);
     }
 }

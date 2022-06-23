@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Model.DTO.DTO_Client.DTO_Product>
+@if (Model.Count() > 0 || !Model.Any())
+{
+    <form class="form-horizontal" role="form" method="post" action="@Url.Action("Index", "Product")">
+        <div class="sidebar-widget tag">
+            <h2 class="title">Sản phẩm gợi ý cho bạn</h2>
+            @foreach (var item in Model)
+            {
+                <a href="@Url.Action("Index", "Product", new {searchName1=item.Name})">@item.Name</a>
+
+            }
+        </div>
+    </form>
+}
+else
+{
+    <div style="display:none"></div>
+}

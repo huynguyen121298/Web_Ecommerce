@@ -383,6 +383,66 @@ namespace DataAndServices.Client_Services
             return prod;
         }
 
+        public List<Product> GetProductSuggestion(string userLogin)
+        {
+            var recommends = _dbProductRecommend.Find(p =>p.UserId == userLogin).ToList();
+            if (recommends.Any())
+            {
+                var orderByDescending = (from product in recommends
+                                               orderby product.Frequency descending
+                                               select product).FirstOrDefault();
+
+                var recommendByItemType = _dbProductRecommend.Find(s => s.ItemTypeId == orderByDescending.ItemTypeId).ToList();
+                if (recommendByItemType.Any())
+                {
+                    var recommendArr = recommendByItemType.Select(s => s.UserId).ToArray();
+
+                    int i = 0, max = 0, index = 0;
+                    int frequency;
+                    while (i < recommendArr.Length)
+                    {
+
+                        frequency = 1;
+
+                        while (recommendArr[i] == recommendArr[i + 1])
+                        {
+
+                            frequency++;
+                            i++;
+                        }
+
+                        if (max < frequency)
+                        {
+
+                            max = frequency;
+                            index = i;
+                        }
+
+                        i++;
+                    }
+                    var frequencyfator = recommendArr[index];
+                    
+                    var finalRecommend = _dbProductRecommend.Find(s=>s.UserId == frequencyfator).ToList();
+                    var products = new List<Product>();
+                    var dbProducts = _db.Find(p=>true).ToList();
+                    foreach (var product in finalRecommend)
+                    {
+                        var pro = dbProducts.FirstOrDefault(s => s._id == product.ProductId);
+                        if(pro != null)
+                        {
+                            products.Add(pro);
+                        }
+
+                    }
+                    return (List<Product>)products.Take(10);
+                }
+                
+                
+            }
+          
+            return null;
+        }
+
         public async Task<bool> UpdateRating(Product productRating)
         {
             var product = await _db.Find(p => p._id == productRating._id).FirstOrDefaultAsync();

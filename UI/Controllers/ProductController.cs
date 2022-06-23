@@ -191,6 +191,18 @@ namespace UI.Controllers
             return PartialView(productRecommends.Take(10));
         }
 
+        public PartialViewResult BagProductSuggestion()
+        {
+            var userLogin = (UserLogin)Session[Constants.USER_SESSION];
+            if (userLogin == null)
+                return null;
+
+            HttpResponseMessage response2 = service.GetResponse("api/Product/GetProductSuggestion/"+userLogin._id);
+            List<DTO_Product> productRecommends = response2.Content.ReadAsAsync<List<DTO_Product>>().Result;
+
+            return PartialView(productRecommends.Take(10));
+        }
+
         public PartialViewResult BagCart_()
         {
             try

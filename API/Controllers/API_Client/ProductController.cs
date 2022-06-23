@@ -147,6 +147,14 @@ namespace H_Shop.NetCore.Controllers.API_Client
             return Ok(productRecomends);
         }
 
+        [HttpGet]
+        [Route("GetProductSuggestion/{userLogin}")]
+        public ActionResult GetProductSuggestion(string userLogin)
+        {
+            var productRecomends = _productClientService.GetProductSuggestion(userLogin);
+            return Ok(productRecomends);
+        }
+
         [HttpPut]
         [Route("DeleteProductAction")]
         public bool DeleteProductAction(ProductAction productAction)
