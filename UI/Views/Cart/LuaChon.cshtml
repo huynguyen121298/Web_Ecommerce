@@ -185,7 +185,7 @@
 
                                 </div>
                             </div>
-                            @Html.Action("BagProductRecommend", "Product")
+
 
                             @section Upload {
 
@@ -258,23 +258,23 @@
                                 @foreach (var comment in item.Comments)
                                 {
 
-                                    
-                                        
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                                <div class="mr-3">
-                                                    <div class="icon-circle bg-primary">
-                                                        <i class="fas fa-file-alt text-white"></i>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="small text-gray-500">@comment.DateTimeComment</div>
-                                                    <span class="font-weight-bold">@comment.FullName</span>
-                                                    <br />
-                                                    <P class="font-weight-bold">@comment.Content</P>
-                                                </div>
-                                            </a>
-                                        
-                                    
+
+
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-file-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">@comment.DateTimeComment</div>
+                                            <span class="font-weight-bold">@comment.FullName</span>
+                                            <br />
+                                            <P class="font-weight-bold">@comment.Content</P>
+                                        </div>
+                                    </a>
+
+
                                 }
                             </div>
                             <div class="reviews-submit">
@@ -309,7 +309,8 @@
                         </div>
                         @ViewData["ErrorMessage"]
                     </div>
-
+                    @Html.Action("BagProductRecommend", "Product")
+                    @Html.Action("BagProductSuggestion", "Product")
                 </div>
             </div>
         </div>

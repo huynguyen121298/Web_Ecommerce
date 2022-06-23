@@ -3063,6 +3063,7 @@
     <Content Include="Views\Merchant\Index2.cshtml" />
     <Content Include="Views\Merchant\Index_.cshtml" />
     <Content Include="Views\Product\BagProductRecommend.cshtml" />
+    <Content Include="Views\Product\BagProductSuggestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

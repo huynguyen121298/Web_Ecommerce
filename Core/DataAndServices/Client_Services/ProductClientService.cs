@@ -313,7 +313,7 @@ namespace DataAndServices.Client_Services
         {
             try
             {
-                var dbProductRecommend = await _dbProductRecommend.Find(pr => pr.ProductId == productRecommend.ProductId).FirstOrDefaultAsync();
+                var dbProductRecommend = await _dbProductRecommend.Find(pr => pr.ProductId == productRecommend.ProductId && pr.UserId==productRecommend.UserId).FirstOrDefaultAsync();
                 if (dbProductRecommend == null)
                 {
                     var product = await _db.Find(p => p._id == productRecommend.ProductId).FirstOrDefaultAsync();
@@ -347,40 +347,22 @@ namespace DataAndServices.Client_Services
 
         public List<Product> GetProductRecommend()
         {
-            var recommends = _dbProductRecommend.Find(p => true).ToList();
-            var orderByDescendingResult = (from product in recommends
-                                           orderby product.Frequency descending
-                                           select product);
+            var recommends = _dbProductRecommend.Find(p => true).ToList().OrderByDescending(s => s.Frequency).Take(10);
 
-            orderByDescendingResult.Take(10);
 
-            var products = _db.Find(p => true).ToList();
-            //var productRecomends = new List<Product>();
 
-            var prod = (from recommend in orderByDescendingResult.AsQueryable()
-                        join product in products.AsQueryable() on recommend.ProductId equals product._id
-                        select new Product()
-                        {
-                            _id = product._id,
-                            Name = product.Name,
-                            Price = product.Price,
-                            Details = product.Details,
-                            Photo = product.Photo,
-                            Photo2 = product.Photo2,
-                            Photo3 = product.Photo3,
-                            IdItemType = product.IdItemType,
-                            AccountId = product.AccountId,
-                            Rating = product.Rating
-                        }).ToList();
+            var products = new List<Product>();
+            var dbProducts = _db.Find(p => true).ToList();
+            foreach (var product in recommends)
+            {
+                var pro = dbProducts.FirstOrDefault(s => s._id == product.ProductId);
+                if (pro != null)
+                {
+                    products.Add(pro);
+                }
 
-            //foreach (var productId in orderByDescendingResult.Select(p=>p.ProductId))
-            //{
-            //    var productRecomend = products.Find(p => p._id == productId);
-            //    if
-            //}
-
-            //return orderByDescendingResult;
-            return prod;
+            }
+            return products;
         }
 
         public List<Product> GetProductSuggestion(string userLogin)
@@ -392,7 +374,7 @@ namespace DataAndServices.Client_Services
                                                orderby product.Frequency descending
                                                select product).FirstOrDefault();
 
-                var recommendByItemType = _dbProductRecommend.Find(s => s.ItemTypeId == orderByDescending.ItemTypeId).ToList();
+                var recommendByItemType = _dbProductRecommend.Find(s => s.ItemTypeId == orderByDescending.ItemTypeId && s.UserId!= userLogin).ToList();
                 if (recommendByItemType.Any())
                 {
                     var recommendArr = recommendByItemType.Select(s => s.UserId).ToArray();
@@ -403,26 +385,33 @@ namespace DataAndServices.Client_Services
                     {
 
                         frequency = 1;
-
-                        while (recommendArr[i] == recommendArr[i + 1])
+                        try
                         {
+                            while (recommendArr[i] == recommendArr[i + 1])
+                            {
 
-                            frequency++;
+                                frequency++;
+                                i++;
+                            }
+                        }
+                        catch
+                        {
+                            if (max < frequency)
+                            {
+
+                                max = frequency;
+                                index = i;
+                            }
+
                             i++;
                         }
+                        
 
-                        if (max < frequency)
-                        {
-
-                            max = frequency;
-                            index = i;
-                        }
-
-                        i++;
+                        
                     }
                     var frequencyfator = recommendArr[index];
                     
-                    var finalRecommend = _dbProductRecommend.Find(s=>s.UserId == frequencyfator).ToList();
+                    var finalRecommend = _dbProductRecommend.Find(s=>s.UserId == frequencyfator).ToList().OrderByDescending(s => s.Frequency).Take(10);
                     var products = new List<Product>();
                     var dbProducts = _db.Find(p=>true).ToList();
                     foreach (var product in finalRecommend)
@@ -434,8 +423,9 @@ namespace DataAndServices.Client_Services
                         }
 
                     }
-                    return (List<Product>)products.Take(10);
+                    return products;
                 }
+                return null;
                 
                 
             }

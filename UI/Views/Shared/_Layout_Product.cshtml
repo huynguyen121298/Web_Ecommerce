@@ -25,8 +25,6 @@
     <link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-
-
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -36,7 +34,6 @@
             window.scrollTo(0, 1);
         }
     </script>
-
 
     <style>
         .menuli {
@@ -82,7 +79,6 @@
             border-bottom-left-radius: 4px;
         }
 
-
         .dropdown.dropdown-lg {
             position: static !important;
         }
@@ -91,7 +87,6 @@
                 min-width: 500px;
             }
     </style>
-
 
     <!-- css files -->
     <link href="~/css/bootstrap.css" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
@@ -107,12 +102,9 @@
     <link href="//fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <!-- //google fonts -->
     <script src="~/js/jquery-3.3.1.min.js"></script>
-
-
 </head>
 
 <body>
-
 
     <!-- header -->
     <header>
@@ -142,8 +134,6 @@
                                                 <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("Index", "Product", new { gia_="500000",gia="1000000" })">500.000-1.000.000 </a>
                                                 <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("Index", "Product", new { gia_="1000000",gia="2000000" })">1.000.000-2.000.000 </a>
                                                 <a style="font-size:20px;color:chocolate;font-family:'Times New Roman'" class="btn" href="@Url.Action("Index", "Product", new { gia_="2000000",gia="1000000000" })">Lớn hơn 2 triệu </a>
-
-
                                             </li>
                                         </ul>
                                         <label for="contain">Giá từ</label>
@@ -152,14 +142,12 @@
 
                                         <input name="priceGiaMax" class="form-control" type="text" />
                                         <button style="text-align:center" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">Chọn</span></button>
-
                                     </div>
 
                                     <br />
 
-
-                                 
-                                        @Html.Action("BagProductRecommend", "Product")
+                                    @Html.Action("BagProductRecommend", "Product")
+                                    @Html.Action("BagProductSuggestion", "Product")
 
 
                                     <div class="sidebar-widget tag">
@@ -175,7 +163,6 @@
 
                                         <input type="text" class="form-control" name="searchMerchant" placeholder="Nhập tên cửa hàng..." onchange="BtnClick()" />
 
-
                                         <button id="btnSearchMerchant" style="height:35px;display:none" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">Tìm kiếm</span></button>
                                         <script>
                                             function BtnClick() {
@@ -183,16 +170,12 @@
                                             }
                                         </script>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </form>
 
                     <
-
-
                 </div>
             </div>
 
@@ -204,7 +187,6 @@
                             <span class="fa fa-stumbleupon" aria-hidden="true"></span>
                         </a>
                     </h1>
-
                 </div>
                 <div class="nav_w3ls mt-3">
                     <nav>
@@ -213,7 +195,6 @@
                             <li class="mr-lg-3 mr-2 active"><a href="~/Home/Index">Trang Chủ</a></li>
                             @*<li class="mr-lg-3 mr-2"><a href="~/Home/Index">Giới thiệu </a></li>*@
                             <li class="mr-lg-3 mr-2 p-0">
-
 
                                 <a href="#">Sản phẩm <span class="fa fa-angle-down" aria-hidden="true"></span></a>
                                 <input type="checkbox" id="drop-2" />
@@ -232,16 +213,10 @@
                                         <li><a href=" @Url.Action("Index2", "Product", new { id = 4 })"> Mẹ và bé</a></li>
                                         <li><a href=" @Url.Action("Index2", "Product", new { id = 5 })">Sức khỏe và sắc đẹp</a></li>*@
                                     @Html.Action("ListTypeProduct", "Home")
-
                                 </ul>
                             </li>
 
-
                             <li class="mr-lg-3 mr-2"><a href="#contact">Liên hệ</a></li>
-
-
-
-
                         </ul>
                     </nav>
                 </div>
@@ -251,11 +226,6 @@
                     <nav>
 
                         <ul class="menu">
-
-
-
-
-
 
                             <li><a href="~/Product/Details">Giỏ hàng <span style="color:red" id="total-product" class="fa fa-shopping-cart" aria-hidden="true">  @Html.Action("BagCart", "Product")/</span></a></li>
 
@@ -265,18 +235,9 @@
                                     <i class="fa fa-heart"></i>
                                 </a>
                                 <span style="color:red" id="sttbuy">@Html.Action("BagCart_", "Product")</span>
-
                             </li>
-
-
-
-
                         </ul>
-
                     </nav>
-
-
-
                 </div>
                 <div class="social mt-3 ml-auto">
                     <!--<ul class="menu">-->
@@ -285,8 +246,6 @@
                         <label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"> </span></label>
                         <input type="checkbox" id="drop" />
                         <ul class="menu">
-
-
 
                             <li class="mr-lg-3 mr-2 p-0" id="huy">
                                 <a href="#">Tài Khoản <span class="fa fa-angle-down" aria-hidden="true"></span></a>
@@ -299,17 +258,10 @@
                                         </a>
                                     </li>
 
-
-
-
                                     <li>
                                         <a style="background-color:forestgreen" href="~/Customer/Signup" class="btn btn-success btn-user btn-block"><i class="fa fa-ruble-sign" aria-hidden="true"></i>Đăng ký</a>
-
                                     </li>
-
                                 </ul>
-
-
                             </li>
                             <li class="mr-lg-3 mr-2 p-0">
                                 @if ((UserLogin)HttpContext.Current.Session[Constants.USER_SESSION] != null)
@@ -337,29 +289,15 @@
                                     </ul>
                                 }
                             </li>
-
-
-
-
                         </ul>
-
                     </nav>
-
-
-
                 </div>
-
-
             </div>
-
-
         </div>
-
     </header>
     <section class="main-slider" id="home">
         <div class="owl-one owl-carousel owl-theme">
             <div style="height:500px" class="item">
-
 
                 <div class="banner-view">
                     <div style="height:500px" class="container banner-info ">
@@ -374,10 +312,8 @@
                         <a href="~/Product/Index">Xem thêm sản phầm</a>
                     </div>
                 </div>
-
             </div>
             <div style="height:500px" class="item">
-
 
                 <div style="height:500px" class="banner-view banner-top1">
                     <div style="height:500px" class="container banner-info">
@@ -393,7 +329,6 @@
             </div>
             <div style="height:500px" class="item">
 
-
                 <div style="height:500px" class="banner-view banner-top2">
                     <div style="height:500px" class="container banner-info">
                         <br />
@@ -407,9 +342,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </section>
 
     <!-- //header -->
@@ -422,10 +354,7 @@
         <nav aria-label="Page navigation example" style="color:red">
             Trang @(Model.PageCount<Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 
-
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-
         </nav>
     </div>
 
@@ -441,11 +370,9 @@
                         Nếu bạn có bất kỳ thắc mắc nào hoặc muốn nói chuyện với chúng tôi, vui lòng liên hệ với chúng tôi để biết thêm chi tiết theo bên dưới
                         thông tin đã cho.
                     </p>
-
                 </div>
                 <div class="col-lg-8 about-text">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15676.273867632177!2d106.71046386775461!3d10.80606817682145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a16940b30b%3A0x1b25a34b7a3ab959!2zUGjGsOG7nW5nIDI1LCBCw6xuaCBUaOG6oW5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1606188970470!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-
                 </div>
 
                 <div class="col-lg-8 mt-5">
@@ -474,13 +401,9 @@
                                 </div>
                             </div>
 
-
-
                             <input class="btn btn-outline-primary" onclick="Add()" type="submit" value="Gửi">
-
                         </form>
                     }
-
                 </div>
                 <div class="col-lg-4 mt-5">
                     <div class="contact-info">
@@ -548,7 +471,6 @@
                 <!-- pay -->
                 <div class="container-fluid">
 
-
                     <div class="row payment align-items-center">
                         <div class="col-md-6">
                             <div class="payment-method">
@@ -604,7 +526,6 @@
                         @DateTime.Now   NTH_Ecom | Design by Nguyễn Tuấn Huy
                         <a href="mailto:nguyentuanhuy301198@gmail.com" style="font-style:unset"> send mail for NguyenTuanHuy</a>
                     </p>
-
                 </div>
                 <div id="btnlogin" @*style="display:none"*@ class="copy-right text-center">
 
@@ -616,19 +537,11 @@
                     {
                         <script>
 
-
                             document.getElementById("btnlogin").style.display = 'block';
-
-
-
-
-
                         </script>
 
                     }*@
                 <!-- //copyright -->
-
-
             </div>
         </div>
     </footer>
@@ -638,7 +551,6 @@
     <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 
     <script src="~/js/owl.carousel.js"></script>
-
 
     @RenderSection("Upload", required: false)
     @RenderSection("UpProduct", required: false)
@@ -684,12 +596,8 @@
                 timer: 300000
             })
 
-
-
         }
     </script>
     <!-- /main slider -->
-
 </body>
-
 </html>
