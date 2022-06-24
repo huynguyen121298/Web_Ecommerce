@@ -82,7 +82,7 @@ namespace DataAndServices.Client_Services
                             IdItemType = product.IdItemType,
                             Content = dis.Content,
                             Rating = product.Rating,
-                            AccountId = product.AccountId,                         
+                            AccountId = product.AccountId,
                             Price_Dis = dis.Price_Dis,
                             Start = dis.Start,
                             End = dis.End
@@ -216,10 +216,10 @@ namespace DataAndServices.Client_Services
                 //case 2: history
                 var actions = _dbProductAction.Find(a => a.UserId == productActions.FirstOrDefault().UserId).ToList();
                 var newProductActions = new List<ProductAction>();
-                foreach(var action in productActions)
+                foreach (var action in productActions)
                 {
                     var userAction = actions.Where(a => a.ProductId == action.ProductId).FirstOrDefault();
-                    if (userAction ==null)
+                    if (userAction == null)
                     {
                         newProductActions.Add(action);
                     }
@@ -239,7 +239,7 @@ namespace DataAndServices.Client_Services
             {
                 var userAction = _dbProductAction.Find(p => p.UserId == product.UserId
                                                        && p.ProductId == product.ProductId
-                                                       && p.Status==product.Status).FirstOrDefault();
+                                                       && p.Status == product.Status).FirstOrDefault();
 
                 var deleteFilter = Builders<ProductAction>.Filter.Eq("_id", userAction._id);
                 _dbProductAction.DeleteOne(deleteFilter);
@@ -288,7 +288,6 @@ namespace DataAndServices.Client_Services
                     if (!checkPro)
                         products.Add(pro);
                 }
-               
             }
 
             return products;
@@ -313,7 +312,7 @@ namespace DataAndServices.Client_Services
         {
             try
             {
-                var dbProductRecommend = await _dbProductRecommend.Find(pr => pr.ProductId == productRecommend.ProductId && pr.UserId==productRecommend.UserId).FirstOrDefaultAsync();
+                var dbProductRecommend = await _dbProductRecommend.Find(pr => pr.ProductId == productRecommend.ProductId && pr.UserId == productRecommend.UserId).FirstOrDefaultAsync();
                 if (dbProductRecommend == null)
                 {
                     var product = await _db.Find(p => p._id == productRecommend.ProductId).FirstOrDefaultAsync();
@@ -331,7 +330,7 @@ namespace DataAndServices.Client_Services
                 var eqfilter = Builders<ProductRecommend>.Filter.Where(s => s.ProductId == productRecommend.ProductId);
                 var newFrequency = dbProductRecommend.Frequency + 1;
 
-                var update = Builders<ProductRecommend>.Update.Set(s => s.Frequency,newFrequency );
+                var update = Builders<ProductRecommend>.Update.Set(s => s.Frequency, newFrequency);
 
                 var options = new UpdateOptions { IsUpsert = true };
 
@@ -347,34 +346,39 @@ namespace DataAndServices.Client_Services
 
         public List<Product> GetProductRecommend()
         {
-            var recommends = _dbProductRecommend.Find(p => true).ToList().OrderByDescending(s => s.Frequency).Take(10);
-
-
+            var recommends = _dbProductRecommend.Find(p => true).ToList();
 
             var products = new List<Product>();
             var dbProducts = _db.Find(p => true).ToList();
-            foreach (var product in recommends)
+            var newRecommends = recommends.Select(s => s.ProductId).Distinct();
+            foreach (var product in newRecommends)
+            {
+                var recommend = recommends.Where(s => s.ProductId == product);
+                if (recommend.Count() > 1)
+                {
+                    var newRecommend = recommend.FirstOrDefault();
+                    newRecommend.Frequency = recommend.Select(s => s.Frequency).Sum();
+                }
+            }
+
+            var sortRecommends = recommends.OrderByDescending(s => s.Frequency).Take(10);
+            foreach (var product in sortRecommends)
             {
                 var pro = dbProducts.FirstOrDefault(s => s._id == product.ProductId);
                 if (pro != null)
                 {
                     products.Add(pro);
                 }
-
             }
             return products;
         }
 
         public List<Product> GetProductSuggestion(string userLogin)
         {
-            var recommends = _dbProductRecommend.Find(p =>p.UserId == userLogin).ToList();
-            if (recommends.Any())
+            var recommend = _dbProductRecommend.Find(p => p.UserId == userLogin).SortByDescending(s => s.Frequency).FirstOrDefault();
+            if (recommend != null)
             {
-                var orderByDescending = (from product in recommends
-                                               orderby product.Frequency descending
-                                               select product).FirstOrDefault();
-
-                var recommendByItemType = _dbProductRecommend.Find(s => s.ItemTypeId == orderByDescending.ItemTypeId && s.UserId!= userLogin).ToList();
+                var recommendByItemType = _dbProductRecommend.Find(s => s.ItemTypeId == recommend.ItemTypeId && s.UserId != userLogin).ToList();
                 if (recommendByItemType.Any())
                 {
                     var recommendArr = recommendByItemType.Select(s => s.UserId).ToArray();
@@ -383,13 +387,11 @@ namespace DataAndServices.Client_Services
                     int frequency;
                     while (i < recommendArr.Length)
                     {
-
                         frequency = 1;
                         try
                         {
                             while (recommendArr[i] == recommendArr[i + 1])
                             {
-
                                 frequency++;
                                 i++;
                             }
@@ -398,38 +400,31 @@ namespace DataAndServices.Client_Services
                         {
                             if (max < frequency)
                             {
-
                                 max = frequency;
                                 index = i;
                             }
 
                             i++;
                         }
-                        
-
-                        
                     }
                     var frequencyfator = recommendArr[index];
-                    
-                    var finalRecommend = _dbProductRecommend.Find(s=>s.UserId == frequencyfator).ToList().OrderByDescending(s => s.Frequency).Take(10);
+
+                    var finalRecommend = _dbProductRecommend.Find(s => s.UserId == frequencyfator).ToList().OrderByDescending(s => s.Frequency).Take(10);
                     var products = new List<Product>();
-                    var dbProducts = _db.Find(p=>true).ToList();
+                    var dbProducts = _db.Find(p => true).ToList();
                     foreach (var product in finalRecommend)
                     {
                         var pro = dbProducts.FirstOrDefault(s => s._id == product.ProductId);
-                        if(pro != null)
+                        if (pro != null)
                         {
                             products.Add(pro);
                         }
-
                     }
                     return products;
                 }
                 return null;
-                
-                
             }
-          
+
             return null;
         }
 
