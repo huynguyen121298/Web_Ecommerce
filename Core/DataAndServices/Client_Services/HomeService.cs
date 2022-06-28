@@ -164,7 +164,8 @@ namespace DataAndServices.Client_Services
             string hash = Encryptor.MD5Hash(pass);
             var cus = await _dbUser.Find(x => x.Email == user & x.Password == hash).FirstOrDefaultAsync();
             if (cus != null)
-                return new User_Acc_Client() { _id = cus._id, Email = cus.Email, LastName = cus.LastName, FirstName = cus.FirstName,RoleId = cus.RoleId };
+                return new User_Acc_Client() { _id = cus._id, Email = cus.Email, LastName = cus.LastName, FirstName = cus.FirstName,RoleId = cus.RoleId, Address=cus.Address,
+                                             City=cus.City,PhoneNumber =cus.PhoneNumber};
             return new User_Acc_Client();
 
         }
