@@ -216,6 +216,7 @@ namespace UI.Controllers
                     {
                         Session.Remove("cart");
                         Session.Remove("PayOrder");
+                        Session.Remove("typeProduct");
                         Session.Remove(Constants.CART_SESSION);
                         return RedirectToAction("Thankyou","Cart",new {Id = bills.FirstOrDefault()._id });
                     }

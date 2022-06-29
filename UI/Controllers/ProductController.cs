@@ -18,12 +18,24 @@ namespace UI.Controllers
 
         public ActionResult TypeProduct()
         {
-            HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByTypeByEndUser");
-            responseMessage.EnsureSuccessStatusCode();
-            List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
-            var view = dTO_Accounts.ToPagedList(1, 50);
+            var typeProductSession = (List<List<DTO_Dis_Product>>)Session["typeProduct"];
+            if(typeProductSession != null)
+            {
+                var view = typeProductSession.ToPagedList(1, 50);
 
-            return View(view);
+                return View(view);
+            }
+            else
+            {
+                HttpResponseMessage responseMessage = service.GetResponse("api/Products_Ad/GetAllProductByTypeByEndUser");
+                responseMessage.EnsureSuccessStatusCode();
+                List<List<DTO_Dis_Product>> dTO_Accounts = responseMessage.Content.ReadAsAsync<List<List<DTO_Dis_Product>>>().Result;
+                Session.Add("typeProduct",dTO_Accounts);
+                var view = dTO_Accounts.ToPagedList(1, 50);
+
+                return View(view);
+            }
+           
         }
 
         public ActionResult Index(FormCollection fc, int? page, int? gia, int? gia_, string searchName1)
